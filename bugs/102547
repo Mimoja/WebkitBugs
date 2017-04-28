@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r135027 | jsbell@chromium.org | 2012-11-17 03:08:13 +0100 (Sa, 17. Nov 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/storage/indexeddb/object-lookups-in-versionchange-expected.txt
+   A /trunk/LayoutTests/storage/indexeddb/object-lookups-in-versionchange.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBTransaction.cpp
+
+IndexedDB: Assert hit when getting non-existent object store in version change transaction
+https://bugs.webkit.org/show_bug.cgi?id=102547
+
+Reviewed by Tony Chang.
+
+Source/WebCore:
+
+Code did not account for the not-found case in "versionchange" transactions, where all
+object stores are implicitly in scope.
+
+Test: storage/indexeddb/object-lookups-in-versionchange.html
+
+* Modules/indexeddb/IDBTransaction.cpp:
+(WebCore::IDBTransaction::objectStore):
+
+LayoutTests:
+
+Regression test - make sure that .objectStore() and .index() fail on unknown names
+in "versionchange" transactions.
+
+* storage/indexeddb/object-lookups-in-versionchange-expected.txt: Added.
+* storage/indexeddb/object-lookups-in-versionchange.html: Added.
+
+

@@ -1,0 +1,95 @@
+------------------------------------------------------------------------
+r137509 | pdr@google.com | 2012-12-12 22:31:59 +0100 (Mi, 12. Dez 2012) | 81 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/target-condition-crash-expected.txt
+   A /trunk/LayoutTests/svg/animations/target-condition-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.cpp
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.h
+   M /trunk/Source/WebCore/svg/SVGElement.cpp
+   M /trunk/Source/WebCore/svg/SVGUseElement.cpp
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+
+Fix target element handling in SVGSMILElement.
+https://bugs.webkit.org/show_bug.cgi?id=104495
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+This patch fixes two bugs that led to stale target elements in SVGSMILElement.
+
+r122449 changed the <use> code to call removeAllElementReferencesForTarget to rebuild
+dependent <use> trees. This contained a bug where element references would be incorrectly
+removed. removeAllElementReferencesForTarget calls svgAttributeChanged(href) on all
+references, which can then re-add the references back. The bug is that
+removeAllElementReferencesForTarget removes a newly-added reference as the last step.
+
+r136906 changed targetElement() to no longer be lazily resolved so any changes to an
+animation's href attribute needed to be tracked. r136906 refactored the code but did not
+fix a bug where animation elements not in the document would not react to
+svgAttributeChanged(href).
+
+The combination of these two bugs allowed stale targetElement references to exist. A
+target element could be removed from the document without dependent animation elements
+receiving a notification (bug 1) and not reacting to notifications they received (bug 2).
+
+This patch updates SVGUseElement::buildInstanceTree to only rebuild (not remove) the
+elements referencing the target by adding rebuildAllElementReferencesForTarget. This patch
+also updates SVGSMILElement to correctly react to svgAttributeChanged() notifications
+for href changes even when not in the document.
+
+Test: svg/animations/target-condition-crash.html
+
+* svg/SVGDocumentExtensions.cpp:
+(WebCore::SVGDocumentExtensions::rebuildAllElementReferencesForTarget):
+(WebCore::SVGDocumentExtensions::removeAllElementReferencesForTarget):
+
+    Refactored so that we can notify element references to update without removing
+    references.
+
+* svg/SVGDocumentExtensions.h:
+(SVGDocumentExtensions):
+* svg/SVGElement.cpp:
+(WebCore::SVGElement::~SVGElement):
+(WebCore::SVGElement::removedFrom):
+
+    Similar to SVGUseElement::buildShadowAndInstanceTree, this callsite was updated to
+    only rebuild references instead of removing them.
+
+(WebCore::SVGElement::attributeChanged):
+* svg/SVGUseElement.cpp:
+(WebCore::SVGUseElement::buildShadowAndInstanceTree):
+
+    The comment indicates we just want to rebuild (not remove). This callsite has been
+    updated to use the new rebuildAllElementReferencesForTarget function.
+
+(WebCore::SVGUseElement::buildInstanceTree):
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::buildPendingResource):
+(WebCore::SVGSMILElement::removedFrom):
+
+    Previously, if an SVGSMILElement was not in the document, only clearResourceReferences
+    would be called when the target changed. This has been refactored to reset the
+    targetElement if the element needs to build resources but is not in the document.
+
+    I looked at moving this into clearResourceReferences (since the target element might
+    be considered a reference) but we run into issues calling pure virtual functions in
+    the destructor. The current implementation seemed the cleanest.
+
+    SVGSMILElement::removedFrom was cleaned up to match the rest of the code. The comment
+    in removedFrom appears to be stale since disconnectConditions does not kill the element.
+
+(WebCore::SVGSMILElement::svgAttributeChanged):
+
+    Removed the bad !inDocument() checks that broke href change notifications.
+
+(WebCore::SVGSMILElement::setTargetElement):
+
+LayoutTests:
+
+* svg/animations/target-condition-crash-expected.txt: Added.
+* svg/animations/target-condition-crash.html: Added.
+
+

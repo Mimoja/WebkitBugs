@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r133717 | kenrb@chromium.org | 2012-11-07 05:55:23 +0100 (Mi, 07. Nov 2012) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/colspan-under-button-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/colspan-under-button-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderButton.cpp
+
+Crash due to column span under button element
+https://bugs.webkit.org/show_bug.cgi?id=101402
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+When there is a column-spanning child of a RenderButton
+splitBlocks() must split the RenderButton as well as its
+only permitted direct child, the anonymous block referenced
+by m_inner. A crash was occurring because splitBlocks()
+calls addChildIgnoringAnonymousColumnBlocks() to add the
+cloned m_inner to the cloned RenderButton, which meant the
+m_inner for the cloned RenderButton was not being set even
+though a child was being added. This violates state
+assumptions in the RenderButton code.
+
+This patch prevents any descendants of RenderButton from
+spanning columns. Also, it adds a precautionary check in
+RenderButton::removeChild() to mitigate problems if similar
+state problems are found in future.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::containingColumnsBlock):
+* rendering/RenderButton.cpp:
+(WebCore::RenderButton::removeChild):
+
+LayoutTests:
+
+Test creates crashing condition for bug 101402.
+
+* fast/block/colspan-under-button-crash.html: Added.
+* fast/block/colspan-under-button-crash-expected.txt: Added.
+
+

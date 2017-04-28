@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r140834 | vcarbune@chromium.org | 2013-01-25 17:58:54 +0100 (Fr, 25. Jan 2013) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/track/track-remove-active-cue-crash-expected.txt
+   A /trunk/LayoutTests/media/track/track-remove-active-cue-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/Source/WebCore/html/HTMLMediaElement.h
+
+Heap-use-after-free in WebCore::TextTrackCue::isActive
+https://bugs.webkit.org/show_bug.cgi?id=104594
+
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Test: media/track/track-remove-active-cue-crash.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::updateActiveTextTrackCues):
+(WebCore::HTMLMediaElement::textTrackAddCue):
+(WebCore::HTMLMediaElement::textTrackRemoveCue): Remove the cue
+from the active cue set as well.
+* html/HTMLMediaElement.h:
+(WebCore):
+
+LayoutTests:
+
+* media/track/track-remove-active-cue-crash-expected.txt: Added.
+* media/track/track-remove-active-cue-crash.html: Added.
+
+

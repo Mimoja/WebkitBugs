@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r132648 | tkent@chromium.org | 2012-10-26 16:07:49 +0200 (Fr, 26. Okt 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMWindowPagePopup.cpp
+   M /trunk/Source/WebCore/page/PagePopupController.cpp
+   M /trunk/Source/WebCore/page/PagePopupController.h
+
+Crash in PagePopupController by events after WebPagePopupImpl::closePopup
+https://bugs.webkit.org/show_bug.cgi?id=100454
+
+Reviewed by Hajime Morita.
+
+No new tests. The bug is timing-dependent.
+
+* page/DOMWindowPagePopup.cpp:
+(WebCore::DOMWindowPagePopup::~DOMWindowPagePopup):
+Calls clearPagePopupClient for the associalated PagePopupController object.
+* page/PagePopupController.cpp:
+(WebCore::PagePopupController::setValueAndClosePopup):
+Do nothing if m_popupClient is 0.
+(WebCore::PagePopupController::localizeNumberString): Ditto.
+(WebCore::PagePopupController::clearPagePopupClient): Added.
+* page/PagePopupController.h:
+(PagePopupController): Declare clearPagePopupClient.
+

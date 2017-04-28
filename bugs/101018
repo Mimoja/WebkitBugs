@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r133610 | commit-queue@webkit.org | 2012-11-06 16:54:05 +0100 (Di, 06. Nov 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/media/track/track-add-remove-cue-expected.txt
+   M /trunk/LayoutTests/media/track/track-add-remove-cue.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/track/TextTrackCueList.cpp
+
+Heap-buffer-overflow in WebCore::TextTrackCueList::add
+https://bugs.webkit.org/show_bug.cgi?id=101018
+
+Patch by Aaron Colwell <acolwell@chromium.org> on 2012-11-06
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Added an extra check to avoid using a negative array index when a cue
+is added to the beginning of the list.
+
+Test case added to LayoutTests/media/track/track-add-remove-cue.html.
+
+* html/track/TextTrackCueList.cpp:
+(WebCore::TextTrackCueList::add):
+
+LayoutTests:
+
+Added a test case to verify that adding a cue to the beginning of a non-empty list doesn't crash.
+
+* media/track/track-add-remove-cue-expected.txt:
+* media/track/track-add-remove-cue.html:
+

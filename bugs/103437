@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r135900 | zhajiang@rim.com | 2012-11-27 21:32:13 +0100 (Di, 27. Nov 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/blackberry/ChangeLog
+   M /trunk/Source/WebKit/blackberry/WebCoreSupport/ChromeClientBlackBerry.cpp
+
+[BlackBerry] http:// origins can navigate to privileged local:// origins
+https://bugs.webkit.org/show_bug.cgi?id=103437
+
+Patch by Jacky Jiang  <zhajiang@rim.com>.
+Reviewed by Yong Li.
+
+PR: 251489
+When we aren't allowed to display the destination origin, we shouldn't
+even create the window for it. In this way we can block the remote
+origins(like http://) window.open local origins(like file:// and
+local://) and avoid further security issues.
+Chrome and Safari will open a blank window and fail to load. Firefox
+will fail to open the window and report a load failure error which has
+the same behavior as us. I would prefer this way as the window would
+be useless and the calls after that would be harmful to us.
+
+* WebCoreSupport/ChromeClientBlackBerry.cpp:
+(WebCore::ChromeClientBlackBerry::createWindow):
+

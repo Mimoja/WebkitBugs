@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r132176 | morrita@google.com | 2012-10-23 06:20:01 +0200 (Di, 23. Okt 2012) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/insertion-points-with-shadow-disabled-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/insertion-points-with-shadow-disabled.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/shadow/HTMLContentElement.cpp
+   M /trunk/Source/WebCore/html/shadow/HTMLContentElement.h
+
+Assertion failed at WebCore::toInsertionPoint / WebCore::ContentDistributor::distribute
+https://bugs.webkit.org/show_bug.cgi?id=100038
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+isHTMLContentElement() assumes that the content element always has
+a tag name "content" but it doesn't when Shadow DOM feature is
+disabled. This fix let the function see the correct tag name.
+
+Test: fast/dom/shadow/insertion-points-with-shadow-disabled.html
+
+* html/shadow/HTMLContentElement.cpp:
+(WebCore::HTMLContentElement::contentTagName):
+* html/shadow/HTMLContentElement.h:
+(HTMLContentElement):
+(WebCore::isHTMLContentElement):
+
+LayoutTests:
+
+* fast/dom/shadow/insertion-points-with-shadow-disabled-expected.txt: Added.
+* fast/dom/shadow/insertion-points-with-shadow-disabled.html: Added.
+
+

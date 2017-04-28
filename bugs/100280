@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r132511 | tsepez@chromium.org | 2012-10-25 21:07:02 +0200 (Do, 25. Okt 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/security/xssAuditor/form-action-expected.txt
+   M /trunk/LayoutTests/http/tests/security/xssAuditor/form-action.html
+   M /trunk/LayoutTests/http/tests/security/xssAuditor/resources/echo-intertag.pl
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/XSSAuditor.cpp
+
+XSSAuditor must replace form action with about:blank when reflected action detected.
+https://bugs.webkit.org/show_bug.cgi?id=100280
+
+Reviewed by Daniel Bates.
+
+Source/WebCore:
+
+Changes empty string form-action replacement to about:blank.
+Existing form-action.html test modified to check this case.
+
+* html/parser/XSSAuditor.cpp:
+(WebCore::XSSAuditor::filterFormToken):
+
+LayoutTests:
+
+Update tests to log form action attribute.
+
+* http/tests/security/xssAuditor/form-action-expected.txt:
+* http/tests/security/xssAuditor/form-action.html:
+* http/tests/security/xssAuditor/resources/echo-intertag.pl:
+
+

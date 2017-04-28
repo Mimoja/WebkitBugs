@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r138908 | robert@webkit.org | 2013-01-05 22:23:07 +0100 (Sa, 05. Jan 2013) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/sticky-position-containing-block-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/sticky-position-containing-block-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/StyleResolver.cpp
+
+Heap-use-after-free in WebCore::RenderBlock::insertIntoTrackedRendererMaps
+https://bugs.webkit.org/show_bug.cgi?id=105654
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+As with position:relative, position:sticky does not apply to table sections.
+
+Test: fast/block/sticky-position-containing-block-crash.html
+
+* css/StyleResolver.cpp:
+(WebCore::StyleResolver::adjustRenderStyle):
+
+LayoutTests:
+
+* fast/block/sticky-position-containing-block-crash-expected.txt: Added.
+* fast/block/sticky-position-containing-block-crash.html: Added.
+
+

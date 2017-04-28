@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r138460 | apavlov@chromium.org | 2012-12-25 10:26:38 +0100 (Di, 25. Dez 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/inspector/elements-test.js
+   A /trunk/LayoutTests/inspector/styles/removed-rule-crash-expected.txt
+   A /trunk/LayoutTests/inspector/styles/removed-rule-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.cpp
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.h
+
+Web Inspector: Crash when modifying a rule that has been removed through JavaScript
+https://bugs.webkit.org/show_bug.cgi?id=105718
+
+Reviewed by Yury Semikhatsky.
+
+Source/WebCore:
+
+CSSStyleRules should be stored by RefPtr's to avoid using stale pointers to deleted instances.
+
+Test: inspector/styles/removed-rule-crash.html
+
+* inspector/InspectorStyleSheet.cpp:
+(WebCore::InspectorStyleSheet::ruleForId):
+(WebCore::InspectorStyleSheet::revalidateStyle):
+(WebCore::InspectorStyleSheet::buildArrayForRuleList):
+(WebCore::InspectorStyleSheet::collectFlatRules):
+* inspector/InspectorStyleSheet.h:
+(InspectorStyleSheet):
+
+LayoutTests:
+
+* http/tests/inspector/elements-test.js: Add InspectorTest.toggleMatchedStyleProperty.
+(initialize_ElementTest.InspectorTest.toggleMatchedStyleProperty): Added.
+* inspector/styles/removed-rule-crash-expected.txt: Added.
+* inspector/styles/removed-rule-crash.html: Added.
+
+

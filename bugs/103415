@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r136250 | fmalita@chromium.org | 2012-11-30 18:49:11 +0100 (Fr, 30. Nov 2012) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/large-image-pattern-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/large-image-pattern-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourcePattern.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourcePattern.h
+
+SVG pattern data deleted while in use
+https://bugs.webkit.org/show_bug.cgi?id=103415
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+Various calls in RenderSVGResourcePattern::applyResource() can trigger invalidations,
+which may end up deleting our current pattern data (via removeAllClientsFromCache).
+To avoid this, we should add the pattern data to the cache only after it is fully built.
+For clarity, the patch also refactors the pattern setup code into a separate method.
+
+Test: svg/custom/large-image-pattern-crash.html
+
+* rendering/svg/RenderSVGResourcePattern.cpp:
+(WebCore::RenderSVGResourcePattern::buildPattern):
+(WebCore::RenderSVGResourcePattern::applyResource):
+* rendering/svg/RenderSVGResourcePattern.h:
+(RenderSVGResourcePattern):
+
+LayoutTests:
+
+* svg/custom/large-image-pattern-crash-expected.txt: Added.
+* svg/custom/large-image-pattern-crash.html: Added.
+
+

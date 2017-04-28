@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r132462 | apavlov@chromium.org | 2012-10-25 11:32:16 +0200 (Do, 25. Okt 2012) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.cpp
+
+Web Inspector: Improper out-of-order call on a rule that is being removed from the stylesheet.
+https://bugs.webkit.org/show_bug.cgi?id=100357
+
+Reviewed by Vsevolod Vlasov.
+
+* inspector/InspectorStyleSheet.cpp:
+(WebCore::InspectorStyleSheet::deleteRule):
+

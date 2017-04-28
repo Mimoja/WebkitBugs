@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r139062 | mrobinson@webkit.org | 2013-01-08 17:45:55 +0100 (Di, 08. Jan 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/misc/authentication-redirect-4
+   A /trunk/LayoutTests/http/tests/misc/authentication-redirect-4/authentication-sent-to-redirect-same-origin-url-expected.txt
+   A /trunk/LayoutTests/http/tests/misc/authentication-redirect-4/authentication-sent-to-redirect-same-origin-url.html
+   A /trunk/LayoutTests/http/tests/misc/authentication-redirect-4/resources
+   A /trunk/LayoutTests/http/tests/misc/authentication-redirect-4/resources/auth-echo.php
+   A /trunk/LayoutTests/http/tests/misc/authentication-redirect-4/resources/auth-then-redirect.php
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/soup/ResourceHandleSoup.cpp
+
+[GTK] Login & password shown in browsers' URL entry after successful HTTP authentication
+https://bugs.webkit.org/show_bug.cgi?id=105190
+
+Reviewed by Carlos Garcia Campos.
+
+Source/WebCore:
+
+Test: http/tests/misc/authentication-redirect-4/authentication-sent-to-redirect-same-origin-url.html
+
+* platform/network/soup/ResourceHandleSoup.cpp:
+(WebCore::restartedCallback): After sending a redirect with credentials to libsoup, strip
+the credentials from the request. This ensures that the credentials do not show up in
+the user agent or in document.location.
+
+LayoutTests:
+
+Add a new test that checks that the URL of a page that redirects and uses
+authentication. This verifies correct behavior for ports that communicates
+a request's credentials to the platform networking layer by setting them in the URL.
+The credentials should not remain in the URL string itself.
+
+* http/tests/misc/authentication-redirect-4/authentication-sent-to-redirect-same-origin-url-expected.txt: Added.
+* http/tests/misc/authentication-redirect-4/authentication-sent-to-redirect-same-origin-url.html: Added.
+* http/tests/misc/authentication-redirect-4/resources/auth-echo.php: Added.
+* http/tests/misc/authentication-redirect-4/resources/auth-then-redirect.php: Added.
+

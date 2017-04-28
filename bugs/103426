@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r135906 | commit-queue@webkit.org | 2012-11-27 22:00:23 +0100 (Di, 27. Nov 2012) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/media/media-source/video-media-source-closed-on-htmlmediaelement-destruction-expected.txt
+   A /trunk/LayoutTests/http/tests/media/media-source/video-media-source-closed-on-htmlmediaelement-destruction.html
+   M /trunk/LayoutTests/http/tests/media/media-source/video-media-source-state-changes-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+Use-after-free in media player handling
+https://bugs.webkit.org/show_bug.cgi?id=103426
+
+Patch by Aaron Colwell <acolwell@chromium.org> on 2012-11-27
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Fixed use-after-free bugs caused by the MediaSource not being closed before the HTMLMediaElement or the MediaPlayer
+is destroyed. Closing the MediaSource causes it to clear its reference to the MediaPlayer which prevents
+the use-after-free problems from happening.
+
+Test: http/tests/media/media-source/video-media-source-closed-on-htmlmediaelement-destruction.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::~HTMLMediaElement):
+(WebCore::HTMLMediaElement::clearMediaPlayer):
+
+LayoutTests:
+
+- Added a test to verify that the MediaSource gets closed when the HTMLMediaElement is destroyed
+  after it is removed from the DOM.
+- Updated video-media-source-state-changes-expected.txt to reflect a slight change in event dispatch ordering.
+
+* http/tests/media/media-source/video-media-source-closed-on-htmlmediaelement-destruction-expected.txt: Added.
+* http/tests/media/media-source/video-media-source-closed-on-htmlmediaelement-destruction.html: Added.
+* http/tests/media/media-source/video-media-source-state-changes-expected.txt:
+

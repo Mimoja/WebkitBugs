@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r132420 | tommyw@google.com | 2012-10-25 01:24:05 +0200 (Do, 25. Okt 2012) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/mediastream/RTCPeerConnection-events-expected.txt
+   A /trunk/LayoutTests/fast/mediastream/RTCPeerConnection-events.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/mediastream/RTCPeerConnection.cpp
+   M /trunk/Source/WebCore/Modules/mediastream/RTCPeerConnection.h
+
+Source/WebCore: MediaStream API: Make sure all events are dispatched asynchronously
+https://bugs.webkit.org/show_bug.cgi?id=100286
+
+Reviewed by Adam Barth.
+
+This is necessary to safeguard against if the UA uses synchronous UA->WebKit calls,
+and the web application calls methods on the RTCPeerConnection in the event callbacks.
+
+Test: fast/mediastream/RTCPeerConnection-events.html
+Also tested by the chromium webrtc fuzz tests.
+
+* Modules/mediastream/RTCPeerConnection.cpp:
+(WebCore::RTCPeerConnection::RTCPeerConnection):
+(WebCore::RTCPeerConnection::negotiationNeeded):
+(WebCore::RTCPeerConnection::didGenerateIceCandidate):
+(WebCore::RTCPeerConnection::didAddRemoteStream):
+(WebCore::RTCPeerConnection::didRemoveRemoteStream):
+(WebCore::RTCPeerConnection::didAddRemoteDataChannel):
+(WebCore::RTCPeerConnection::changeReadyState):
+(WebCore::RTCPeerConnection::changeIceState):
+(WebCore):
+(WebCore::RTCPeerConnection::scheduleDispatchEvent):
+(WebCore::RTCPeerConnection::scheduledEventTimerFired):
+* Modules/mediastream/RTCPeerConnection.h:
+(RTCPeerConnection):
+
+LayoutTests: MediaStream API: Make sure all RTCPeerConnection events are dispatched asynchronously
+https://bugs.webkit.org/show_bug.cgi?id=100286
+
+Reviewed by Adam Barth.
+
+RTCPeerConnection::close is the only function that dispatches an event directly so only test that.
+
+* fast/mediastream/RTCPeerConnection-events-expected.txt: Added.
+* fast/mediastream/RTCPeerConnection-events.html: Added.
+
+

@@ -1,0 +1,72 @@
+------------------------------------------------------------------------
+r149925 | ap@apple.com | 2013-05-11 07:51:04 +0200 (Sa, 11. Mai 2013) | 54 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/dom/HTMLAnchorElement/script-tests/set-href-attribute-pathname.js
+   M /trunk/LayoutTests/fast/dom/HTMLAnchorElement/set-href-attribute-pathname-expected.txt
+   M /trunk/LayoutTests/fast/url/host-expected.txt
+   M /trunk/LayoutTests/fast/url/host.html
+   A /trunk/LayoutTests/fast/url/segments-userinfo-vs-host-expected.txt
+   A /trunk/LayoutTests/fast/url/segments-userinfo-vs-host.html
+   D /trunk/LayoutTests/http/tests/uri/username-with-no-hostname-expected.txt
+   D /trunk/LayoutTests/http/tests/uri/username-with-no-hostname.html-disabled
+   D /trunk/LayoutTests/platform/win/http/tests/uri
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/SecurityOrigin.cpp
+   M /trunk/Source/WebCore/platform/KURL.cpp
+
+        <rdar://problem/13666412> Clean up some edge cases of URL parsing.
+        https://bugs.webkit.org/show_bug.cgi?id=104919
+
+        Reviewed by Darin Adler.
+
+WebCore:
+        * page/SecurityOrigin.cpp:
+        (WebCore::schemeRequiresHost):
+        (WebCore::shouldTreatAsUniqueOrigin):
+        Updated function name and comments (host is not the same as authority). We still
+        need this check - KURL can still produce http URLs with an empty host (even as this
+        patch reduces the number of such cases). So can Gecko and current draft of URL
+        Standard.
+        It would be good to have a guarantee that such useless URLs can not come out of
+        URL parser, as relying on downstream code re-parsing the URL correctly would be fragile.
+
+        * platform/KURL.cpp:
+        (WebCore::hostPortIsEmptyButCredentialsArePresent): Updated an argument name for
+        correctness.
+        (WebCore::KURL::parse):
+        1. Reverted behavior changes from <http://trac.webkit.org/changeset/82181> - I could
+        find no reason to allow "@" in hostnames, and having a URL like this re-parsed by
+        a different parser would likely produce different results. It's better to just treat
+        these edge case URLs as invalid.
+        2. When hostname component is a lone colon, preserve it in parsed URL string,
+        as otherwise path would get pushed in its place when re-parsing.
+        3. When authority component is a lone colon, don't forget to "//" after scheme, too.
+        4. Added some assertions about contents of authority component, to catch potential
+        mis-parsing earlier.
+
+LayoutTests:
+        * fast/dom/HTMLAnchorElement/script-tests/set-href-attribute-pathname.js:
+        * fast/dom/HTMLAnchorElement/set-href-attribute-pathname-expected.txt:
+        Updated expectations of one sub-test. We previously tried to keep the test passing
+        as is (see bug 57291), but I couldn't find any reason to prefer the old behavior.
+
+        * fast/url/host-expected.txt:
+        * fast/url/host.html:
+        Updated one subtest to new results, which match at least Gecko (original of the
+        test actually claims that all browsers including Safari already do what we'll do now).
+
+        * fast/url/segments-userinfo-vs-host-expected.txt: Added.
+        * fast/url/segments-userinfo-vs-host.html: Added.
+        Added a number of tests, with detailed explanations of the differences with Firefox,
+        and with rationales.
+
+        * http/tests/uri/username-with-no-hostname-expected.txt: Removed.
+        * http/tests/uri/username-with-no-hostname.html-disabled: Removed.
+        * platform/win/http/tests/uri/username-with-no-hostname-expected.txt: Removed.
+        This test has been disabled for a long time, and being an end-to-end test for
+        invalid URL handling, it would be difficult to make work again. We have multiple
+        parsing tests for URLs like this.
+
+
+

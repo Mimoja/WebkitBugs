@@ -1,0 +1,61 @@
+------------------------------------------------------------------------
+r135478 | commit-queue@webkit.org | 2012-11-22 07:45:27 +0100 (Do, 22. Nov 2012) | 45 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Geolocation/watchPosition-unique-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/watchPosition-unique.html
+   A /trunk/LayoutTests/fast/dom/Window/setTimeout-setInterval-unique-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/setTimeout-setInterval-unique.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/geolocation/Geolocation.cpp
+   M /trunk/Source/WebCore/Modules/geolocation/Geolocation.h
+   M /trunk/Source/WebCore/dom/ScriptExecutionContext.cpp
+   M /trunk/Source/WebCore/dom/ScriptExecutionContext.h
+   M /trunk/Source/WebCore/page/DOMTimer.cpp
+
+Numeric identifiers of events should not be globally sequential
+https://bugs.webkit.org/show_bug.cgi?id=102244
+
+Patch by Cosmin Truta <ctruta@rim.com> on 2012-11-21
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore:
+
+The functions setTimeout, setInterval and navigator.geolocation.watchPosition
+are currently returning values that are unique across all JavaScript execution
+contexts, due to their dependency on global variables.
+Such a guarantee is unnecessarily strong. In this patch, we constrain uniqueness
+to these functions' own script execution context only.
+
+Tests: fast/dom/Geolocation/watchPosition-unique.html
+       fast/dom/Window/setTimeout-setInterval-unique.html
+
+* Modules/geolocation/Geolocation.cpp:
+(WebCore): Remove firstAvailableWatchId.
+(WebCore::Geolocation::watchPosition): Get new watchID from script execution context.
+(WebCore::Geolocation::clearWatch): Invalid watchID means less than or equal to 0.
+* Modules/geolocation/Geolocation.h:
+(Geolocation): Renamed the argument of Geolocation::clearWatch to WatchID.
+* dom/ScriptExecutionContext.cpp:
+(WebCore::ScriptExecutionContext::ScriptExecutionContext): Update initialization.
+(WebCore::ScriptExecutionContext::newUniqueID): Add.
+* dom/ScriptExecutionContext.h:
+(ScriptExecutionContext): Add m_sequentialID.
+(WebCore::ScriptExecutionContext::addTimeout): Inline.
+(WebCore::ScriptExecutionContext::removeTimeout): Inline.
+(WebCore::ScriptExecutionContext::findTimeout): Inline.
+* page/DOMTimer.cpp:
+(WebCore): Remove timeoutId.
+(WebCore::DOMTimer::DOMTimer): Get new timeoutId from script execution context.
+
+LayoutTests:
+
+Ensured that the results of setTimeout(), setInterval() and
+navigator.geolocation.watchPosition() are strictly positive
+and unique within their script execution context.
+
+* fast/dom/Geolocation/watchPosition-unique-expected.txt: Added.
+* fast/dom/Geolocation/watchPosition-unique.html: Added.
+* fast/dom/Window/setTimeout-setInterval-unique-expected.txt: Added.
+* fast/dom/Window/setTimeout-setInterval-unique.html: Added.
+

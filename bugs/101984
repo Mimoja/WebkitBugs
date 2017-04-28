@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r138988 | inferno@chromium.org | 2013-01-07 23:07:45 +0100 (Mo, 07. Jan 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/recursive-split-flow-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/recursive-split-flow-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Heap-buffer-overflow in WebCore::RenderBlock::clone.
+https://bugs.webkit.org/show_bug.cgi?id=101984
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Add a global in RenderBlock to prevent recursion inside splitFlow.
+While inside splitFlow (multi-column handling), we move many children
+using fullRemoveInsert=true, causing RenderBlock::addChild to be called
+and recursing in splitFlow. This messes the tree splitting happening in
+RenderBlock::splitBlocks and can cause bad casts.
+
+Test: fast/multicol/recursive-split-flow-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::addChildIgnoringAnonymousColumnBlocks):
+
+LayoutTests:
+
+* fast/multicol/recursive-split-flow-crash-expected.txt: Added.
+* fast/multicol/recursive-split-flow-crash.html: Added.
+
+

@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r133609 | commit-queue@webkit.org | 2012-11-06 16:42:48 +0100 (Di, 06. Nov 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/track/track-remove-by-setting-innerHTML-expected.txt
+   A /trunk/LayoutTests/media/track/track-remove-by-setting-innerHTML.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+Regression(r132681): Heap-use-after-free in WebCore::RenderTextTrackCue::layout
+https://bugs.webkit.org/show_bug.cgi?id=100981
+
+Patch by Aaron Colwell <acolwell@chromium.org> on 2012-11-06
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Fixing a TextTrackCue use after free bug. textTrackRemoveCues() needs to be called when
+an HTMLTrackElement is removed from an HTMLMediaElement so that references to
+TextTrackCues are removed from m_cueTree.
+
+Test: media/track/track-remove-by-setting-innerHTML.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::willRemoveTrack):
+
+LayoutTests:
+
+Added a test that removes track elements by setting innerHTML on the track's parent.
+
+* media/track/track-remove-by-setting-innerHTML-expected.txt: Added.
+* media/track/track-remove-by-setting-innerHTML.html: Added.
+

@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r135345 | commit-queue@webkit.org | 2012-11-21 05:54:44 +0100 (Mi, 21. Nov 2012) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/text/LocaleICU.cpp
+
+REGRESSION(r135263): Fix a wrong argument for udat_close
+https://bugs.webkit.org/show_bug.cgi?id=102856
+
+Patch by Kunihiko Sakamoto <ksakamoto@chromium.org> on 2012-11-20
+Reviewed by Kent Tamura.
+
+Fixed a bug that passed wrong pointer to udat_close.
+
+No new tests. No changes in behavior.
+
+* platform/text/LocaleICU.cpp:
+(WebCore::LocaleICU::initializeDateTimeFormat): Close correct object.
+

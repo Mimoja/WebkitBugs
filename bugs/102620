@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r135719 | fmalita@chromium.org | 2012-11-26 16:03:36 +0100 (Mo, 26. Nov 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/stale-resource-data-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/stale-resource-data-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceContainer.cpp
+
+RenderSVGResourceContainer does not clear cached data on removal
+https://bugs.webkit.org/show_bug.cgi?id=102620
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+RenderSVGResourceContainer::removeClient needs to also remove the client from specialized
+caches, otherwise we can end up with stale references.
+
+Test: svg/custom/stale-resource-data-crash.svg
+
+* rendering/svg/RenderSVGResourceContainer.cpp:
+(WebCore::RenderSVGResourceContainer::removeClient):
+
+LayoutTests:
+
+* svg/custom/stale-resource-data-crash-expected.txt: Added.
+* svg/custom/stale-resource-data-crash.svg: Added.
+
+

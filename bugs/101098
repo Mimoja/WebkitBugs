@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r136062 | inferno@chromium.org | 2012-11-28 23:53:55 +0100 (Mi, 28. Nov 2012) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/EventHandler.cpp
+
+Heap-use-after-free in WebCore::EventHandler::handleMousePressEvent
+https://bugs.webkit.org/show_bug.cgi?id=101098
+
+Reviewed by Adam Barth.
+
+|subframe| can be blown away inside passMousePressEventToSubframe
+call. Use RefPtr to protect it in handleMousePressEvent function.
+We use similar approach in handleMouseMoveEvent function.
+
+No new tests. Test is extremely time dependent and needs to trigger
+interaction gesture. Reproduced on ClusterFuzz.
+
+* page/EventHandler.cpp:
+(WebCore::EventHandler::handleMousePressEvent):
+
+

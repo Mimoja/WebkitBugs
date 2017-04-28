@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r135992 | roger_fong@apple.com | 2012-11-28 12:31:47 +0100 (Mi, 28. Nov 2012) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/win/SimpleFontDataWin.cpp
+
+Initialize identity matrix in SimpleFontData::initGDIFont() properly.
+https://bugs.webkit.org/show_bug.cgi?id=103499
+<rdar://problem/12400700>
+
+Reviewed by Timothy Horton.
+
+We are incorrectly initializing the matrix passed into GetGlyphOutline.
+This patch fixes MAT2 initialization to match the way we initialize the 
+identity matrix in SimpleFontData::boundsForGDIGlyph and SimpleFontData::widthForGDIGlyph.
+
+* platform/graphics/win/SimpleFontDataWin.cpp:
+(WebCore::SimpleFontData::initGDIFont):
+
+

@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r133840 | rniwa@webkit.org | 2012-11-08 04:50:25 +0100 (Do, 08. Nov 2012) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/FrameSelection.cpp
+
+Crash in WebCore::RenderLayer::normalFlowList
+https://bugs.webkit.org/show_bug.cgi?id=101528
+
+Reviewed by Simon Fraser.
+
+Make sure the layout is up to date before re-computing the caret rect.
+Avoid doing the layout when the selection is cleared since we can always stop
+the blink timer in that case.
+
+Unfortunately, we haven't found any reproduction of this crash yet.
+
+* editing/FrameSelection.cpp:
+(WebCore::isNonOrphanedCaret):
+(WebCore::FrameSelection::localCaretRect):
+(WebCore::FrameSelection::updateAppearance):
+
+

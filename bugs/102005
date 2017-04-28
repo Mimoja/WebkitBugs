@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r134682 | fpizlo@apple.com | 2012-11-15 00:34:19 +0100 (Do, 15. Nov 2012) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGFixupPhase.cpp
+
+Don't access Node& after adding nodes to the graph.
+https://bugs.webkit.org/show_bug.cgi?id=102005
+
+Reviewed by Oliver Hunt.
+
+* dfg/DFGFixupPhase.cpp:
+(JSC::DFG::FixupPhase::fixupNode):
+
+
+

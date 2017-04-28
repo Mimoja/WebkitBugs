@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r132844 | hclam@chromium.org | 2012-10-29 21:57:13 +0100 (Mo, 29. Okt 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/images/mask-box-image-crash-expected.png
+   A /trunk/LayoutTests/fast/images/mask-box-image-crash-expected.txt
+   A /trunk/LayoutTests/fast/images/mask-box-image-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/skia/ImageSkia.cpp
+
+[skia] Handle mask box image.
+https://bugs.webkit.org/show_bug.cgi?id=100570
+
+Reviewed by James Robinson.
+
+Source/WebCore:
+
+When drawing an image with source rectangle it should intersect with image rectangle.
+This should be the case for drawing single image and tiling an image.
+
+Test: fast/images/mask-box-image-crash.html
+
+* platform/graphics/skia/ImageSkia.cpp:
+(WebCore::Image::drawPattern):
+(WebCore::BitmapImage::draw):
+(WebCore::BitmapImageSingleFrameSkia::draw):
+
+LayoutTests:
+
+Added a test for -webkit-mask-box-image. Test should complete without crashes.
+Output image should be blank.
+
+* fast/images/mask-box-image-crash-expected.png: Added.
+* fast/images/mask-box-image-crash-expected.txt: Added.
+* fast/images/mask-box-image-crash.html: Added.
+
+

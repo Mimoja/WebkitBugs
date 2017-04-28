@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r138926 | inferno@chromium.org | 2013-01-07 08:15:33 +0100 (Mo, 07. Jan 2013) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/ready-state-change-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/ready-state-change-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLDocumentParser.cpp
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+
+Heap-use-after-free in DocumentLoader::stopLoading
+https://bugs.webkit.org/show_bug.cgi?id=103656
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Test: fast/dom/ready-state-change-crash.html
+
+* html/parser/HTMLDocumentParser.cpp:
+(WebCore::HTMLDocumentParser::prepareToStopParsing): Bail out
+if the parser is detached due to mutation event.
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::stopLoading): Move the protectors for
+frame and document loader to the start of the function. Call to
+m_frame->loader()->stopLoading() can change document ready state
+and fire mutation event which might blow the document loader from
+underneath.
+
+LayoutTests:
+
+* fast/dom/ready-state-change-crash-expected.txt: Added.
+* fast/dom/ready-state-change-crash.html: Added.
+
+

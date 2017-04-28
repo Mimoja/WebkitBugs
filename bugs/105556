@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r138315 | adamk@chromium.org | 2012-12-21 01:09:20 +0100 (Fr, 21. Dez 2012) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/html5lib/resources/template.dat
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+
+Properly process <template> end tags when in TemplateContentsMode
+https://bugs.webkit.org/show_bug.cgi?id=105556
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::processEndTag): Take care of the FIXME and just call
+processTemplateEndTag() instead of incorrectly special-casing the end tag behavior in some cases.
+
+LayoutTests:
+
+* html5lib/resources/template.dat:
+
+

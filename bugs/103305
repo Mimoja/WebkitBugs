@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r139264 | fpizlo@apple.com | 2013-01-10 02:59:38 +0100 (Do, 10. Jan 2013) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGArgumentsSimplificationPhase.cpp
+
+Dont use a node reference after appending to the graph.
+https://bugs.webkit.org/show_bug.cgi?id=103305
+<rdar://problem/12753096>
+
+Reviewed by Mark Hahnenberg.
+
+* dfg/DFGArgumentsSimplificationPhase.cpp:
+(JSC::DFG::ArgumentsSimplificationPhase::run):
+
+
+

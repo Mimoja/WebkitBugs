@@ -1,0 +1,64 @@
+------------------------------------------------------------------------
+r132895 | tkent@chromium.org | 2012-10-30 13:07:38 +0100 (Di, 30. Okt 2012) | 44 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/chromium/fast/forms/calendar-picker/calendar-picker-type-change-onchange-expected.txt
+   A /trunk/LayoutTests/platform/chromium/fast/forms/calendar-picker/calendar-picker-type-change-onchange.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/shadow/PickerIndicatorElement.cpp
+   M /trunk/Source/WebCore/html/shadow/PickerIndicatorElement.h
+   M /trunk/Source/WebCore/loader/EmptyClients.cpp
+   M /trunk/Source/WebCore/loader/EmptyClients.h
+   M /trunk/Source/WebCore/page/ChromeClient.h
+   M /trunk/Source/WebCore/platform/DateTimeChooser.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.h
+   M /trunk/Source/WebKit/chromium/src/DateTimeChooserImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/DateTimeChooserImpl.h
+
+Fix crash by calendar picker or suggestion picker
+https://bugs.webkit.org/show_bug.cgi?id=100728
+
+Reviewed by Hajime Morita.
+
+Source/WebCore:
+
+Change DateTimeChooser so that it is ref-coutned.
+
+Test: platform/chromium/fast/forms/calendar-picker/calendar-picker-type-change-onchange.html
+
+* platform/DateTimeChooser.h: Made DateTimeChooser RefCounted.
+* page/ChromeClient.h:
+(ChromeClient): openDateTimeChooser should return PassRefPtr<DateTimeChooser>.
+* loader/EmptyClients.h:
+(EmptyChromeClient): Follow the above change.
+* loader/EmptyClients.cpp:
+(WebCore::EmptyChromeClient::openDateTimeChooser): Ditto.
+
+* html/shadow/PickerIndicatorElement.h:
+(PickerIndicatorElement): Hold DateTimeChooser in RefPtr<DateTimeChooser>.
+* html/shadow/PickerIndicatorElement.cpp:
+(WebCore::PickerIndicatorElement::PickerIndicatorElement):
+Remove unnecessary initialization.
+
+Source/WebKit/chromium:
+
+* src/DateTimeChooserImpl.h:
+(DateTimeChooserImpl): Add a factory function, and made the constructor private.
+* src/DateTimeChooserImpl.cpp:
+(WebKit::DateTimeChooserImpl::create): Added.
+(WebKit::DateTimeChooserImpl::setValueAndClosePopup):
+Protect this because JavaScript code might run during didChooseValue.
+
+* src/ChromeClientImpl.h:
+(ChromeClientImpl): Follow the ChromeClient change.
+* src/ChromeClientImpl.cpp:
+(WebKit::ChromeClientImpl::openDateTimeChooser):
+Use DateTimeChooserImpl::create.
+
+LayoutTests:
+
+* platform/chromium/fast/forms/calendar-picker/calendar-picker-type-change-onchange-expected.txt: Added.
+* platform/chromium/fast/forms/calendar-picker/calendar-picker-type-change-onchange.html: Added.
+

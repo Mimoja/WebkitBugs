@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r132451 | tkent@chromium.org | 2012-10-25 08:42:27 +0200 (Do, 25. Okt 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-change-type-expected.txt
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-change-type.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/BaseMultipleFieldsDateAndTimeInputType.cpp
+
+REGRESSION(r132291): Crash in BaseMultipleFieldsDateAndTimeInputType
+https://bugs.webkit.org/show_bug.cgi?id=100326
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Test: fast/forms/time-multiple-fields/time-multiple-fields-change-type.html
+
+* html/BaseMultipleFieldsDateAndTimeInputType.cpp:
+(WebCore::BaseMultipleFieldsDateAndTimeInputType::destroyShadowSubtree):
+We need to disconnect m_spinButtonElement before destructing the UA shadow tree.
+
+LayoutTests:
+
+* fast/forms/time-multiple-fields/time-multiple-fields-change-type-expected.txt: Added.
+* fast/forms/time-multiple-fields/time-multiple-fields-change-type.html: Added.
+
+
