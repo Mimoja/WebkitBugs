@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r107726 | inferno@chromium.org | 2012-02-14 21:45:20 +0100 (Di, 14. Feb 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/class-attr-change-double-mutation-fire-expected.txt
+   A /trunk/LayoutTests/fast/dom/class-attr-change-double-mutation-fire.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/StyledElement.cpp
+
+Crash due to incorrect firing of mutation event during class attribute parsing.
+https://bugs.webkit.org/show_bug.cgi?id=78537
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: fast/dom/class-attr-change-double-mutation-fire.html
+
+* dom/StyledElement.cpp:
+(WebCore::StyledElement::classAttributeChanged):
+
+LayoutTests:
+
+* fast/dom/class-attr-change-double-mutation-fire-expected.txt: Added.
+* fast/dom/class-attr-change-double-mutation-fire.html: Added.
+
+

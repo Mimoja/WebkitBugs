@@ -1,0 +1,56 @@
+------------------------------------------------------------------------
+r215784 | bfulgham@apple.com | 2017-04-26 03:53:06 +0200 (Mi, 26. Apr 2017) | 41 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/platform/text/StringWithDirection.h
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebFrameLoaderClient.mm
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+   A /trunk/Tools/TestWebKitAPI/Tests/WebKit2/LimitTitleSize.cpp
+   A /trunk/Tools/TestWebKitAPI/Tests/WebKit2/set-long-title.html
+   A /trunk/Tools/TestWebKitAPI/Tests/mac/LimitTitleSize.mm
+
+Limit allowed size of document.title to avoid locking WebKit clients
+https://bugs.webkit.org/show_bug.cgi?id=165113
+<rdar://problem/28324389>
+
+Reviewed by Darin Adler.
+
+Source/WebKit/mac:
+
+When a web application attempts to set an extremely long title, truncate the
+title to a more reasonable size.
+
+We do this at at the presentation layer, rather than in the DOM, so that we do
+not affect script function. Instead, we merely limit display to a level that is
+reasonable for normal GUI widgets. Anything else needs to be truncated in the UI
+layer, so it is a waste of effort to send across IPC.
+
+* WebCoreSupport/WebFrameLoaderClient.h:
+* WebCoreSupport/WebFrameLoaderClient.mm:
+(WebFrameLoaderClient::dispatchDidReceiveTitle):
+
+Source/WebKit2:
+
+When a web application attempts to set an extremely long title, truncate the
+title to a more reasonable size.
+
+We do this at at the presentation layer, rather than in the DOM, so that we do
+not affect script function. Instead, we merely limit display to a level that is
+reasonable for normal GUI widgets. Anything else needs to be truncated in the UI
+layer, so it is a waste of effort to send across IPC.
+
+* WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp:
+(WebKit::WebFrameLoaderClient::dispatchDidReceiveTitle):
+* WebProcess/WebCoreSupport/WebFrameLoaderClient.h:
+
+Tools:
+
+* TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj: Add new files.
+* TestWebKitAPI/Tests/WebKit2/LimitTitleSize.cpp: Added.
+* TestWebKitAPI/Tests/WebKit2/set-long-title.html: Added.
+* TestWebKitAPI/Tests/mac/LimitTitleSize.mm: Added.
+
+

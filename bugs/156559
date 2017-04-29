@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r199517 | beidson@apple.com | 2016-04-14 00:45:21 +0200 (Do, 14. Apr 2016) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/Network/NetworkProcessConnection.cpp
+
+Modern IDB: NetworkProcessConnection::didClose needs to have a self ref.
+<rdar://problem/25700864> and https://bugs.webkit.org/show_bug.cgi?id=156559
+
+Reviewed by Alex Christensen.
+
+* WebProcess/Network/NetworkProcessConnection.cpp:
+(WebKit::NetworkProcessConnection::didClose): Self ref to protect this.
+

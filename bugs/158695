@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r201994 | cdumez@apple.com | 2016-06-13 19:28:29 +0200 (Mo, 13. Jun 2016) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/HTTPHeaderMap.cpp
+   M /trunk/Source/WebCore/platform/network/HTTPHeaderMap.h
+
+Make sure HTTPHeaderMap gets a move constructor / assignment operator
+https://bugs.webkit.org/show_bug.cgi?id=158695
+<rdar://problem/26729511>
+
+Reviewed by Alex Christensen.
+
+Make sure HTTPHeaderMap gets a move constructor / assignment operator.
+It was not getting an implicit one because of its user-declared
+destructor. This patch drops the user-declared destructor so that
+HTTPHeaderMap now gets an implicit move constructor / assignment
+operator.
+
+Not having a move constructor / assignment operator is an issue because
+we rely on HTTPHeaderMap::isolatedCopy() / WTFMove() since r201623 to
+pass HTTPHeaderMap across thread.
+
+* platform/network/HTTPHeaderMap.cpp:
+(WebCore::HTTPHeaderMap::~HTTPHeaderMap): Deleted.
+* platform/network/HTTPHeaderMap.h:
+

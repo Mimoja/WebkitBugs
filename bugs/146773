@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r186579 | beidson@apple.com | 2015-07-09 06:47:09 +0200 (Do, 09. Jul 2015) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+   A /trunk/Tools/TestWebKitAPI/Tests/mac/WebViewCloseInsideDidFinishLoadForFrame.mm
+
+Crash calling [WebView close] in didFinishLoadForFrame callback.
+<rdar://problem/21690765> and https://bugs.webkit.org/show_bug.cgi?id=146773
+
+Reviewed by David Kilzer.
+
+Source/WebCore:
+
+Added API Test "WebViewCloseInsideDidFinishLoadForFrame"
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::checkLoadCompleteForThisFrame): After the delegate callback,
+  don't use the local Page* variable from earlier, but instead refetch it from m_frame.
+
+Tools:
+
+* TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+
+* TestWebKitAPI/Tests/mac/WebViewCloseInsideDidFinishLoadForFrame.mm: Added.
+(-[WebViewCloseFrameLoadDelegate webView:didFinishLoadForFrame:]):
+(TestWebKitAPI::TEST):
+

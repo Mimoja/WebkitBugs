@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r139964 | morrita@google.com | 2013-01-17 06:25:14 +0100 (Do, 17. Jan 2013) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/use-mutation-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-mutation-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+NoEventDispatchAssertion in ContainerNode::removeChildren is too strict
+https://bugs.webkit.org/show_bug.cgi?id=106985
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+This change narrowed the lifetime of NoEventDispatchAssertion in removeChildren().
+It is as safe as other mutation method even after this change: childrenChanged() and
+ChildNodeRemovalNotifier are used outside the assertion scope.
+
+Test: svg/custom/use-mutation-crash.xhtml
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::removeChildren):
+
+LayoutTests:
+
+* svg/custom/use-mutation-crash-expected.txt: Added.
+* svg/custom/use-mutation-crash.xhtml: Added.
+
+

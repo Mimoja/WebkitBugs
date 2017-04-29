@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r200986 | bfulgham@apple.com | 2016-05-17 03:09:27 +0200 (Di, 17. Mai 2016) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/crash-during-iframe-load-stop-expected.txt
+   A /trunk/LayoutTests/fast/frames/crash-during-iframe-load-stop.html
+   A /trunk/LayoutTests/fast/frames/resources/crash-during-iframe-load-stop-inner.html
+   A /trunk/LayoutTests/fast/frames/resources/crash-during-iframe-load-stop.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+
+heap use-after-free at WebCore::TimerBase::heapPopMin()
+https://bugs.webkit.org/show_bug.cgi?id=157742
+<rdar://problem/26236778>
+
+Source/WebCore:
+
+Reviewed by David Kilzer.
+
+Tested by fast/frames/resources/crash-during-iframe-load-stop.html.
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::stopForUserCancel): Protect m_frame from destruction while it is still
+being used by the current stack frame.
+(WebCore::FrameLoader::frameDetached): Ditto.
+(WebCore::FrameLoader::continueFragmentScrollAfterNavigationPolicy): Ditto.
+
+LayoutTests:
+
+Reviewed by Simon Fraser.
+
+* fast/frames/crash-during-iframe-load-stop-expected.txt: Added.
+* fast/frames/crash-during-iframe-load-stop.html: Added.
+* fast/frames/resources/crash-during-iframe-load-stop-inner.html: Added.
+* fast/frames/resources/crash-during-iframe-load-stop.html: Added.
+
+

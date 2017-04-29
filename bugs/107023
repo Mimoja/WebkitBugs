@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r140101 | rafaelw@chromium.org | 2013-01-18 06:07:08 +0100 (Fr, 18. Jan 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/foster-parent-adopted-expected.txt
+   A /trunk/LayoutTests/fast/parser/foster-parent-adopted.html
+   A /trunk/LayoutTests/fast/parser/foster-parent-adopted2-expected.txt
+   A /trunk/LayoutTests/fast/parser/foster-parent-adopted2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.cpp
+
+Ensure the parser adopts foster-parented children into the document of their parent.
+https://bugs.webkit.org/show_bug.cgi?id=107023
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Tests: fast/parser/foster-parent-adopted.html
+       fast/parser/foster-parent-adopted2.html
+
+* html/parser/HTMLConstructionSite.cpp:
+(WebCore::HTMLConstructionSite::insertTextNode):
+(WebCore::HTMLConstructionSite::fosterParent):
+
+LayoutTests:
+
+This patch adopts the child into the parent's document after foster parenting to prevent a child from ending up in the tree with the wrong document.
+
+* fast/parser/foster-parent-adopted-expected.txt: Added.
+* fast/parser/foster-parent-adopted.html: Added.
+* fast/parser/foster-parent-adopted2-expected.txt: Added.
+* fast/parser/foster-parent-adopted2.html: Added.
+
+

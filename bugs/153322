@@ -1,0 +1,55 @@
+------------------------------------------------------------------------
+r195477 | weinig@apple.com | 2016-01-22 23:24:32 +0100 (Fr, 22. Jan 2016) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-form-in-iframe-expected.txt
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-form-in-iframe.html
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-form-in-main-frame-expected.txt
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-form-in-main-frame.html
+   A /trunk/LayoutTests/http/tests/security/mixedContent/javascript-url-form-in-main-frame-expected.txt
+   A /trunk/LayoutTests/http/tests/security/mixedContent/javascript-url-form-in-main-frame.html
+   A /trunk/LayoutTests/http/tests/security/mixedContent/resources/frame-with-insecure-form.html
+   A /trunk/LayoutTests/http/tests/security/mixedContent/resources/frame-with-javascript-url-form.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFormElement.cpp
+   M /trunk/Source/WebCore/loader/MixedContentChecker.cpp
+   M /trunk/Source/WebCore/loader/MixedContentChecker.h
+   M /trunk/Tools/WebEditingTester/WK2WebDocumentController.m
+
+Treat non-https actions on secure pages as mixed content
+<rdar://problem/23144492>
+https://bugs.webkit.org/show_bug.cgi?id=153322
+Source/WebCore:
+
+
+Reviewed by Alexey Proskuryakov.
+
+Tests:  http/tests/security/mixedContent/insecure-form-in-iframe.html
+        http/tests/security/mixedContent/insecure-form-in-main-frame.html
+        http/tests/security/mixedContent/javascript-url-form-in-main-frame.html
+
+* html/HTMLFormElement.cpp:
+(WebCore::HTMLFormElement::parseAttribute):
+Check form actions for mixed content.
+
+* loader/MixedContentChecker.cpp:
+(WebCore::MixedContentChecker::checkFormForMixedContent):
+* loader/MixedContentChecker.h:
+Add new function to check and warn if a form's action is mixed content.
+
+LayoutTests:
+
+        
+Reviewed by Alexey Proskuryakov.
+
+* http/tests/security/mixedContent/insecure-form-in-iframe-expected.txt: Added.
+* http/tests/security/mixedContent/insecure-form-in-iframe.html: Added.
+* http/tests/security/mixedContent/insecure-form-in-main-frame-expected.txt: Added.
+* http/tests/security/mixedContent/insecure-form-in-main-frame.html: Added.
+* http/tests/security/mixedContent/javascript-url-form-in-main-frame-expected.txt: Added.
+* http/tests/security/mixedContent/javascript-url-form-in-main-frame.html: Added.
+* http/tests/security/mixedContent/resources/frame-with-insecure-form.html: Added.
+* http/tests/security/mixedContent/resources/frame-with-javascript-url-form.html: Added.
+
+
+

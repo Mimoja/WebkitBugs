@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r159596 | rniwa@webkit.org | 2013-11-21 02:07:19 +0100 (Do, 21. Nov 2013) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLTemplateElement/content-outlives-template-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLTemplateElement/content-outlives-template-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/TemplateContentDocumentFragment.h
+   M /trunk/Source/WebCore/html/HTMLTemplateElement.cpp
+   M /trunk/Source/WebCore/html/HTMLTemplateElement.h
+
+Clear TemplateContentDocumentFragment::m_host when HTMLTemplateElement is destroyed
+https://bugs.webkit.org/show_bug.cgi?id=122806
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+Merge https://chromium.googlesource.com/chromium/blink/+/858ed5f6341de9d900768c1f4668fcfce870c52e
+
+The document fragment of a template element outlives the element itself.
+Clear the host property on the document fragment when that happens.
+
+Test: fast/dom/HTMLTemplateElement/content-outlives-template-crash.html
+
+* dom/TemplateContentDocumentFragment.h:
+* html/HTMLTemplateElement.cpp:
+(WebCore::HTMLTemplateElement::~HTMLTemplateElement):
+* html/HTMLTemplateElement.h:
+
+LayoutTests:
+
+* fast/dom/HTMLTemplateElement/content-outlives-template-crash-expected.txt: Added.
+* fast/dom/HTMLTemplateElement/content-outlives-template-crash.html: Added.
+
+

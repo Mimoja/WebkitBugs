@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r150072 | rniwa@webkit.org | 2013-05-14 18:52:30 +0200 (Di, 14. Mai 2013) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/adopt-attribute-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/adopt-attribute-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/Element.h
+
+Removing Attr can delete a wrong Attribute in ElementData
+https://bugs.webkit.org/show_bug.cgi?id=116077
+
+Source/WebCore: 
+
+Reviewed by Benjamin Poulain.
+        
+Merge https://chromium.googlesource.com/chromium/blink/+/e861452a292e185501e48940305947aa6a4e23c2
+after simplifying and renaming functions to be more WebKit style.
+
+The XML parser can produce elements with attributes whose names have
+distinct prefixes, but the same expanded name. When one of these
+attributes is put up for adoption, it may be its similarly named
+sibling that is removed from its owner element. As a result the
+original owner hangs onto the adopted attribute, despite the fact that
+it is now in a different document. Sometimes it's just hard to let go.
+
+Test: fast/dom/adopt-attribute-crash.svg
+
+* dom/Element.cpp:
+(WebCore::Element::setAttributeNode):
+(WebCore::Element::removeAttributeNode):
+(WebCore::ElementData::getAttributeItemIndex):
+* dom/Element.h:
+(ElementData):
+(Element):
+
+LayoutTests: 
+
+Reviewed by Benjamin Poulain.
+
+Add a regression test by importing
+https://chromium.googlesource.com/chromium/blink/+/e861452a292e185501e48940305947aa6a4e23c2
+
+* fast/dom/adopt-attribute-crash-expected.txt: Added.
+* fast/dom/adopt-attribute-crash.svg: Added.
+
+

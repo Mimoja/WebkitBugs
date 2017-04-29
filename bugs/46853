@@ -1,0 +1,77 @@
+------------------------------------------------------------------------
+r70335 | inferno@chromium.org | 2010-10-22 23:05:16 +0200 (Fr, 22. Okt 2010) | 48 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/backgrounds/repeat/background-repeat-shorthand-expected.txt
+   M /trunk/LayoutTests/fast/backgrounds/repeat/margin-shorthand-expected.txt
+   M /trunk/LayoutTests/fast/backgrounds/repeat/resources/background-repeat-shorthand.js
+   M /trunk/LayoutTests/fast/backgrounds/repeat/resources/margin-shorthand.js
+   M /trunk/LayoutTests/fast/css/disabled-author-styles.html
+   M /trunk/LayoutTests/fast/css/modify-ua-rules-from-javascript-expected.txt
+   M /trunk/LayoutTests/fast/css/modify-ua-rules-from-javascript.html
+   M /trunk/LayoutTests/fast/css/word-break-user-modify-allowed-values.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-call-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-call.html
+   A /trunk/LayoutTests/http/tests/security/cross-origin-getMatchedCSSRules-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-origin-getMatchedCSSRules.html
+   A /trunk/LayoutTests/http/tests/security/cross-origin-getMatchedCSSRules2-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-origin-getMatchedCSSRules2.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-origin-getMatchedCSSRules-frame.html
+   M /trunk/LayoutTests/platform/chromium/http/tests/security/cross-frame-access-call-expected.txt
+   M /trunk/LayoutTests/platform/qt/http/tests/security/cross-frame-access-call-expected.txt
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/css/CSSRule.h
+   M /trunk/WebCore/css/CSSStyleSelector.cpp
+   M /trunk/WebCore/css/CSSStyleSelector.h
+   M /trunk/WebCore/page/DOMWindow.cpp
+   M /trunk/WebCore/page/DOMWindow.idl
+
+2010-10-22  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Add code in getMatchedCSSRules to block cross origin access to stylesheet data. Prevent access
+        in Javascript to non author stylesheets.
+        https://bugs.webkit.org/show_bug.cgi?id=46853
+
+        Tests: http/tests/security/cross-origin-getMatchedCSSRules.html
+               http/tests/security/cross-origin-getMatchedCSSRules2.html
+
+        * css/CSSRule.h:
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::matchRulesForList):
+        (WebCore::CSSStyleSelector::SelectorChecker::SelectorChecker):
+        (WebCore::CSSStyleSelector::styleRulesForElement):
+        (WebCore::CSSStyleSelector::pseudoStyleRulesForElement):
+        * css/CSSStyleSelector.h:
+        * page/DOMWindow.cpp:
+        (WebCore::DOMWindow::getMatchedCSSRules):
+        * page/DOMWindow.idl:
+2010-10-22  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that cross origin bypass does not work with getMatchedCSSRules. Rebaseline existing tests
+        that try to access non-author stylesheets. This functionality is no longer supported. So, css rules
+        should return null for those cases.
+        https://bugs.webkit.org/show_bug.cgi?id=46853
+
+        * fast/backgrounds/repeat/background-repeat-shorthand-expected.txt:
+        * fast/backgrounds/repeat/margin-shorthand-expected.txt:
+        * fast/backgrounds/repeat/resources/background-repeat-shorthand.js:
+        * fast/backgrounds/repeat/resources/margin-shorthand.js:
+        * fast/css/disabled-author-styles.html:
+        * fast/css/modify-ua-rules-from-javascript-expected.txt:
+        * fast/css/modify-ua-rules-from-javascript.html:
+        * fast/css/word-break-user-modify-allowed-values.html:
+        * http/tests/security/cross-frame-access-call-expected.txt:
+        * http/tests/security/cross-frame-access-call.html:
+        * http/tests/security/cross-origin-getMatchedCSSRules-expected.txt: Added.
+        * http/tests/security/cross-origin-getMatchedCSSRules.html: Added.
+        * http/tests/security/cross-origin-getMatchedCSSRules2-expected.txt: Added.
+        * http/tests/security/cross-origin-getMatchedCSSRules2.html: Added.
+        * http/tests/security/resources/cross-origin-getMatchedCSSRules-frame.html: Added.
+        * platform/chromium/http/tests/security/cross-frame-access-call-expected.txt:
+        * platform/qt/http/tests/security/cross-frame-access-call-expected.txt:
+
+

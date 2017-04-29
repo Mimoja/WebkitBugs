@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r111089 | dslomov@google.com | 2012-03-17 00:49:29 +0100 (Sa, 17. Mär 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/DOMURL.cpp
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.cpp
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.h
+
+REGRESSION: DOMURL::revokeObjectURL accesses memoryCache on worker thread.
+https://bugs.webkit.org/show_bug.cgi?id=80889
+On worker threads, post a task to main thread to evict from cache.
+ASSERT that MemoryCache is only accessed from main thread.
+
+Reviewed by David Levin.
+
+* html/DOMURL.cpp:
+(WebCore::DOMURL::revokeObjectURL):
+* loader/cache/MemoryCache.cpp:
+(WebCore::memoryCache):
+(WebCore::MemoryCache::add):
+(WebCore::MemoryCache::revalidationFailed):
+(WebCore::MemoryCache::resourceForURL):
+(WebCore::MemoryCache::evict):
+(WebCore):
+(WebCore::MemoryCache::removeUrlFromCache):
+(WebCore::MemoryCache::removeUrlFromCacheImpl):
+* loader/cache/MemoryCache.h:
+(WebCore):
+(MemoryCache):
+
+

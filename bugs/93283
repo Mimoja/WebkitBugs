@@ -1,0 +1,120 @@
+------------------------------------------------------------------------
+r125500 | tsepez@chromium.org | 2012-08-14 04:37:54 +0200 (Di, 14. Aug 2012) | 95 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/PluginDocument.cpp
+   M /trunk/Source/WebKit/blackberry/ChangeLog
+   M /trunk/Source/WebKit/blackberry/WebCoreSupport/FrameLoaderClientBlackBerry.cpp
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/FrameLoaderClientImpl.cpp
+   M /trunk/Source/WebKit/efl/ChangeLog
+   M /trunk/Source/WebKit/efl/WebCoreSupport/FrameLoaderClientEfl.cpp
+   M /trunk/Source/WebKit/gtk/ChangeLog
+   M /trunk/Source/WebKit/gtk/WebCoreSupport/FrameLoaderClientGtk.cpp
+   M /trunk/Source/WebKit/qt/ChangeLog
+   M /trunk/Source/WebKit/qt/WebCoreSupport/FrameLoaderClientQt.cpp
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebCoreSupport/WebFrameLoaderClient.cpp
+   M /trunk/Source/WebKit/wince/ChangeLog
+   M /trunk/Source/WebKit/wince/WebCoreSupport/FrameLoaderClientWinCE.cpp
+   M /trunk/Source/WebKit/wx/ChangeLog
+   M /trunk/Source/WebKit/wx/WebKitSupport/FrameLoaderClientWx.cpp
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
+
+[chromium] release FrameLoaderClientImpl::m_pluginWidget refptr upon Plugin Document detach.
+https://bugs.webkit.org/show_bug.cgi?id=93283
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Chromium has a refptr that needs to be NULLed at this point.
+
+The approach is to change the client redirectDataToPlugin method(s) to expect
+the possibility of a NULL argument, and the use this to clear the refptr on
+the chromium platform.  Other platforms can merely ignore the NULL case, thereby
+maintaining the existing behaviour.
+
+Formal testing is nearly impossible without some chrome-specific plugins.
+
+* html/PluginDocument.cpp:
+(WebCore::PluginDocument::detach):
+
+Source/WebKit/blackberry:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebCoreSupport/FrameLoaderClientBlackBerry.cpp:
+(WebCore::FrameLoaderClientBlackBerry::redirectDataToPlugin):
+
+Source/WebKit/chromium:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, NULLing Chromium's refptr that needs to be NULLed.
+
+* src/FrameLoaderClientImpl.cpp:
+(WebKit::FrameLoaderClientImpl::redirectDataToPlugin):
+
+Source/WebKit/efl:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebCoreSupport/FrameLoaderClientEfl.cpp:
+(WebCore::FrameLoaderClientEfl::redirectDataToPlugin):
+
+Source/WebKit/gtk:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebCoreSupport/FrameLoaderClientGtk.cpp:
+(WebKit::FrameLoaderClient::redirectDataToPlugin):
+
+Source/WebKit/qt:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebCoreSupport/FrameLoaderClientQt.cpp:
+(WebCore::FrameLoaderClientQt::redirectDataToPlugin):
+
+Source/WebKit/win:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebCoreSupport/WebFrameLoaderClient.cpp:
+(WebFrameLoaderClient::redirectDataToPlugin):
+
+Source/WebKit/wince:
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebCoreSupport/FrameLoaderClientWinCE.cpp:
+(WebKit::FrameLoaderClientWinCE::redirectDataToPlugin):
+
+Source/WebKit/wx:
+
+Chromium has a refptr that needs to be NULLed at this point.
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebKitSupport/FrameLoaderClientWx.cpp:
+(WebCore::FrameLoaderClientWx::redirectDataToPlugin):
+
+Source/WebKit2:
+
+Chromium has a refptr that needs to be NULLed at this point.
+
+Change the client redirectDataToPlugin method(s) to expect the possibility of
+a NULL argument, keeping existing behaviour otherwise.
+
+* WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp:
+(WebKit::WebFrameLoaderClient::redirectDataToPlugin):
+
+

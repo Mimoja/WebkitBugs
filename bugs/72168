@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r100033 | ap@apple.com | 2011-11-12 00:06:35 +0100 (Sa, 12. Nov 2011) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/mac/WebProcessMac.mm
+   M /trunk/WebKitLibraries/ChangeLog
+   M /trunk/WebKitLibraries/WebKitSystemInterface.h
+   M /trunk/WebKitLibraries/libWebKitSystemInterfaceLeopard.a
+   M /trunk/WebKitLibraries/libWebKitSystemInterfaceLion.a
+   M /trunk/WebKitLibraries/libWebKitSystemInterfaceSnowLeopard.a
+
+        WebProcess should use AppSandbox style quarantine
+        https://bugs.webkit.org/show_bug.cgi?id=72168
+        <rdar://problem/10434292>
+
+        Reviewed by Darin Adler.
+
+        * WebProcess/mac/WebProcessMac.mm: (WebKit::initializeSandbox): Just enable it.
+
+
+

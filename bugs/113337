@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r146935 | rniwa@webkit.org | 2013-03-26 23:03:16 +0100 (Di, 26. Mär 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/loader/EmptyClients.h
+   M /trunk/Source/WebCore/page/ChromeClient.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.h
+
+Heap-use-after-free regression
+https://bugs.webkit.org/show_bug.cgi?id=113337
+
+Reviewed by Abhishek Arya and Alexey Proskuryakov.
+
+Source/WebCore: 
+
+Use RefPtr instead of raw pointer in m_associatedFormControls.
+
+* dom/Document.cpp:
+(WebCore::Document::didAssociateFormControlsTimerFired):
+* dom/Document.h:
+(Document):
+* loader/EmptyClients.h:
+(WebCore::EmptyChromeClient::didAssociateFormControls):
+* page/ChromeClient.h:
+(WebCore::ChromeClient::didAssociateFormControls):
+
+Source/WebKit/chromium: 
+
+* src/ChromeClientImpl.cpp:
+(WebKit::ChromeClientImpl::didAssociateFormControls):
+* src/ChromeClientImpl.h:
+(ChromeClientImpl):
+
+

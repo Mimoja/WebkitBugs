@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r121279 | jchaffraix@webkit.org | 2012-06-26 21:40:08 +0200 (Di, 26. Jun 2012) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/AutoTableLayout.cpp
+   M /trunk/Source/WebCore/rendering/FixedTableLayout.cpp
+
+Crash in FixedTableLayout::layout
+https://bugs.webkit.org/show_bug.cgi?id=88676
+
+Unreviewed typo fix, pointed out by Darin Adler.
+
+* rendering/AutoTableLayout.cpp:
+(WebCore::AutoTableLayout::layout):
+* rendering/FixedTableLayout.cpp:
+(WebCore::FixedTableLayout::layout):
+

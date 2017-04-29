@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r94905 | commit-queue@webkit.org | 2011-09-10 13:25:03 +0200 (Sa, 10. Sep 2011) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/SVGStyledElement-pendingResource-crash-expected.txt
+   A /trunk/LayoutTests/svg/dom/SVGStyledElement-pendingResource-crash.html
+   A /trunk/LayoutTests/svg/dom/resources/SVGStyledElement-pendingResource-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceContainer.cpp
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.cpp
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.h
+   M /trunk/Source/WebCore/svg/SVGStyledElement.cpp
+   M /trunk/Source/WebCore/svg/SVGStyledElement.h
+   M /trunk/Source/WebCore/svg/SVGUseElement.cpp
+
+Source/WebCore: Crash due to bad data in SVGDocumentExtensions m_pendingResources
+https://bugs.webkit.org/show_bug.cgi?id=67488
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-09-10
+Reviewed by Nikolas Zimmermann.
+
+Resolving a crash condition caused by the deletion of
+elements while pending resource entries for those elements are still
+recorded.
+
+* rendering/svg/RenderSVGResourceContainer.cpp:
+(WebCore::RenderSVGResourceContainer::registerResource)
+* svg/SVGDocumentExtensions.h:
+(WebCore::SVGDocumentExtensions::isElementInPendingResources)
+* svg/SVGDocumentExtensions.cpp:
+(WebCore::SVGDocumentExtensions::addPendingResource)
+(WebCore::SVGDocumentExtensions::isElementInPendingResources)
+(WebCore::SVGDocumentExtensions::removeElementFromPendingResources)
+* svg/SVGStyledElement.h:
+(WebCore::SVGStyledElement::clearHasPendingResourcesIfPossible)
+* svg/SVGStyledElement.cpp:
+(WebCore::SVGStyledElement::buildPendingResourcesIfNeeded)
+(WebCore::SVGStyledElement::clearHasPendingResourcesIfPossible)
+* svg/SVGUseElement.cpp:
+(WebCore::SVGUseElement::svgAttributeChanged)
+
+LayoutTests: Crash due to bad data in SVGDocumentExtensions m_pendingResources.
+https://bugs.webkit.org/show_bug.cgi?id=67488
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-09-10
+Reviewed by Nikolas Zimmermann.
+
+Test added: validating that the crash referenced in the bug is not present.
+
+* svg/dom/SVGStyledElement-pendingResource-crash.html: Added.
+* svg/dom/SVGStyledElement-pendingResource-crash-expected.txt: Added.
+* svg/dom/resources/SVGStyledElement-pendingResource-crash.svg: Added.
+

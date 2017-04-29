@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r50698 | andersca@apple.com | 2009-11-10 01:46:37 +0100 (Di, 10. Nov 2009) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLObjectElement/children-changed-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLObjectElement/children-changed.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/FrameLoader.cpp
+
+WebCore: <rdar://problem/7328395>
+https://bugs.webkit.org/show_bug.cgi?id=31277
+
+Reviewed by Darin Adler and Dan Bernstein.
+
+When an object tag's style changes (for example when child nodes are added/removed),
+reuse its Frame (if it has one) instead of creating multiple Frames.
+
+Test: fast/dom/HTMLObjectElement/children-changed.html
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::requestObject):
+
+LayoutTests: <rdar://problem/7328395>
+https://bugs.webkit.org/show_bug.cgi?id=31277
+        
+Reviewed by Darin Adler and Dan Bernstein.
+
+When an object tag's style changes (for example when child nodes are added/removed),
+reuse its Frame (if it has one) instead of creating multiple Frames.
+        
+* fast/dom/HTMLObjectElement/children-changed-expected.txt: Added.
+* fast/dom/HTMLObjectElement/children-changed.html: Added.
+
+
+

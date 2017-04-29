@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r179877 | zalan@apple.com | 2015-02-10 21:27:40 +0100 (Di, 10. Feb 2015) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/newmulticol/crash-when-switching-to-floating-expected.txt
+   A /trunk/LayoutTests/fast/multicol/newmulticol/crash-when-switching-to-floating.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+REGRESSION (r168046): Crash in WebCore::InlineBox::renderer / WebCore::RenderFlowThread::checkLinesConsistency
+https://bugs.webkit.org/show_bug.cgi?id=133462
+
+Reviewed by David Hyatt.
+
+RenderFlowThread::m_lineToRegionMap stores pointers to the root inlineboxes in the block flow.
+Normally root inlineboxes remove themselves from this map in their dtors. However when collapsing an anonymous block,
+we detach the inline tree first and destroy them after. The detached root boxes can't access
+the flowthread containing block and we end up with dangling pointers in this map.
+Call removeFlowChildInfo() before detaching the subtree to ensure proper pointer removal.
+
+Source/WebCore:
+
+Test: fast/multicol/newmulticol/crash-when-switching-to-floating.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::collapseAnonymousBoxChild):
+
+LayoutTests:
+
+* fast/multicol/newmulticol/crash-when-switching-to-floating-expected.txt: Added.
+* fast/multicol/newmulticol/crash-when-switching-to-floating.html: Added.
+

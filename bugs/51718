@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r74779 | jschuh@chromium.org | 2010-12-30 06:43:31 +0100 (Do, 30. Dez 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/scroll-to-anchor-in-symbol-expected.txt
+   A /trunk/LayoutTests/svg/custom/scroll-to-anchor-in-symbol.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/page/FrameView.cpp
+
+2010-12-29  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Check SVG element type in FrameView::scrollToAnchor
+        https://bugs.webkit.org/show_bug.cgi?id=51718
+
+        Test: svg/custom/scroll-to-anchor-in-symbol.svg
+
+        * page/FrameView.cpp:
+        (WebCore::FrameView::scrollToAnchor):
+2010-12-29  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Check SVG element type in FrameView::scrollToAnchor
+        https://bugs.webkit.org/show_bug.cgi?id=51718
+
+        * svg/custom/scroll-to-anchor-in-symbol-expected.txt: Added.
+        * svg/custom/scroll-to-anchor-in-symbol.svg: Added.
+
+

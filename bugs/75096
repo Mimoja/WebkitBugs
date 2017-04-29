@@ -1,0 +1,71 @@
+------------------------------------------------------------------------
+r108134 | commit-queue@webkit.org | 2012-02-18 00:16:38 +0100 (Sa, 18. Feb 2012) | 57 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/svglength-animation-retarget-crash-expected.txt
+   A /trunk/LayoutTests/svg/animations/svglength-animation-retarget-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGAnimateElement.cpp
+   M /trunk/Source/WebCore/svg/SVGAnimateElement.h
+   M /trunk/Source/WebCore/svg/SVGAnimatedTypeAnimator.h
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.h
+
+Crash in SVGAnimateElement due to changed target
+https://bugs.webkit.org/show_bug.cgi?id=75096
+
+Patch by Stephen Chenney <schenney@chromium.org> on 2012-02-17
+Reviewed by Nikolas Zimmermann.
+
+Source/WebCore:
+
+The SVGAnimateElement object creates various internal objects
+depending on the type of property being animated, which depends on the
+target. These objects were not being recreated when the target
+changed, and crashes ensued. Now the SVGSMILElement provides a virtual
+method that is called when the target changes, and SVGAnimateElement
+updates its objects as necessary. We also deactivate the animation
+when the target changes, forcing recomputation of other derived
+objects.
+
+This change also removes various unnecessary calls to semi-expensive
+methods.
+
+Not only does this change fix the new test, it also fixes potential
+crashes in other tests that apparently never manifested before (but
+manifest when this new test is included in DRT).
+
+Test: svg/animations/svglength-animation-retarget-crash.html
+
+* svg/SVGAnimateElement.cpp:
+(WebCore::SVGAnimateElement::hasValidAttributeType):
+(WebCore::SVGAnimateElement::calculateAnimatedValue):
+(WebCore::SVGAnimateElement::calculateFromAndToValues):
+(WebCore::SVGAnimateElement::calculateFromAndByValues):
+(WebCore::SVGAnimateElement::resetToBaseValue):
+(WebCore::SVGAnimateElement::calculateDistance):
+(WebCore):
+(WebCore::SVGAnimateElement::targetElementDidChange):
+* svg/SVGAnimateElement.h:
+(SVGAnimateElement):
+* svg/SVGAnimatedTypeAnimator.h:
+(SVGAnimatedTypeAnimator):
+(WebCore::SVGAnimatedTypeAnimator::type):
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::targetElement):
+(WebCore::SVGSMILElement::resetTargetElement):
+(WebCore):
+* svg/animation/SVGSMILElement.h:
+(SVGSMILElement):
+(WebCore::SVGSMILElement::targetElementDidChange):
+
+LayoutTests:
+
+This test verifies that the target element information is correctly
+updated when the target changes. Note that the clone is required, as
+it causes the results of one animation to be pushed to a different
+animation.
+
+* svg/animations/svglength-animation-retarget-crash-expected.txt: Added.
+* svg/animations/svglength-animation-retarget-crash.html: Added.
+

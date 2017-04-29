@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r113856 | schenney@chromium.org | 2012-04-11 15:41:51 +0200 (Mi, 11. Apr 2012) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNodeAlgorithms.h
+
+Shadow tree TreeScope data is not removed by ContainerNode::removeAllChildren
+https://bugs.webkit.org/show_bug.cgi?id=83484
+
+Unreviewed attempted build fix.
+
+* dom/ContainerNodeAlgorithms.h: Adding Document.h include.
+
+

@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r201772 | bfulgham@apple.com | 2016-06-07 23:09:59 +0200 (Di, 07. Jun 2016) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/bmalloc/ChangeLog
+   M /trunk/Source/bmalloc/bmalloc/Vector.h
+
+Prevents integer overflow in Vector.h
+https://bugs.webkit.org/show_bug.cgi?id=158455
+<rdar://problem/20235469>
+
+Patch by Pranjal Jumde <pjumde@apple.com> on 2016-06-07
+Reviewed by Mark Lam.
+
+* bmalloc/Vector.h:
+(bmalloc::Vector<T>::reallocateBuffer):
+
+

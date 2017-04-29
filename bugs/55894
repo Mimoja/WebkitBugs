@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r80507 | abarth@webkit.org | 2011-03-08 01:17:14 +0100 (Di, 08. Mär 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/document-write-into-initial-document-expected.txt
+   A /trunk/LayoutTests/fast/parser/document-write-into-initial-document.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+2011-03-07  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        REGRESSION(r78147): Crash on http://gnarf.net/jquery/test/
+        https://bugs.webkit.org/show_bug.cgi?id=55894
+
+        * fast/parser/document-write-into-initial-document-expected.txt: Added.
+        * fast/parser/document-write-into-initial-document.html: Added.
+2011-03-07  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        REGRESSION(r78147): Crash on http://gnarf.net/jquery/test/
+        https://bugs.webkit.org/show_bug.cgi?id=55894
+
+        The m_frame can disappear out from under us, and there's no point in
+        checking whether the load is complete in a non-existant frame.
+
+        Test: fast/parser/document-write-into-initial-document.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::explicitClose):
+

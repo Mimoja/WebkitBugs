@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r115236 | japhet@chromium.org | 2012-04-25 21:31:42 +0200 (Mi, 25. Apr 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/access-control-repeated-failed-preflight-crash-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/access-control-repeated-failed-preflight-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedRawResource.cpp
+
+Source/WebCore: Crash in CachedRawResource::didAddClient() due to missing protector.
+https://bugs.webkit.org/show_bug.cgi?id=83632
+
+Reviewed by Eric Seidel.
+
+Test: http/tests/xmlhttprequest/access-control-repeated-failed-preflight-crash.html
+
+* loader/cache/CachedRawResource.cpp:
+(WebCore::CachedRawResource::didAddClient):
+
+LayoutTests: Test for https://bugs.webkit.org/show_bug.cgi?id=83632.
+
+Reviewed by Eric Seidel.
+
+* http/tests/xmlhttprequest/access-control-repeated-failed-preflight-crash-expected.txt: Added.
+* http/tests/xmlhttprequest/access-control-repeated-failed-preflight-crash.html: Added.
+
+

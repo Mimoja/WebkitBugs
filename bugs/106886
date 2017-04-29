@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r139732 | tommyw@google.com | 2013-01-15 11:45:04 +0100 (Di, 15. Jan 2013) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/mediastream/MediaStream.cpp
+
+MediaStream API: Fixing crashing bug in MediaStream
+https://bugs.webkit.org/show_bug.cgi?id=106886
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Fixing crashing bug during destruction.
+
+No new tests needed.
+
+* Modules/mediastream/MediaStream.cpp:
+(WebCore::MediaStream::contextDestroyed):
+
+LayoutTests:
+
+Removing obsolete exception.
+
+* platform/chromium/TestExpectations:
+
+

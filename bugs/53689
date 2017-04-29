@@ -1,0 +1,91 @@
+------------------------------------------------------------------------
+r78147 | abarth@webkit.org | 2011-02-10 00:07:45 +0100 (Do, 10. Feb 2011) | 68 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/document-write-in-iframe-onload-3-expected.txt
+   A /trunk/LayoutTests/fast/frames/document-write-in-iframe-onload-3.html
+   A /trunk/LayoutTests/fast/parser/iframe-onload-document-close-with-external-script-2-expected.txt
+   A /trunk/LayoutTests/fast/parser/iframe-onload-document-close-with-external-script-2.html
+   A /trunk/LayoutTests/fast/parser/iframe-onload-document-close-with-external-script-3-expected.txt
+   A /trunk/LayoutTests/fast/parser/iframe-onload-document-close-with-external-script-3.html
+   A /trunk/LayoutTests/fast/parser/iframe-onload-document-close-with-external-script-expected.txt
+   A /trunk/LayoutTests/fast/parser/iframe-onload-document-close-with-external-script.html
+   A /trunk/LayoutTests/fast/parser/setTimeout-open-expected.txt
+   A /trunk/LayoutTests/fast/parser/setTimeout-open.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/dom/ScriptableDocumentParser.cpp
+   M /trunk/Source/WebCore/dom/ScriptableDocumentParser.h
+   M /trunk/Source/WebCore/html/parser/HTMLDocumentParser.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLInputStream.h
+
+2011-02-09  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        document.close shouldn't affect non-script-created parsers
+        https://bugs.webkit.org/show_bug.cgi?id=53689
+
+        Tests for various cases involving document.open/write/close.  Not all
+        of them are related to this patch, but they were helpful to me in
+        working through this patch, so I've added them in case they're useful
+        in the future.
+
+        * fast/frames/document-write-in-iframe-onload-3-expected.txt: Added.
+        * fast/frames/document-write-in-iframe-onload-3.html: Added.
+        * fast/parser/iframe-onload-document-close-with-external-script-2-expected.txt: Added.
+        * fast/parser/iframe-onload-document-close-with-external-script-2.html: Added.
+        * fast/parser/iframe-onload-document-close-with-external-script-3-expected.txt: Added.
+        * fast/parser/iframe-onload-document-close-with-external-script-3.html: Added.
+        * fast/parser/iframe-onload-document-close-with-external-script-expected.txt: Added.
+        * fast/parser/iframe-onload-document-close-with-external-script.html: Added.
+        * fast/parser/setTimeout-open-expected.txt: Added.
+        * fast/parser/setTimeout-open.html: Added.
+2011-02-09  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        document.close shouldn't affect non-script-created parsers
+        https://bugs.webkit.org/show_bug.cgi?id=53689
+
+        Tests: fast/frames/document-write-in-iframe-onload-3.html
+               fast/parser/iframe-onload-document-close-with-external-script-2.html
+               fast/parser/iframe-onload-document-close-with-external-script-3.html
+               fast/parser/iframe-onload-document-close-with-external-script.html
+               fast/parser/setTimeout-open.html
+
+        Move our implementation of document.close closer to the spec by
+        introducing the notion of a script-created parser.  This area of our
+        code is somewhat hairy.  It might take a few more iterations before we
+        fully come up to spec.
+
+        * dom/Document.cpp:
+        (WebCore::Document::setContent):
+        (WebCore::Document::open):
+        (WebCore::Document::cancelParsing):
+        (WebCore::Document::close):
+            - Over time, this method should converge to the spec.
+        (WebCore::Document::explicitClose):
+            - I'm not in love with this name.  Somehow we want to differentiate
+              between Document closing itself and the document.close DOM
+              method.
+        (WebCore::Document::removePendingSheet):
+        * dom/Document.h:
+        * dom/ScriptableDocumentParser.cpp:
+        (WebCore::ScriptableDocumentParser::ScriptableDocumentParser):
+        * dom/ScriptableDocumentParser.h:
+        (WebCore::ScriptableDocumentParser::setWasCreatedByScript):
+        (WebCore::ScriptableDocumentParser::wasCreatedByScript):
+            - General nonsense to keep track of whether the parser was created
+              by script.
+        * html/parser/HTMLDocumentParser.cpp:
+        (WebCore::HTMLDocumentParser::hasInsertionPoint):
+            - I'm not sure whether this part of the change is 100% correct.  I
+              think our notion of the EOF character might be subtly different
+              from the notion in the spec.
+        * html/parser/HTMLInputStream.h:
+        (WebCore::HTMLInputStream::hasInsertionPoint):
+            - Remove FIXME because we're fixing that!
+
+

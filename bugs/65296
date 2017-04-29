@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r91908 | rniwa@webkit.org | 2011-07-28 07:24:41 +0200 (Do, 28. Jul 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/text-iterator/find-after-mutation-expected.txt
+   A /trunk/LayoutTests/editing/text-iterator/find-after-mutation.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/TextIterator.cpp
+
+Calling window.find immediately after mutating the document crashes WebKit.
+https://bugs.webkit.org/show_bug.cgi?id=65296
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Don't forget to layout first.
+
+Test: editing/text-iterator/find-after-mutation.html
+
+* editing/TextIterator.cpp:
+(WebCore::findPlainText):
+
+LayoutTests:
+
+Added a test to ensure WebKit doesn't crash when searching for string after mutating the document.
+
+* editing/text-iterator/find-after-mutation-expected.txt: Added.
+* editing/text-iterator/find-after-mutation.html: Added.
+
+

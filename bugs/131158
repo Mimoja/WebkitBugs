@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r166714 | antti@apple.com | 2014-04-03 12:46:51 +0200 (Do, 03. Apr 2014) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderSnapshottedPlugIn.cpp
+
+RenderSnapshottedPlugIn::paint should use iterator for traversal.
+https://bugs.webkit.org/show_bug.cgi?id=131158
+
+Reviewed by Dean Jackson.
+
+* rendering/RenderSnapshottedPlugIn.cpp:
+(WebCore::RenderSnapshottedPlugIn::paint):
+
+
+

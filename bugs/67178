@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r94095 | oliver@apple.com | 2011-08-30 21:13:33 +0200 (Di, 30. Aug 2011) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/canvas/webgl/webgl-array-invalid-ranges-expected.txt
+   M /trunk/LayoutTests/fast/canvas/webgl/webgl-array-invalid-ranges.html
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSValue.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm
+
+TypedArrays don't ensure that denormalised values are normalised
+https://bugs.webkit.org/show_bug.cgi?id=67178
+
+Reviewed by Gavin Barraclough.
+
+../../../../Volumes/Data/git/WebKit/OpenSource/LayoutTests:
+
+Add test to ensure that we create a non-signalling nan when reading
+a singaling nan from a typed array.
+
+* fast/canvas/webgl/webgl-array-invalid-ranges-expected.txt:
+* fast/canvas/webgl/webgl-array-invalid-ranges.html:
+
+../../../../Volumes/Data/git/WebKit/OpenSource/Source/JavaScriptCore:
+
+Add a couple of assertions to jsNumber() to ensure that
+we block signaling NaNs
+
+* runtime/JSValue.h:
+(JSC::jsDoubleNumber):
+(JSC::jsNumber):
+
+../../../../Volumes/Data/git/WebKit/OpenSource/Source/WebCore:
+
+Ensure that we convert singaling nans to silent nans when loading
+from a typed array.
+
+* bindings/scripts/CodeGeneratorJS.pm:
+(GenerateImplementation):
+

@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r88444 | loislo@chromium.org | 2011-06-09 14:42:40 +0200 (Do, 09. Jun 2011) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/JavaScriptCore.exp
+   M /trunk/Source/JavaScriptCore/JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.def
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorValues.cpp
+
+2011-06-08  Mikołaj Małecki  <m.malecki@samsung.com>
+
+        Reviewed by Pavel Feldman.
+
+        Web Inspector: Crash by buffer overrun crash when serializing inspector object tree.
+        https://bugs.webkit.org/show_bug.cgi?id=52791
+
+        No new tests. The problem can be reproduced by trying to create InspectorValue
+        from 1.0e-100 and call ->toJSONString() on this.
+
+        * JavaScriptCore.exp:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.def:
+        export 2 functions DecimalNumber::bufferLengthForStringExponential and
+        DecimalNumber::toStringExponential.
+
+2011-06-08  Mikołaj Małecki  <m.malecki@samsung.com>
+
+        Reviewed by Pavel Feldman.
+
+        Web Inspector: Crash by buffer overrun crash when serializing inspector object tree.
+        https://bugs.webkit.org/show_bug.cgi?id=52791
+
+        No new tests. The problem can be reproduced by trying to create InspectorValue
+        from 1.0e-100 and call ->toJSONString() on this.
+
+        * JavaScriptCore.exp:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.def:
+        export 2 functions DecimalNumber::bufferLengthForStringExponential and
+        DecimalNumber::toStringExponential.
+
+
+

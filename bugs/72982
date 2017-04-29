@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r105750 | inferno@chromium.org | 2012-01-24 19:33:05 +0100 (Di, 24. Jan 2012) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/block-remove-child-delete-line-box-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/block-remove-child-delete-line-box-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash when accessing removed parent in InlineTextBox.
+https://bugs.webkit.org/show_bug.cgi?id=72982
+
+Reviewed by James Robinson.
+
+Source/WebCore: 
+
+The crash happens because:
+1. We add heading element(h1) before the span element(span1),
+   causing splitflow on the anonymous block containing BeforeText,
+   span1(and SpanText) and AfterText.
+2. span1 moves to the cloneBlock (continuation).
+3. Our anonymous block and cloneBlock are both marked for layout,
+   however we still have a copy of our lineboxes with its childs
+   as the textboxes belonging to SpanText.
+4. Our anonymous block only child BeforeText is getting removed,
+   so we dont have any children anymore and we delete our lineboxes,
+   leaving behind the children textboxes belonging to SpanText.
+5. SpanText is getting destroyed, so it tries to inform removed
+   parent lineboxes causing the crash.
+
+Test: fast/block/block-remove-child-delete-line-box-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::removeChild):
+
+LayoutTests: 
+
+Tests passes if it does not crash on ASSERT(!m_hasBadParent)
+in InlineBox::parent().
+
+* fast/block/block-remove-child-delete-line-box-crash-expected.txt: Added.
+* fast/block/block-remove-child-delete-line-box-crash.html: Added.
+
+

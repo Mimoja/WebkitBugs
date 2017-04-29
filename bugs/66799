@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r93708 | commit-queue@webkit.org | 2011-08-24 19:30:39 +0200 (Mi, 24. Aug 2011) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/flow-anonymous-children-expected.txt
+   A /trunk/LayoutTests/fast/regions/flow-anonymous-children.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.h
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+https://bugs.webkit.org/show_bug.cgi?id=66799
+RenderFlowThread creates a list of child elements, so that it can search
+the insertion point of a new element without searching the whole DOM.
+The issue is that it used addChild/removeChild, but that wasn't taking care of
+elements added in anonymous blocks created inside the RenderFlowThread.
+
+Patch by Alexandru Chiculita <achicu@adobe.com> on 2011-08-24
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test: fast/regions/flow-anonymous-children.html
+
+* rendering/RenderFlowThread.cpp:
+(WebCore::RenderFlowThread::nextRendererForNode):
+(WebCore::RenderFlowThread::previousRendererForNode):
+(WebCore::RenderFlowThread::addFlowChild):
+(WebCore::RenderFlowThread::removeFlowChild):
+* rendering/RenderFlowThread.h:
+* rendering/RenderObjectChildList.cpp:
+(WebCore::renderFlowThreadContainer):
+(WebCore::RenderObjectChildList::removeChildNode):
+(WebCore::RenderObjectChildList::appendChildNode):
+(WebCore::RenderObjectChildList::insertChildNode):
+
+LayoutTests:
+
+* fast/regions/flow-anonymous-children-expected.txt: Added.
+* fast/regions/flow-anonymous-children.html: Added.
+

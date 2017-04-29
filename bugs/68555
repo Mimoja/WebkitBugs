@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r95667 | commit-queue@webkit.org | 2011-09-21 22:13:57 +0200 (Mi, 21. Sep 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/frame-deleted-in-document-open-expected.txt
+   A /trunk/LayoutTests/fast/dom/frame-deleted-in-document-open.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/custom/V8HTMLDocumentCustom.cpp
+
+[Chromium] Protect the Frame in V8HTMLDocument::openCallback
+https://bugs.webkit.org/show_bug.cgi?id=68555
+
+Patch by Sergey Glazunov <serg.glazunov@gmail.com> on 2011-09-21
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Test: fast/dom/frame-deleted-in-document-open.html
+
+* bindings/v8/custom/V8HTMLDocumentCustom.cpp:
+(WebCore::V8HTMLDocument::openCallback):
+
+LayoutTests:
+
+* fast/dom/frame-deleted-in-document-open-expected.txt: Added.
+* fast/dom/frame-deleted-in-document-open.html: Added.
+

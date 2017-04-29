@@ -1,0 +1,76 @@
+------------------------------------------------------------------------
+r117865 | inferno@chromium.org | 2012-05-22 03:36:43 +0200 (Di, 22. Mai 2012) | 50 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/lists/parent-box-not-box-crash-expected.txt
+   A /trunk/LayoutTests/fast/runin/generated-content-crash-expected.png
+   A /trunk/LayoutTests/fast/runin/generated-content-crash-expected.txt
+   A /trunk/LayoutTests/fast/runin/generated-content-crash.html
+   A /trunk/LayoutTests/fast/runin/move-run-in-original-position-crash-expected.png (von /trunk/LayoutTests/platform/chromium-mac/fast/runin/runin-between-list-marker-and-before-content-expected.png:117864)
+   A /trunk/LayoutTests/fast/runin/move-run-in-original-position-crash-expected.txt
+   A /trunk/LayoutTests/fast/runin/move-run-in-original-position-crash.html
+   M /trunk/LayoutTests/fast/runin/runin-between-list-marker-and-before-content-expected.png
+   M /trunk/LayoutTests/fast/runin/runin-between-list-marker-and-before-content-expected.txt
+   M /trunk/LayoutTests/fast/runin/runin-between-list-marker-and-before-content.html
+   D /trunk/LayoutTests/platform/chromium-mac/fast/runin/runin-between-list-marker-and-before-content-expected.png
+   D /trunk/LayoutTests/platform/chromium-win/fast/runin/runin-between-list-marker-and-before-content-expected.png
+   D /trunk/LayoutTests/platform/gtk/fast/runin/runin-between-list-marker-and-before-content-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+   M /trunk/Source/WebCore/rendering/RenderInline.h
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+Regression(r117482): Run-in crashes relating to generated content and inline line box clearing.
+https://bugs.webkit.org/show_bug.cgi?id=86879
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Tests: fast/runin/generated-content-crash.html
+       fast/runin/move-run-in-original-position-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::addChildIgnoringAnonymousColumnBlocks): Use the new helper
+placeRunInIfNeeded. Do not place the run-in if it is a generated container since
+the caller such as updateBeforeAfterContent might be keeping a reference to it
+and adding children to it later.
+(WebCore::destroyRunIn): Add ability to clear line box tree for inlines.
+(WebCore::RenderBlock::placeRunInIfNeeded): Helper to place run-in. Add an
+argument to not modify generated content during addChild, it should be moved
+only at end of updateBeforeAfterContent.
+(WebCore::RenderBlock::moveRunInUnderSiblingBlockIfNeeded):
+(WebCore::RenderBlock::runInIsPlacedIntoSiblingBlock): helper to tell if this run-in
+is actually placed into the next sibling block.
+(WebCore::RenderBlock::moveRunInToOriginalPosition):
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::deleteLineBoxTree): like RenderBlock, add a helper
+for deleteLineBoxTree. Virtualizing this might not be good, since this is
+the only call site for inline line box tree clearing and RenderBlock::deleteLineBoxTree
+is called a lot.
+* rendering/RenderObjectChildList.cpp:
+(WebCore::createRendererForBeforeAfterContent): fix a typo.
+(WebCore::RenderObjectChildList::updateBeforeAfterContent): If insertBefore is equal
+to the intruded run-in, then set it to next sibling so that new child will come after it. At
+the end, place the generatedContainer if it is a run-in.
+
+LayoutTests:
+
+These tests need to show dump render tree to show the correct location of run-in placement. All
+renderings match IE and Opera.
+
+* fast/lists/parent-box-not-box-crash-expected.txt: Rebaselined, since now run-in functions correctly
+by being the first child before list marker.
+* fast/runin/generated-content-crash-expected.png: Added.
+* fast/runin/generated-content-crash-expected.txt: Added.
+* fast/runin/generated-content-crash.html: Added.
+* fast/runin/move-run-in-original-position-crash-expected.png: Added.
+* fast/runin/move-run-in-original-position-crash-expected.txt: Added.
+* fast/runin/move-run-in-original-position-crash.html: Added.
+* fast/runin/runin-between-list-marker-and-before-content-expected.png:
+* fast/runin/runin-between-list-marker-and-before-content-expected.txt: Rebaselined, since now run-in
+functions correctly by being the first child before list marker.
+

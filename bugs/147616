@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r187797 | mmaxfield@apple.com | 2015-08-04 03:39:40 +0200 (Di, 04. Aug 2015) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/input-webfont-focus-expected.txt
+   A /trunk/LayoutTests/fast/text/input-webfont-focus.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/FontPlatformData.h
+   M /trunk/Source/WebCore/platform/graphics/cocoa/FontPlatformDataCocoa.mm
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebView/WebHTMLView.mm
+
+REGRESSION(r184899): Crash when focusing an input element styled with a web font
+https://bugs.webkit.org/show_bug.cgi?id=147616
+<rdar://problem/21838271>
+
+Reviewed by Dean Jackson.
+
+Source/WebCore:
+
+NSFontManager can't handle web fonts. We used to pass null to NSFontManager in this case,
+but r184899 changed that.
+
+Test: fast/text/input-webfont-focus.html
+
+* platform/graphics/FontPlatformData.h:
+* platform/graphics/cocoa/FontPlatformDataCocoa.mm:
+(WebCore::FontPlatformData::activatedFont):
+
+Source/WebKit/mac:
+
+NSFontManager can't handle web fonts. We used to pass null to NSFontManager in this case,
+but r184899 changed that.
+
+* WebView/WebHTMLView.mm:
+(-[WebHTMLView _updateFontPanel]):
+
+LayoutTests:
+
+* fast/text/input-webfont-focus-expected.txt: Added.
+* fast/text/input-webfont-focus.html: Added.
+

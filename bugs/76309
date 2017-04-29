@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r105250 | inferno@chromium.org | 2012-01-18 11:00:20 +0100 (Mi, 18. Jan 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/parent-view-layout-crash-expected.txt
+   A /trunk/LayoutTests/svg/dom/parent-view-layout-crash.html
+   A /trunk/LayoutTests/svg/dom/resources/svg-font-face.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/FrameView.cpp
+
+Source/WebCore: Crash in FrameView::forceLayoutParentViewIfNeeded.
+https://bugs.webkit.org/show_bug.cgi?id=76309
+
+Reviewed by Nikolas Zimmermann.
+
+updateWidgetPositions can blow away the owning renderer
+and its frameview, so need to protect it with refptr.
+
+Test: svg/dom/parent-view-layout-crash.html
+
+* page/FrameView.cpp:
+(WebCore::FrameView::forceLayoutParentViewIfNeeded):
+
+LayoutTests: Crash in FrameView::forceLayoutParentViewIfNeeded.
+https://bugs.webkit.org/show_bug.cgi?id=76309
+
+Reviewed by Nikolas Zimmermann.
+
+* svg/dom/parent-view-layout-crash-expected.txt: Added.
+* svg/dom/parent-view-layout-crash.html: Added.
+* svg/dom/resources/svg-font-face.svg: Added.
+
+

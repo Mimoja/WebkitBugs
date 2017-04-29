@@ -1,0 +1,90 @@
+------------------------------------------------------------------------
+r105978 | zimmermann@webkit.org | 2012-01-26 10:50:47 +0100 (Do, 26. Jan 2012) | 66 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+   A /trunk/LayoutTests/platform/mac/svg/clip-path/clip-path-tspan-and-stroke-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/clip-path/clip-path-tspan-and-stroke-expected.txt
+   A /trunk/LayoutTests/svg/clip-path/clip-path-tspan-and-stroke.svg
+   A /trunk/LayoutTests/svg/custom/layout-loop-expected.txt
+   A /trunk/LayoutTests/svg/custom/layout-loop.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/PaintPhase.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResource.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceClipper.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceClipper.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceMasker.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceMasker.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourcePattern.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceSolidColor.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGImageBufferTools.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGInlineTextBox.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGRenderSupport.cpp
+
+crash in WebCore::RenderSVGContainer::paint
+https://bugs.webkit.org/show_bug.cgi?id=69714
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+When RenderSVGResourceClipper draws its children to a mask, it requires some special constraints:
+- fill-opacity/stroke-opacity/opacity forced to 1
+- masker/filter resources shouldn't be applied to the children
+- fill must be set to the initial fill paint server for all children (solid black)
+- stroke must be set to the initial stroke paint server for all children (none)
+
+This was achieved before by mutating the style of the children, which made them need a relayout.
+SVGImageBufferTools:renderSubtreeToImageBuffer thus needed to layout the children, if needed, before painting.
+
+This can be completly avoided, when changing RenderSVGResourceClipper to avoid style mutations.
+Introduce a new "PaintBehaviorRenderingSVGMask", and set the current FrameViews paintBehaviour to this
+state, before painting the subtree. This way we can detect that we're rendering a clip mask, without
+having to mutate the style of the children and without having to relayout.
+
+We can now ASSERT(!item->needsLayout()) in renderSubtreeToImageBuffer.
+
+Tests: svg/clip-path/clip-path-tspan-and-stroke.svg
+       svg/custom/layout-loop.svg
+
+* rendering/PaintPhase.h:
+* rendering/svg/RenderSVGResource.cpp:
+(WebCore::requestPaintingResource):
+* rendering/svg/RenderSVGResourceClipper.cpp:
+(WebCore::RenderSVGResourceClipper::RenderSVGResourceClipper):
+(WebCore::RenderSVGResourceClipper::removeAllClientsFromCache):
+(WebCore::RenderSVGResourceClipper::removeClientFromCache):
+(WebCore::RenderSVGResourceClipper::applyClippingToContext):
+(WebCore::RenderSVGResourceClipper::drawContentIntoMaskImage):
+* rendering/svg/RenderSVGResourceClipper.h:
+* rendering/svg/RenderSVGResourceMasker.cpp:
+(WebCore::RenderSVGResourceMasker::applyResource):
+(WebCore::RenderSVGResourceMasker::drawContentIntoMaskImage):
+* rendering/svg/RenderSVGResourceMasker.h:
+* rendering/svg/RenderSVGResourcePattern.cpp:
+(WebCore::RenderSVGResourcePattern::createTileImage):
+* rendering/svg/RenderSVGResourceSolidColor.cpp:
+(WebCore::RenderSVGResourceSolidColor::applyResource):
+* rendering/svg/SVGImageBufferTools.cpp:
+(WebCore::SVGImageBufferTools::renderSubtreeToImageBuffer):
+* rendering/svg/SVGInlineTextBox.cpp:
+(WebCore::SVGInlineTextBox::paintSelectionBackground):
+(WebCore::SVGInlineTextBox::paint):
+* rendering/svg/SVGRenderSupport.cpp:
+(WebCore::SVGRenderSupport::prepareToRenderSVGContent):
+
+LayoutTests:
+
+Added a new test covering the clipper specific demands when rendering its children to a mask.
+(fill/stroke-opacity=1, opacity=1, don't apply masker/filter to children)
+
+All cases are covered by existing tests, I'm adding a new combination of <tspan> within a <text>,
+that tries to apply a stroke paint server, which is supposed to be ignored.
+
+* platform/chromium/test_expectations.txt:
+* platform/mac/svg/clip-path/clip-path-tspan-and-stroke-expected.png: Added.
+* platform/mac/svg/clip-path/clip-path-tspan-and-stroke-expected.txt: Added.
+* svg/clip-path/clip-path-tspan-and-stroke.svg: Added.
+* svg/custom/layout-loop-expected.txt: Added.
+* svg/custom/layout-loop.svg: Added.
+

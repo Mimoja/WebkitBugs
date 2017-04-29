@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r126901 | danakj@chromium.org | 2012-08-28 20:22:07 +0200 (Di, 28. Aug 2012) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/skia/OpaqueRegionSkia.cpp
+
+[chromium] Be robust to WebCore popping an empty GraphicsContext stack
+https://bugs.webkit.org/show_bug.cgi?id=95152
+
+Reviewed by James Robinson.
+
+* platform/graphics/skia/OpaqueRegionSkia.cpp:
+(WebCore::OpaqueRegionSkia::popCanvasLayer):
+
+

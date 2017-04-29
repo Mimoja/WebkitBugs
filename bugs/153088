@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r195165 | carlosgc@webkit.org | 2016-01-16 09:49:18 +0100 (Sa, 16. Jan 2016) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/soup/ResourceResponseSoup.cpp
+
+[SOUP] Initialize HTTP version of ResourceResponse
+https://bugs.webkit.org/show_bug.cgi?id=153088
+
+Reviewed by Michael Catanzaro.
+
+* platform/network/soup/ResourceResponseSoup.cpp:
+(WebCore::ResourceResponse::updateFromSoupMessage):
+

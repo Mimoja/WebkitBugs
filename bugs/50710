@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r73799 | inferno@chromium.org | 2010-12-10 22:42:36 +0100 (Fr, 10. Dez 2010) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Range/range-extractContents-expected.txt
+   A /trunk/LayoutTests/fast/dom/Range/range-extractContents.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/Range.cpp
+
+2010-12-10  Emil Eklund  <eae@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Fix crash in Range::processContents when modified during mutation event.
+        https://bugs.webkit.org/show_bug.cgi?id=50710
+
+        Test: fast/dom/Range/range-extractContents.html
+
+        * dom/Range.cpp:
+        (WebCore::Range::processContents):
+        Replace raw pointers with RefPtrs and add checks.
+2010-12-10  Emil Eklund  <eae@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add testcase for range.extractContents crash.
+        https://bugs.webkit.org/show_bug.cgi?id=50710
+
+        * fast/dom/Range/range-extractContents-expected.txt: Added.
+        * fast/dom/Range/range-extractContents.html: Added.
+
+

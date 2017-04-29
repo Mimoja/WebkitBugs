@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r158870 | rniwa@webkit.org | 2013-11-07 22:47:32 +0100 (Do, 07. Nov 2013) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+Crash in HTMLMediaElement::contextDestroyed
+https://bugs.webkit.org/show_bug.cgi?id=123963
+
+Reviewed by Eric Carlson.
+
+Merge https://chromium.googlesource.com/chromium/blink/+/177999cdb34b707465670f0feff723922939f278
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::~HTMLMediaElement):
+

@@ -1,0 +1,124 @@
+------------------------------------------------------------------------
+r55250 | ap@apple.com | 2010-02-25 21:23:25 +0100 (Do, 25. Feb 2010) | 76 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/java/Makefile
+   M /trunk/LayoutTests/java/SharedApplet.java
+   M /trunk/LayoutTests/java/argument-to-object-type-expected.txt
+   M /trunk/LayoutTests/java/argument-to-object-type.html
+   M /trunk/LayoutTests/java/array-return-expected.txt
+   M /trunk/LayoutTests/java/array-return.html
+   A /trunk/LayoutTests/java/java-and-plugins-expected.txt
+   A /trunk/LayoutTests/java/java-and-plugins.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/WebCore.PluginHostProcess.exp
+   M /trunk/WebCore/WebCore.xcodeproj/project.pbxproj
+   M /trunk/WebCore/bindings/objc/WebScriptObject.mm
+   A /trunk/WebCore/bridge/c/CRuntimeObject.cpp
+   A /trunk/WebCore/bridge/c/CRuntimeObject.h
+   M /trunk/WebCore/bridge/c/c_instance.cpp
+   M /trunk/WebCore/bridge/c/c_instance.h
+   M /trunk/WebCore/bridge/c/c_utility.cpp
+   M /trunk/WebCore/bridge/jni/jni_jsobject.mm
+   M /trunk/WebCore/bridge/jni/jsc/JNIBridgeJSC.cpp
+   M /trunk/WebCore/bridge/jni/jsc/JNIUtilityPrivate.cpp
+   M /trunk/WebCore/bridge/jni/jsc/JNIUtilityPrivate.h
+   M /trunk/WebCore/bridge/jni/jsc/JavaInstanceJSC.cpp
+   M /trunk/WebCore/bridge/jni/jsc/JavaInstanceJSC.h
+   A /trunk/WebCore/bridge/jni/jsc/JavaRuntimeObject.cpp
+   A /trunk/WebCore/bridge/jni/jsc/JavaRuntimeObject.h
+   M /trunk/WebCore/bridge/jsc/BridgeJSC.h
+   A /trunk/WebCore/bridge/objc/ObjCRuntimeObject.h
+   A /trunk/WebCore/bridge/objc/ObjCRuntimeObject.mm
+   M /trunk/WebCore/bridge/objc/objc_instance.h
+   M /trunk/WebCore/bridge/objc/objc_instance.mm
+   M /trunk/WebCore/bridge/objc/objc_runtime.mm
+   M /trunk/WebCore/bridge/runtime_object.cpp
+   M /trunk/WebCore/bridge/runtime_object.h
+   M /trunk/WebCore/bridge/runtime_root.h
+   M /trunk/WebKit/ChangeLog
+   M /trunk/WebKit/WebKit.xcodeproj/project.pbxproj
+   M /trunk/WebKit/mac/ChangeLog
+   M /trunk/WebKit/mac/Plugins/Hosted/NetscapePluginInstanceProxy.mm
+   M /trunk/WebKit/mac/Plugins/Hosted/ProxyInstance.h
+   M /trunk/WebKit/mac/Plugins/Hosted/ProxyInstance.mm
+   A /trunk/WebKit/mac/Plugins/Hosted/ProxyRuntimeObject.h
+   A /trunk/WebKit/mac/Plugins/Hosted/ProxyRuntimeObject.mm
+
+        Reviewed by Geoffrey Garen.
+
+        https://bugs.webkit.org/show_bug.cgi?id=35394
+        <rdar://problem/7685262> Make passing objects between Java and plug-ins work
+
+        * WebCore.PluginHostProcess.exp: WebKit now subclasses RuntimeObject, so it needed more exports.
+
+        * bridge/runtime_object.cpp:
+        (JSC::Bindings::callRuntimeObject):
+        (JSC::Bindings::callRuntimeConstructor):
+        Assert that a runtime object is passed as function.
+
+        * bridge/runtime_object.h: Moved RuntimeObject into Bindings namespace, matching other
+        related classes.
+
+        * bridge/jni/jni_jsobject.mm:
+        (JavaJSObject::toString): Pass rootObject to convertValueToJValue(). It's not needed when
+        constructing a string, but this function now takes it for the sake of Object.
+        (JavaJSObject::convertValueToJObject): Check that object class is JavaRuntimeObject, not
+        just RuntimeObject.
+
+        * bridge/jni/jsc/JNIBridgeJSC.cpp:
+        (JavaField::setValueToInstance): Pass rootObject to convertValueToJValue().
+        (JavaArray::setValueAt): Ditto.
+
+        * bridge/jni/jsc/JNIUtilityPrivate.h: convertValueToJValue() now takes a RootObject argument,
+        because one is needed to gcProtect an object ghtat is wrapped into JSObject.
+
+        * bridge/jni/jsc/JNIUtilityPrivate.cpp: (JSC::Bindings::convertValueToJValue): Convert
+        JavaScript objects to Java JSObject ones. This was already happening in other code paths,
+        which we should change to use common code.
+
+        * bridge/jni/jsc/JavaInstanceJSC.cpp:
+        (JavaInstance::newRuntimeObject): Create an appropriate RuntimeObject subclass,
+        which is JavaRuntimeObject for Java.
+        (JavaInstance::invokeMethod): Unwrap returned JavaObjects that contain JS objects.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/objc/WebScriptObject.mm:
+        (+[WebScriptObject _convertValueToObjcValue:originRootObject:rootObject:]):
+        * bridge/c/CRuntimeObject.cpp: Added.
+        (JSC::Bindings::CRuntimeObject::CRuntimeObject):
+        (JSC::Bindings::CRuntimeObject::~CRuntimeObject):
+        (JSC::Bindings::CRuntimeObject::getInternalCInstance):
+        * bridge/c/CRuntimeObject.h: Added.
+        (JSC::Bindings::CRuntimeObject::classInfo):
+        * bridge/c/c_instance.cpp:
+        (JSC::Bindings::CInstance::newRuntimeObject):
+        * bridge/c/c_instance.h:
+        * bridge/c/c_utility.cpp:
+        (JSC::Bindings::convertValueToNPVariant):
+        * bridge/jni/jsc/JavaInstanceJSC.h:
+        * bridge/jni/jsc/JavaRuntimeObject.cpp: Added.
+        (JSC::Bindings::):
+        (JSC::Bindings::JavaRuntimeObject::JavaRuntimeObject):
+        (JSC::Bindings::JavaRuntimeObject::~JavaRuntimeObject):
+        (JSC::Bindings::JavaRuntimeObject::getInternalJavaInstance):
+        * bridge/jni/jsc/JavaRuntimeObject.h: Added.
+        (JSC::Bindings::JavaRuntimeObject::classInfo):
+        * bridge/jsc/BridgeJSC.h:
+        * bridge/objc/ObjCRuntimeObject.h: Added.
+        (JSC::Bindings::ObjCRuntimeObject::classInfo):
+        * bridge/objc/ObjCRuntimeObject.mm: Added.
+        (JSC::Bindings::):
+        (JSC::Bindings::ObjCRuntimeObject::ObjCRuntimeObject):
+        (JSC::Bindings::ObjCRuntimeObject::~ObjCRuntimeObject):
+        (JSC::Bindings::ObjCRuntimeObject::getInternalObjCInstance):
+        * bridge/objc/objc_instance.h:
+        * bridge/objc/objc_instance.mm:
+        (ObjcInstance::newRuntimeObject):
+        * bridge/objc/objc_runtime.mm:
+        (JSC::Bindings::callObjCFallbackObject):
+        * bridge/runtime_root.h:
+        Added RuntimeObject subclasses for each instance type, and use them for type casting.
+
+
+

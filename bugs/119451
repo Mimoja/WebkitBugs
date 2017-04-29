@@ -1,0 +1,46 @@
+------------------------------------------------------------------------
+r203383 | bfulgham@apple.com | 2016-07-19 02:13:49 +0200 (Di, 19. Jul 2016) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/image-disconnected-during-parse-expected.txt
+   A /trunk/LayoutTests/fast/forms/image-disconnected-during-parse.html
+   A /trunk/LayoutTests/fast/forms/input-disconnected-during-parse-expected.txt
+   A /trunk/LayoutTests/fast/forms/input-disconnected-during-parse.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.h
+   M /trunk/Source/WebCore/html/FormAssociatedElement.cpp
+   M /trunk/Source/WebCore/html/HTMLImageElement.cpp
+
+Don't associate form-associated elements with forms in other trees.
+https://bugs.webkit.org/show_bug.cgi?id=119451
+<rdar://problem/27382946>
+
+Change is based on the Blink change (patch by <adamk@chromium.org>):
+<https://chromium.googlesource.com/chromium/blink/+/0b33128be67e7845d495d5219614c02ccfe7a414>
+
+Reviewed by Chris Dumez.
+
+Source/WebCore:
+
+Prevent elements from being associated with forms that are not part of the same home subtree.
+This brings us in line with the WhatWG HTML specification as of September, 2013.
+
+Tests: fast/forms/image-disconnected-during-parse.html
+       fast/forms/input-disconnected-during-parse.html
+
+* dom/Element.h:
+(WebCore::Node::rootElement): Added.
+* html/FormAssociatedElement.cpp:
+(WebCore::FormAssociatedElement::insertedInto): If the element is associated with a form that
+is not part of the same tree, remove the association.
+* html/HTMLImageElement.cpp:
+(WebCore::HTMLImageElement::insertedInto): Ditto.
+
+LayoutTests:
+
+* fast/forms/image-disconnected-during-parse-expected.txt: Added.
+* fast/forms/image-disconnected-during-parse.html: Added.
+* fast/forms/input-disconnected-during-parse-expected.txt: Added.
+* fast/forms/input-disconnected-during-parse.html: Added.
+
+

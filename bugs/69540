@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r97124 | inferno@chromium.org | 2011-10-11 07:08:13 +0200 (Di, 11. Okt 2011) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-in-nested-before-table-expected.png
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-in-nested-before-table-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-in-nested-before-table.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+Style not updated on text fragment in :first-letter
+nested in :before table.
+https://bugs.webkit.org/show_bug.cgi?id=69540
+
+Reviewed by Dan Bernstein.
+
+Source/WebCore: 
+
+Test: fast/css-generated-content/first-letter-in-nested-before-table.html
+
+* rendering/RenderObjectChildList.cpp:
+(WebCore::RenderObjectChildList::updateBeforeAfterContent):
+
+LayoutTests: 
+
+* fast/css-generated-content/first-letter-in-nested-before-table-expected.png: Added.
+* fast/css-generated-content/first-letter-in-nested-before-table-expected.txt: Added.
+* fast/css-generated-content/first-letter-in-nested-before-table.html: Added.
+
+

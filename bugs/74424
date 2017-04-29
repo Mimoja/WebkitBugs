@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r102786 | tsepez@chromium.org | 2011-12-14 18:03:07 +0100 (Mi, 14. Dez 2011) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/mixedContent/resources/frame-with-insecure-iframe.html
+   A /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-allowed-expected.txt (von /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed-expected.txt:102785)
+   A /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-allowed.html (von /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed.html:102785)
+   A /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-blocked-expected.txt
+   A /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-blocked.html (von /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed.html:102785)
+   M /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed-expected.txt
+   M /trunk/LayoutTests/platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+   M /trunk/Source/WebCore/loader/MainResourceLoader.cpp
+
+DocumentLoader should ref its mainResourceLoader.
+https://bugs.webkit.org/show_bug.cgi?id=74424
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Tests: platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-allowed.html
+       platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-blocked.html
+
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::startLoadingMainResource):
+* loader/MainResourceLoader.cpp:
+(WebCore::MainResourceLoader::loadNow):
+
+LayoutTests:
+
+More tests for insecure iframes blocked inside of https frames.
+
+* http/tests/security/mixedContent/resources/frame-with-insecure-iframe.html: Added.
+* platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-allowed-expected.txt: Added.
+* platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-allowed.html: Added.
+* platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-blocked-expected.txt: Added.
+* platform/chromium/http/tests/security/mixedContent/insecure-iframe-in-main-frame-blocked.html: Added.
+* platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed-expected.txt:
+* platform/chromium/http/tests/security/mixedContent/insecure-image-in-main-frame-allowed.html:
+
+

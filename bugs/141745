@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r183398 | darin@apple.com | 2015-04-27 19:07:20 +0200 (Mo, 27. Apr 2015) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBDatabase.cpp
+
+Crashes under IDBDatabase::closeConnection
+https://bugs.webkit.org/show_bug.cgi?id=141745
+
+Reviewed by Alexey Proskuryakov.
+
+* Modules/indexeddb/IDBDatabase.cpp:
+(WebCore::IDBDatabase::~IDBDatabase): Do the work of close/closeConnection without
+actually calling those functions.
+(WebCore::IDBDatabase::closeConnection): Protect the database so it's not destroyed
+in the middle of this function's execution.
+

@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r99649 | cevans@google.com | 2011-11-09 05:17:42 +0100 (Mi, 09. Nov 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/css-fontface-rule-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/css-fontface-rule-crash.html
+   A /trunk/LayoutTests/resources/gc.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSFontFaceRule.cpp
+
+Crash accessing font fact rule parent
+https://bugs.webkit.org/show_bug.cgi?id=71860
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/css/css-fontface-rule-crash.html
+
+* css/CSSFontFaceRule.cpp:
+(WebCore::CSSFontFaceRule::~CSSFontFaceRule): tell our child rule when we are going away.
+
+LayoutTests:
+
+* fast/css/css-fontface-rule-crash-expected.txt: Added.
+* fast/css/css-fontface-rule-crash.html: Added.
+* resources/gc.js: Added. Add a re-usable best-of-breed gc().
+
+

@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r56810 | abarth@webkit.org | 2010-03-30 23:51:52 +0200 (Di, 30. Mär 2010) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/canvas/resources/empty.svg
+   A /trunk/LayoutTests/fast/canvas/svg-taint-expected.txt
+   A /trunk/LayoutTests/fast/canvas/svg-taint.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/html/canvas/CanvasRenderingContext2D.cpp
+
+2010-03-30  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add test for SVG pattern canvas tainting.
+
+        https://bugs.webkit.org/show_bug.cgi?id=36838
+
+        * fast/canvas/svg-taint.html: Added
+        * fast/canvas/svg-taint-expected.txt: Added
+        * fast/canvas/resources/empty.svg: Added
+2010-03-30  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Taint the canvas if an SVG-derived pattern is rendered into it.
+
+        https://bugs.webkit.org/show_bug.cgi?id=36838
+
+        Test: fast/canvas/svg-taint.html
+
+        * html/canvas/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasRenderingContext2D::createPattern):
+          Take into account the image's hasSingleSecurityOrigin() property.
+

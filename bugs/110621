@@ -1,0 +1,56 @@
+------------------------------------------------------------------------
+r145423 | schenney@chromium.org | 2013-03-12 00:18:44 +0100 (Di, 12. Mär 2013) | 41 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/image/image-error-event-modifies-type-crash-expected.txt
+   A /trunk/LayoutTests/fast/forms/image/image-error-event-modifies-type-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLInputElement.cpp
+   M /trunk/Source/WebCore/html/HTMLInputElement.h
+   M /trunk/Source/WebCore/html/ImageInputType.cpp
+   M /trunk/Source/WebCore/html/ImageInputType.h
+   M /trunk/Source/WebCore/html/InputType.cpp
+   M /trunk/Source/WebCore/html/InputType.h
+
+HTMLInputElement can delete an ImageLoader while it's still needed
+https://bugs.webkit.org/show_bug.cgi?id=110621
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+ImageLoader objects may fire events for HTMLInputElements that are of
+type ImageInputType that own the loader. These events may cause script
+to run that changes the type of the input element and hence causes the
+ImageLoader to be deleted, while the image loader is still processing
+the event dispatch. Bad things ensue.
+
+This change moves ownership of the ImageLoader from the ImageInputType
+onto the HTMLImageElement which is already protected from deletion during
+event processing.
+
+Test: fast/forms/image/image-error-event-modifies-type-crash.html
+
+* html/HTMLInputElement.cpp:
+(WebCore::HTMLInputElement::imageLoader): Method to return the
+  ImageLoader, creating it if not already created.
+* html/HTMLInputElement.h:
+(WebCore::HTMLInputElement::hasImageLoader): Return true if the
+  ImageLoader has been created.
+(HTMLInputElement): Define ImageLoader access methods and the OwnPtr
+  for the HTMLImageLoader.
+* html/ImageInputType.cpp:
+(WebCore::ImageInputType::srcAttributeChanged): Use the element's ImageLoader.
+(WebCore::ImageInputType::attach): Use the element's ImageLoader.
+(WebCore::ImageInputType::willMoveToNewOwnerDocument): Use the element's ImageLoader.
+(WebCore::ImageInputType::height): Use the element's ImageLoader.
+(WebCore::ImageInputType::width): Use the element's ImageLoader.
+* html/ImageInputType.h:
+(ImageInputType): Remove the declaration of the ImageLoader.
+
+LayoutTests:
+
+* fast/forms/image/image-error-event-modifies-type-crash-expected.txt: Added.
+* fast/forms/image/image-error-event-modifies-type-crash.html: Added.
+
+

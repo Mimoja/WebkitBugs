@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r199243 | said@apple.com | 2016-04-08 22:07:51 +0200 (Fr, 08. Apr 2016) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/filters/FEComposite.cpp
+
+Timing attack on SVG feComposite filter circumvents same-origin policy
+https://bugs.webkit.org/show_bug.cgi?id=154338
+
+Patch by Said Abou-Hallawa <sabouhallawa@apple,com> on 2016-04-08
+Reviewed by Oliver Hunt.
+
+Ensure the FEComposite arithmetic filter is clamping the resulted color
+components in a constant time.
+
+* platform/graphics/filters/FEComposite.cpp:
+(WebCore::clampByte):
+(WebCore::computeArithmeticPixels):
+
+

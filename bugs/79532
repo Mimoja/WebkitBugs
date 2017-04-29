@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r108878 | inferno@chromium.org | 2012-02-25 03:01:52 +0100 (Sa, 25. Feb 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/mutation/mutation-callback-non-element-crash-expected.txt
+   A /trunk/LayoutTests/fast/mutation/mutation-callback-non-element-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/StaticNodeList.cpp
+
+Regression(r107477): Crash in StaticNodeList::itemWithName.
+https://bugs.webkit.org/show_bug.cgi?id=79532
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+Make sure that node is an element node before checking its id attribute.
+
+Test: fast/mutation/mutation-callback-non-element-crash.html
+
+* dom/StaticNodeList.cpp:
+(WebCore::StaticNodeList::itemWithName):
+
+LayoutTests:
+
+* fast/mutation/mutation-callback-non-element-crash-expected.txt: Added.
+* fast/mutation/mutation-callback-non-element-crash.html: Added.
+
+

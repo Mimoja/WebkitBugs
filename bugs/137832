@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r174930 | carlosgc@webkit.org | 2014-10-21 10:05:28 +0200 (Di, 21. Okt 2014) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/UIProcess/API/gtk/WebKitWebContext.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/Tests/WebKit2Gtk/TestSSL.cpp
+
+Change the default TLS errors policy to WEBKIT_TLS_ERRORS_POLICY_FAIL
+https://bugs.webkit.org/show_bug.cgi?id=137832
+
+Patch by Michael Catanzaro <mcatanzaro@igalia.com> on 2014-10-20
+Reviewed by Carlos Garcia Campos.
+
+Source/WebKit2:
+
+Too many general-purpose browsers that really need this policy
+are not selecting it, so let's do so for them.
+
+* UIProcess/API/gtk/WebKitWebContext.cpp:
+(createDefaultWebContext):
+
+Tools:
+
+Ensure each test sets the TLS errors policy that it really needs.
+Have each test except testTLSErrorsPolicy stash and restore the original
+TLS errors policy. Update testTLSErrorsPolicy to account for the new
+default policy.
+
+* TestWebKitAPI/Tests/WebKit2Gtk/TestSSL.cpp:
+(testSSL):
+(testInsecureContent):
+(testTLSErrorsPolicy):
+(testTLSErrorsRedirect):
+(testTLSErrorsHTTPAuth):
+(testLoadFailedWithTLSErrors):
+(beforeAll):
+

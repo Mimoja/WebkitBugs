@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r164783 | reni@webkit.org | 2014-02-27 11:17:22 +0100 (Do, 27. Feb 2014) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/crash-on-column-splitting-expected.txt
+   A /trunk/LayoutTests/fast/css/crash-on-column-splitting.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Improving containing column block determination
+https://bugs.webkit.org/show_bug.cgi?id=125449
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Making sure that the containing column block of any elements
+can not be oneself.
+
+Test: fast/css/crash-on-column-splitting.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::containingColumnsBlock):
+(WebCore::RenderBlock::splitFlow):
+
+LayoutTests:
+
+* fast/css/crash-on-column-splitting-expected.txt: Added.
+* fast/css/crash-on-column-splitting.html: Added.
+

@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r119050 | inferno@chromium.org | 2012-05-31 06:25:01 +0200 (Do, 31. Mai 2012) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/child-insertion-notify-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/child-insertion-notify-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+Crash in ContainerNode::parserAddChild.
+https://bugs.webkit.org/show_bug.cgi?id=87903
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Call the ChildNodeInsertionNotifier.notify call at the end since
+it can destroy |this| and some of the local pointers like |last|.
+This also matches the order of calls - childrenChanged precedes
+ChildNodeInsertionNotifier.notify in updateTreeAfterInsertion and
+ContainerNode::parserInsertBefore.
+
+Also remove a FIXME since we use ChildNodeInsertionNotifier.notify
+instead of ChildNodeInsertionNotifier.notifyInsertedIntoDocument
+(as recommended in the FIXME).
+
+Test: fast/dom/child-insertion-notify-crash.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::parserAddChild):
+
+LayoutTests:
+
+* fast/dom/child-insertion-notify-crash-expected.txt: Added.
+* fast/dom/child-insertion-notify-crash.html: Added.
+
+

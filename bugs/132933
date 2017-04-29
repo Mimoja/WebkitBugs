@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r169160 | stavila@adobe.com | 2014-05-21 17:31:20 +0200 (Mi, 21. Mai 2014) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/newmulticol/table-section-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/newmulticol/table-section-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+
+REGRESSION (r168046): Invalid layout in WebCore::RenderBox::containingBlockLogicalWidthForPositioned
+https://bugs.webkit.org/show_bug.cgi?id=132933
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+Invalid layout is performed when calling containingBlockLogicalWidthForPositioned for a RenderTableSection object.
+
+Test: fast/multicol/newmulticol/table-section-crash.html
+
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::containingBlockLogicalWidthForPositioned):
+
+LayoutTests:
+Added test for crash caused by invalid layout for RenderTableSection.
+
+* fast/multicol/newmulticol/table-section-crash-expected.txt: Added.
+* fast/multicol/newmulticol/table-section-crash.html: Added.
+
+

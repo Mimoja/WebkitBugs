@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r176295 | hyatt@apple.com | 2014-11-19 01:37:35 +0100 (Mi, 19. Nov 2014) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/selection-block-gap-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/selection-block-gap-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+REGRESSION (r167210): Invalid cast in WebCore::RenderBlock::blockSelectionGaps
+https://bugs.webkit.org/show_bug.cgi?id=137590
+
+Reviewed by Dean Jackson.
+
+Source/WebCore:
+
+Added fast/block/selection-block-gaps-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::blockSelectionGaps):
+Check that we really are a RenderBlock before recurring.
+
+LayoutTests:
+
+* fast/block/selection-block-gap-crash-expected.txt: Added.
+* fast/block/selection-block-gap-crash.html: Added.
+
+
+

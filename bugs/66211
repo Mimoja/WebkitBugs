@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r93216 | bashi@chromium.org | 2011-08-17 19:23:24 +0200 (Mi, 17. Aug 2011) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/chromium/HarfbuzzSkia.cpp
+   M /trunk/Source/WebCore/platform/graphics/chromium/HarfbuzzSkia.h
+
+[Chromium] Crash in HarfbuzzFace::~HarfbuzzFace
+https://bugs.webkit.org/show_bug.cgi?id=66211
+
+Holds Skia's unique font ID instead of FontPlatformData to avoid accessing freed FontPlatformData.
+
+Reviewed by Tony Chang.
+
+No new tests; no functional change.
+
+* platform/graphics/chromium/HarfbuzzSkia.cpp:
+(WebCore::releaseCachedHarfbuzzFace): Changed the argument.
+(WebCore::HarfbuzzFace::HarfbuzzFace): Changed to have Skia's font uniqueID instead of FontPlatformData.
+(WebCore::HarfbuzzFace::~HarfbuzzFace): Uses m_uniqueID to call releaseCachedHarfbuzzFace.
+* platform/graphics/chromium/HarfbuzzSkia.h:
+
+

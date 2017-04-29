@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r120845 | japhet@chromium.org | 2012-06-20 20:42:51 +0200 (Mi, 20. Jun 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/reentrant-cancel-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/reentrant-cancel.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentThreadableLoader.cpp
+
+Source/WebCore: Don't re-enter CachedResource::removeClient() if an XHR
+is canceled and restarted multiple times.
+https://bugs.webkit.org/show_bug.cgi?id=89378
+
+Reviewed by Eric Seidel.
+
+Test: http/tests/xmlhttprequest/reentrant-cancel.html
+
+* loader/DocumentThreadableLoader.cpp:
+(WebCore::DocumentThreadableLoader::cancel):
+(WebCore::DocumentThreadableLoader::clearResource): Save off a copy of m_resource
+   then clear it, so we don't call clearResource() multiple times for the same resource.
+
+LayoutTests: Test for https://bugs.webkit.org/show_bug.cgi?id=89378.
+Reviewed by Eric Seidel.
+
+* http/tests/xmlhttprequest/reentrant-cancel-expected.txt: Added.
+* http/tests/xmlhttprequest/reentrant-cancel.html: Added.
+
+

@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r108641 | hausmann@webkit.org | 2012-02-23 19:46:32 +0100 (Do, 23. Feb 2012) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/os-win32/inttypes.h
+
+Fix the PRI macros used in WTF::String formatters to be compatible with Qt and Visual Studio 2005 and newer.
+https://bugs.webkit.org/show_bug.cgi?id=76210
+
+Add compile time check for Visual Studio 2005 or newer.
+
+Patch by Aron Rosenberg <arosenberg@logitech.com> on 2012-02-23
+Reviewed by Simon Hausmann.
+
+* os-win32/inttypes.h:
+

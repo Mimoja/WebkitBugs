@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r140520 | morrita@google.com | 2013-01-23 09:37:56 +0100 (Mi, 23. Jan 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/use-invalidate-click-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-invalidate-click-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGUseElement.cpp
+
+Invalidated SVG shadow tree should be always detached.
+https://bugs.webkit.org/show_bug.cgi?id=107634
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+SVGUseElement::clearResourceReferences() uses removeAllChildren() for
+clearing its shadow DOM, but this is wrong.
+removeAllChildren() is designed for removing children of an out-of-document Node.
+For efficiency, it skips a series of cleanup sequences like detach().
+
+For removing SVG shadow tree which is in Document, removeChildren() should be used.
+It does proper cleanup for the chilren.
+
+Test: svg/custom/use-invalidate-click-crash.xhtml
+
+* svg/SVGUseElement.cpp:
+(WebCore::SVGUseElement::clearResourceReferences):
+
+LayoutTests:
+
+* svg/custom/use-invalidate-click-crash-expected.txt: Added.
+* svg/custom/use-invalidate-click-crash.xhtml: Added.
+
+

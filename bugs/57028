@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r81871 | sfalken@apple.com | 2011-03-24 17:53:13 +0100 (Do, 24. Mär 2011) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/win/ClipboardUtilitiesWin.cpp
+
+Use proper string method to generate webloc string.
+https://bugs.webkit.org/show_bug.cgi?id=57028
+<rdar://problem/9181955>
+
+Reviewed by Darin Adler.
+
+* platform/win/ClipboardUtilitiesWin.cpp:
+(WebCore::getWebLocData):
+
+
+

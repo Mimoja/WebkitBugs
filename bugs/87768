@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r120761 | kenrb@chromium.org | 2012-06-20 00:34:55 +0200 (Mi, 20. Jun 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/positioning/abspositioned-object-under-split-relpositioned-inline-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/positioning/abspositioned-object-under-split-relpositioned-inline-crash.html
+   A /trunk/LayoutTests/fast/block/positioning/insert-positioned-in-anonymous-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/positioning/insert-positioned-in-anonymous-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+
+Absolute positioned objects should not be added to anonymous block lists
+https://bugs.webkit.org/show_bug.cgi?id=87768
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+containingBlock() was returning an anonymous block for absolute
+positioned objects under a relative positioned inline in the case
+that the inline is split and the object is underneath the block
+continuation. Anonymous blocks should never have anything in their
+positioned object lists because they can be destroyed at any time
+for a different reasons such as anonymous block merging, which is
+a problem for layout if they have m_posChildNeedsLayout set.
+
+This patch adds a generic check for anonymous blocks in
+containingBlock() to correct this problem.
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::containingBlock):
+
+LayoutTests:
+
+Test crashing condition in bug 87768.
+
+* fast/block/positioning/abspositioned-object-under-split-relpositioned-inline-crash-expected.txt: Added
+* fast/block/positioning/abspositioned-object-under-split-relpositioned-inline-crash.html: Added
+* fast/block/positioning/insert-positioned-in-anonymous-crash-expected.txt: Added
+* fast/block/positioning/insert-positioned-in-anonymous-crash.html: Added
+
+

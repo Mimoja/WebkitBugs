@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r111912 | inferno@chromium.org | 2012-03-23 23:05:21 +0100 (Fr, 23. Mär 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/span/update-after-content-before-child-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/span/update-after-content-before-child-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash in RenderBlock::splitBlocks.
+https://bugs.webkit.org/show_bug.cgi?id=81926
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+We are updating the :after content before calling splitFlow. The :after content
+gets blown away since it will go to the continuation. beforeChild was earlier
+set to the first child. Being the last anonymous block, its children gets pulled
+up in collapseAnonymousBoxChild and it gets destroyed. So, we need to update
+beforeChild value.
+
+Test: fast/multicol/span/update-after-content-before-child-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::addChildIgnoringAnonymousColumnBlocks):
+
+LayoutTests:
+
+* fast/multicol/span/update-after-content-before-child-crash.html: Added.
+

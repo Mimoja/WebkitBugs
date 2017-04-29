@@ -1,0 +1,65 @@
+------------------------------------------------------------------------
+r124681 | fmalita@chromium.org | 2012-08-04 03:23:58 +0200 (Sa, 04. Aug 2012) | 53 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/tref-nested-events-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/tref-nested-events-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/EventListener.h
+   M /trunk/Source/WebCore/svg/SVGTRefElement.cpp
+   M /trunk/Source/WebCore/svg/SVGTRefElement.h
+
+[SVG] Tref target event listener cleanup
+https://bugs.webkit.org/show_bug.cgi?id=93004
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Currently SVGTRefElement allocates event listeners dynamically as it attaches to its
+targets. Synchronizing the lifetime of the target listener vs. the tref element is
+error prone, as various events can stack and trigger nested handlers.
+
+In order to reduce complexity and address a couple of outstanding issues, this patch
+changes the way event listeners are allocated: only one target listener is created
+for the lifetime of the SVGTRefElement, and gets reused if the target element changes.
+
+Test: svg/custom/tref-nested-events-crash.svg
+
+* dom/EventListener.h:
+Added new <tref> target event listener type.
+* svg/SVGTRefElement.cpp:
+(WebCore):
+(WebCore::SVGTRefTargetEventListener::create):
+(WebCore::SVGTRefTargetEventListener::cast):
+(SVGTRefTargetEventListener):
+(WebCore::SVGTRefTargetEventListener::isAttached):
+(WebCore::SVGTRefTargetEventListener::SVGTRefTargetEventListener):
+(WebCore::SVGTRefTargetEventListener::attach):
+(WebCore::SVGTRefTargetEventListener::detach):
+(WebCore::SVGTRefTargetEventListener::operator==):
+(WebCore::SVGTRefTargetEventListener::handleEvent):
+No need to check m_trefElement anymore - the listener is allocated for the whole element
+lifetime, detached when the element is removed and deallocated when the element is
+destroyed.
+(WebCore::SVGTRefElement::SVGTRefElement):
+Allocate one target listener per element, at construction time.
+(WebCore::SVGTRefElement::~SVGTRefElement):
+Detach the listener if necessary.
+(WebCore::SVGTRefElement::detachTarget):
+Check whether the element is still in document after updating the text (may have been
+removed by event handlers).
+(WebCore::SVGTRefElement::buildPendingResource):
+Attach the event listener before updating the text content to avoid racing with event
+handlers (which can remove the element).
+(WebCore::SVGTRefElement::removedFrom):
+* svg/SVGTRefElement.h:
+(WebCore):
+(SVGTRefElement):
+
+LayoutTests:
+
+* svg/custom/tref-nested-events-crash-expected.txt: Added.
+* svg/custom/tref-nested-events-crash.svg: Added.
+
+

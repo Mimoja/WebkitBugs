@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r89614 | barraclough@apple.com | 2011-06-23 23:35:50 +0200 (Do, 23. Jun 2011) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regex/overflow-expected.txt
+   A /trunk/LayoutTests/fast/regex/overflow.html
+   A /trunk/LayoutTests/fast/regex/script-tests/overflow.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/yarr/YarrInterpreter.cpp
+   M /trunk/Source/JavaScriptCore/yarr/YarrJIT.cpp
+
+https://bugs.webkit.org/show_bug.cgi?id=61585
+Crash running regexp /(?:(?=g))|(?:m).{2147483648,}/
+
+Reviewed by Oliver Hunt.
+
+Source/JavaScriptCore: 
+
+This is due to use of int instead of unsigned, bad math around
+the 2^31 boundary.
+
+* yarr/YarrInterpreter.cpp:
+(JSC::Yarr::ByteCompiler::emitDisjunction):
+    - Change some uses of int to unsigned, refactor compare logic to
+      restrict to the range 0..2^32-1 (rather than -2^32-1..2^32-1).
+* yarr/YarrJIT.cpp:
+(JSC::Yarr::YarrGenerator::generate):
+(JSC::Yarr::YarrGenerator::backtrack):
+    - Ditto.
+
+LayoutTests: 
+
+Add regression tests where an alterative has a size of ~2^31.
+
+* fast/regex/overflow-expected.txt: Added.
+* fast/regex/overflow.html: Added.
+* fast/regex/script-tests/overflow.js: Added.
+
+
+

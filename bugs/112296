@@ -1,0 +1,347 @@
+------------------------------------------------------------------------
+r145818 | inferno@chromium.org | 2013-03-14 17:08:06 +0100 (Do, 14. Mär 2013) | 254 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AXObjectCache.cpp
+   M /trunk/Source/WebCore/accessibility/AccessibilityObject.cpp
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+   M /trunk/Source/WebCore/bindings/gobject/WebKitDOMBinding.cpp
+   M /trunk/Source/WebCore/bindings/js/JSClipboardCustom.cpp
+   M /trunk/Source/WebCore/bindings/js/JSElementCustom.cpp
+   M /trunk/Source/WebCore/bindings/js/JSNodeCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8ClipboardCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8ElementCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8NodeCustom.cpp
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/DocumentStyleSheetCollection.cpp
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/LiveNodeList.cpp
+   M /trunk/Source/WebCore/dom/Node.cpp
+   M /trunk/Source/WebCore/dom/Position.cpp
+   M /trunk/Source/WebCore/dom/Range.cpp
+   M /trunk/Source/WebCore/dom/SelectorQuery.cpp
+   M /trunk/Source/WebCore/dom/ShadowRoot.cpp
+   M /trunk/Source/WebCore/dom/StaticHashSetNodeList.cpp
+   M /trunk/Source/WebCore/editing/ApplyStyleCommand.cpp
+   M /trunk/Source/WebCore/editing/Editor.cpp
+   M /trunk/Source/WebCore/editing/FrameSelection.cpp
+   M /trunk/Source/WebCore/editing/IndentOutdentCommand.cpp
+   M /trunk/Source/WebCore/editing/MarkupAccumulator.cpp
+   M /trunk/Source/WebCore/editing/ModifySelectionListLevel.cpp
+   M /trunk/Source/WebCore/editing/ReplaceSelectionCommand.cpp
+   M /trunk/Source/WebCore/editing/SplitTextNodeContainingElementCommand.cpp
+   M /trunk/Source/WebCore/editing/TextIterator.cpp
+   M /trunk/Source/WebCore/editing/htmlediting.cpp
+   M /trunk/Source/WebCore/editing/markup.cpp
+   M /trunk/Source/WebCore/html/HTMLElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFormControlElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFormElement.cpp
+   M /trunk/Source/WebCore/html/HTMLObjectElement.cpp
+   M /trunk/Source/WebCore/html/HTMLPlugInImageElement.cpp
+   M /trunk/Source/WebCore/html/HTMLViewSourceDocument.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+   M /trunk/Source/WebCore/html/shadow/MediaControlElementTypes.cpp
+   M /trunk/Source/WebCore/html/shadow/TextFieldDecorationElement.h
+   M /trunk/Source/WebCore/inspector/DOMPatchSupport.cpp
+   M /trunk/Source/WebCore/inspector/InspectorDOMAgent.cpp
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.cpp
+   M /trunk/Source/WebCore/mathml/MathMLElement.h
+   M /trunk/Source/WebCore/page/ContextMenuController.cpp
+   M /trunk/Source/WebCore/page/DragController.cpp
+   M /trunk/Source/WebCore/page/FocusController.cpp
+   M /trunk/Source/WebCore/page/Frame.cpp
+   M /trunk/Source/WebCore/page/FrameView.cpp
+   M /trunk/Source/WebCore/page/SpatialNavigation.cpp
+   M /trunk/Source/WebCore/page/animation/ImplicitAnimation.cpp
+   M /trunk/Source/WebCore/page/animation/KeyframeAnimation.cpp
+   M /trunk/Source/WebCore/platform/efl/RenderThemeEfl.cpp
+   M /trunk/Source/WebCore/rendering/FilterEffectRenderer.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGViewportContainer.cpp
+   M /trunk/Source/WebCore/svg/SVGSVGElement.cpp
+   M /trunk/Source/WebCore/svg/SVGUseElement.cpp
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+   M /trunk/Source/WebCore/xml/XPathStep.cpp
+   M /trunk/Source/WebCore/xml/parser/XMLDocumentParserQt.cpp
+   M /trunk/Source/WebKit/blackberry/Api/WebPage.cpp
+   M /trunk/Source/WebKit/blackberry/ChangeLog
+   M /trunk/Source/WebKit/blackberry/WebCoreSupport/EditorClientBlackBerry.cpp
+   M /trunk/Source/WebKit/blackberry/WebKitSupport/BackingStoreClient.cpp
+   M /trunk/Source/WebKit/blackberry/WebKitSupport/DOMSupport.cpp
+   M /trunk/Source/WebKit/blackberry/WebKitSupport/FatFingers.cpp
+   M /trunk/Source/WebKit/blackberry/WebKitSupport/InputHandler.cpp
+   M /trunk/Source/WebKit/blackberry/WebKitSupport/SelectionHandler.cpp
+   M /trunk/Source/WebKit/blackberry/WebKitSupport/TouchEventHandler.cpp
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WebDocument.cpp
+   M /trunk/Source/WebKit/chromium/src/WebElement.cpp
+   M /trunk/Source/WebKit/chromium/src/WebPageSerializer.cpp
+   M /trunk/Source/WebKit/chromium/src/WebViewImpl.cpp
+   M /trunk/Source/WebKit/gtk/ChangeLog
+   M /trunk/Source/WebKit/gtk/webkit/webkitwebview.cpp
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebFrameLoaderClient.mm
+   M /trunk/Source/WebKit/mac/WebView/WebHTMLRepresentation.mm
+   M /trunk/Source/WebKit/qt/Api/qwebelement.cpp
+   M /trunk/Source/WebKit/qt/ChangeLog
+   M /trunk/Source/WebKit/qt/WebCoreSupport/QWebFrameAdapter.cpp
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebView.cpp
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/InjectedBundle/DOM/InjectedBundleNodeHandle.cpp
+   M /trunk/Source/WebKit2/WebProcess/WebPage/WebFrame.cpp
+
+Replace static_casts with to* helper functions.
+https://bugs.webkit.org/show_bug.cgi?id=112296
+
+Reviewed by Kentaro Hara.
+
+to* helper functions are preferred over static_cast calls since they
+help to catch bad casts easily on the testing infrastructure.
+
+Source/WebCore:
+
+* accessibility/AXObjectCache.cpp:
+(WebCore::nodeHasRole):
+* accessibility/AccessibilityObject.cpp:
+(WebCore::AccessibilityObject::hasAttribute):
+(WebCore::AccessibilityObject::getAttribute):
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::anchorElement):
+(WebCore::AccessibilityRenderObject::helpText):
+(WebCore::AccessibilityRenderObject::checkboxOrRadioRect):
+(WebCore::AccessibilityRenderObject::titleUIElement):
+(WebCore::AccessibilityRenderObject::computeAccessibilityIsIgnored):
+(WebCore::AccessibilityRenderObject::accessKey):
+(WebCore::AccessibilityRenderObject::setElementAttributeValue):
+(WebCore::AccessibilityRenderObject::setValue):
+(WebCore::AccessibilityRenderObject::activeDescendant):
+(WebCore::AccessibilityRenderObject::handleActiveDescendantChanged):
+(WebCore::AccessibilityRenderObject::correspondingLabelForControlElement):
+(WebCore::AccessibilityRenderObject::inheritsPresentationalRole):
+(WebCore::AccessibilityRenderObject::setAccessibleName):
+(WebCore::AccessibilityRenderObject::stringRoleForMSAA):
+* bindings/gobject/WebKitDOMBinding.cpp:
+(WebKit::createWrapper):
+* bindings/js/JSClipboardCustom.cpp:
+(WebCore::JSClipboard::setDragImage):
+* bindings/js/JSElementCustom.cpp:
+(WebCore::toJSNewlyCreated):
+* bindings/js/JSNodeCustom.cpp:
+(WebCore::createWrapperInline):
+* bindings/v8/custom/V8ClipboardCustom.cpp:
+(WebCore::V8Clipboard::setDragImageMethodCustom):
+* bindings/v8/custom/V8ElementCustom.cpp:
+(WebCore::wrap):
+* bindings/v8/custom/V8NodeCustom.cpp:
+(WebCore::wrap):
+* dom/Document.cpp:
+(WebCore::Document::importNode):
+(WebCore::Document::recalcStyle):
+(WebCore::Document::setFocusedNode):
+(WebCore::Document::updateFocusAppearanceTimerFired):
+* dom/DocumentStyleSheetCollection.cpp:
+(WebCore::DocumentStyleSheetCollection::collectActiveStyleSheets):
+* dom/Element.cpp:
+(WebCore::Element::offsetParent):
+(WebCore::Element::boundsInRootViewSpace):
+(WebCore::Element::getBoundingClientRect):
+(WebCore::Element::recalcStyle):
+(WebCore::Element::computeInheritedLanguage):
+(WebCore::Element::lastElementChild):
+* dom/LiveNodeList.cpp:
+(WebCore::LiveNodeList::namedItem):
+* dom/Node.cpp:
+(WebCore::Node::dumpStatistics):
+(WebCore::Node::normalize):
+(WebCore::Node::rootEditableElement):
+(WebCore::Node::isDefaultNamespace):
+(WebCore::Node::ancestorElement):
+(WebCore::appendAttributeDesc):
+* dom/Position.cpp:
+(WebCore::Position::element):
+* dom/Range.cpp:
+(WebCore::Range::getBorderAndTextQuads):
+* dom/SelectorQuery.cpp:
+(WebCore::SelectorDataList::queryFirst):
+(WebCore::SelectorDataList::execute):
+* dom/ShadowRoot.cpp:
+(WebCore::ShadowRoot::recalcStyle):
+* dom/StaticHashSetNodeList.cpp:
+(WebCore::StaticHashSetNodeList::namedItem):
+* editing/ApplyStyleCommand.cpp:
+(WebCore::ApplyStyleCommand::splitAncestorsWithUnicodeBidi):
+(WebCore::ApplyStyleCommand::pushDownInlineStyleAroundNode):
+(WebCore::ApplyStyleCommand::mergeStartWithPreviousIfIdentical):
+(WebCore::ApplyStyleCommand::surroundNodeRangeWithElement):
+* editing/Editor.cpp:
+(WebCore::Editor::applyEditingStyleToBodyElement):
+* editing/FrameSelection.cpp:
+(WebCore::removingNodeRemovesPosition):
+* editing/IndentOutdentCommand.cpp:
+(WebCore::IndentOutdentCommand::outdentParagraph):
+* editing/MarkupAccumulator.cpp:
+(WebCore::MarkupAccumulator::entityMaskForText):
+(WebCore::MarkupAccumulator::appendStartMarkup):
+(WebCore::MarkupAccumulator::appendEndMarkup):
+* editing/ModifySelectionListLevel.cpp:
+(WebCore::IncreaseSelectionListLevelCommand::doApply):
+* editing/ReplaceSelectionCommand.cpp:
+(WebCore::haveSameTagName):
+(WebCore::handleStyleSpansBeforeInsertion):
+(WebCore::ReplaceSelectionCommand::doApply):
+* editing/SplitTextNodeContainingElementCommand.cpp:
+(WebCore::SplitTextNodeContainingElementCommand::doApply):
+* editing/TextIterator.cpp:
+(WebCore::TextIterator::advance):
+* editing/htmlediting.cpp:
+(WebCore::unsplittableElementForPosition):
+(WebCore::enclosingTableCell):
+* editing/markup.cpp:
+(WebCore::StyledMarkupAccumulator::wrapWithNode):
+(WebCore::createMarkupInternal):
+(WebCore::createFragmentFromMarkupWithContext):
+(WebCore::isPlainTextMarkup):
+(WebCore::createFragmentFromText):
+* html/HTMLElement.cpp:
+(WebCore::HTMLElement::insertAdjacentElement):
+(WebCore::contextElementForInsertion):
+* html/HTMLFormControlElement.cpp:
+(WebCore::focusPostAttach):
+(WebCore::updateFromElementCallback):
+* html/HTMLFormElement.cpp:
+(WebCore::submitElementFromEvent):
+* html/HTMLObjectElement.cpp:
+(WebCore::HTMLObjectElement::updateDocNamedItem):
+* html/HTMLPlugInImageElement.cpp:
+(WebCore::HTMLPlugInImageElement::updateSnapshotInfo):
+* html/HTMLViewSourceDocument.cpp:
+(WebCore::HTMLViewSourceDocument::addRange):
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::closestFormAncestor):
+* html/shadow/MediaControlElementTypes.cpp:
+(WebCore::toParentMediaElement):
+* html/shadow/TextFieldDecorationElement.h:
+(WebCore::toTextFieldDecorationElement):
+* inspector/DOMPatchSupport.cpp:
+(WebCore::DOMPatchSupport::createDigest):
+* inspector/InspectorDOMAgent.cpp:
+(WebCore::InspectorDOMAgent::buildObjectForNode):
+(WebCore::InspectorDOMAgent::didInvalidateStyleAttr):
+* inspector/InspectorStyleSheet.cpp:
+(WebCore::InspectorStyleSheet::inlineStyleSheetText):
+* mathml/MathMLElement.h:
+(WebCore::toMathMLElement):
+* page/ContextMenuController.cpp:
+(WebCore::ContextMenuController::populate):
+* page/DragController.cpp:
+(WebCore::elementUnderMouse):
+(WebCore::DragController::startDrag):
+* page/FocusController.cpp:
+(WebCore::FocusController::advanceFocusInDocumentOrder):
+* page/Frame.cpp:
+(WebCore::Frame::searchForLabelsBeforeElement):
+* page/FrameView.cpp:
+(WebCore::FrameView::updateWidget):
+* page/SpatialNavigation.cpp:
+(WebCore::rectToAbsoluteCoordinates):
+* page/animation/ImplicitAnimation.cpp:
+(WebCore::ImplicitAnimation::sendTransitionEvent):
+* page/animation/KeyframeAnimation.cpp:
+(WebCore::KeyframeAnimation::KeyframeAnimation):
+(WebCore::KeyframeAnimation::sendAnimationEvent):
+* platform/efl/RenderThemeEfl.cpp:
+(WebCore::RenderThemeEfl::paintMediaFullscreenButton):
+(WebCore::RenderThemeEfl::paintMediaMuteButton):
+* rendering/FilterEffectRenderer.cpp:
+(WebCore::FilterEffectRenderer::buildReferenceFilter):
+* rendering/svg/RenderSVGViewportContainer.cpp:
+(WebCore::RenderSVGViewportContainer::calcViewport):
+* svg/SVGSVGElement.cpp:
+(WebCore::SVGSVGElement::getElementById):
+* svg/SVGUseElement.cpp:
+(WebCore::isDisallowedElement):
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::buildPendingResource):
+* xml/XPathStep.cpp:
+(WebCore::XPath::nodeMatchesBasicTest):
+* xml/parser/XMLDocumentParserQt.cpp:
+(WebCore::XMLDocumentParser::XMLDocumentParser):
+(WebCore::XMLDocumentParser::parseEndElement):
+
+Source/WebKit/blackberry:
+
+* Api/WebPage.cpp:
+(BlackBerry::WebKit::WebPagePrivate::webContext):
+(BlackBerry::WebKit::WebPagePrivate::handleMouseEvent):
+(BlackBerry::WebKit::WebPage::setNodeFocus):
+(BlackBerry::WebKit::WebPagePrivate::adjustFullScreenElementDimensionsIfNeeded):
+* WebCoreSupport/EditorClientBlackBerry.cpp:
+(WebCore::EditorClientBlackBerry::shouldSpellCheckFocusedField):
+(WebCore::EditorClientBlackBerry::shouldChangeSelectedRange):
+* WebKitSupport/BackingStoreClient.cpp:
+(BlackBerry::WebKit::BackingStoreClient::absoluteRect):
+* WebKitSupport/DOMSupport.cpp:
+(BlackBerry::WebKit::DOMSupport::toTextControlElement):
+(BlackBerry::WebKit::DOMSupport::selectionContainerElement):
+* WebKitSupport/FatFingers.cpp:
+(BlackBerry::WebKit::FatFingers::getRelevantInfoFromCachedHitTest):
+(BlackBerry::WebKit::FatFingers::setSuccessfulFatFingersResult):
+* WebKitSupport/InputHandler.cpp:
+(BlackBerry::WebKit::InputHandler::focusedNodeChanged):
+(BlackBerry::WebKit::InputHandler::willOpenPopupForNode):
+* WebKitSupport/SelectionHandler.cpp:
+(BlackBerry::WebKit::SelectionHandler::inputNodeOverridesTouch):
+* WebKitSupport/TouchEventHandler.cpp:
+(BlackBerry::WebKit::elementForTapHighlight):
+
+Source/WebKit/chromium:
+
+* src/WebDocument.cpp:
+(WebKit::WebDocument::images):
+* src/WebElement.cpp:
+(WebKit::WebElement::operator PassRefPtr<Element>):
+* src/WebPageSerializer.cpp:
+(WebCore::retrieveResourcesForFrame):
+* src/WebViewImpl.cpp:
+(WebKit::WebViewImpl::setFocus):
+(WebKit::WebViewImpl::clearFocusedNode):
+(WebKit::WebViewImpl::scrollFocusedNodeIntoView):
+(WebKit::WebViewImpl::scrollFocusedNodeIntoRect):
+
+Source/WebKit/gtk:
+
+* webkit/webkitwebview.cpp:
+(webkit_web_view_query_tooltip):
+
+Source/WebKit/mac:
+
+* WebCoreSupport/WebFrameLoaderClient.mm:
+(applyAppleDictionaryApplicationQuirkNonInlinePart):
+* WebView/WebHTMLRepresentation.mm:
+(searchForLabelsBeforeElement):
+
+Source/WebKit/qt:
+
+* Api/qwebelement.cpp:
+(QWebElement::firstChild):
+(QWebElement::lastChild):
+(QWebElement::nextSibling):
+(QWebElement::previousSibling):
+(QWebElementCollection::at):
+(QWebElementCollection::toList):
+* WebCoreSupport/QWebFrameAdapter.cpp:
+(QWebHitTestResultPrivate::elementForInnerNode):
+
+Source/WebKit/win:
+
+* WebView.cpp:
+(WebView::enterFullscreenForNode):
+
+Source/WebKit2:
+
+* WebProcess/InjectedBundle/DOM/InjectedBundleNodeHandle.cpp:
+(WebKit::InjectedBundleNodeHandle::elementBounds):
+* WebProcess/WebPage/WebFrame.cpp:
+(WebKit::WebFrame::containsAnyFormElements):
+
+

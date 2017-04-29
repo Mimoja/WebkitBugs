@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r198357 | beidson@apple.com | 2016-03-17 23:48:41 +0100 (Do, 17. Mär 2016) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/storage/indexeddb/modern/deleteindex-4-private-expected.txt
+   A /trunk/LayoutTests/storage/indexeddb/modern/deleteindex-4-private.html
+   A /trunk/LayoutTests/storage/indexeddb/modern/resources/deleteindex-4.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/server/MemoryBackingStoreTransaction.cpp
+
+Don't try to restore deleted MemoryIndexes if their owning object store is not restored.
+https://bugs.webkit.org/show_bug.cgi?id=155068
+
+Reviewed by Alex Christensen.
+
+Source/WebCore:
+
+Test: storage/indexeddb/modern/deleteindex-4-private.html
+
+* Modules/indexeddb/server/MemoryBackingStoreTransaction.cpp:
+(WebCore::IDBServer::MemoryBackingStoreTransaction::indexDeleted):
+
+LayoutTests:
+
+* storage/indexeddb/modern/deleteindex-4-private-expected.txt: Added.
+* storage/indexeddb/modern/deleteindex-4-private.html: Added.
+* storage/indexeddb/modern/resources/deleteindex-4.js: Added.
+

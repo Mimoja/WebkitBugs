@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r100408 | darin@apple.com | 2011-11-16 07:46:27 +0100 (Mi, 16. Nov 2011) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityMediaControls.cpp
+   M /trunk/Source/WebCore/html/shadow/MediaControlElements.cpp
+   M /trunk/Source/WebCore/html/shadow/MediaControlElements.h
+   M /trunk/Source/WebCore/platform/efl/RenderThemeEfl.cpp
+   M /trunk/Source/WebCore/platform/gtk/RenderThemeGtk.cpp
+   M /trunk/Source/WebCore/rendering/RenderThemeMac.mm
+
+Incorrect type checks in RenderTheme media code
+https://bugs.webkit.org/show_bug.cgi?id=72184
+
+Reviewed by Eric Carlson.
+
+No tests added. Ideally this patch should be revised to add tests!
+
+* accessibility/AccessibilityMediaControls.cpp:
+(WebCore::AccessibilityMediaControl::create): Use mediaControlElementType.
+(WebCore::AccessibilityMediaControl::controlType): Ditto.
+(WebCore::AccessibilityMediaTimeline::valueDescription): Use early return
+rather than an assertion to check type of input element.
+
+* html/shadow/MediaControlElements.cpp:
+(WebCore::mediaControlElementType): Added. A type-safe way to get the
+media control element type after checking isMediaControlElement but with
+no other assumptions.
+* html/shadow/MediaControlElements.h: Added mediaControlElementType.
+
+* platform/efl/RenderThemeEfl.cpp:
+(WebCore::RenderThemeEfl::paintMediaPlayButton): Use mediaControlElementType.
+(WebCore::RenderThemeEfl::paintMediaSeekBackButton): Use mediaControlElementType.
+(WebCore::RenderThemeEfl::paintMediaSeekForwardButton): Use mediaControlElementType.
+* platform/gtk/RenderThemeGtk.cpp:
+(WebCore::RenderThemeGtk::paintMediaPlayButton): Check isMediaControlElement and
+use mediaControlElementType.
+* rendering/RenderThemeMac.mm:
+(WebCore::RenderThemeMac::paintMediaMuteButton): Ditto. Also remove uneeded
+redundant null check.
+(WebCore::RenderThemeMac::paintMediaPlayButton): Ditto.
+(WebCore::RenderThemeMac::paintMediaToggleClosedCaptionsButton): Ditto.
+
+

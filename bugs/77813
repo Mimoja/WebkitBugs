@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r106771 | inferno@chromium.org | 2012-02-06 04:53:42 +0100 (Mo, 06. Feb 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/form-submission-create-crash-expected.txt
+   A /trunk/LayoutTests/fast/forms/form-submission-create-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FormSubmission.cpp
+
+Crash in FormSubmission::create.
+https://bugs.webkit.org/show_bug.cgi?id=77813
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+Test: fast/forms/form-submission-create-crash.xhtml
+
+* loader/FormSubmission.cpp:
+(WebCore::FormSubmission::create):
+
+LayoutTests:
+
+* fast/forms/form-submission-create-crash-expected.txt: Added.
+* fast/forms/form-submission-create-crash.xhtml: Added.
+
+

@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r195483 | bfulgham@apple.com | 2016-01-22 23:50:41 +0100 (Fr, 22. Jan 2016) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/crypto/mac/CryptoKeyMac.cpp
+   M /trunk/Source/WebCore/crypto/mac/SerializedCryptoKeyWrapMac.mm
+
+Don't ignore the return value of CCRandomCopyBytes
+https://bugs.webkit.org/show_bug.cgi?id=153369
+<rdar://problem/22198376>
+<rdar://problem/22198378>
+
+Reviewed by Alexey Proskuryakov.
+
+Tested by existing Crypto tests.
+
+* crypto/mac/CryptoKeyMac.cpp:
+(WebCore::CryptoKey::randomData): RELEASE_ASSERT if CCRandomCopyBytes ever returns
+anything besides kCCSuccess.
+* crypto/mac/SerializedCryptoKeyWrapMac.mm:
+(WebCore::createAndStoreMasterKey): Ditto.
+(WebCore::wrapSerializedCryptoKey): Ditto.
+
+

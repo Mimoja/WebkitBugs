@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r146760 | apavlov@chromium.org | 2013-03-25 13:55:30 +0100 (Mo, 25. Mär 2013) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorCSSAgent.cpp
+
+Web Inspector: Properly handle the rule addition to an XML or SVG document.
+https://bugs.webkit.org/show_bug.cgi?id=113185
+
+Reviewed by Pavel Feldman.
+
+* inspector/InspectorCSSAgent.cpp:
+(WebCore::InspectorCSSAgent::viaInspectorStyleSheet):
+

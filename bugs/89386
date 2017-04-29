@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r120737 | inferno@chromium.org | 2012-06-19 20:05:58 +0200 (Di, 19. Jun 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fullscreen/empty-anonymous-block-continuation-crash-expected.txt
+   A /trunk/LayoutTests/fullscreen/empty-anonymous-block-continuation-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash in RenderInline::willBeDestroyed.
+https://bugs.webkit.org/show_bug.cgi?id=89386
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+We were unable to find the previous continuation during the process
+of cleaning up empty anonymous block continuation. The reason being
+that we were just looking till our immediate parent and ignoring the
+fact that it can be enclosed in anonymous blocks. The change skips
+over anonymous blocks in the parent chain.
+
+Test: fullscreen/empty-anonymous-block-continuation-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::removeChild):
+
+LayoutTests:
+
+* fullscreen/empty-anonymous-block-continuation-crash-expected.txt: Added.
+* fullscreen/empty-anonymous-block-continuation-crash.html: Added.
+
+

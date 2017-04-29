@@ -1,0 +1,61 @@
+------------------------------------------------------------------------
+r147281 | tsepez@chromium.org | 2013-03-30 19:31:52 +0100 (Sa, 30. Mär 2013) | 45 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/editing/pasteboard/paste-noscript-expected.txt
+   M /trunk/LayoutTests/editing/pasteboard/paste-noscript.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/Element.h
+   M /trunk/Source/WebCore/html/HTMLFrameElementBase.cpp
+   M /trunk/Source/WebCore/html/HTMLFrameElementBase.h
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.cpp
+   M /trunk/Source/WebCore/xml/parser/XMLDocumentParserLibxml2.cpp
+   M /trunk/Source/WebCore/xml/parser/XMLDocumentParserQt.cpp
+
+Cross-Origin copy&paste / drag&drop allowing XSS via srcdoc attribute.
+https://bugs.webkit.org/show_bug.cgi?id=113443
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Tested by LayoutTests/editing/pasteboard/paste-noscript.html
+
+* dom/Element.h:
+(Element):
+(WebCore::Element::isHTMLContentAttribute):
+Adds an isHTMLContentAttribute() method to determine whether an attribute can contain
+(potentially unsafe) HTML content. Currently, the iframe's srcdoc attribute is the only
+such attribute, but clever folks might add more in the future.
+Rename stripJavaScriptAttributes() method to stripScriptingAttributes(), to better reflect
+the reality that scripting content may appear as above.
+Adds missing consts and consolidate isJavaScriptAttribute() method.
+
+* dom/Element.cpp:
+(WebCore::Element::isJavaScriptURLAttribute):
+(WebCore::Element::stripScriptingAttributes):
+Consolidated methods.
+
+* html/HTMLFrameElementBase.cpp:
+(WebCore::HTMLFrameElementBase::isHTMLContentAttribute):
+(WebCore):
+* html/HTMLFrameElementBase.h:
+(HTMLFrameElementBase):
+Indicate that for frames, the srcdoc attribute contains HTML content.
+
+* html/parser/HTMLConstructionSite.cpp:
+(WebCore::setAttributes):
+* xml/parser/XMLDocumentParserLibxml2.cpp:
+(WebCore::setAttributes):
+* xml/parser/XMLDocumentParserQt.cpp:
+(WebCore::setAttributes):
+Rename stripJavaScriptAttribute calls to match Element.h
+
+LayoutTests:
+
+* editing/pasteboard/paste-noscript-expected.txt:
+* editing/pasteboard/paste-noscript.html:
+Adds a test that an iframe's srcdoc attribute is not pasted.
+
+

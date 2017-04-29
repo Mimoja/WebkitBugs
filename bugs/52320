@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r76828 | jschuh@chromium.org | 2011-01-27 21:47:46 +0100 (Do, 27. Jan 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/css-keyframe-style-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/css-keyframe-style-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSRuleList.cpp
+   M /trunk/Source/WebCore/css/WebKitCSSKeyframesRule.cpp
+
+2011-01-27  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Clear the parent on a css keyframe's m_style when removing it from the stylesheet.
+        https://bugs.webkit.org/show_bug.cgi?id=52320
+
+        Test: fast/css/css-keyframe-style-crash.html
+
+        * css/CSSRuleList.cpp:
+        (WebCore::CSSRuleList::deleteRule):
+        * css/WebKitCSSKeyframesRule.cpp:
+        (WebCore::WebKitCSSKeyframesRule::~WebKitCSSKeyframesRule):
+2011-01-27  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Test for crash when accessing a keyframe's style rule.
+        https://bugs.webkit.org/show_bug.cgi?id=52320
+
+        * fast/css/css-keyframe-style-crash-expected.txt: Added.
+        * fast/css/css-keyframe-style-crash.html: Added.
+
+

@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r48256 | abarth@webkit.org | 2009-09-10 18:41:46 +0200 (Do, 10. Sep 2009) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/newline-in-request-uri-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/newline-in-request-uri.html
+
+2009-09-10  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24205
+
+        Added a test case for inserting a new line character into the
+        request-uri.
+
+        * http/tests/xmlhttprequest/newline-in-request-uri-expected.txt: Added.
+        * http/tests/xmlhttprequest/newline-in-request-uri.html: Added.
+

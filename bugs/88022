@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r119409 | inferno@chromium.org | 2012-06-04 20:06:52 +0200 (Mo, 04. Jun 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/span/empty-anonymous-block-split-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/span/empty-anonymous-block-split-crash.html
+   A /trunk/LayoutTests/fast/multicol/span/positioned-objects-not-removed-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/span/positioned-objects-not-removed-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash in multi-column layout.
+https://bugs.webkit.org/show_bug.cgi?id=88022
+
+Reviewed by Ojan Vafai.
+
+Source/WebCore:
+
+The patch addresses two problems::
+1. |this| in RenderBlock::splitBlocks can get destroyed when we
+move its children to the clone and later call updateBeforeAfterContent
+on the parent. So, we stop accessing its member variables and cache
+it in a local.
+2. Positioned objects were not getting cleared from our grand parents.
+This will happen if our immediate children got moved to a clone tree,
+however at our parent nothing was moved. So, we make sure to remove
+the positioned objects at every level while we are doing the cloning.
+
+Tests: fast/multicol/span/empty-anonymous-block-split-crash.html
+       fast/multicol/span/positioned-objects-not-removed-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::splitBlocks):
+
+LayoutTests:
+
+* fast/multicol/span/empty-anonymous-block-split-crash-expected.txt: Added.
+* fast/multicol/span/empty-anonymous-block-split-crash.html: Added.
+* fast/multicol/span/positioned-objects-not-removed-crash-expected.txt: Added.
+* fast/multicol/span/positioned-objects-not-removed-crash.html: Added.
+
+

@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r75531 | msaboff@apple.com | 2011-01-11 21:24:55 +0100 (Di, 11. Jan 2011) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/js/array-sort-exception-expected.txt
+   A /trunk/LayoutTests/fast/js/array-sort-exception.html
+   A /trunk/LayoutTests/fast/js/script-tests/array-sort-exception.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSArray.cpp
+
+2011-01-11  Michael Saboff  <msaboff@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Missing call to popTempSortVector() for exception case in JSArray::sort.
+        https://bugs.webkit.org/show_bug.cgi?id=50718
+
+        Fix to patch of 50718 that added pushTempSortVector() and 
+        popTempSortVector() to JSArray::sort() to mark elements during sort.
+        Need to add popTempSortVector() for the return case if toString()
+        had an exception.
+
+        * runtime/JSArray.cpp:
+        (JSC::JSArray::sort): Added popTempSortVector()
+2011-01-11  Michael Saboff  <msaboff@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Missing call to popTempSortVector() for exception case in JSArray::sort.
+        https://bugs.webkit.org/show_bug.cgi?id=50718
+
+        New test to validate balanced calls to pushTempSortVector() and
+        popTempSortVector().
+
+        * fast/js/array-sort-exception-expected.txt: Added.
+        * fast/js/array-sort-exception.html: Added.
+        * fast/js/script-tests/array-sort-exception.js: Added.
+        (do_gc):
+        (Item):
+        (toString_throw):
+        (test):
+
+

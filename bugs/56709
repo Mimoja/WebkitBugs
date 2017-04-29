@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r81648 | inferno@chromium.org | 2011-03-22 07:27:50 +0100 (Di, 22. Mär 2011) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/anchor-linked-anonymous-block-crash-expected.txt
+   A /trunk/LayoutTests/accessibility/anchor-linked-anonymous-block-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+2011-03-21  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Anonymous blocks need isRenderBlock cast check. Also, need
+        to allow display BOX for flexible boxes.
+        https://bugs.webkit.org/show_bug.cgi?id=56709
+
+        Test: accessibility/anchor-linked-anonymous-block-crash.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::canMergeContiguousAnonymousBlocks): remove specific
+        fix in r81088 which is no longer needed.
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::isAnonymousBlock): Add isRenderBlock cast
+        check.
+2011-03-21  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Tests that we do not crash when searching up the render tree
+        for an anchor element in accessibility code.
+        https://bugs.webkit.org/show_bug.cgi?id=56709
+
+        * accessibility/anchor-linked-anonymous-block-crash-expected.txt: Added.
+        * accessibility/anchor-linked-anonymous-block-crash.html: Added.
+
+

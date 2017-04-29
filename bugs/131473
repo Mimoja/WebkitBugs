@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r167063 | jonlee@apple.com | 2014-04-10 06:42:34 +0200 (Do, 10. Apr 2014) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/ios/WebVideoFullscreenInterfaceAVKit.mm
+
+Fix build failure.
+https://bugs.webkit.org/show_bug.cgi?id=131473
+
+Patch by Jeremy Jones <jeremyj@apple.com> on 2014-04-09
+Reviewed by Dan Bernstein.
+
+Fix build failure.
+
+* platform/ios/WebVideoFullscreenInterfaceAVKit.mm:
+(mediaSelectionOptions):
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r111263 | inferno@chromium.org | 2012-03-19 23:53:57 +0100 (Mo, 19. Mär 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/runin/run-in-layer-not-removed-crash-expected.txt
+   A /trunk/LayoutTests/fast/runin/run-in-layer-not-removed-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash due to layer tree information not updated when moving run-in children.
+https://bugs.webkit.org/show_bug.cgi?id=81265
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+We need to do a full removal as the run-in child is getting inserted into
+the neighbouring block and |blockRunIn| is going to be destroyed later
+in the function.
+
+Test: fast/runin/run-in-layer-not-removed-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::handleRunInChild):
+
+LayoutTests:
+
+* fast/runin/run-in-layer-not-removed-crash-expected.txt: Added.
+* fast/runin/run-in-layer-not-removed-crash.html: Added.
+

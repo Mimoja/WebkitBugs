@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r131110 | abarth@webkit.org | 2012-10-12 01:44:02 +0200 (Fr, 12. Okt 2012) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/FrameView.cpp
+
+Incorrect/Illegal static cast in FrameView.cpp
+https://bugs.webkit.org/show_bug.cgi?id=98943
+
+Reviewed by Eric Seidel.
+
+HTMLFrameElementBase is the common base class for <frame> and <iframe>.
+
+* page/FrameView.cpp:
+(WebCore::FrameView::init):
+
+

@@ -1,0 +1,51 @@
+------------------------------------------------------------------------
+r128148 | yosin@chromium.org | 2012-09-11 07:29:55 +0200 (Di, 11. Sep 2012) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur-expected.txt
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/shadow/DateTimeEditElement.cpp
+   M /trunk/Source/WebCore/html/shadow/DateTimeEditElement.h
+
+REGRESSION (r127226): Calling DateTimeEditElement::layout() in focus handler should not dispatch blur event
+https://bugs.webkit.org/show_bug.cgi?id=96232
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+This patch makes DateTimeEditElement::layout() not to dispatch blur
+event by removing existing fields, one of them can be focused, after
+moving focus to newly created field.
+
+This patch affects ports which enable both ENABLE_INPUT_TYPE_TIME and
+ENABLE_INPUT_TYPE_TIME_MULTIPLE_FIELDS.
+
+Test: fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur.html
+
+* html/shadow/DateTimeEditElement.cpp:
+(WebCore::DateTimeEditBuilder::build): Changed to call resetFields().
+(WebCore::DateTimeEditElement::focusedFieldIndex): Changed to use
+Document::focusedNode(). When this function is called during handling
+focus event, Element::focused() isn't true.
+(WebCore::DateTimeEditElement::layout): Changed to remove existing
+child nodes after moving focus to newly created field.
+(WebCore::DateTimeEditElement::resetFields): Renamed from resetLayout().
+This function makes m_fields vector empty.
+(WebCore::DateTimeEditElement::resetLayout): Renamed to resetFields().
+We moved removing field elements and spin button to layout().
+* html/shadow/DateTimeEditElement.h:
+(DateTimeEditElement): Renamed resetLayout() to resetFields().
+
+LayoutTests:
+
+This patch adds a new test for checking layout changing of multiple
+fields time input UI in focus handler doesn't dispatch blur event.
+
+This patch affects ports which enable both ENABLE_INPUT_TYPE_TIME and
+ENABLE_INPUT_TYPE_TIME_MULTIPLE_FIELDS.
+
+* fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur-expected.txt: Added.
+* fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur.html: Added.
+

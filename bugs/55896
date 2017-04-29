@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r80520 | commit-queue@webkit.org | 2011-03-08 03:13:33 +0100 (Di, 08. Mär 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/vkern-element-crash-expected.txt
+   A /trunk/LayoutTests/svg/dom/vkern-element-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGHKernElement.cpp
+   M /trunk/Source/WebCore/svg/SVGVKernElement.cpp
+
+2011-03-07  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Eric Seidel.
+
+        Add the missing insertedIntoDocument() call in SVGVKernElement and SVGHKernElement
+        https://bugs.webkit.org/show_bug.cgi?id=55896
+
+        * svg/dom/vkern-element-crash-expected.txt: Added.
+        * svg/dom/vkern-element-crash.html: Added.
+2011-03-07  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Eric Seidel.
+
+        Add the missing insertedIntoDocument() call in SVGVKernElement and SVGHKernElement
+        https://bugs.webkit.org/show_bug.cgi?id=55896
+
+        Test: svg/dom/vkern-element-crash.html
+
+        * svg/SVGHKernElement.cpp:
+        (WebCore::SVGHKernElement::insertedIntoDocument):
+        * svg/SVGVKernElement.cpp:
+        (WebCore::SVGVKernElement::insertedIntoDocument):
+

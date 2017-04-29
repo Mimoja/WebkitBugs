@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r57313 | abarth@webkit.org | 2010-04-09 08:43:19 +0200 (Fr, 09. Apr 2010) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/popup-blocked-to-post-blank-expected.txt
+   A /trunk/LayoutTests/fast/events/popup-blocked-to-post-blank.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/v8/ScriptController.cpp
+   M /trunk/WebCore/dom/UserGestureIndicator.cpp
+   M /trunk/WebCore/dom/UserGestureIndicator.h
+   M /trunk/WebCore/loader/FrameLoader.cpp
+   M /trunk/WebCore/loader/RedirectScheduler.cpp
+   M /trunk/WebCore/page/EventHandler.cpp
+
+2010-04-08  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Sam Weinig.
+
+        Add test for POST & _blank popup blocker bypass.
+        https://bugs.webkit.org/show_bug.cgi?id=34541
+
+        * fast/events/popup-blocked-to-post-blank.html: added
+        * fast/events/popup-blocked-to-post-blank-expected.txt: added
+2010-04-08  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Sam Weinig.
+
+        Use the new UserGestureIndictor for _blank POST requests.
+
+        https://bugs.webkit.org/show_bug.cgi?id=34541
+
+        Test: fast/events/popup-blocked-to-post-blank.html
+
+        * bindings/v8/ScriptController.cpp:
+        (WebCore::ScriptController::processingUserGesture):
+          Use UserGestureIndicator in more cases.
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler):
+          Impact from UserGestureIndicator API change.
+        (WebCore::FrameLoader::submitForm):
+          Block the load immediately if popups are not allowed and it would
+          open a new window.
+        * loader/RedirectScheduler.cpp:
+        (WebCore::ScheduledFormSubmission::ScheduledFormSubmission):
+          Note the UserGestureIndicator status at the time of submission.
+        (WebCore::ScheduledFormSubmission::fire):
+          Use the stored UserGestureIndicator status in the asynchronous
+          callback.
+        * dom/UserGestureIndicator.h:
+        * dom/UserGestureIndicator.cpp:
+        (WebCore::UserGestureIndicator::UserGestureIndicator):
+          Add ability to store a negative indication.
+

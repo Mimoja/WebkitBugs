@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r125472 | commit-queue@webkit.org | 2012-08-14 02:11:35 +0200 (Di, 14. Aug 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/replaced/render-inline-cast-to-render-box-crash-expected.txt
+   A /trunk/LayoutTests/fast/replaced/render-inline-cast-to-render-box-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+
+Bad cast in RenderBox::computeReplacedLogicalHeightUsing
+https://bugs.webkit.org/show_bug.cgi?id=93875
+
+Patch by Pravin D <pravind.2k4@gmail.com> on 2012-08-13
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Pointer to the container of a replaced element was being type casted to renderbox
+without checking if the container is a renderbox or not.
+
+Test: fast/replaced/render-inline-cast-to-render-box-crash.html
+
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::computeReplacedLogicalHeightUsing):
+ Scrollbar height is retrieved only if the container is a renderBox. Otherwise scrollbar is taken as zero.
+
+LayoutTests:
+
+* fast/replaced/render-inline-cast-to-render-box-crash-expected.txt: Added.
+* fast/replaced/render-inline-cast-to-render-box-crash.html: Added.
+

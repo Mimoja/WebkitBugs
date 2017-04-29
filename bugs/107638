@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r140614 | dmazzoni@google.com | 2013-01-24 01:34:42 +0100 (Do, 24. Jan 2013) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+AX: AXObjectCache should be initialized with topDocument
+https://bugs.webkit.org/show_bug.cgi?id=107638
+
+Reviewed by Chris Fleizach.
+
+Initialize AXObjectCache with the top document, not the
+document that axObjectCache happened to be called on, which
+could be an iframe. Having an AXObjectCache with the wrong
+document could cause a heap-use-after-free in
+notificationPostTimerFired if the inner document was deleted
+while notifications were pending.
+
+* dom/Document.cpp:
+(WebCore::Document::axObjectCache):
+
+

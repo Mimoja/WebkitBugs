@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r100827 | cevans@google.com | 2011-11-19 01:43:23 +0100 (Sa, 19. Nov 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/move-detached-child-in-range-expected.txt
+   A /trunk/LayoutTests/fast/dom/move-detached-child-in-range.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/RangeBoundaryPoint.h
+
+Crash with ranges across a detached, reparented node tree
+https://bugs.webkit.org/show_bug.cgi?id=72757
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/dom/move-detached-child-in-range.html
+
+* dom/RangeBoundaryPoint.h:
+(WebCore::RangeBoundaryPoint::childBefore): protect the raw child node from getting pulled from under us.
+
+LayoutTests:
+
+* fast/dom/move-detached-child-in-range-expected.txt: Added.
+* fast/dom/move-detached-child-in-range.html: Added.
+
+

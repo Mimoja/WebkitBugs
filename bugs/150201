@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r192316 | jhoneycutt@apple.com | 2015-11-11 19:48:33 +0100 (Mi, 11. Nov 2015) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/strip-script-attrs-on-input-expected.txt
+   A /trunk/LayoutTests/fast/parser/strip-script-attrs-on-input.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+
+Crash loading Blink layout test fast/parser/strip-script-attrs-on-input.html
+https://bugs.webkit.org/show_bug.cgi?id=150201
+<rdar://problem/23136478>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+Test: fast/parser/strip-script-attrs-on-input.html
+
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::processStartTagForInBody):
+Get the attribute after calling
+HTMLConstructionSite::insertSelfClosingHTMLElement(), as this may
+mutate the token's attributes.
+
+LayoutTests:
+
+* fast/parser/strip-script-attrs-on-input-expected.txt: Added.
+* fast/parser/strip-script-attrs-on-input.html: Added.
+

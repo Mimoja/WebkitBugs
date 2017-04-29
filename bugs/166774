@@ -1,0 +1,13 @@
+------------------------------------------------------------------------
+r212175 | dbates@webkit.org | 2017-02-11 04:32:40 +0100 (Sa, 11. Feb 2017) | 6 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/Interfaces/WebKit.idl
+
+Attempt to fix the WinCairo 64-Bit Release build following <https://trac.webkit.org/changeset/212173>
+(https://bugs.webkit.org/show_bug.cgi?id=166774)
+
+Touch WebKit.idl in the hopes that it will cause CMake to regenerate the COM interface files.
+
+* Interfaces/WebKit.idl:
+

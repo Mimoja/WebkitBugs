@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r142940 | morrita@google.com | 2013-02-15 01:42:03 +0100 (Fr, 15. Feb 2013) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/onerror-no-constructor-expected.txt
+   A /trunk/LayoutTests/fast/events/onerror-no-constructor.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/V8AbstractEventListener.cpp
+
+[V8] Assertion failure on an exception is thrown
+https://bugs.webkit.org/show_bug.cgi?id=109129
+
+Source/WebCore:
+
+An assertion in V8AbstractEventListener is wrong. This change turns it into an error check.
+
+Reviewed by Kentaro Hara.
+
+Test: fast/events/onerror-no-constructor.html
+
+* bindings/v8/V8AbstractEventListener.cpp:
+(WebCore::V8AbstractEventListener::handleEvent):
+
+LayoutTests:
+
+Reviewed by Kentaro Hara.
+
+* fast/events/onerror-no-constructor-expected.txt: Added.
+* fast/events/onerror-no-constructor.html: Added.
+

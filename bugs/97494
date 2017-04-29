@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r129583 | inferno@chromium.org | 2012-09-26 04:14:07 +0200 (Mi, 26. Sep 2012) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderArena.cpp
+
+Mask RenderArena freelist entries.
+https://bugs.webkit.org/show_bug.cgi?id=97494
+
+Patch by Justin Schuh <jschuh@chromium.org> on 2012-09-25
+Reviewed by Julien Chaffraix.
+
+This is a mitigation for freelist spraying. See http://download.crowdstrike.com/papers/hes-exploiting-a-coalmine.pdf.
+
+No new tests. This is a hardening measure. Found no measurable performance impact with Dromaeo.
+
+* rendering/RenderArena.cpp:
+(MaskPtr):
+(WebCore::RenderArena::allocate):
+(WebCore::RenderArena::free):
+

@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r83082 | dino@apple.com | 2011-04-06 21:26:23 +0200 (Mi, 06. Apr 2011) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/animation/CompositeAnimation.cpp
+
+2011-04-06  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Chris Marrin.
+
+        https://bugs.webkit.org/show_bug.cgi?id=56936
+        Crash in ImplicitAnimation::~ImplicitAnimation
+
+        Make sure the style and start time waiting lists
+        are cleared in the CompositeAnimation destructor. This
+        way, no running transitions can be left in a state
+        where they are destroyed as the AnimationControllerPrivate
+        cleans up.
+
+        * page/animation/CompositeAnimation.cpp:
+        (WebCore::CompositeAnimation::~CompositeAnimation):
+

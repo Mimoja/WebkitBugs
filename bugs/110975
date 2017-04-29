@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r144292 | mkwst@chromium.org | 2013-02-28 13:22:11 +0100 (Do, 28. Feb 2013) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/formaction-on-button-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/formaction-on-button.html
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/formaction-on-input-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/formaction-on-input.html
+   M /trunk/LayoutTests/http/tests/security/xssAuditor/resources/echo-intertag.pl
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/XSSAuditor.cpp
+   M /trunk/Source/WebCore/html/parser/XSSAuditor.h
+
+XSSAuditor should strip formaction attributes from input and button elements.
+https://bugs.webkit.org/show_bug.cgi?id=110975
+
+Reviewed by Daniel Bates.
+
+Source/WebCore:
+
+The 'formaction' attribute of 'input' and 'button' elements is just as
+dangerous as the 'action' attribute of 'form' elements. This patch
+teaches the XSSAuditor how to avoid them.
+
+Tests: http/tests/security/xssAuditor/formaction-on-button.html
+       http/tests/security/xssAuditor/formaction-on-input.html
+
+* html/parser/XSSAuditor.cpp:
+(WebCore::XSSAuditor::filterStartToken):
+(WebCore::XSSAuditor::filterInputToken): Added.
+(WebCore::XSSAuditor::filterButtonToken): Added.
+* html/parser/XSSAuditor.h:
+    Create filters for 'input' and 'button' elements, which currently
+    only have the effect of filtering the 'formaction' attribute.
+
+LayoutTests:
+
+* http/tests/security/xssAuditor/formaction-on-button-expected.txt: Added.
+* http/tests/security/xssAuditor/formaction-on-button.html: Added.
+* http/tests/security/xssAuditor/formaction-on-input-expected.txt: Added.
+* http/tests/security/xssAuditor/formaction-on-input.html: Added.
+* http/tests/security/xssAuditor/resources/echo-intertag.pl:
+    Support 'showFormaction' as a new option to write out formaction values.
+

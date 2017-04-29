@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r71805 | zimmermann@webkit.org | 2010-11-11 13:46:36 +0100 (Do, 11. Nov 2010) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/SVGPolygonElement-baseVal-list-removal-crash-expected.txt
+   A /trunk/LayoutTests/svg/dom/SVGPolygonElement-baseVal-list-removal-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/svg/properties/SVGListProperty.h
+
+2010-11-11  Nikolas Zimmermann  <nzimmermann@rim.com>
+
+        Reviewed by Dirk Schulze.
+
+        chrome.dll!WebCore::SVGLengthInternal::valueInSpecifiedUnitsAttrGetter ReadAV@NULL (4cf97a4f3ebe8006a2f5ffcc5bc10aeb)
+        https://bugs.webkit.org/show_bug.cgi?id=49331
+
+        Test: svg/dom/SVGPolygonElement-baseVal-list-removal-crash.html
+
+        * svg/properties/SVGListProperty.h:
+        (WebCore::SVGListProperty::replaceItemValuesAndWrappers): Avoid premature deletion of 'oldItem'.
+        (WebCore::SVGListProperty::removeItemValuesAndWrappers): Ditto.
+
+2010-11-11  Nikolas Zimmermann  <nzimmermann@rim.com>
+
+        Reviewed by Dirk Schulze.
+
+        chrome.dll!WebCore::SVGLengthInternal::valueInSpecifiedUnitsAttrGetter ReadAV@NULL (4cf97a4f3ebe8006a2f5ffcc5bc10aeb)
+        https://bugs.webkit.org/show_bug.cgi?id=49331
+
+        * svg/dom/SVGPolygonElement-baseVal-list-removal-crash-expected.txt: Added.
+        * svg/dom/SVGPolygonElement-baseVal-list-removal-crash.html: Added.
+
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r62482 | zimmermann@webkit.org | 2010-07-05 14:27:35 +0200 (Mo, 05. Jul 2010) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/mac/svg/custom/use-property-synchronization-crash-expected.checksum
+   A /trunk/LayoutTests/platform/mac/svg/custom/use-property-synchronization-crash-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/custom/use-property-synchronization-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-property-synchronization-crash.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/svg/SVGElement.cpp
+
+2010-07-05  Nikolas Zimmermann  <nzimmermann@rim.com>
+
+        Reviewed by Darin Adler.
+
+        Memory corruption with SVG <use> element
+        https://bugs.webkit.org/show_bug.cgi?id=40994
+
+        Fix race condition in svgAttributeChanged. Never call svgAttributeChanged() from attributeChanged()
+        when we're synchronizing SVG attributes. It leads to either unnecessary extra work being done or
+        crashes. Especially together with <polyline>/<polygon> which always synchronize the SVGAnimatedPoints
+        datastructure with the points attribute, no matter if there are changes are not. This should be
+        furhter optimized, but this fix is sane and fixes the root of the evil races.
+
+        Test: svg/custom/use-property-synchronization-crash.svg
+
+        * svg/SVGElement.cpp:
+        (WebCore::SVGElement::attributeChanged):
+
+

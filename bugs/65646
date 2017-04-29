@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r92413 | commit-queue@webkit.org | 2011-08-04 23:37:03 +0200 (Do, 04. Aug 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/canvas/webgl/resources/floatArrayUniformShader.vert
+   A /trunk/LayoutTests/fast/canvas/webgl/resources/intArrayUniformShader2.vert
+   A /trunk/LayoutTests/fast/canvas/webgl/uniform-array-length-overflow-expected.txt
+   A /trunk/LayoutTests/fast/canvas/webgl/uniform-array-length-overflow.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSWebGLRenderingContextCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8WebGLRenderingContextCustom.cpp
+
+Fix integer overflow in custom bindings for WebGLRenderingContext
+https://bugs.webkit.org/show_bug.cgi?id=65646
+
+Patch by Sergey Glazunov <serg.glazunov@gmail.com> on 2011-08-04
+Reviewed by Kenneth Russell.
+
+Source/WebCore:
+
+Test: fast/canvas/webgl/uniform-array-length-overflow.html
+
+* bindings/js/JSWebGLRenderingContextCustom.cpp:
+(WebCore::toVector): Don't crash if allocation fails.
+* bindings/v8/custom/V8WebGLRenderingContextCustom.cpp:
+(WebCore::jsArrayToFloatArray):
+(WebCore::jsArrayToIntArray):
+
+LayoutTests:
+
+* fast/canvas/webgl/resources/floatArrayUniformShader.vert: Added.
+* fast/canvas/webgl/resources/intArrayUniformShader2.vert: Added.
+* fast/canvas/webgl/uniform-array-length-overflow-expected.txt: Added.
+* fast/canvas/webgl/uniform-array-length-overflow.html: Added.
+

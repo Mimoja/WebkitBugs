@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r80487 | commit-queue@webkit.org | 2011-03-07 21:10:08 +0100 (Mo, 07. Mär 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/dom-method-document-change-expected.txt
+   A /trunk/LayoutTests/fast/dom/dom-method-document-change.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+   M /trunk/Source/WebCore/dom/Node.cpp
+   M /trunk/Source/WebCore/dom/Node.h
+
+2011-03-07  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        Node::checkAddChild and Node::checkReplaceChild shouldn't change the owner document of a node
+        https://bugs.webkit.org/show_bug.cgi?id=55803
+
+        * fast/dom/dom-method-document-change-expected.txt: Added.
+        * fast/dom/dom-method-document-change.html: Added.
+2011-03-07  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        Node::checkAddChild and Node::checkReplaceChild shouldn't change the owner document of a node
+        https://bugs.webkit.org/show_bug.cgi?id=55803
+
+        Test: fast/dom/dom-method-document-change.html
+
+        * dom/ContainerNode.cpp:
+        (WebCore::ContainerNode::insertBefore):
+        (WebCore::ContainerNode::replaceChild):
+        (WebCore::ContainerNode::appendChild):
+        * dom/Node.cpp:
+        (WebCore::Node::checkReplaceChild):
+        (WebCore::Node::checkAddChild):
+        * dom/Node.h:
+

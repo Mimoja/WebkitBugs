@@ -1,0 +1,92 @@
+------------------------------------------------------------------------
+r206006 | beidson@apple.com | 2016-09-16 02:27:11 +0200 (Fr, 16. Sep 2016) | 64 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/history/CachedFrame.cpp
+   M /trunk/Source/WebCore/history/CachedFrame.h
+   M /trunk/Source/WebCore/loader/EmptyClients.h
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+   M /trunk/Source/WebCore/loader/FrameLoader.h
+   M /trunk/Source/WebCore/loader/FrameLoaderClient.h
+   M /trunk/Source/WebCore/loader/FrameLoaderTypes.h
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebFrameLoaderClient.h
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebFrameLoaderClient.mm
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebCoreSupport/WebFrameLoaderClient.cpp
+   M /trunk/Source/WebKit/win/WebCoreSupport/WebFrameLoaderClient.h
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/Scripts/webkit/messages.py
+   M /trunk/Source/WebKit2/Shared/WebCoreArgumentCoders.h
+   M /trunk/Source/WebKit2/UIProcess/PageLoadState.h
+   M /trunk/Source/WebKit2/UIProcess/WebPageProxy.cpp
+   M /trunk/Source/WebKit2/UIProcess/WebPageProxy.h
+   M /trunk/Source/WebKit2/UIProcess/WebPageProxy.messages.in
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebFrameLoaderClient.h
+
+WKWebView.hasOnlySecureContent always returns "YES" after going back to a CachedPage (even if it has http resources).
+<rdar://problem/27681261> and https://bugs.webkit.org/show_bug.cgi?id=162043
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+No new tests (Not possible with current testing infrastructure).
+
+This adds the infrastructure for WebCore to track whether or not a CachedFrame had insecure content at the time
+it was cached, and then to report that back to the client when a CachedPage is restored.
+
+Since "has insecure content" is currently only tracked in the WK2 UI process, that is the only client of this code.
+
+* history/CachedFrame.cpp:
+(WebCore::CachedFrame::setHasInsecureContent):
+* history/CachedFrame.h:
+(WebCore::CachedFrame::hasInsecureContent):
+
+* loader/EmptyClients.h:
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::receivedFirstData):
+(WebCore::FrameLoader::commitProvisionalLoad):
+(WebCore::FrameLoader::dispatchDidCommitLoad):
+* loader/FrameLoader.h:
+
+* loader/FrameLoaderClient.h:
+
+* loader/FrameLoaderTypes.h:
+
+Source/WebKit/mac:
+
+* WebCoreSupport/WebFrameLoaderClient.h:
+* WebCoreSupport/WebFrameLoaderClient.mm:
+(WebFrameLoaderClient::dispatchDidCommitLoad):
+
+Source/WebKit/win:
+
+* WebCoreSupport/WebFrameLoaderClient.cpp:
+(WebFrameLoaderClient::dispatchDidCommitLoad):
+* WebCoreSupport/WebFrameLoaderClient.h:
+
+Source/WebKit2:
+
+* Scripts/webkit/messages.py:
+(headers_for_type): Add a custom header, and alphabetize existing ones.
+
+* Shared/WebCoreArgumentCoders.h: Add EnumTraits for HasInsecureContent.
+
+* UIProcess/PageLoadState.h:
+(WebKit::PageLoadState::committedHasInsecureContent):
+
+* UIProcess/WebPageProxy.cpp:
+(WebKit::WebPageProxy::hasInsecureContent):
+(WebKit::WebPageProxy::didCommitLoadForFrame): If the WebProcess included an existing "HasInsecureContent" value, use it.
+* UIProcess/WebPageProxy.h:
+* UIProcess/WebPageProxy.messages.in:
+
+* WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp:
+(WebKit::WebFrameLoaderClient::dispatchDidCommitLoad):
+(WebKit::WebFrameLoaderClient::savePlatformDataToCachedFrame): Save the "HasInsecureContent" value to the CachedFrame in
+  case we restore it in the future.
+* WebProcess/WebCoreSupport/WebFrameLoaderClient.h:
+

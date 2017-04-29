@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r121491 | pdr@google.com | 2012-06-29 02:13:07 +0200 (Fr, 29. Jun 2012) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/animate-reference-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/animate-reference-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+
+Prevent crash in animate resource handling
+https://bugs.webkit.org/show_bug.cgi?id=90042
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+This patch adds a check that we are in a document before registering animation
+resources and creating a target element in SVGSMILElement. This prevents a crash where
+we would register resources and create the target when we were not in a document
+but fail to deregister / reset the target when we were removed from a document.
+In failing to reset the target, we can crash when trying to deregister resources that
+were not created after being inserted into a document and then removed.
+
+The existence of m_targetResources and registered animation resources is now
+tied to being in a document.
+
+Test: svg/custom/animate-reference-crash.html
+
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::targetElement):
+
+LayoutTests:
+
+* svg/custom/animate-reference-crash-expected.txt: Added.
+* svg/custom/animate-reference-crash.html: Added.
+
+

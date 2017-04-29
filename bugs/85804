@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r126100 | inferno@chromium.org | 2012-08-21 02:09:47 +0200 (Di, 21. Aug 2012) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+
+Yank an unneccessary if added in r125810.
+https://bugs.webkit.org/show_bug.cgi?id=85804
+
+Reviewed by Levi Weintraub.
+
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlock::layoutInlineChildren):
+
+

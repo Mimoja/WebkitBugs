@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r209990 | bfulgham@apple.com | 2016-12-19 20:05:36 +0100 (Mo, 19. Dez 2016) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/html/form-mutate-expected.txt
+   A /trunk/LayoutTests/fast/html/form-mutate.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFormElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFormElement.h
+
+Side effects while restting form elements
+https://bugs.webkit.org/show_bug.cgi?id=165959
+<rdar://problem/29705967>
+
+Reviewed by Anders Carlsson.
+
+Source/WebCore:
+
+JavaScript logic can run while resetting FormElement objects. This can
+lead to unintended side-effets and other unwanted behavior. We should
+protect these elements during the reset.
+
+Test: fast/html/form-mutate.html
+
+* html/HTMLFormElement.cpp:
+(WebCore::HTMLFormElement::HTMLFormElement): Switch to C++11 initialization.
+(WebCore::HTMLFormElement::reset): Protect elements until the reset
+operation is finished.
+(WebCore::HTMLFormElement::resetAssociatedFormControlElements): Added to share
+code with 'resumeFromDocument'.
+(WebCore::HTMLFormElement::resumeFromDocument): Protect elements until the
+reset operation is finished.
+
+LayoutTests:
+
+* fast/html/form-mutate-expected.txt: Added.
+* fast/html/form-mutate.html: Added.
+
+

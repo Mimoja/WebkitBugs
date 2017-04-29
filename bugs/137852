@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r174861 | commit-queue@webkit.org | 2014-10-18 17:54:59 +0200 (Sa, 18. Okt 2014) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/UIProcess/API/gtk/WebKitWebView.cpp
+
+[GTK] Improve documentation of webkit_web_view_get_tls_info()
+https://bugs.webkit.org/show_bug.cgi?id=137852
+
+Patch by Michael Catanzaro <mcatanzaro@igalia.com> on 2014-10-18
+Reviewed by Martin Robinson.
+
+* UIProcess/API/gtk/WebKitWebView.cpp:
+

@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r90568 | jchaffraix@webkit.org | 2011-07-07 19:05:25 +0200 (Do, 07. Jul 2011) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/flexbox/crash-button-input-autofocus-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/crash-button-input-autofocus.html
+   A /trunk/LayoutTests/fast/flexbox/crash-button-keygen-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/crash-button-keygen.html
+   A /trunk/LayoutTests/fast/flexbox/crash-button-relayout-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/crash-button-relayout.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderDeprecatedFlexibleBox.cpp
+
+Patch by Julien Chaffraix <jchaffraix@webkit.org> on 2011-07-07
+Reviewed by David Hyatt.
+
+Partial layout when a flex-box has visibility: collapse
+https://bugs.webkit.org/show_bug.cgi?id=63776
+
+Source/WebCore:
+
+Tests: fast/flexbox/crash-button-input-autofocus.html
+       fast/flexbox/crash-button-keygen.html
+       fast/flexbox/crash-button-relayout.html
+
+The issue is that FlexBoxIterator would skip any child if it has visibility: collapsed.
+However if one of the child is anonymous, it may wrap some other child that would be skipped.
+Now FlexBoxIterator is called during the layout phase and thus some nodes would not relayouted
+as expected.
+
+* rendering/RenderDeprecatedFlexibleBox.cpp:
+(WebCore::FlexBoxIterator::next): When iterating, don't skip anonymous content as there may
+be real content hiding below.
+
+LayoutTests:
+
+Those tests checks some variation of the same underlying issue.
+
+* fast/flexbox/crash-button-input-autofocus-expected.txt: Added.
+* fast/flexbox/crash-button-input-autofocus.html: Added.
+* fast/flexbox/crash-button-keygen-expected.txt: Added.
+* fast/flexbox/crash-button-keygen.html: Added.
+* fast/flexbox/crash-button-relayout-expected.txt: Added.
+* fast/flexbox/crash-button-relayout.html: Added.
+

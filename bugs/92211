@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r139942 | morrita@google.com | 2013-01-17 02:38:20 +0100 (Do, 17. Jan 2013) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ScriptElement.cpp
+
+WebCore::ScriptRunner::timerFired() is reported to crash.
+https://bugs.webkit.org/show_bug.cgi?id=92211
+
+Reviewed by Darin Adler.
+
+This is a speculative fix to address some crash reports.
+Here is my rough guess.
+
+The crash report says there is a PendingScript instance whose m_element is null.
+- It happens only if the instance is created through the default constructor,
+- that could happen if m_pendingAsyncScripts doesn't contains matched PendingScript in ScriptRunner::notifyScriptReady(),
+- that could happen when notifyScriptReady() is called more than once.
+- It turns out that the call site, ScriptElement::notifyFinished(), could be called multiple times since
+  it doesn't remove itself from the CachedResource, which is done separately in ScriptElement::execute().
+- So if notifyFinished() is called before execute(), it could happen
+
+This change added a guard to prevent notifyFinished() from being invoked multiple times.
+We should watch if these crash reports disappear.
+
+No new tests. I couldn't create any repro for this.
+
+* dom/ScriptElement.cpp:
+(WebCore::ScriptElement::notifyFinished):
+
+

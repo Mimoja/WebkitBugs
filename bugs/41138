@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r61750 | oliver@apple.com | 2010-06-24 11:11:04 +0200 (Do, 24. Jun 2010) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/JavaScriptCore/ChangeLog
+   M /trunk/JavaScriptCore/runtime/JSString.cpp
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/js/script-tests/string-replace-3.js
+   M /trunk/LayoutTests/fast/js/string-replace-3-expected.txt
+
+Single character string replacement may replace too many characters
+https://bugs.webkit.org/show_bug.cgi?id=41138
+<rdar://problem/8097496>
+
+Reviewed by Maciej Stachowiak.
+
+Simple fix to stop the rope path of single character replacement
+once the first replacement occurs.
+
+* runtime/JSString.cpp:
+(JSC::JSString::replaceCharacter):
+

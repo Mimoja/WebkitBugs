@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r147765 | zoltan@webkit.org | 2013-04-05 20:13:17 +0200 (Fr, 05. Apr 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/float-object-doesnt-crash-expected.txt
+   A /trunk/LayoutTests/fast/ruby/float-object-doesnt-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.cpp
+
+[regression] Security: Heap-use-after-free in WebCore::RenderBlock::logicalRightOffsetForLine
+https://bugs.webkit.org/show_bug.cgi?id=111594
+
+Patch by Bem Jones-Bey <bjonesbe@adobe.com> on 2013-04-05
+Reviewed by David Hyatt.
+
+Source/WebCore: 
+
+Swapping the bases was causing any floats in the right base to be
+lost, so change the code so that it no longer swaps the bases.
+
+Test: fast/ruby/float-object-doesnt-crash.html
+
+* rendering/RenderRubyRun.cpp:
+(WebCore::RenderRubyRun::removeChild): Don't swap the bases anymore.
+
+LayoutTests: 
+
+Add test to verify that the use-after-free is fixed. Note that it will
+only crash when run under a memory checking tool like ASAN.
+
+* fast/ruby/float-object-doesnt-crash-expected.txt: Added.
+* fast/ruby/float-object-doesnt-crash.html: Added.
+
+
+

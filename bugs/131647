@@ -1,0 +1,55 @@
+------------------------------------------------------------------------
+r167928 | abucur@adobe.com | 2014-04-29 14:38:20 +0200 (Di, 29. Apr 2014) | 41 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/inline-strike-through-expected.txt
+   A /trunk/LayoutTests/fast/regions/inline-strike-through.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineFlowBox.h
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.h
+   M /trunk/Source/WebCore/rendering/RootInlineBox.cpp
+
+Store the containing region map inside the flow thread
+https://bugs.webkit.org/show_bug.cgi?id=131647
+
+Reviewed by Mihnea Ovidenie.
+
+Source/WebCore:
+The patch moves the containing region map inside the flow thread where
+it can be better handled in case the region chain changes and the map
+needs to be cleared.
+
+As a result of this move we are able to also cleanup the lines region
+information of a block flow when it is removed from the tree.
+
+Test: fast/regions/inline-strike-through.html
+
+* rendering/InlineFlowBox.h:
+(WebCore::InlineFlowBox::InlineFlowBox):
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlockFlow::addOverflowFromInlineChildren):
+* rendering/RenderFlowThread.cpp:
+(WebCore::RenderFlowThread::removeFlowChildInfo):
+(WebCore::RenderFlowThread::invalidateRegions):
+(WebCore::RenderFlowThread::removeLineRegionInfo):
+(WebCore::RenderFlowThread::checkLinesConsistency):
+(WebCore::RenderFlowThread::containingRegionMap):
+* rendering/RenderFlowThread.h:
+* rendering/RootInlineBox.cpp:
+(WebCore::containingRegionMap):
+(WebCore::RootInlineBox::~RootInlineBox):
+(WebCore::RootInlineBox::paint):
+(WebCore::RootInlineBox::containingRegion):
+(WebCore::RootInlineBox::clearContainingRegion):
+(WebCore::RootInlineBox::setContainingRegion):
+
+LayoutTests:
+Add a test that verifies the containing region map is properly cleared
+when the region chain changes.
+
+* fast/regions/inline-strike-through-expected.txt: Added.
+* fast/regions/inline-strike-through.html: Added.
+
+

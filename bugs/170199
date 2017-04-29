@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r214501 | antti@apple.com | 2017-03-29 00:48:26 +0200 (Mi, 29. Mär 2017) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/shadow-dom/slot-renderer-teardown-expected.txt
+   A /trunk/LayoutTests/fast/shadow-dom/slot-renderer-teardown.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/style/RenderTreeUpdater.cpp
+
+Missing render tree position invalidation when tearing down renderers for display:contents subtree
+https://bugs.webkit.org/show_bug.cgi?id=170199
+<rdar://problem/31260856>
+
+Reviewed by Zalan Bujtas.
+
+Source/WebCore:
+
+Test: fast/shadow-dom/slot-renderer-teardown.html
+
+* style/RenderTreeUpdater.cpp:
+(WebCore::RenderTreeUpdater::updateElementRenderer):
+
+    Invalidate the render tree position in case we do a teardown for an element without renderer.
+
+LayoutTests:
+
+* fast/shadow-dom/slot-renderer-teardown-expected.txt: Added.
+* fast/shadow-dom/slot-renderer-teardown.html: Added.
+
+
+

@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r131315 | jcivelli@chromium.org | 2012-10-15 19:25:58 +0200 (Mo, 15. Okt 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/mhtml/shared_buffer_bug-expected.txt
+   A /trunk/LayoutTests/mhtml/shared_buffer_bug.mht
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/SharedBuffer.cpp
+
+Calling WebCore::SharedBuffer::append(data, 0) on a shared buffer when
+its current position is at a segment boundary (4096) ends up adding an
+unitialized segment (with uninitialized memory) to the SharedBuffer.
+https://bugs.webkit.org/show_bug.cgi?id=99000
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+* platform/SharedBuffer.cpp:
+(WebCore::SharedBuffer::append):
+
+LayoutTests:
+
+* mhtml/shared_buffer_bug-expected.txt: Added.
+* mhtml/shared_buffer_bug.mht: Added.
+
+

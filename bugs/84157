@@ -1,0 +1,59 @@
+------------------------------------------------------------------------
+r114666 | commit-queue@webkit.org | 2012-04-19 22:15:18 +0200 (Do, 19. Apr 2012) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/floating-ruby-text-expected.png
+   A /trunk/LayoutTests/fast/ruby/floating-ruby-text-expected.txt
+   A /trunk/LayoutTests/fast/ruby/floating-ruby-text.html
+   A /trunk/LayoutTests/fast/ruby/modify-positioned-ruby-text-crash-expected.txt
+   A /trunk/LayoutTests/fast/ruby/modify-positioned-ruby-text-crash.html
+   A /trunk/LayoutTests/fast/ruby/positioned-ruby-text-expected.png
+   A /trunk/LayoutTests/fast/ruby/positioned-ruby-text-expected.txt
+   A /trunk/LayoutTests/fast/ruby/positioned-ruby-text.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSStyleSelector.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.cpp
+
+Positioned children of ruby runs not handled correctly during layout
+https://bugs.webkit.org/show_bug.cgi?id=84157
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-04-19
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+A positioned ruby text causes a problem because it is excluded from
+normal layout by its parent and instead gets layout from
+RenderRubyRun::layoutSpecialExcludedChild; however this means it gets
+skipped over during the loop in RenderBlock::layoutBlockChildren,
+which is where positioned RenderBlocks get added to the appropriate
+positioned object lists. As a result, a dirty positioned ruby text
+will not get layout again unless the RenderRubyRun also needs layout
+which is not guaranteed.
+
+This patch disqualifies ruby text elements from being positioned.
+If it is necessary to support this in future, ruby text layout will
+have to be modified to ensure the renderers are added to the
+appropriate block lists.
+
+* css/CSSStyleSelector.cpp:
+(WebCore::CSSStyleSelector::adjustRenderStyle):
+* rendering/RenderRubyRun.cpp:
+(WebCore::RenderRubyRun::rubyText):
+
+LayoutTests:
+
+* fast/ruby/modify-positioned-ruby-text-crash-expected.txt: Added
+* fast/ruby/modify-positioned-ruby-text-crash.html: Exercises the crash condition
+in but 84157 relating to positioned ruby text. This is being added
+in case support for positioned ruby text is added in future, so that
+we can guard against regression.
+* fast/ruby/floating-ruby-text-expected.png: Added
+* fast/ruby/floating-ruby-text-expected.txt: Added
+* fast/ruby/floating-ruby-text.html: Creates a positioned ruby text. The
+position should be ignored.
+* fast/ruby/positioned-ruby-text-expected.png: Added
+* fast/ruby/positioned-ruby-text-expected.txt: Added
+* fast/ruby/positioned-ruby-text.html: Creates a floating ruby text. The
+float should be ignored.
+

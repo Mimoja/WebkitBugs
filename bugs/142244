@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r181074 | carlosgc@webkit.org | 2015-03-05 11:38:30 +0100 (Do, 05. Mär 2015) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/soup/ResourceHandleSoup.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/Tests/WebKit2Gtk/TestSSL.cpp
+
+[SOUP] Check TLS errors as soon as they are set in the SoupMessage
+https://bugs.webkit.org/show_bug.cgi?id=142244
+
+Reviewed by Sergio Villar Senin.
+
+Source/WebCore:
+
+Connect to the notify::tls-errors signal of SoupMessage to cancel
+the load earlier in case of TLS failure, preventing any private
+data from being sent to the server before the TLS errors are checked.
+
+* platform/network/soup/ResourceHandleSoup.cpp:
+(WebCore::tlsErrorsChangedCallback):
+(WebCore::gotHeadersCallback):
+(WebCore::createSoupMessageForHandleAndRequest):
+
+Tools:
+
+Check that the SSL server doesn't process any request in case of
+TLS errors when the policy is set to FAIL.
+
+* TestWebKitAPI/Tests/WebKit2Gtk/TestSSL.cpp:
+(testTLSErrorsPolicy):
+(testTLSErrorsRedirect):
+(testTLSErrorsHTTPAuth):
+(testLoadFailedWithTLSErrors):
+(testSubresourceLoadFailedWithTLSErrors):
+(httpsServerCallback):
+

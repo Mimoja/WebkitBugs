@@ -1,0 +1,49 @@
+------------------------------------------------------------------------
+r113887 | arv@chromium.org | 2012-04-11 21:21:59 +0200 (Mi, 11. Apr 2012) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-sheet-owner-node-expected.txt
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-sheet-owner-node-link-expected.txt
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-sheet-owner-node-link.html
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-sheet-owner-node.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/StyleElement.cpp
+   M /trunk/Source/WebCore/dom/StyleElement.h
+   M /trunk/Source/WebCore/html/HTMLLinkElement.cpp
+   M /trunk/Source/WebCore/html/HTMLLinkElement.h
+
+StyleElement ownerNode is not cleared correctly
+https://bugs.webkit.org/show_bug.cgi?id=83696
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+When the css text changes in such a way that we remove the sheet of a style element or a link[rel=stylesheet]
+element we need to ensure that the ownerNode of the sheet is cleared. If we don't do this and there is a
+wrapper for the sheet the sheet is kept alive but the ownerNode of the sheet may point to a deleted node.
+
+Tests: fast/dom/StyleSheet/detached-sheet-owner-node-link.html
+       fast/dom/StyleSheet/detached-sheet-owner-node.html
+
+* dom/StyleElement.cpp:
+(WebCore::StyleElement::removedFromDocument):
+(WebCore::StyleElement::clearSheet):
+(WebCore):
+(WebCore::StyleElement::createSheet):
+* dom/StyleElement.h:
+(StyleElement):
+* html/HTMLLinkElement.cpp:
+(WebCore::HTMLLinkElement::process):
+(WebCore::HTMLLinkElement::clearSheet):
+(WebCore):
+* html/HTMLLinkElement.h:
+(HTMLLinkElement):
+
+LayoutTests:
+
+* fast/dom/StyleSheet/detached-sheet-owner-node-expected.txt: Added.
+* fast/dom/StyleSheet/detached-sheet-owner-node-link-expected.txt: Added.
+* fast/dom/StyleSheet/detached-sheet-owner-node-link.html: Added.
+* fast/dom/StyleSheet/detached-sheet-owner-node.html: Added.
+

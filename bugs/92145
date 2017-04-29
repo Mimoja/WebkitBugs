@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r123525 | jchaffraix@webkit.org | 2012-07-24 22:59:14 +0200 (Di, 24. Jul 2012) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/crash-table-section-layoutRows-expected.txt
+   A /trunk/LayoutTests/fast/table/crash-table-section-layoutRows.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+Crash in RenderTableSection::layoutRows
+https://bugs.webkit.org/show_bug.cgi?id=92145
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+The crash came from the insertChildNode logic being confused and choosing the wrong
+renderer for insertion. This is because after r123159, table anonymous wrappers can
+be created as 'inline-table' and wouldn't pass the isAnonymousBlock() check.
+
+This change also aligns the ancestor iteration with RenderBlock::addChildToAnonymousColumnBlocks.
+
+Test: fast/table/crash-table-section-layoutRows.html
+
+* rendering/RenderObjectChildList.cpp:
+(WebCore::RenderObjectChildList::insertChildNode):
+Changed the code to always get the right child. There is no justification to not
+walking up to the |owner|'s direct child in all cases.
+
+LayoutTests:
+
+* fast/table/crash-table-section-layoutRows-expected.txt: Added.
+* fast/table/crash-table-section-layoutRows.html: Added.
+
+

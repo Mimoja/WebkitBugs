@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r146856 | mihnea@adobe.com | 2013-03-26 08:54:26 +0100 (Di, 26. Mär 2013) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/offsetParent-in-flow-thread-expected.txt
+   A /trunk/LayoutTests/fast/regions/offsetParent-in-flow-thread.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+
+[CSSRegions]: Crash accessing offsetParent for contentNodes inside a flow thread
+https://bugs.webkit.org/show_bug.cgi?id=112730
+
+Reviewed by Levi Weintraub.
+
+Source/WebCore:
+
+When computing the offsetParent for an element inside a flow thread, do not
+let the algorithm process past the flow thread boundaries, until we figure out
+the proper behavior. When reaching the flow thread, offsetParent will return 0,
+thus preventing the assert while calling toElement inside Element::offsetParent.
+
+The attached test sets the ground work and will be changed to match the right behavior.
+For now, it makes sure we do not crash or return HTMLDocument as offsetParent for
+elements inside the flow thread.
+
+Test: fast/regions/offsetParent-in-flow-thread.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::offsetParent):
+
+LayoutTests:
+
+* fast/regions/offsetParent-in-flow-thread-expected.txt: Added.
+* fast/regions/offsetParent-in-flow-thread.html: Added.
+
+

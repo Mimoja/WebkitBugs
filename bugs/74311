@@ -1,0 +1,60 @@
+------------------------------------------------------------------------
+r102875 | commit-queue@webkit.org | 2011-12-15 05:19:24 +0100 (Do, 15. Dez 2011) | 47 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/text/international/embed-bidi-style-in-isolate-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/international/multiline-and-object-inside-isolate-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/international/multiline-and-object-inside-isolate-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineIterator.h
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+
+Crash due to incorrect parsing of isolates
+https://bugs.webkit.org/show_bug.cgi?id=74311
+When <bdi> content is wrapped, all hell breaks loose
+https://bugs.webkit.org/show_bug.cgi?id=74396
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-12-14
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+When an isolate was encountered during run layout, the entire isolate
+would be parsed, even if the run started in the middle of the isolate.
+This would sometimes cause parts of the isolate to be added multiple
+times as runs. This patch marks the starting position within the
+isolate so nothing is parsed twice.
+
+This patch changes appendRun() so that when a run is added that is
+inside an isolate, it saves the start position of the run rather than
+the root. This allows constructBidiRuns() to resume parsing the
+isolate from the correct position.
+
+The change to RenderBox partially reverts a previous change I had
+done. It makes sense to screen for the condition, as was previously
+the case.
+
+This patch does not add the test case from 74396 because a separate
+bug is preventing it from rendering correctly.
+
+* rendering/InlineIterator.h:
+(WebCore::addPlaceholderRunForIsolatedInline)
+(WebCore::IsolateTracker::addFakeRunIfNecessary)
+(WebCore::InlineBidiResolver::appendRun)
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlockLineLayout::constructBidiRuns)
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::positionLineBox)
+
+LayoutTests:
+
+Layout test has multiple lines inside an isolate to ensure each run
+is created only once.
+
+The test that is in bug 74396 will have to be added once bug 74489 is
+fixed.
+
+* LayoutTests/fast/text/international/multiline-and-object-inside-isolate-crash-expected.txt: Added
+* LayoutTests/fast/text/international/multiline-and-object-inside-isolate-crash.html: Added
+

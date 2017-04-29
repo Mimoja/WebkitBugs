@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r163599 | jpfau@apple.com | 2014-02-07 03:18:32 +0100 (Fr, 07. Feb 2014) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/SubframeLoader.cpp
+
+loadSubframe can return null in SubframeLoader::loadOrRedirectSubframe
+https://bugs.webkit.org/show_bug.cgi?id=128344
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+* loader/SubframeLoader.cpp:
+(WebCore::SubframeLoader::loadOrRedirectSubframe):
+
+LayoutTests:
+
+* TestExpectations: Unskipped tests that were previously crashing
+

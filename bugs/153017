@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r195004 | bfulgham@apple.com | 2016-01-14 02:29:17 +0100 (Do, 14. Jan 2016) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+   M /trunk/Source/WebCore/loader/ResourceLoader.cpp
+   M /trunk/Source/WebCore/loader/SubresourceLoader.cpp
+   M /trunk/Source/WebCore/platform/network/ResourceResponseBase.cpp
+   M /trunk/Source/WebCore/platform/network/ResourceResponseBase.h
+   M /trunk/Source/WebCore/platform/network/cf/ResourceResponseCFNet.cpp
+   M /trunk/Source/WebCore/platform/network/cocoa/ResourceResponseCocoa.mm
+
+Cross-protocol, cross-site scripting (XPSS) using HTML forms
+https://bugs.webkit.org/show_bug.cgi?id=153017
+<rdar://problem/5873254>
+
+Reviewed by David Kilzer.
+
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::responseReceived): If response HTTP version is 0.9,
+sandbox against script execution and plugins.
+* loader/ResourceLoader.cpp:
+(WebCore::ResourceLoader::didReceiveResponse): Ditto.
+* loader/SubresourceLoader.cpp:
+(WebCore::SubresourceLoader::didReceiveResponse): Ditto.
+* platform/network/ResourceResponseBase.cpp:
+(WebCore::ResourceResponseBase::adopt): Update for HTTP version.
+(WebCore::ResourceResponseBase::copyData): Ditto.
+(WebCore::ResourceResponseBase::httpVersion): Added.
+(WebCore::ResourceResponseBase::setHTTPVersion): Ditto.
+* platform/network/ResourceResponseBase.h:
+(WebCore::ResourceResponseBase::encode): Update for HTTP version.
+(WebCore::ResourceResponseBase::decode): Ditto.
+* platform/network/cf/ResourceResponseCFNet.cpp:
+(WebCore::ResourceResponse::platformLazyInit): Capture HTTP version.
+* platform/network/cocoa/ResourceResponseCocoa.mm:
+(WebCore::ResourceResponse::platformLazyInit): Ditto.
+
+

@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r41825 | ap@webkit.org | 2009-03-19 08:32:40 +0100 (Do, 19. Mär 2009) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/resources/cross-site-progress-events.cgi
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-progress-events-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-progress-events.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/CrossOriginAccessControl.cpp
+   M /trunk/WebCore/xml/XMLHttpRequest.cpp
+   M /trunk/WebCore/xml/XMLHttpRequest.h
+   M /trunk/WebCore/xml/XMLHttpRequestUpload.cpp
+   M /trunk/WebCore/xml/XMLHttpRequestUpload.h
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24676
+        Simple cross-origin requests shouldn't dispatch upload progress events
+
+        Test: http/tests/xmlhttprequest/simple-cross-origin-progress-events.html
+
+        * loader/CrossOriginAccessControl.cpp: (WebCore::passesAccessControlCheck): Added a comment
+        explaining the somewhat unexpected behavior of this function.
+
+        * xml/XMLHttpRequestUpload.cpp: (WebCore::XMLHttpRequestUpload::hasListeners):
+        * xml/XMLHttpRequestUpload.h:
+        Report whether there are any event listeners registered.
+
+        * xml/XMLHttpRequest.h: Added m_uploadEventsAllowed.
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::createRequest): Set m_uploadEventsAllowed flag.
+        (WebCore::XMLHttpRequest::makeSameOriginRequest): Ditto.
+        (WebCore::XMLHttpRequest::makeCrossOriginAccessRequest): Ditto.
+        (WebCore::XMLHttpRequest::makeSimpleCrossOriginAccessRequest): Set request body - it can be
+        non-empty for POST requests.
+        (WebCore::XMLHttpRequest::makeCrossOriginAccessRequestWithPreflight): Set m_uploadEventsAllowed flag.
+        (WebCore::XMLHttpRequest::handleAsynchronousPreflightResult): Ditto.
+        (WebCore::XMLHttpRequest::abort): Only dispatch upload progress events if allowed.
+        (WebCore::XMLHttpRequest::networkError): Ditto.
+        (WebCore::XMLHttpRequest::abortError): Ditto.
+        (WebCore::XMLHttpRequest::didSendData): Ditto.
+
+
+

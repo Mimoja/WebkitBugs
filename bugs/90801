@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r128654 | tsepez@chromium.org | 2012-09-14 23:34:10 +0200 (Fr, 14. Sep 2012) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/beforeload/clear-video-poster-in-beforeload-listener-expected.txt
+   A /trunk/LayoutTests/fast/dom/beforeload/clear-video-poster-in-beforeload-listener.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLEmbedElement.cpp
+   M /trunk/Source/WebCore/html/HTMLObjectElement.cpp
+   M /trunk/Source/WebCore/html/HTMLVideoElement.cpp
+
+ImageLoader can't be cleared when video element poster attribute removed.
+https://bugs.webkit.org/show_bug.cgi?id=96301
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Same problem as in https://bugs.webkit.org/show_bug.cgi?id=90801. We can't
+clear the image loader when the src attribute is cleared, because we might be
+inside a handler called on top of an image loader event dispatch. Instead we
+will rely on the OwnPtr relationship between the Element and the Image Loader
+to limit the lifetime of the loader to that of the element.
+
+Test: fast/dom/beforeload/clear-video-poster-in-beforeload-listener.html
+
+* html/HTMLVideoElement.cpp:
+(WebCore::HTMLVideoElement::parseAttribute):
+Remove permature clearing of m_imageLoader.
+* html/HTMLEmbedElement.cpp:
+(WebCore::HTMLEmbedElement::parseAttribute):
+Remove permature clearing of m_imageLoader.
+* html/HTMLObjectElement.cpp:
+(WebCore::HTMLObjectElement::parseAttribute):
+Remove permature clearing of m_imageLoader.
+
+LayoutTests:
+
+Added test case.
+
+* fast/dom/beforeload/clear-video-poster-in-beforeload-listener-expected.txt: Added.
+* fast/dom/beforeload/clear-video-poster-in-beforeload-listener.html: Added.
+
+

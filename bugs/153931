@@ -1,0 +1,65 @@
+------------------------------------------------------------------------
+r196227 | cdumez@apple.com | 2016-02-07 01:18:40 +0100 (So, 07. Feb 2016) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/frames/sandboxed-iframe-history-denied-expected.txt
+   M /trunk/LayoutTests/http/tests/history/cross-origin-replace-history-object-child-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-call-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-call.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-delete-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-delete.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-getOwnPropertyDescriptor-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-getOwnPropertyDescriptor.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-history-prototype-expected.txt
+   D /trunk/LayoutTests/http/tests/security/cross-frame-access-history-put.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-object-getPrototypeOf-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-object-getPrototypeOf.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-object-setPrototypeOf-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-object-setPrototypeOf.html
+   D /trunk/LayoutTests/http/tests/security/resources/cross-frame-iframe-for-history-put-test.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSHistoryCustom.cpp
+   M /trunk/Source/WebCore/page/DOMWindow.idl
+   M /trunk/Source/WebCore/page/History.idl
+
+Prevent cross-origin access to window.history
+https://bugs.webkit.org/show_bug.cgi?id=153931
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Prevent cross-origin access to window.history to match the specification [1]
+and the behavior of other browsers (tested Firefox and Chrome).
+
+[1] https://html.spec.whatwg.org/multipage/browsers.html#security-window
+
+No new tests, already covered by existing tests that
+were updated in this patch.
+
+* bindings/js/JSHistoryCustom.cpp:
+(WebCore::JSHistory::pushState):
+(WebCore::JSHistory::replaceState):
+(WebCore::JSHistory::state): Deleted.
+* page/DOMWindow.idl:
+* page/History.idl:
+
+LayoutTests:
+
+Update / rebaseline several layout tests now that cross-origin access to
+window.history is prevented.
+
+* fast/frames/sandboxed-iframe-history-denied-expected.txt:
+* http/tests/history/cross-origin-replace-history-object-child-expected.txt:
+* http/tests/security/cross-frame-access-call-expected.txt:
+* http/tests/security/cross-frame-access-call.html:
+* http/tests/security/cross-frame-access-delete-expected.txt:
+* http/tests/security/cross-frame-access-delete.html:
+* http/tests/security/cross-frame-access-history-prototype-expected.txt:
+* http/tests/security/cross-frame-access-history-put.html: Removed.
+* http/tests/security/cross-frame-access-object-getPrototypeOf-expected.txt:
+* http/tests/security/cross-frame-access-object-getPrototypeOf.html:
+* http/tests/security/cross-frame-access-object-setPrototypeOf-expected.txt:
+* http/tests/security/cross-frame-access-object-setPrototypeOf.html:
+* http/tests/security/resources/cross-frame-iframe-for-history-put-test.html: Removed.
+

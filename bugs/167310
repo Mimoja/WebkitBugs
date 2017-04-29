@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r212027 | bfulgham@apple.com | 2017-02-10 03:17:05 +0100 (Fr, 10. Feb 2017) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/html/details-close-modify-open-expected.html
+   A /trunk/LayoutTests/fast/html/details-close-modify-open.html
+   A /trunk/LayoutTests/fast/shadow-dom/slot-remove-mutate-add-expected.html
+   A /trunk/LayoutTests/fast/shadow-dom/slot-remove-mutate-add.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/SlotAssignment.cpp
+
+Details element doesn't work correctly when mutating content between closing and opening
+https://bugs.webkit.org/show_bug.cgi?id=167310
+
+Patch by Antti Koivisto <antti@apple.com> on 2017-02-09
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Tests: fast/html/details-close-modify-open.html
+       fast/shadow-dom/slot-remove-mutate-add.html
+
+* dom/SlotAssignment.cpp:
+(WebCore::SlotAssignment::didChangeSlot):
+
+    Always reset the slot assignment when content is mutated.
+
+LayoutTests:
+
+* fast/html/details-close-modify-open-expected.html: Added.
+* fast/html/details-close-modify-open.html: Added.
+* fast/shadow-dom/slot-remove-mutate-add-expected.html: Added.
+* fast/shadow-dom/slot-remove-mutate-add.html: Added.
+
+

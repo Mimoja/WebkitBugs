@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r78728 | inferno@chromium.org | 2011-02-16 21:01:13 +0100 (Mi, 16. Feb 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/counters/render-tree-reorg-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/counters/render-tree-reorg-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderCounter.cpp
+
+2011-02-16  Carol Szabo  <carol.szabo@nokia.com>
+
+        Reviewed by David Hyatt.
+
+        REGRESSION: Use after free in WebCore::RenderCounter::destroyCounterNode
+        https://bugs.webkit.org/show_bug.cgi?id=54478
+
+        Test: fast/css/counters/render-tree-reorg-crash.html
+
+        * rendering/RenderCounter.cpp:
+        (WebCore::findPlaceForCounter):
+        Fixed typo. The code was still walking sometimes the renderer tree
+        instead of the element tree as intended.
+2011-02-16  Carol Szabo  <carol.szabo@nokia.com>
+
+        Reviewed by David Hyatt.
+
+        REGRESSION: Use after free in WebCore::RenderCounter::destroyCounterNode
+        https://bugs.webkit.org/show_bug.cgi?id=54478
+
+        Added this test, to evidence a bug not previously caught by the
+        Layout tests.
+
+        * fast/css/counters/render-tree-reorg-crash-expected.txt: Added.
+        * fast/css/counters/render-tree-reorg-crash.html: Added.
+
+

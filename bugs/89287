@@ -1,0 +1,71 @@
+------------------------------------------------------------------------
+r133686 | simon.fraser@apple.com | 2012-11-07 01:03:53 +0100 (Mi, 07. Nov 2012) | 50 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/compositing/repaint/composited-document-element.html
+   A /trunk/LayoutTests/fast/backgrounds/background-clip-text-on-body-expected.png
+   A /trunk/LayoutTests/fast/backgrounds/background-clip-text-on-body-expected.txt
+   A /trunk/LayoutTests/fast/backgrounds/background-clip-text-on-body.html
+   A /trunk/LayoutTests/fast/backgrounds/transformed-body-background-expected.png
+   A /trunk/LayoutTests/fast/backgrounds/transformed-body-background-expected.txt
+   A /trunk/LayoutTests/fast/backgrounds/transformed-body-background.html
+   A /trunk/LayoutTests/fast/backgrounds/transformed-body-html-background-expected.png
+   A /trunk/LayoutTests/fast/backgrounds/transformed-body-html-background-expected.txt
+   A /trunk/LayoutTests/fast/backgrounds/transformed-body-html-background.html
+   A /trunk/LayoutTests/fast/backgrounds/transformed-html-body-background-expected.png
+   A /trunk/LayoutTests/fast/backgrounds/transformed-html-body-background-expected.txt
+   A /trunk/LayoutTests/fast/backgrounds/transformed-html-body-background.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderView.cpp
+
+-webkit-background-clip:text produces artifacts when applied to the body and the browser is resized
+https://bugs.webkit.org/show_bug.cgi?id=89287
+
+Reviewed by Beth Dakin.
+
+Source/WebCore:
+
+If the body had -webkit-background-clip: text, we'd fail to paint
+anything behind it, so would see garbage pixels.
+
+Fix by having RenderView::paintBoxDecorations() check for a background-clip of "text"
+on the renderer that paints the root background.
+
+Added some new pixel tests for combinations of html and body transform
+and backgrounds; earlier versions of the patch broke some of these tests.
+
+Tests: fast/backgrounds/background-clip-text-on-body.html
+       fast/backgrounds/transformed-body-background.html
+       fast/backgrounds/transformed-body-html-background.html
+       fast/backgrounds/transformed-html-body-background.html
+
+* rendering/RenderView.cpp:
+(WebCore::rendererObscuresBackground): Broke up the single condition
+into early 'false' returns when possible. We need to also check whether
+the renderer that actually paints the background (which might be the body)
+will fill it; background-clip: text does not.
+(WebCore::RenderView::paintBoxDecorations): Rather than checking firstChild(),
+actually check the root renderer, so that we can reliably get to the renderer
+that mains the root background.
+
+LayoutTests:
+
+Test with -webkit-background-clip: text on the body, which scrolls.
+
+Some additional tests that exercise different combinations of html and
+body transform and background.
+
+* compositing/repaint/composited-document-element.html:
+* fast/backgrounds/background-clip-text-on-body-expected.png: Added.
+* fast/backgrounds/background-clip-text-on-body-expected.txt: Added.
+* fast/backgrounds/background-clip-text-on-body.html: Added.
+* fast/backgrounds/transformed-body-background-expected.png: Added.
+* fast/backgrounds/transformed-body-background-expected.txt: Added.
+* fast/backgrounds/transformed-body-background.html: Added.
+* fast/backgrounds/transformed-body-html-background-expected.png: Added.
+* fast/backgrounds/transformed-body-html-background-expected.txt: Added.
+* fast/backgrounds/transformed-body-html-background.html: Added.
+* fast/backgrounds/transformed-html-body-background-expected.png: Added.
+* fast/backgrounds/transformed-html-body-background-expected.txt: Added.
+* fast/backgrounds/transformed-html-body-background.html: Added.
+

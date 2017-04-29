@@ -1,0 +1,129 @@
+------------------------------------------------------------------------
+r157070 | mrobinson@webkit.org | 2013-10-08 02:36:07 +0200 (Di, 08. Okt 2013) | 97 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+   A /trunk/LayoutTests/mathml/presentation/mo-minus-expected.html
+   A /trunk/LayoutTests/mathml/presentation/mo-minus.html
+   A /trunk/LayoutTests/mathml/presentation/mo-stacked-glyphs-expected.html
+   A /trunk/LayoutTests/mathml/presentation/mo-stacked-glyphs.html
+   A /trunk/LayoutTests/mathml/presentation/mo-stretchy-vertical-bar-expected-mismatch.html
+   A /trunk/LayoutTests/mathml/presentation/mo-stretchy-vertical-bar.html
+   A /trunk/LayoutTests/mathml/very-large-stretchy-operators-expected.txt
+   A /trunk/LayoutTests/mathml/very-large-stretchy-operators.html
+   M /trunk/LayoutTests/platform/gtk/TestExpectations
+   M /trunk/LayoutTests/platform/mac/TestExpectations
+   M /trunk/LayoutTests/platform/win/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/mathml.css
+   M /trunk/Source/WebCore/mathml/MathMLTextElement.cpp
+   M /trunk/Source/WebCore/mathml/MathMLTextElement.h
+   M /trunk/Source/WebCore/rendering/RenderFlexibleBox.h
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLBlock.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLBlock.h
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLFenced.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLOperator.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLOperator.h
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLRoot.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLRoot.h
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLRow.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLRow.h
+
+[MathML] Remove RenderTree modification during layout and refactor the StretchyOp code
+https://bugs.webkit.org/show_bug.cgi?id=121416
+
+Source/WebCore:
+
+Reviewed by David Hyatt.
+
+Tests: mathml/presentation/mo-minus.html
+       mathml/presentation/mo-stacked-glyphs.html
+       mathml/presentation/mo-stretchy-vertical-bar.html
+       mathml/very-large-stretchy-operators.html
+
+MathML stretched operators by both modifying the width of the operator
+and adding children to the operator node in the render tree.
+
+Instead we make the operator width equal to the widest glyph possible that we use
+to represent the operator.  Additionally instead of rendering stretchy glyphs via
+stacked operator pieces in separate render tree nodes, keep only one node for the
+glyph, and use a custom paint method to paint the stacked representation.
+
+With this patch, rendering seems roughly equivalent on Mac and markedly better
+on Linux.
+
+* css/mathml.css:
+Not sure what this line-height:0 was here for, but it caused bugs with the new code
+
+* mathml/MathMLTextElement.cpp:
+(WebCore::MathMLTextElement::attach):
+(WebCore):
+(WebCore::MathMLTextElement::childrenChanged):
+Need to update the anonymous render tree below <mo> elements when their
+children change or when the renderer is first attached.
+
+* mathml/MathMLTextElement.h:
+(MathMLTextElement):
+* rendering/mathml/RenderMathMLBlock.cpp:
+(WebCore::RenderMathMLBlock::RenderMathMLBlock):
+* rendering/mathml/RenderMathMLBlock.h:
+Now that the preferred width doesn't depend on the height, we don't
+need to override computePreferredLogicalWidths at all.
+
+* rendering/mathml/RenderMathMLFenced.cpp:
+(WebCore::RenderMathMLFenced::makeFences):
+(WebCore::RenderMathMLFenced::styleDidChange):
+Need to update the anonymous renderers for the anonymous RenderMathMLOperators.
+
+* rendering/mathml/RenderMathMLOperator.cpp:
+(WebCore::RenderMathMLOperator::expandedStretchHeight):
+Store the non-expanded stretch height so that we can detect when the height
+actually changed.
+
+(WebCore::RenderMathMLOperator::stretchToHeight):
+Only update the style on the anonymous render tree since this is called
+from RenderMathMLRow::layout
+
+(WebCore::RenderMathMLOperator::styleDidChange):
+(WebCore::RenderMathMLOperator::glyphBoundsForCharacter): A helper to get glyph boundaries.
+(WebCore::RenderMathMLOperator::glyphHeightForCharacter): Ditto for glyph width.
+(WebCore::RenderMathMLOperator::advanceForCharacter): The advance is different from the width,
+and we want the width of the operator to be the advance instead of the tight bounding width.
+(WebCore::RenderMathMLOperator::computePreferredLogicalWidths): Use the max of all possible glyphs
+we can use to render this operator.
+(WebCore::RenderMathMLOperator::computeLogicalHeight): Return the stretched operator height, if appropriate.
+(WebCore::RenderMathMLOperator::updateFromElement): We add a child for rendering the non-scaled
+version of the glyph.
+(WebCore::RenderMathMLOperator::firstCharacterForStretching): Helper to figure out what character
+is the character used for stretching operations.
+(WebCore::RenderMathMLOperator::findAcceptableStretchyCharacter): Helper to find an acceptable set
+of glyph pieces for stretching characters.
+(WebCore::RenderMathMLOperator::updateStyle): Resize the operator to the appropriate height and hide
+the child if we are using the stretchy style.
+(WebCore::RenderMathMLOperator::firstLineBoxBaseline):
+(WebCore::RenderMathMLOperator::paintCharacter): Helper to paint a single character component of the
+stretchy glyph.
+(WebCore::RenderMathMLOperator::fillWithExtensionGlyph): Helper to paint the extender glue between
+features of the stretchy glyph.
+(WebCore::RenderMathMLOperator::paint): Properly paint stretchy glyphs.
+* rendering/mathml/RenderMathMLOperator.h: Update method declarations.
+
+LayoutTests:
+
+Patch by Frédéric Wang <fred.wang@free.fr> on 2013-10-04
+Reviewed by David Hyatt.
+
+Add some reftests for stretchy operators.
+
+* TestExpectations: The remaining MathML pixel tests are broken by this patch.
+* LayoutTests/platform/gtk/TestExpectations:
+* LayoutTests/platform/mac/TestExpectations:
+* LayoutTests/platform/win/TestExpectations:
+* mathml/presentation/mo-minus.html: Added.
+* mathml/presentation/mo-stacked-glyphs-expected.html: Added.
+* mathml/presentation/mo-stacked-glyphs.html: Added.
+* mathml/presentation/mo-stretchy-vertical-bar-expected-mismatch.html: Added.
+* mathml/presentation/mo-stretchy-vertical-bar.html: Added.
+* mathml/very-large-stretchy-operators-expected.txt: Added.
+* mathml/very-large-stretchy-operators.html: Added.
+

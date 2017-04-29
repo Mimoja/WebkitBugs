@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r65563 | dimich@chromium.org | 2010-08-18 00:29:42 +0200 (Mi, 18. Aug 2010) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/message-port-context-destroyed-expected.txt
+   A /trunk/LayoutTests/fast/events/message-port-context-destroyed.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/MessagePort.cpp
+   M /trunk/WebCore/dom/ScriptExecutionContext.cpp
+   M /trunk/WebCore/dom/ScriptExecutionContext.h
+
+MessagePort.close() crashes if the owning context was destroyed.
+https://bugs.webkit.org/show_bug.cgi?id=43140
+
+Reviewed by David Levin.
+
+WebCore:
+
+Test: fast/events/message-port-context-destroyed.html
+
+* dom/MessagePort.cpp:
+(WebCore::MessagePort::postMessage):
+(WebCore::MessagePort::start):
+(WebCore::MessagePort::close):
+(WebCore::MessagePort::contextDestroyed):
+Use isEntangled() method to gate various operations on MessagePort. This method also takes into account m_closed bit.
+
+* dom/ScriptExecutionContext.cpp:
+(WebCore::ScriptExecutionContext::stopActiveDOMObjects):
+(WebCore::ScriptExecutionContext::closeMessagePorts):
+* dom/ScriptExecutionContext.h:
+Add closeMessagePorts() method that closes message ports at the same moments when other ActiveDOMObjects are stopped.
+
+LayoutTests:
+
+* fast/events/message-port-context-destroyed-expected.txt: Added.
+* fast/events/message-port-context-destroyed.html: Added.
+

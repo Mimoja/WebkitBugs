@@ -1,0 +1,62 @@
+------------------------------------------------------------------------
+r201717 | beidson@apple.com | 2016-06-06 20:38:34 +0200 (Mo, 06. Jun 2016) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBTransaction.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/client/IDBConnectionProxy.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/client/IDBConnectionProxy.h
+   M /trunk/Source/WebCore/bindings/js/SerializedScriptValue.cpp
+   M /trunk/Source/WebCore/bindings/js/SerializedScriptValue.h
+   M /trunk/Source/WebCore/platform/network/BlobRegistry.h
+   M /trunk/Source/WebCore/platform/network/BlobRegistryImpl.cpp
+   M /trunk/Source/WebCore/platform/network/BlobRegistryImpl.h
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/NetworkProcess/FileAPI/NetworkBlobRegistry.cpp
+   M /trunk/Source/WebKit2/NetworkProcess/FileAPI/NetworkBlobRegistry.h
+   M /trunk/Source/WebKit2/NetworkProcess/NetworkConnectionToWebProcess.cpp
+   M /trunk/Source/WebKit2/WebProcess/FileAPI/BlobRegistryProxy.cpp
+   M /trunk/Source/WebKit2/WebProcess/FileAPI/BlobRegistryProxy.h
+   M /trunk/Source/WebKit2/WebProcess/Network/NetworkProcessConnection.cpp
+   M /trunk/Source/WebKit2/WebProcess/Network/NetworkProcessConnection.h
+
+Modern IDB: Crash seen in IDBConnectionProxy::putOrAdd on GuardMalloc bot
+https://bugs.webkit.org/show_bug.cgi?id=158124
+
+Reviewed by Darin Adler.
+Source/WebCore:
+
+No new tests (Covered by existing test configurations).
+
+* Modules/indexeddb/IDBTransaction.cpp:
+(WebCore::IDBTransaction::putOrAddOnServer):
+
+* Modules/indexeddb/client/IDBConnectionProxy.cpp:
+(WebCore::IDBClient::IDBConnectionProxy::putOrAdd):
+
+* Modules/indexeddb/client/IDBConnectionProxy.h:
+(WebCore::IDBClient::IDBConnectionProxy::callConnectionOnMainThread):
+
+* bindings/js/SerializedScriptValue.cpp:
+(WebCore::SerializedScriptValue::writeBlobsToDiskForIndexedDB):
+* bindings/js/SerializedScriptValue.h:
+
+* platform/network/BlobRegistry.h:
+* platform/network/BlobRegistryImpl.cpp:
+(WebCore::BlobRegistryImpl::writeBlobsToTemporaryFiles):
+* platform/network/BlobRegistryImpl.h:
+
+Source/WebKit2:
+
+* NetworkProcess/FileAPI/NetworkBlobRegistry.cpp:
+(WebKit::NetworkBlobRegistry::writeBlobsToTemporaryFiles):
+* NetworkProcess/FileAPI/NetworkBlobRegistry.h:
+
+* WebProcess/FileAPI/BlobRegistryProxy.cpp:
+(WebKit::BlobRegistryProxy::writeBlobsToTemporaryFiles):
+* WebProcess/FileAPI/BlobRegistryProxy.h:
+
+* WebProcess/Network/NetworkProcessConnection.cpp:
+(WebKit::NetworkProcessConnection::didClose):
+(WebKit::NetworkProcessConnection::writeBlobsToTemporaryFiles):
+* WebProcess/Network/NetworkProcessConnection.h:
+

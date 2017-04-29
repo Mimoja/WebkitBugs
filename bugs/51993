@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r75168 | inferno@chromium.org | 2011-01-06 19:52:51 +0100 (Do, 06. Jan 2011) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/StyleSheet/removed-media-rule-deleted-parent-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/StyleSheet/removed-media-rule-deleted-parent-crash.html
+   A /trunk/LayoutTests/fast/dom/StyleSheet/removed-stylesheet-rule-deleted-parent-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/StyleSheet/removed-stylesheet-rule-deleted-parent-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/css/CSSRuleList.cpp
+   M /trunk/WebCore/css/CSSStyleSheet.cpp
+
+2011-01-06  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        Null out the parent stylesheet pointer when a css rule is removed.
+        https://bugs.webkit.org/show_bug.cgi?id=51993
+
+        Tests: fast/dom/StyleSheet/removed-media-rule-deleted-parent-crash.html
+               fast/dom/StyleSheet/removed-stylesheet-rule-deleted-parent-crash.html
+
+        * css/CSSRuleList.cpp:
+        (WebCore::CSSRuleList::deleteRule):
+        * css/CSSStyleSheet.cpp:
+        (WebCore::CSSStyleSheet::deleteRule):
+2011-01-06  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        Tests that we do not crash when accessing a deleted parent stylesheet
+        from a removed css rule.
+        https://bugs.webkit.org/show_bug.cgi?id=51993
+
+        * fast/dom/StyleSheet/removed-media-rule-deleted-parent-crash-expected.txt: Added.
+        * fast/dom/StyleSheet/removed-media-rule-deleted-parent-crash.html: Added.
+        * fast/dom/StyleSheet/removed-stylesheet-rule-deleted-parent-crash-expected.txt: Added.
+        * fast/dom/StyleSheet/removed-stylesheet-rule-deleted-parent-crash.html: Added.
+
+

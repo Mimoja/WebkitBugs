@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r191636 | achristensen@apple.com | 2015-10-27 21:41:34 +0100 (Di, 27. Okt 2015) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+   M /trunk/Source/WebCore/loader/DocumentLoader.h
+
+Cancel navigation policy checks like we do content policy checks.
+https://bugs.webkit.org/show_bug.cgi?id=150582
+rdar://problem/22077579
+
+Reviewed by Brent Fulgham.
+
+This was verified manually and I'll write a layout test for it soon.
+
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::DocumentLoader):
+(WebCore::DocumentLoader::~DocumentLoader):
+(WebCore::DocumentLoader::willSendRequest):
+(WebCore::DocumentLoader::continueAfterNavigationPolicy):
+(WebCore::DocumentLoader::cancelPolicyCheckIfNeeded):
+* loader/DocumentLoader.h:
+Add a bool to keep track of whether we are waiting for navigation policy checks, like we do with content policy checks.
+Without this check, sometimes callbacks are made to DocumentLoaders that do not exist any more because they do not get
+cancelled by cancelPolicyCheckIfNeeded when detaching from the frame.
+
+
+

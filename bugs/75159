@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r103650 | aboxhall@chromium.org | 2011-12-24 06:41:56 +0100 (Sa, 24. Dez 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/textbox-role-on-contenteditable-crash-expected.txt
+   A /trunk/LayoutTests/accessibility/textbox-role-on-contenteditable-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+
+Fix crash when adding paragraph in contenteditable with role=textbox.
+https://bugs.webkit.org/show_bug.cgi?id=75159
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: accessibility/textbox-role-on-contenteditable-crash.html
+
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::childrenChanged): Use rendererIsEditable() rather than isContentEditable()
+as this method is called during render layouts, and isContentEditable() triggers a layout update, which crashes.
+
+LayoutTests:
+
+* accessibility/textbox-role-on-contenteditable-crash-expected.txt: Added.
+* accessibility/textbox-role-on-contenteditable-crash.html: Added.
+
+

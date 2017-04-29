@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r121508 | pdr@google.com | 2012-06-29 04:36:06 +0200 (Fr, 29. Jun 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGTRefElement.cpp
+
+Add preventative assert in SVGTRefElement
+https://bugs.webkit.org/show_bug.cgi?id=90203
+
+Reviewed by Abhishek Arya.
+
+SVGTRefElement::detachTarget() adds a pending resource via addPendingResource.
+Due to some recent bugs in this area, an assert is being added to prevent
+users from calling detachTarget when not in a document. Doing
+so would create a bug such as in WK90042.
+
+This assert will not fire currently because detachTarget is only called after
+a DOMNodeRemovedFromDocumentEvent event fires, which only comes from
+dispatchChildRemovalEvents when the node is in a document.
+
+* svg/SVGTRefElement.cpp:
+(WebCore::SVGTRefElement::detachTarget):
+
+

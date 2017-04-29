@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r56365 | darin@chromium.org | 2010-03-22 23:57:29 +0100 (Mo, 22. Mär 2010) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/loader/stateobjects/replacestate-in-iframe-expected.txt
+   A /trunk/LayoutTests/fast/loader/stateobjects/replacestate-in-iframe.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/HistoryController.cpp
+
+2010-03-22  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Brady Eidson.
+
+        HistoryController::replaceState() should modify m_currentItem
+        instead of the current HistoryItem of the BackForwardList.
+
+        https://bugs.webkit.org/show_bug.cgi?id=36435
+
+        Test: fast/loader/stateobjects/replacestate-in-iframe.html
+
+        * loader/HistoryController.cpp:
+        (WebCore::HistoryController::replaceState):
+
+
+

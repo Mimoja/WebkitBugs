@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r167079 | bjonesbe@adobe.com | 2014-04-10 20:53:54 +0200 (Do, 10. Apr 2014) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/css3/masking/clip-path-box-shape-on-inline-crash-expected.txt
+   A /trunk/LayoutTests/css3/masking/clip-path-box-shape-on-inline-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLayer.cpp
+
+Invalid cast in WebCore::RenderLayer::setupClipPath
+https://bugs.webkit.org/show_bug.cgi?id=131368
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+Only attempt to clip to a box shape if the renderer being clipped is
+actually a box.
+
+Test: css3/masking/clip-path-box-shape-on-inline-crash.html
+
+* rendering/RenderLayer.cpp:
+(WebCore::RenderLayer::setupClipPath): Add isBox() check.
+
+LayoutTests:
+
+* css3/masking/clip-path-box-shape-on-inline-crash-expected.txt: Added.
+* css3/masking/clip-path-box-shape-on-inline-crash.html: Added.
+
+

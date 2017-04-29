@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r118213 | cfleizach@apple.com | 2012-05-23 20:45:15 +0200 (Mi, 23. Mai 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/content-changed-notification-causes-crash-expected.txt
+   A /trunk/LayoutTests/accessibility/content-changed-notification-causes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityObject.h
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+
+Source/WebCore: Regression(r112694): Crash in WebCore::AXObjectCache::postNotification 
+https://bugs.webkit.org/show_bug.cgi?id=86029
+
+Reviewed by Abhishek Arya.
+
+Test: accessibility/content-changed-notification-causes-crash.html
+
+* accessibility/AccessibilityObject.h:
+(WebCore::AccessibilityObject::isDetached):
+(AccessibilityObject):
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::contentChanged):
+
+LayoutTests: Regression(r112694): Crash in WebCore::AXObjectCache::postNotification
+https://bugs.webkit.org/show_bug.cgi?id=86029
+
+Reviewed by Abhishek Arya.
+
+* accessibility/content-changed-notification-causes-crash-expected.txt: Added.
+* accessibility/content-changed-notification-causes-crash.html: Added.
+
+
+

@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r215451 | mark.lam@apple.com | 2017-04-18 07:55:41 +0200 (Di, 18. Apr 2017) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/regress-170896.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSArray.cpp
+
+JSArray::appendMemcpy() needs to handle copying from Undecided indexing type too.
+https://bugs.webkit.org/show_bug.cgi?id=170896
+<rdar://problem/31651319>
+
+Reviewed by JF Bastien and Keith Miller.
+
+JSTests:
+
+* stress/regress-170896.js: Added.
+
+Source/JavaScriptCore:
+
+* runtime/JSArray.cpp:
+(JSC::JSArray::appendMemcpy):
+
+
+

@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r47829 | eric@webkit.org | 2009-08-27 21:16:26 +0200 (Do, 27. Aug 2009) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/pasteboard/files-during-page-drags-expected.txt
+   A /trunk/LayoutTests/editing/pasteboard/files-during-page-drags.html
+   A /trunk/LayoutTests/editing/pasteboard/resources/files-during-page-drags.js
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/mac/ClipboardMac.mm
+
+2009-08-27  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Adam Barth.
+
+        Add a test to make sure that image/link drags don't contain junk file arrays.
+        https://bugs.webkit.org/show_bug.cgi?id=28755
+
+        * editing/pasteboard/files-during-page-drags-expected.txt: Added.
+        * editing/pasteboard/files-during-page-drags.html: Added.
+        * editing/pasteboard/resources/files-during-page-drags.js: Added.
+2009-08-27  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Adam Barth.
+
+        Fix a typo in files() causing image drags to have junk file arrays.
+        https://bugs.webkit.org/show_bug.cgi?id=28755
+
+        Test: editing/pasteboard/files-during-page-drags.html
+
+        * platform/mac/ClipboardMac.mm:
+        (WebCore::ClipboardMac::files):
+

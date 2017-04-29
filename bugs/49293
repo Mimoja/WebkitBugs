@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r71867 | darin@apple.com | 2010-11-12 02:01:14 +0100 (Fr, 12. Nov 2010) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/JavaScriptCore/ChangeLog
+   M /trunk/JavaScriptCore/wtf/text/StringImpl.cpp
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderText.cpp
+
+2010-11-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Harden some string functions against large lengths
+        https://bugs.webkit.org/show_bug.cgi?id=49293
+
+        * wtf/text/StringImpl.cpp:
+        (WTF::StringImpl::create): Fix incorrect use of PassRefPtr. Check for
+        strlen results that are too large for StringImpl.
+        (WTF::StringImpl::lower): Check for lengths that are too large for
+        int32_t.
+        (WTF::StringImpl::upper): Fix incorrect use of PassRefPtr. Check for
+        lengths that are too large for int32_t.
+        (WTF::StringImpl::secure): Fix incorect use of PassRefPtr. Use unsigned
+        rather than int and int32_t so we can handle any length.
+        (WTF::StringImpl::foldCase): Fix incorrect use of PassRefPtr. Check for
+        lengths that are too large for int32_t.
+        (WTF::StringImpl::find): Check for strlen results that are too large for
+        StringImpl.
+        (WTF::StringImpl::findIgnoringCase): Ditto.
+        (WTF::StringImpl::replace): Fix incorrect use of PassRefPtr.
+        (WTF::StringImpl::createWithTerminatingNullCharacter): Check before
+        incrementing length.
+2010-11-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Harden some string functions against large lengths
+        https://bugs.webkit.org/show_bug.cgi?id=49293
+
+        * rendering/RenderText.cpp:
+        (WebCore::makeCapitalized): Check before incrementing length.
+
+

@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r111492 | xji@chromium.org | 2012-03-21 04:56:05 +0100 (Mi, 21. Mär 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/move-by-word-visually-crash-test-5-expected.txt
+   A /trunk/LayoutTests/editing/selection/move-by-word-visually-crash-test-5.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/visible_units.cpp
+
+Crash introduced in r110965.
+https://bugs.webkit.org/show_bug.cgi?id=81720
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Since word break iterator just keeps a pointer to the UChar array given to the constructor,
+we need to allocate the UChar array deeper in the stack than the iterator.
+
+Test: editing/selection/move-by-word-visually-crash-test-5.html
+
+* editing/visible_units.cpp:
+(WebCore::wordBreakIteratorForMinOffsetBoundary):
+(WebCore::wordBreakIteratorForMaxOffsetBoundary):
+(WebCore::visualWordPosition):
+
+LayoutTests:
+
+* editing/selection/move-by-word-visually-crash-test-5-expected.txt: Added.
+* editing/selection/move-by-word-visually-crash-test-5.html: Added.
+
+

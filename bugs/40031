@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r61050 | simon.fraser@apple.com | 2010-06-12 02:52:38 +0200 (Sa, 12. Jun 2010) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/text/text-style-invalid.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderSVGText.cpp
+   M /trunk/WebCore/rendering/RenderSVGText.h
+
+2010-06-10  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Do not render CSS Styles :first-letter and :first-line in a SVG text element context.
+        https://bugs.webkit.org/show_bug.cgi?id=40031
+
+        Test: svg/text/text-style-invalid.svg
+
+        * rendering/RenderSVGText.cpp:
+        (WebCore::RenderSVGText::firstLineBlock):
+        (WebCore::RenderSVGText::updateFirstLetter):
+        * rendering/RenderSVGText.h:
+

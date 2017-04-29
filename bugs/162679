@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r206523 | bfulgham@apple.com | 2016-09-28 18:34:06 +0200 (Mi, 28. Sep 2016) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/StdLibExtras.h
+
+Correct 'safeCast' implementation
+https://bugs.webkit.org/show_bug.cgi?id=162679
+<rdar://problem/28518189>
+
+Reviewed by Zalan Bujtas.
+
+* wtf/StdLibExtras.h:
+(WTF::safeCast): Use a RELEASE_ASSERT.
+
+

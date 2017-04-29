@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r138657 | inferno@chromium.org | 2013-01-03 00:03:24 +0100 (Do, 03. Jan 2013) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/InsertParagraphSeparatorCommand.cpp
+   M /trunk/Source/WebCore/editing/InsertParagraphSeparatorCommand.h
+
+Crash in WebCore::Element::cloneElementWithoutChildren.
+https://bugs.webkit.org/show_bug.cgi?id=105949
+
+Reviewed by Ryosuke Niwa.
+
+RefPtr |ancestors| vector since its elements can be destroyed from mutation events
+fired in CompositeEditCommand::appendNode.
+
+No new tests. The testcase relies on recursive DOM mutations and does not minimize.
+
+* editing/InsertParagraphSeparatorCommand.cpp:
+(WebCore::InsertParagraphSeparatorCommand::getAncestorsInsideBlock):
+(WebCore::InsertParagraphSeparatorCommand::cloneHierarchyUnderNewBlock):
+(WebCore::InsertParagraphSeparatorCommand::doApply):
+* editing/InsertParagraphSeparatorCommand.h:
+(InsertParagraphSeparatorCommand):
+
+

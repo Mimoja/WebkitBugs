@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r120801 | cdn@chromium.org | 2012-06-20 07:36:27 +0200 (Mi, 20. Jun 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/counters/counter-reset-subtree-insert-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/counters/counter-reset-subtree-insert-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/CounterNode.cpp
+
+Source/WebCore: Fixes condition where inserting a CounterNode subtree which could result in incorrect placement.
+https://bugs.webkit.org/show_bug.cgi?id=88142
+
+Reviewed by Adam Barth.
+
+Test: fast/css/counters/counter-reset-subtree-insert-crash.html
+
+* rendering/CounterNode.cpp:
+(WebCore::CounterNode::insertAfter):
+
+LayoutTests: Add test which inserts a CounterNode subtree which contains reset nodes into another tree.
+https://bugs.webkit.org/show_bug.cgi?id=88142
+
+Reviewed by Adam Barth.
+
+* fast/css/counters/counter-reset-subtree-insert-crash-expected.txt: Added.
+* fast/css/counters/counter-reset-subtree-insert-crash.html: Added.
+
+

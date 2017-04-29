@@ -1,0 +1,101 @@
+------------------------------------------------------------------------
+r157342 | akling@apple.com | 2013-10-12 20:16:42 +0200 (Sa, 12. Okt 2013) | 69 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityMockObject.h
+   M /trunk/Source/WebCore/bindings/js/JSCanvasRenderingContextCustom.cpp
+   M /trunk/Source/WebCore/bindings/js/ScheduledAction.cpp
+   M /trunk/Source/WebCore/css/DeprecatedStyleBuilder.cpp
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/FocusEvent.h
+   M /trunk/Source/WebCore/dom/MouseEvent.h
+   M /trunk/Source/WebCore/dom/Node.cpp
+   M /trunk/Source/WebCore/dom/StyledElement.cpp
+   M /trunk/Source/WebCore/dom/TouchEvent.h
+   M /trunk/Source/WebCore/editing/CompositeEditCommand.h
+   M /trunk/Source/WebCore/html/HTMLObjectElement.cpp
+   M /trunk/Source/WebCore/html/track/AudioTrack.h
+   M /trunk/Source/WebCore/html/track/TextTrack.h
+   M /trunk/Source/WebCore/html/track/VideoTrack.h
+   M /trunk/Source/WebCore/inspector/InspectorCSSAgent.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResourceClientWalker.h
+   M /trunk/Source/WebCore/page/FrameView.h
+   M /trunk/Source/WebCore/rendering/InlineBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGPathData.cpp
+   M /trunk/Source/WebCore/workers/WorkerMessagingProxy.cpp
+   M /trunk/Source/WebCore/xml/XMLHttpRequest.cpp
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/Shared/Plugins/NPObjectProxy.h
+   M /trunk/Source/WebKit2/WebProcess/Plugins/Netscape/NPJSObject.h
+
+Replace static cast ASSERTs with ASSERT_WITH_SECURITY_IMPLICATION
+https://bugs.webkit.org/show_bug.cgi?id=120803
+
+Patch by Jessica Pease <jessica_n_pease@apple.com> on 2013-09-27
+Reviewed by Andreas Kling.
+
+No new tests because we're just changing assertions.
+
+Source/WebCore:
+
+* accessibility/AccessibilityMockObject.h:
+(WebCore::toAccessibilityMockObject):
+* bindings/js/JSCanvasRenderingContextCustom.cpp:
+(WebCore::toJS):
+* bindings/js/ScheduledAction.cpp:
+(WebCore::ScheduledAction::execute):
+* css/CSSGradientValue.cpp:
+(WebCore::CSSGradientValue::image):
+* css/DeprecatedStyleBuilder.cpp:
+(WebCore::ApplyPropertyTextUnderlinePosition::applyValue):
+* dom/Element.cpp:
+(WebCore::Element::elementRareData):
+(WebCore::Element::synchronizeAttribute):
+* dom/FocusEvent.h:
+(WebCore::toFocusEvent):
+* dom/MouseEvent.h:
+(WebCore::toMouseEvent):
+* dom/Node.cpp:
+(WebCore::Node::rareData):
+* dom/StyledElement.cpp:
+(WebCore::StyledElement::ensureMutableInlineStyle):
+* dom/TouchEvent.h:
+(WebCore::toTouchEvent):
+* editing/CompositeEditCommand.h:
+(WebCore::toCompositeEditCommand):
+* html/HTMLObjectElement.cpp:
+(WebCore::HTMLObjectElement::shouldAllowQuickTimeClassIdQuirk):
+* html/track/AudioTrack.h:
+(WebCore::toAudioTrack):
+* html/track/TextTrack.h:
+(WebCore::toTextTrack):
+* html/track/VideoTrack.h:
+(WebCore::toVideoTrack):
+* inspector/InspectorCSSAgent.cpp:
+(WebCore::InspectorCSSAgent::buildObjectForAttributesStyle):
+* loader/cache/CachedResourceClientWalker.h:
+(WebCore::CachedResourceClientWalker::next):
+* page/FrameView.h:
+(WebCore::toFrameView):
+* rendering/InlineBox.cpp:
+(WebCore::InlineBox::root):
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlock::createLineBoxesFromBidiRuns):
+* rendering/svg/SVGPathData.cpp:
+(WebCore::updatePathFromEllipseElement):
+(WebCore::updatePathFromLineElement):
+(WebCore::updatePathFromPolygonElement):
+(WebCore::updatePathFromPolylineElement):
+* workers/WorkerMessagingProxy.cpp:
+(WebCore::WorkerMessagingProxy::startWorkerGlobalScope):
+* xml/XMLHttpRequest.cpp:
+(WebCore::XMLHttpRequest::document):
+
+Source/WebKit2:
+
+* Shared/Plugins/NPObjectProxy.h:
+(WebKit::NPObjectProxy::toNPObjectProxy):
+* WebProcess/Plugins/Netscape/NPJSObject.h:
+(WebKit::NPJSObject::toNPJSObject):
+

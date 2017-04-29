@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r117527 | pkasting@chromium.org | 2012-05-18 04:12:45 +0200 (Fr, 18. Mai 2012) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+
+[chromium] Prune unnecessary failure expectations.
+http://code.google.com/p/chromium/issues/detail?id=11251
+http://code.google.com/p/chromium/issues/detail?id=69181
+http://code.google.com/p/chromium/issues/detail?id=124313
+http://code.google.com/p/chromium/issues/detail?id=124779
+https://bugs.webkit.org/show_bug.cgi?id=80067
+https://bugs.webkit.org/show_bug.cgi?id=84125
+https://bugs.webkit.org/show_bug.cgi?id=85553
+
+Unreviewed, test expectations update.
+
+* platform/chromium/test_expectations.txt:
+
+
+

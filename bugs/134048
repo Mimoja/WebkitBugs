@@ -1,0 +1,49 @@
+------------------------------------------------------------------------
+r174085 | hyatt@apple.com | 2014-09-29 22:54:02 +0200 (Mo, 29. Sep 2014) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/multicol-fieldset-span-changes-expected.txt
+   A /trunk/LayoutTests/fast/multicol/multicol-fieldset-span-changes.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderMultiColumnFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderMultiColumnFlowThread.h
+
+REGRESSION (r168046): Confused column spans when combined with dynamic animations
+https://bugs.webkit.org/show_bug.cgi?id=134048.
+
+Reviewed by Dean Jackson.
+
+Source/WebCore:
+
+Added fast/multicol/multicol-fieldset-span-changes.html
+
+* rendering/RenderMultiColumnFlowThread.cpp:
+(WebCore::RenderMultiColumnFlowThread::processPossibleSpannerDescendant):
+Refactor handling of insertions into the multicolumn flow thread into
+a helper function, processPossibleSpannerDescendant. This makes it easier
+to call the code from more than one place.
+
+(WebCore::RenderMultiColumnFlowThread::flowThreadDescendantInserted):
+Modify the nested columns span shifting code to avoid problems. The
+new code suppresses notifications and does the move of the spanner back
+into the original spot *before* removing the placeholder. This ensures that
+the placeholder parent still exists.
+        
+The stale placeholder is then removed and destroyed after the spanner has been put back
+into place.
+
+(WebCore::RenderMultiColumnFlowThread::handleSpannerRemoval):
+(WebCore::RenderMultiColumnFlowThread::flowThreadRelativeWillBeRemoved):
+Refactor the removal notifications for spanners into a helper function so that it can
+be called to do cleanup from the code that cleans up stale placeholders on a shift.
+
+* rendering/RenderMultiColumnFlowThread.h:
+Modified to add the new helpers.
+
+LayoutTests:
+
+* fast/multicol/multicol-fieldset-span-changes-expected.txt: Added.
+* fast/multicol/multicol-fieldset-span-changes.html: Added.
+
+
+

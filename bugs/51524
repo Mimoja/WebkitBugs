@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r85406 | jschuh@chromium.org | 2011-05-01 06:17:32 +0200 (So, 01. Mai 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/filter-on-svgimage-expected.txt
+   A /trunk/LayoutTests/svg/custom/filter-on-svgimage.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceFilter.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceFilter.h
+
+2011-04-30  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Make RenderSVGResourceFilter take ownership of filter data when painting
+        https://bugs.webkit.org/show_bug.cgi?id=51524
+
+        * svg/custom/filter-on-svgimage-expected.txt: Added.
+        * svg/custom/filter-on-svgimage.svg: Added.
+2011-04-30  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Make RenderSVGResourceFilter take ownership of filter data when painting
+        https://bugs.webkit.org/show_bug.cgi?id=51524
+
+        Test: svg/custom/filter-on-svgimage.svg
+
+        * rendering/svg/RenderSVGResourceFilter.cpp:
+        (WebCore::RenderSVGResourceFilter::removeClientFromCache):
+        (WebCore::RenderSVGResourceFilter::postApplyResource):
+        * rendering/svg/RenderSVGResourceFilter.h:
+        (WebCore::FilterData::FilterData):
+

@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r214362 | cdumez@apple.com | 2017-03-24 19:56:57 +0100 (Fr, 24. Mär 2017) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/CryptographicallyRandomNumber.cpp
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/PlatformMac.cmake
+   M /trunk/Source/WebCore/WebCore.xcodeproj/project.pbxproj
+   M /trunk/Source/WebCore/crypto/CryptoKey.cpp
+   A /trunk/Source/WebCore/crypto/mac/CryptoKeyMac.cpp (von /trunk/Source/WTF/wtf/CryptographicallyRandomNumber.cpp:214361)
+   M /trunk/Source/WebCore/page/Crypto.cpp
+
+Unreviewed, rolling out r214329.
+
+Significantly regressed Speedometer
+
+Reverted changeset:
+
+"window.crypto.getRandomValues() uses the insecure RC4 RNG"
+https://bugs.webkit.org/show_bug.cgi?id=169623
+http://trac.webkit.org/changeset/214329
+

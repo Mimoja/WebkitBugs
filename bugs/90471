@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r123121 | simonjam@chromium.org | 2012-07-19 20:04:48 +0200 (Do, 19. Jul 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/video-poster-cross-origin-crash-expected.txt
+   A /trunk/LayoutTests/http/tests/security/video-poster-cross-origin-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLImageLoader.cpp
+   M /trunk/Source/WebCore/loader/ImageLoader.cpp
+   M /trunk/Source/WebCore/loader/ImageLoader.h
+
+Regression(120096): Protect the element used by ImageLoader until the end of notifyFinished().
+https://bugs.webkit.org/show_bug.cgi?id=90471
+
+Reviewed by Brady Eidson.
+
+Source/WebCore:
+
+Test: http/tests/security/video-poster-cross-origin-crash.html
+
+* html/HTMLImageLoader.cpp:
+(WebCore::HTMLImageLoader::notifyFinished): Hang on to the element until we're done.
+* loader/ImageLoader.cpp:
+(WebCore::ImageLoader::setImage): No behavior change.
+(WebCore):
+(WebCore::ImageLoader::setImageWithoutConsideringPendingLoadEvent): Split off from old setImage, minus calling updatedHasPendingLoadEvent().
+(WebCore::ImageLoader::notifyFinished): Invoke updatedHasPendingLoadEvent when done with cross origin errors.
+* loader/ImageLoader.h:
+(ImageLoader):
+
+LayoutTests:
+
+* http/tests/security/video-poster-cross-origin-crash-expected.txt: Added.
+* http/tests/security/video-poster-cross-origin-crash.html: Added. From fuzzer.
+

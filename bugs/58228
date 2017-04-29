@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r83611 | inferno@chromium.org | 2011-04-12 19:52:56 +0200 (Di, 12. Apr 2011) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/runin/runin-reparent-crash-expected.txt
+   A /trunk/LayoutTests/fast/runin/runin-reparent-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+2011-04-11  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not crash when reparenting a runin to a details block.
+        https://bugs.webkit.org/show_bug.cgi?id=58228
+
+        * fast/runin/runin-reparent-crash-expected.txt: Added.
+        * fast/runin/runin-reparent-crash.html: Added.
+2011-04-11  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Replace insertChildNode with addChild in handleRunIn's reparenting
+        of inlineRunIn to currBlock.
+        https://bugs.webkit.org/show_bug.cgi?id=58228
+
+        Use addChild instead of insertChildNode since it handles 
+        correct placement of the children, esp where we cannot insert
+        anything before the first child. e.g. details tag requires that its
+        first child be a summary child and won't be able to remove child if
+        that is not the case.
+
+        Test: fast/runin/runin-reparent-crash.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::handleRunInChild):
+
+

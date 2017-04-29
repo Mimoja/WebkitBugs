@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r57839 | dglazkov@chromium.org | 2010-04-19 23:15:33 +0200 (Mo, 19. Apr 2010) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Node/fragment-mutation-expected.txt
+   A /trunk/LayoutTests/fast/dom/Node/fragment-mutation.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/ContainerNode.cpp
+   M /trunk/WebCore/dom/Node.cpp
+
+Manipulating document fragment members while adding it to tree may result in loss of tree integrity.
+https://bugs.webkit.org/show_bug.cgi?id=36031
+
+Reviewed by Darin Adler.
+
+WebCore:
+
+Changes the logic of appending/inserting document fragment to first stashing all of its children
+to a vector, then processing the vector. This avoids ghastliness that would be caused by mutation
+events mucking with the document fragment while it's being appended/inserted.
+
+Test: fast/dom/Node/fragment-mutation.html
+
+* dom/ContainerNode.cpp:
+(WebCore::targetNodes): Added method to populate a vector of nodes (targets) to be used in
+    inserting/appending operation.
+(WebCore::ContainerNode::insertBefore): Changed to use vector-based iteration.
+(WebCore::ContainerNode::appendChild): Ditto.
+* dom/Node.cpp:
+(WebCore::Node::checkReplaceChild): Cleaned up comments.
+(WebCore::Node::checkAddChild): Ditto.
+
+LayoutTests:
+
+These tests study various side-effects of DOM mutation events fired during appending/inserting
+document fragments.
+
+* fast/dom/Node/fragment-mutation-expected.txt: Added.
+* fast/dom/Node/fragment-mutation.html: Added.
+

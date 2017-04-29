@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r69043 | jschuh@chromium.org | 2010-10-05 00:25:43 +0200 (Di, 05. Okt 2010) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/remove-from-document-before-load-expected.txt
+   A /trunk/LayoutTests/media/remove-from-document-before-load.html
+   M /trunk/LayoutTests/media/video-click-dblckick-standalone.html
+   M /trunk/LayoutTests/media/video-controls-rendering.html
+   M /trunk/LayoutTests/media/video-transformed.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/Document.cpp
+   M /trunk/WebCore/dom/Document.h
+   M /trunk/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/WebCore/html/HTMLMediaElement.h
+
+2010-10-04  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by James Robinson.
+
+        HTMLMediaElement delayed load should fire asynchronously
+        https://bugs.webkit.org/show_bug.cgi?id=45765
+
+        Test: media/remove-from-document-before-load.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::Document):
+        (WebCore::Document::decrementLoadEventDelayCount):
+        (WebCore::Document::loadEventDelayTimerFired):
+        * dom/Document.h:
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::HTMLMediaElement):
+        (WebCore::HTMLMediaElement::asyncEventTimerFired):
+        (WebCore::HTMLMediaElement::setShouldDelayLoadEvent):
+        * html/HTMLMediaElement.h:
+2010-10-04  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by James Robinson.
+
+        HTMLMediaElement delayed load should fire asynchronously
+        https://bugs.webkit.org/show_bug.cgi?id=45765
+
+        * media/remove-from-document-before-load-expected.txt: Added.
+        * media/remove-from-document-before-load.html: Added.
+        * media/video-click-dblckick-standalone.html:
+        * media/video-controls-rendering.html:
+        * media/video-transformed.html:
+
+

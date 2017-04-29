@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r91957 | abarth@webkit.org | 2011-07-29 01:39:27 +0200 (Fr, 29. Jul 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/inactive-document-with-empty-security-origin-expected.txt
+   A /trunk/LayoutTests/http/tests/security/inactive-document-with-empty-security-origin.html
+   A /trunk/LayoutTests/http/tests/security/resources/post-done-to-opener.html
+   A /trunk/LayoutTests/platform/chromium/http/tests/security/inactive-document-with-empty-security-origin-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/generic/BindingSecurityBase.cpp
+   M /trunk/Source/WebCore/page/SecurityOrigin.cpp
+
+Old code about empty security origins could use a bath
+https://bugs.webkit.org/show_bug.cgi?id=64735
+
+Reviewed by Dimitri Glazkov.
+
+Source/WebCore:
+
+This patch cleans up some old code related to empty security origins.
+It also removes some dodgy code that seems wrong.
+
+Test: http/tests/security/inactive-document-with-empty-security-origin.html
+
+* bindings/generic/BindingSecurityBase.cpp:
+(WebCore::BindingSecurityBase::canAccess):
+* page/SecurityOrigin.cpp:
+(WebCore::SecurityOrigin::isEmpty):
+(WebCore::SecurityOrigin::isSecureTransitionTo):
+(WebCore::SecurityOrigin::toString):
+
+LayoutTests:
+
+* http/tests/security/inactive-document-with-empty-security-origin-expected.txt: Added.
+* http/tests/security/inactive-document-with-empty-security-origin.html: Added.
+* http/tests/security/resources/post-done-to-opener.html: Added.
+
+

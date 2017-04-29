@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r212330 | beidson@apple.com | 2017-02-15 00:26:38 +0100 (Mi, 15. Feb 2017) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentThreadableLoader.cpp
+
+Speculative fix for: Crash in DocumentThreadableLoader::redirectReceived.
+<rdar://problem/29899473> and https://bugs.webkit.org/show_bug.cgi?id=168337
+
+Reviewed by Geoffrey Garen.
+
+No new tests (Unable to find a reproduction).
+
+* loader/DocumentThreadableLoader.cpp:
+(WebCore::DocumentThreadableLoader::loadRequest):
+

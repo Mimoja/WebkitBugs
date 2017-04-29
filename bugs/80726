@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r113670 | inferno@chromium.org | 2012-04-10 05:41:56 +0200 (Di, 10. Apr 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/text-node-attach-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/text-node-attach-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/xml/parser/XMLDocumentParser.cpp
+
+ASSERTION FAILED: !attached() in Node::attach.
+https://bugs.webkit.org/show_bug.cgi?id=80726
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+While parsing XML document, prevent attaching the leaf text node
+back to document, if its parent is not attached.
+
+Test: fast/dom/text-node-attach-crash.xhtml
+
+* xml/parser/XMLDocumentParser.cpp:
+(WebCore::XMLDocumentParser::exitText):
+
+LayoutTests:
+
+* fast/dom/text-node-attach-crash-expected.txt: Added.
+* fast/dom/text-node-attach-crash.xhtml: Added.
+
+

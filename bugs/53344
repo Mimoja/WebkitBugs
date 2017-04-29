@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r77142 | inferno@chromium.org | 2011-01-31 19:28:52 +0100 (Mo, 31. Jan 2011) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/css/counter-crash-expected.txt
+   A /trunk/LayoutTests/http/tests/css/counter-crash.html
+   A /trunk/LayoutTests/http/tests/css/resources/counter-crash-frame-src.html
+
+2011-01-31  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Tests for crash when cloning elements that reference counter nodes.
+        https://bugs.webkit.org/show_bug.cgi?id=53344
+
+        * http/tests/css/counter-crash-expected.txt: Added.
+        * http/tests/css/counter-crash.html: Added.
+        * http/tests/css/resources/counter-crash-frame-src.html: Added.
+
+

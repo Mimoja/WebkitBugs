@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r113284 | simon.fraser@apple.com | 2012-04-05 05:44:19 +0200 (Do, 05. Apr 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/compositing/reflections/remove-reflection-expected.txt
+   A /trunk/LayoutTests/compositing/reflections/remove-reflection.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/GraphicsLayer.cpp
+
+Source/WebCore: https://bugs.webkit.org/show_bug.cgi?id=82994
+
+Reviewed by James Robinson.
+
+Fix an issue when removing elements with reflections from the document.
+
+Test: compositing/reflections/remove-reflection.html
+
+* platform/graphics/GraphicsLayer.cpp:
+(WebCore::GraphicsLayer::willBeDestroyed):
+
+LayoutTests: REGRESSION(112939): compositing/reflections/backface-hidden-reflection.html is crashing
+https://bugs.webkit.org/show_bug.cgi?id=82994
+
+Reviewed by James Robinson.
+
+Test that removes reflected elements.
+
+* compositing/reflections/remove-reflection-expected.txt: Added.
+* compositing/reflections/remove-reflection.html: Added.
+

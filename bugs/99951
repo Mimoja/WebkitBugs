@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r132031 | tkent@chromium.org | 2012-10-22 07:45:34 +0200 (Mo, 22. Okt 2012) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMWindowPagePopup.cpp
+   M /trunk/Source/WebCore/page/DOMWindowPagePopup.h
+   M /trunk/Source/WebCore/platform/Supplementable.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WebPagePopupImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebPagePopupImpl.h
+
+Page popup: Fix crash by events after closing
+https://bugs.webkit.org/show_bug.cgi?id=99951
+
+Reviewed by Hajime Morita.
+
+Source/WebCore:
+
+WebCore should provide a way to uninstall a DOMWindowPagePopup supplement.
+
+No new tests. The bug is timing-dependent.
+
+* page/DOMWindowPagePopup.cpp:
+(WebCore::DOMWindowPagePopup::uninstall):
+Added. Calls Supplementable::removeSupplement.
+* page/DOMWindowPagePopup.h:
+(DOMWindowPagePopup): Declare uninstall.
+* platform/Supplementable.h:
+(WebCore::Supplementable::removeSupplement): Added.
+
+Source/WebKit/chromium:
+
+- We should not handle events after closePopup call.
+- We should uninstall a DOMWindowPagePopup supplement in closePopup.
+
+* src/WebPagePopupImpl.cpp:
+(WebKit::WebPagePopupImpl::WebPagePopupImpl):
+Initialize m_closing.
+(WebKit::WebPagePopupImpl::handleGestureEvent):
+Don't handle events if m_closing.
+(WebKit::WebPagePopupImpl::handleInputEvent): Ditto.
+(WebKit::WebPagePopupImpl::handleKeyEvent): Ditto.
+(WebKit::WebPagePopupImpl::closePopup):
+- Uninstall a DOMWindowPagePopup supplement.
+- Set m_closing.
+* src/WebPagePopupImpl.h:
+(WebPagePopupImpl): Declare m_closing.
+

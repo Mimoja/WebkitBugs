@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r90980 | loislo@chromium.org | 2011-07-14 07:54:15 +0200 (Do, 14. Jul 2011) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/inspector/elements/edit-dom-actions-expected.txt
+   M /trunk/LayoutTests/inspector/elements/edit-dom-actions.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorDOMAgent.cpp
+
+Web Inspector: if you rename an element into the INPUT element the browser will crash.
+https://bugs.webkit.org/show_bug.cgi?id=64292
+
+Reviewed by Joseph Pecoraro.
+
+Source/WebCore:
+
+* inspector/InspectorDOMAgent.cpp:
+(WebCore::InspectorDOMAgent::setNodeName):
+Unnecessary function call copyNonAttributeProperties was removed.
+
+LayoutTests:
+
+* inspector/elements/edit-dom-actions-expected.txt:
+* inspector/elements/edit-dom-actions.html:
+

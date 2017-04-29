@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r74636 | jschuh@chromium.org | 2010-12-24 18:31:15 +0100 (Fr, 24. Dez 2010) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/use-instanceRoot-with-use-removed-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-instanceRoot-with-use-removed.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/svg/SVGElementInstance.cpp
+   M /trunk/WebCore/svg/SVGElementInstance.h
+   M /trunk/WebCore/svg/SVGUseElement.cpp
+   M /trunk/WebCore/svg/SVGUseElement.h
+
+2010-12-24  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        SVGElementInstance::m_useElement should be cleared when use element is removed from document
+        https://bugs.webkit.org/show_bug.cgi?id=51486
+
+        Test: svg/custom/use-instanceRoot-with-use-removed.svg
+
+        * svg/SVGElementInstance.cpp:
+        (WebCore::SVGElementInstance::invalidateAllInstancesOfElement):
+        * svg/SVGElementInstance.h:
+        (WebCore::SVGElementInstance::clearUseElement):
+        * svg/SVGUseElement.cpp:
+        (WebCore::SVGUseElement::removedFromDocument):
+        (WebCore::ShadowTreeUpdateBlocker::if):
+        (WebCore::SVGUseElement::detachInstance):
+        (WebCore::SVGUseElement::detach):
+        * svg/SVGUseElement.h:
+2010-12-24  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        SVGElementInstance::m_useElement should be cleared when use element is removed from document
+        https://bugs.webkit.org/show_bug.cgi?id=51486
+
+        * svg/custom/use-instanceRoot-with-use-removed-expected.txt: Added.
+        * svg/custom/use-instanceRoot-with-use-removed.svg: Added.
+
+

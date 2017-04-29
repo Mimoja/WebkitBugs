@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r59795 | yaar@chromium.org | 2010-05-20 01:59:08 +0200 (Do, 20. Mai 2010) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/text-transform-nontext-node-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/text-transform-nontext-node-crash.xhtml
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderText.cpp
+   M /trunk/WebCore/rendering/RenderTextFragment.cpp
+
+2010-05-19  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by David Hyatt.
+
+        Check that the node is a text node before doing a static cast
+        to a Text class pointer.
+        https://bugs.webkit.org/show_bug.cgi?id=38626    
+
+        Test: fast/text/text-transform-nontext-node-crash.xhtml
+
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::originalText):
+        * rendering/RenderTextFragment.cpp:
+        (WebCore::RenderTextFragment::originalText):
+        (WebCore::RenderTextFragment::previousCharacter):
+2010-05-19  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by David Hyatt.
+
+        Tests that text transformation applied to a non-text node
+        does not result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=38626        
+
+        * fast/text/text-transform-nontext-node-crash-expected.txt: Added.
+        * fast/text/text-transform-nontext-node-crash.xhtml: Added.
+
+

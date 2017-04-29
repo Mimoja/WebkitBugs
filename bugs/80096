@@ -1,0 +1,51 @@
+------------------------------------------------------------------------
+r109688 | morrita@google.com | 2012-03-05 02:39:47 +0100 (Mo, 05. Mär 2012) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/select-generated-content-expected.txt
+   A /trunk/LayoutTests/fast/forms/select-generated-content.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderButton.cpp
+   M /trunk/Source/WebCore/rendering/RenderButton.h
+   M /trunk/Source/WebCore/rendering/RenderDeprecatedFlexibleBox.h
+   M /trunk/Source/WebCore/rendering/RenderMenuList.h
+
+REGRESSION(r108758): Assertion failure in WebCore::RenderMenuList::addChild
+https://bugs.webkit.org/show_bug.cgi?id=80096
+
+Reviewed by Dimitri Glazkov.
+
+Source/WebCore:
+
+After r108758 RenderBlock allowed <select> to have generated
+contents. But it shouldn't. This change stops allowing it again by
+replacing some canHaveChildren() invocations with
+less permissive canHaveGeneratedChildren().
+
+This change also pulls back original canHaveChildren() logic to
+RenderButton to allow <button> to have generated contents.
+
+Then RenderDeprecatedFlexibleBox::buttonText() is morphed to
+more intention revealing canHaveGeneratedChildren().
+
+Test: fast/forms/select-generated-content.html
+
+* rendering/RenderBlock.cpp:
+(WebCore):
+(WebCore::canHaveGeneratedChildren):
+(WebCore::RenderBlock::styleDidChange):
+(WebCore::findFirstLetterBlock):
+(WebCore::RenderBlock::updateFirstLetter):
+* rendering/RenderButton.cpp:
+* rendering/RenderButton.h:
+(RenderButton):
+* rendering/RenderDeprecatedFlexibleBox.h:
+(WebCore::RenderDeprecatedFlexibleBox::canHaveGeneratedChildren):
+* rendering/RenderMenuList.h:
+
+LayoutTests:
+
+* fast/forms/select-generated-content-expected.txt: Added.
+* fast/forms/select-generated-content.html: Added.
+

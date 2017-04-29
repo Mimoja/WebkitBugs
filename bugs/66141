@@ -1,0 +1,55 @@
+------------------------------------------------------------------------
+r94109 | inferno@chromium.org | 2011-08-30 23:22:48 +0200 (Di, 30. Aug 2011) | 33 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/table-before-child-style-update-expected.png
+   A /trunk/LayoutTests/fast/table/table-before-child-style-update-expected.txt
+   A /trunk/LayoutTests/fast/table/table-before-child-style-update.html
+   A /trunk/LayoutTests/fast/table/table-row-before-child-style-update-expected.png
+   A /trunk/LayoutTests/fast/table/table-row-before-child-style-update-expected.txt
+   A /trunk/LayoutTests/fast/table/table-row-before-child-style-update.html
+   M /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-after-child-in-table-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-before-child-in-table-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-block-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-table-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-block-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-table-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+Source/WebCore: Style not updated for table parts in :before, :after content.
+https://bugs.webkit.org/show_bug.cgi?id=66141        
+
+Reviewed by Dave Hyatt.
+
+Tests: fast/table/table-before-child-style-update.html
+       fast/table/table-row-before-child-style-update.html
+
+* rendering/RenderObjectChildList.cpp:
+(WebCore::RenderObjectChildList::updateBeforeAfterContent):
+
+LayoutTests: Style not updated for table parts in :before, :after content.
+https://bugs.webkit.org/show_bug.cgi?id=66141
+
+1. 2 new tests show that the blue and green boxes don't overlap
+after the fix.
+2. update r93794 tests showing that style info is propagated.
+
+Reviewed by Dave Hyatt.
+
+* fast/table/table-before-child-style-update-expected.png: Added.
+* fast/table/table-before-child-style-update-expected.txt: Added.
+* fast/table/table-before-child-style-update.html: Added.
+* fast/table/table-row-before-child-style-update-expected.png: Added.
+* fast/table/table-row-before-child-style-update-expected.txt: Added.
+* fast/table/table-row-before-child-style-update.html: Added.
+* platform/mac/fast/table/table-after-child-in-table-expected.txt:
+* platform/mac/fast/table/table-before-child-in-table-expected.txt:
+* platform/mac/fast/table/table-row-after-child-in-block-expected.txt:
+* platform/mac/fast/table/table-row-after-child-in-table-expected.txt:
+* platform/mac/fast/table/table-row-before-child-in-block-expected.txt:
+* platform/mac/fast/table/table-row-before-child-in-table-expected.txt:
+
+

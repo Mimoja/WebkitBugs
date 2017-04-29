@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r148497 | rniwa@webkit.org | 2013-04-16 09:36:29 +0200 (Di, 16. Apr 2013) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/ApplyStyleCommand.cpp
+
+Potential use after free in ApplyStyleCommand::splitAncestorsWithUnicodeBidi
+https://bugs.webkit.org/show_bug.cgi?id=114664
+
+Reviewed by Oliver Hunt.
+
+Use RefPtr as needed.
+
+No new tests since this bug was discovered by code inspection.
+
+* editing/ApplyStyleCommand.cpp:
+(WebCore::ApplyStyleCommand::splitAncestorsWithUnicodeBidi):
+
+

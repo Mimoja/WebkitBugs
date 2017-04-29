@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r206975 | rniwa@webkit.org | 2016-10-10 04:03:35 +0200 (Mo, 10. Okt 2016) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/NodeList/form-labels-length-expected.txt
+   A /trunk/LayoutTests/fast/dom/NodeList/form-labels-length.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/dom/Node.cpp
+
+REGRESSION(r165103): labels list doesn't get invalidated when other lists are invalidated at document level
+https://bugs.webkit.org/show_bug.cgi?id=163145
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+The bug was caused by Document::invalidateNodeListAndCollectionCaches removing all node lists regardless
+of whether they have been invalidated or not.
+
+Fixed the bug by removing only those node lists that got invalidated via LiveNodeList::invalidateCache.
+
+Test: fast/dom/NodeList/form-labels-length.html
+
+* dom/Document.cpp:
+(WebCore::Document::Document):
+(WebCore::Document::unregisterNodeListForInvalidation): Removed the conditional which allowed removal to
+happen while m_listsInvalidatedAtDocument is empty inside invalidateNodeListAndCollectionCaches.
+* dom/Document.h:
+* dom/Node.cpp:
+(WebCore::Document::invalidateNodeListAndCollectionCaches): Just remove the node lists being invalidated via
+LiveNodeList's invalidateCache, which calls unregisterNodeListForInvalidation, instead of removing them all.
+We make a copy of the list of node lists into a local vector because mutating HashMap while iterating over it
+is not a safe operation.
+
+LayoutTests:
+
+Added a regression test.
+
+* fast/dom/NodeList/form-labels-length-expected.txt: Added.
+* fast/dom/NodeList/form-labels-length.html: Added.
+

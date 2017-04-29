@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r93696 | commit-queue@webkit.org | 2011-08-24 11:07:59 +0200 (Mi, 24. Aug 2011) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorCSSAgent.cpp
+
+Web Inspector: clearPseudoState should retain Element while clearing
+its state.
+https://bugs.webkit.org/show_bug.cgi?id=66790
+
+Patch by Pavel Feldman <pfeldman@google.com> on 2011-08-24
+Reviewed by Yury Semikhatsky.
+
+* inspector/InspectorCSSAgent.cpp:
+(WebCore::InspectorCSSAgent::clearPseudoState):
+

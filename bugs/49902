@@ -1,0 +1,165 @@
+------------------------------------------------------------------------
+r85823 | cdn@chromium.org | 2011-05-05 04:36:17 +0200 (Do, 05. Mai 2011) | 126 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/media/media-svg-crash-expected.txt
+   A /trunk/LayoutTests/fast/media/media-svg-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/EmptyClients.h
+   M /trunk/Source/WebCore/page/ChromeClient.h
+   M /trunk/Source/WebCore/page/brew/ChromeClientBrew.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/AutoFillPopupMenuClient.cpp
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.h
+   M /trunk/Source/WebKit/chromium/src/GraphicsContext3DChromium.cpp
+   M /trunk/Source/WebKit/chromium/src/PlatformBridge.cpp
+   M /trunk/Source/WebKit/chromium/src/StorageNamespaceProxy.cpp
+   M /trunk/Source/WebKit/chromium/src/WebViewImpl.cpp
+   M /trunk/Source/WebKit/efl/ChangeLog
+   M /trunk/Source/WebKit/efl/WebCoreSupport/ChromeClientEfl.h
+   M /trunk/Source/WebKit/gtk/ChangeLog
+   M /trunk/Source/WebKit/gtk/WebCoreSupport/ChromeClientGtk.h
+   M /trunk/Source/WebKit/haiku/ChangeLog
+   M /trunk/Source/WebKit/haiku/WebCoreSupport/ChromeClientHaiku.h
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebChromeClient.h
+   M /trunk/Source/WebKit/mac/WebView/WebFrame.mm
+   M /trunk/Source/WebKit/qt/ChangeLog
+   M /trunk/Source/WebKit/qt/WebCoreSupport/ChromeClientQt.h
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebCoreSupport/WebChromeClient.h
+   M /trunk/Source/WebKit/wince/ChangeLog
+   M /trunk/Source/WebKit/wince/WebCoreSupport/ChromeClientWinCE.h
+   M /trunk/Source/WebKit/wx/ChangeLog
+   M /trunk/Source/WebKit/wx/WebKitSupport/ChromeClientWx.h
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebChromeClient.h
+
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Tests whether a style media specifier inside an svg image will crash.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * fast/media/media-svg-crash-expected.txt: Added.
+        * fast/media/media-svg-crash.html: Added.
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        Test: fast/media/media-svg-crash.html
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyChromeClient::webView):
+        * page/ChromeClient.h:
+        * page/brew/ChromeClientBrew.h:
+        (WebCore::ChromeClientBrew::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * src/AutoFillPopupMenuClient.cpp:
+        (WebKit::AutoFillPopupMenuClient::getWebView):
+        * src/ChromeClientImpl.cpp:
+        (WebKit::ChromeClientImpl::webView):
+        * src/ChromeClientImpl.h:
+        * src/GraphicsContext3DChromium.cpp:
+        (WebCore::GraphicsContext3DInternal::initialize):
+        * src/PlatformBridge.cpp:
+        (WebCore::toWebWidgetClient):
+        * src/StorageNamespaceProxy.cpp:
+        (WebCore::StorageNamespace::sessionStorageNamespace):
+        * src/WebViewImpl.cpp:
+        (WebKit::WebViewImpl::fromPage):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/ChromeClientEfl.h:
+        (WebCore::ChromeClientEfl::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/ChromeClientGtk.h:
+        (WebKit::ChromeClient::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/ChromeClientHaiku.h:
+        (WebCore::ChromeClientHaiku::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/WebChromeClient.h:
+        (WebChromeClient::webView):
+        * WebView/WebFrame.mm:
+        (kit):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/ChromeClientQt.h:
+        (WebCore::ChromeClientQt::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/WebChromeClient.h:
+        (WebChromeClient::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebCoreSupport/ChromeClientWinCE.h:
+        (WebKit::ChromeClientWinCE::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebKitSupport/ChromeClientWx.h:
+        (WebCore::ChromeClientWx::webView):
+2011-05-04  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Expose WebView directly through ChromeClient.
+        https://bugs.webkit.org/show_bug.cgi?id=49902
+
+        * WebProcess/WebCoreSupport/WebChromeClient.h:
+        (WebKit::WebChromeClient::webView):
+

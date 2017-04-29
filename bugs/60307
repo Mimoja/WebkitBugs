@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r90068 | inferno@chromium.org | 2011-06-30 01:58:25 +0200 (Do, 30. Jun 2011) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/block-not-removed-from-parent-lineboxes-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/block-not-removed-from-parent-lineboxes-crash.html
+   A /trunk/LayoutTests/fast/block/child-not-removed-from-parent-lineboxes-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/child-not-removed-from-parent-lineboxes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderReplaced.cpp
+   M /trunk/Source/WebCore/rendering/RenderReplaced.h
+   M /trunk/Source/WebCore/rendering/RenderWidget.cpp
+
+2011-06-23  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by James Robinson.
+
+        In RenderBlock, RenderWidget and RenderReplaced destroy functions,
+        call dirtyLinesFromChangedChild to tell our parent that we are going away.
+        https://bugs.webkit.org/show_bug.cgi?id=60307
+
+        Test: fast/block/child-not-removed-from-parent-lineboxes-crash.html
+              fast/block/block-not-removed-from-parent-lineboxes-crash.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::destroy):
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::destroy):
+        * rendering/RenderReplaced.h:
+        * rendering/RenderWidget.cpp:
+        (WebCore::RenderWidget::destroy):
+2011-06-23  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by James Robinson.
+
+        Tests that we do not crash when failing to remove the linebreak
+        object(widget, block, replaced, etc) from parent block lineboxes. The
+        testcase tries to fuzz over the list of html and svg tags.
+        https://bugs.webkit.org/show_bug.cgi?id=60307
+
+        * fast/block/block-not-removed-from-parent-lineboxes-crash-expected.txt: Added.
+        * fast/block/block-not-removed-from-parent-lineboxes-crash.html: Added.
+        * fast/block/child-not-removed-from-parent-lineboxes-crash-expected.txt: Added.
+        * fast/block/child-not-removed-from-parent-lineboxes-crash.html: Added.
+
+

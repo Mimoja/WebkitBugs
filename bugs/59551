@@ -1,0 +1,67 @@
+------------------------------------------------------------------------
+r85926 | cdn@chromium.org | 2011-05-06 09:33:18 +0200 (Fr, 06. Mai 2011) | 47 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/filters/filter-after-transform-crash-expected.txt
+   A /trunk/LayoutTests/svg/filters/filter-after-transform-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/filters/FEComposite.cpp
+   M /trunk/Source/WebCore/platform/graphics/filters/FEConvolveMatrix.h
+   M /trunk/Source/WebCore/platform/graphics/filters/FEDisplacementMap.h
+   M /trunk/Source/WebCore/platform/graphics/filters/FEFlood.h
+   M /trunk/Source/WebCore/platform/graphics/filters/FELighting.h
+   M /trunk/Source/WebCore/platform/graphics/filters/FETile.h
+   M /trunk/Source/WebCore/platform/graphics/filters/FETurbulence.h
+   M /trunk/Source/WebCore/platform/graphics/filters/FilterEffect.cpp
+   M /trunk/Source/WebCore/platform/graphics/filters/FilterEffect.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceFilter.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceFilterPrimitive.cpp
+
+2011-05-06  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Change maxEffectRect to a FloatRect.
+        https://bugs.webkit.org/show_bug.cgi?id=59551
+
+        * svg/filters/filter-after-transform-crash-expected.txt: Added.
+        * svg/filters/filter-after-transform-crash.svg: Added.
+2011-05-06  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Tests for crash when a transform is applied to certain filters.
+        https://bugs.webkit.org/show_bug.cgi?id=59551
+
+        Test: svg/filters/filter-after-transform-crash.svg
+
+        * platform/graphics/filters/FEComposite.cpp:
+        (WebCore::FEComposite::determineAbsolutePaintRect):
+        * platform/graphics/filters/FEConvolveMatrix.h:
+        (WebCore::FEConvolveMatrix::determineAbsolutePaintRect):
+        * platform/graphics/filters/FEDisplacementMap.h:
+        (WebCore::FEDisplacementMap::determineAbsolutePaintRect):
+        * platform/graphics/filters/FEFlood.h:
+        (WebCore::FEFlood::determineAbsolutePaintRect):
+        * platform/graphics/filters/FELighting.h:
+        (WebCore::FELighting::determineAbsolutePaintRect):
+        * platform/graphics/filters/FETile.h:
+        (WebCore::FETile::determineAbsolutePaintRect):
+        * platform/graphics/filters/FETurbulence.h:
+        (WebCore::FETurbulence::determineAbsolutePaintRect):
+        * platform/graphics/filters/FilterEffect.cpp:
+        (WebCore::isFilterSizeValid):
+        (WebCore::FilterEffect::determineAbsolutePaintRect):
+        (WebCore::FilterEffect::asUnmultipliedImage):
+        (WebCore::FilterEffect::asPremultipliedImage):
+        (WebCore::FilterEffect::copyUnmultipliedImage):
+        (WebCore::FilterEffect::copyPremultipliedImage):
+        (WebCore::FilterEffect::createUnmultipliedImageResult):
+        (WebCore::FilterEffect::createPremultipliedImageResult):
+        * platform/graphics/filters/FilterEffect.h:
+        (WebCore::FilterEffect::maxEffectRect):
+        (WebCore::FilterEffect::setMaxEffectRect):
+        * rendering/svg/RenderSVGResourceFilter.cpp:
+        * rendering/svg/RenderSVGResourceFilterPrimitive.cpp:
+        (WebCore::RenderSVGResourceFilterPrimitive::determineFilterPrimitiveSubregion):
+

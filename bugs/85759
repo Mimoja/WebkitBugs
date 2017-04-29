@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r116325 | inferno@chromium.org | 2012-05-07 20:27:21 +0200 (Mo, 07. Mai 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-next-sibling-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-next-sibling-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash in RenderBlock::updateFirstLetterStyle.
+https://bugs.webkit.org/show_bug.cgi?id=85759
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Test: fast/css-generated-content/first-letter-next-sibling-crash.html
+
+RenderBlock::removeChild can bring up the children from last single anonymous block,
+causing |nextSibling| in RenderBlock::updateFirstLetterStyle to go stale. We prevent
+this by removing the child safely using removeChildNode before destroying it.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::updateFirstLetterStyle):
+
+LayoutTests:
+
+* fast/css-generated-content/first-letter-next-sibling-crash-expected.txt: Added.
+* fast/css-generated-content/first-letter-next-sibling-crash.html: Added.
+
+

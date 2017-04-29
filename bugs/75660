@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r105380 | tsepez@chromium.org | 2012-01-19 06:56:11 +0100 (Do, 19. Jan 2012) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   A /trunk/Source/WebKit/chromium/public/WebContentSecurityPolicy.h
+   M /trunk/Source/WebKit/chromium/public/WebSharedWorker.h
+   M /trunk/Source/WebKit/chromium/src/AssertMatchingEnums.cpp
+   M /trunk/Source/WebKit/chromium/src/SharedWorkerRepository.cpp
+   M /trunk/Source/WebKit/chromium/src/WebSharedWorkerImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebSharedWorkerImpl.h
+
+Pass content-security-policy directive into shared workers.
+https://bugs.webkit.org/show_bug.cgi?id=75660
+
+Reviewed by Darin Fisher.
+
+* public/WebContentSecurityPolicy.h: Added.
+* public/WebSharedWorker.h:
+(WebKit::WebSharedWorker::startWorkerContext):
+* src/AssertMatchingEnums.cpp:
+* src/SharedWorkerRepository.cpp:
+(WebCore::SharedWorkerScriptLoader::notifyFinished):
+* src/WebSharedWorkerImpl.cpp:
+(WebKit::WebSharedWorkerImpl::startWorkerContext):
+* src/WebSharedWorkerImpl.h:
+
+

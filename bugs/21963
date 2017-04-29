@@ -1,0 +1,57 @@
+------------------------------------------------------------------------
+r38065 | abarth@webkit.org | 2008-11-01 10:31:42 +0100 (Sa, 01. Nov 2008) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/resources/xsl-using-document-redirect.xsl
+   A /trunk/LayoutTests/http/tests/security/resources/xsl-using-external-entity-redirect.xsl
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-xsl-document-redirect-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-xsl-document-redirect.xml
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-xsl-external-entity-redirect-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-xsl-external-entity-redirect.xml
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/XMLTokenizerLibxml2.cpp
+   M /trunk/WebCore/loader/DocLoader.cpp
+   M /trunk/WebCore/loader/DocLoader.h
+   M /trunk/WebCore/xml/XSLTProcessor.cpp
+
+WebCore:
+
+2008-11-01  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        Be sure to check the final URLs of requested resources to make sure we
+        don't get fooled by HTTP redirects.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21963
+
+        Tests: http/tests/security/xss-DENIED-xsl-document-redirect.xml
+               http/tests/security/xss-DENIED-xsl-external-entity-redirect.xml
+
+        * dom/XMLTokenizerLibxml2.cpp:
+        (WebCore::openFunc):
+        * loader/DocLoader.cpp:
+        (WebCore::DocLoader::canRequest):
+        (WebCore::DocLoader::requestResource):
+        * loader/DocLoader.h:
+        * xml/XSLTProcessor.cpp:
+        (WebCore::docLoaderFunc):
+
+LayoutTests:
+
+2008-11-01  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        Test that we properly block non-same-origin redirects for these
+        esoteric loads.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21963
+
+        * http/tests/security/resources/xsl-using-document-redirect.xsl: Added.
+        * http/tests/security/resources/xsl-using-external-entity-redirect.xsl: Added.
+        * http/tests/security/xss-DENIED-xsl-document-redirect-expected.txt: Copied from LayoutTests/http/tests/security/xss-DENIED-xsl-document-expected.txt.
+        * http/tests/security/xss-DENIED-xsl-document-redirect.xml: Added.
+        * http/tests/security/xss-DENIED-xsl-external-entity-redirect-expected.txt: Copied from LayoutTests/http/tests/security/xss-DENIED-xsl-external-entity-expected.txt.
+        * http/tests/security/xss-DENIED-xsl-external-entity-redirect.xml: Added.
+

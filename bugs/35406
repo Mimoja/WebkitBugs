@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r55262 | ap@apple.com | 2010-02-26 01:22:34 +0100 (Fr, 26. Feb 2010) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/JavaScriptCore/ChangeLog
+   M /trunk/JavaScriptCore/JavaScriptCore.exp
+   M /trunk/JavaScriptCore/runtime/JSArray.cpp
+   M /trunk/JavaScriptCore/runtime/JSArray.h
+   M /trunk/JavaScriptCore/runtime/RegExpConstructor.cpp
+   M /trunk/JavaScriptCore/runtime/RegExpMatchesArray.h
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/java/array-sort-expected.txt
+   A /trunk/LayoutTests/java/array-sort.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bridge/runtime_array.cpp
+   M /trunk/WebCore/bridge/runtime_array.h
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=35406
+        <rdar://problem/6945502> Make generic array methods work with JavaArray
+
+        Test: java/array-sort.html
+
+        Made RuntimeArray inherit from JSArray, keeping the promise given in ClassInfo.
+
+        * bridge/runtime_array.cpp:
+        (JSC::RuntimeArray::RuntimeArray):
+        (JSC::RuntimeArray::~RuntimeArray):
+        * bridge/runtime_array.h:
+        (JSC::RuntimeArray::classInfo):
+        (JSC::RuntimeArray::getConcreteArray):
+
+
+

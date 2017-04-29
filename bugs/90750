@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r122278 | pdr@google.com | 2012-07-11 01:36:07 +0200 (Mi, 11. Jul 2012) | 43 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/dynamic-modify-attributename-crash2-expected.txt
+   A /trunk/LayoutTests/svg/animations/dynamic-modify-attributename-crash2.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.cpp
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+
+Crash due to SVG animation element not removed from target (before reset)
+https://bugs.webkit.org/show_bug.cgi?id=90750
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Previously we were not removing an animation element from
+SVGDocumentExtensions::m_animatedElements which led to a crash.
+This change properly removes animation elements in resetTargetElement
+which both fixes this bug and will prevent others from hitting it in
+the future.
+
+Test: svg/animations/dynamic-modify-attributename-crash2.svg
+
+* svg/SVGDocumentExtensions.cpp:
+(WebCore::SVGDocumentExtensions::removeAllAnimationElementsFromTarget):
+
+removeAllAnimationElementsFromTarget now adds all the animation elements
+to a vector and iterates over it because the changes to resetTargetElement
+would have caused us to modify the underlying hashset as we iterated. Note that
+before we deleted animationElementsForTarget in removeAllAnimationElementsFromTarget
+but that logic is now handled in removeAnimationElementFromTarget which is called
+during resetTargetElement.
+
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::removedFrom):
+
+Because of the changes in resetTargetElement, removedFrom was able to be
+refactored. This patch changes removedFrom to call resetTargetElement rather
+than have duplicated logic. There is a very small change in logic here:
+animationAttributeChanged() is now called in removedFrom().
+
+(WebCore::SVGSMILElement::resetTargetElement):
+
+resetTargetElement now fully resets the target, including removing it from
+m_animatedElements. This will prevent future instances of this bug.
+
+LayoutTests:
+
+* svg/animations/dynamic-modify-attributename-crash2-expected.txt: Added.
+* svg/animations/dynamic-modify-attributename-crash2.svg: Added.
+
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r144135 | mark.lam@apple.com | 2013-02-27 03:51:44 +0100 (Mi, 27. Feb 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webdatabase/SQLTransactionBackend.cpp
+
+SQLTransactionBackend::doCleanup() should not nullify its current
+statement and transaction error fields.
+https://bugs.webkit.org/show_bug.cgi?id=110826.
+
+Reviewed by Geoffrey Garen.
+
+The reason for this is because the frontend SQLTransaction may have
+tasks that are already registered via callOnMainThread(), and may
+invoke transaction state functions that access these objects in the
+SQLTransactionBackend. This proves to be problematic if the database
+was interrupted resulting in doCleanup() being called concurrently
+while those states are executing.
+
+Instead, we leave their clean up to the SQLTransactionBackend destructor
+which is guaranteed to only be called when the SQLTransaction is also
+destructing i.e. these objects are no longer needed.
+
+No new tests.
+
+* Modules/webdatabase/SQLTransactionBackend.cpp:
+(WebCore::SQLTransactionBackend::doCleanup):
+
+
+

@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r58872 | aestes@apple.com | 2010-05-06 10:51:41 +0200 (Do, 06. Mai 2010) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/popup-allowed-from-gesture-initiated-form-submit-expected.txt
+   A /trunk/LayoutTests/fast/events/popup-allowed-from-gesture-initiated-form-submit.html
+   A /trunk/LayoutTests/fast/events/resources/popup-allowed-from-gesture-initiated-form-submit-target.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/ScriptController.cpp
+   M /trunk/WebCore/bindings/js/ScriptController.h
+
+WebCore: Allow forms submitting to target="_blank" to open popups if the submission
+originated from a user gesture.
+
+Reviewed by Maciej Stachowiak.
+
+https://bugs.webkit.org/show_bug.cgi?id=37335
+<rdar://problem/7884980>
+
+Test: fast/events/popup-allowed-from-gesture-initiated-form-submit.html
+
+* bindings/js/ScriptController.cpp:
+(WebCore::ScriptController::processingUserGesture): If no DOM event is
+being processed, consult UserGestureIndicator to determine return value.
+* bindings/js/ScriptController.h: Moved the logic of processingUserGestureEvent()
+into processingUserGesture().
+
+LayoutTests: Add a test to ensure popups are allowed when the user submits a form with target="_blank".
+
+Reviewed by Maciej Stachowiak.
+
+https://bugs.webkit.org/show_bug.cgi?id=37335
+<rdar://problem/7884980>
+
+* fast/events/popup-allowed-from-gesture-initiated-form-submit-expected.txt: Added.
+* fast/events/popup-allowed-from-gesture-initiated-form-submit.html: Added.
+* fast/events/resources/popup-allowed-from-gesture-initiated-form-submit-target.html: Added.
+
+
+

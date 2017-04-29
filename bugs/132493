@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r168464 | rego@igalia.com | 2014-05-08 10:05:58 +0200 (Do, 08. Mai 2014) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+   A /trunk/LayoutTests/fast/regions/selection/crash-select-all-expected.txt
+   A /trunk/LayoutTests/fast/regions/selection/crash-select-all.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderView.cpp
+
+REGRESSION (r167652): SelectionState is not set properly for non leaf objects in pages with regions
+https://bugs.webkit.org/show_bug.cgi?id=132493
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+Non selection leaf elements were not included in the selection ranges,
+that was causing that their selection state was not set properly and
+when one of the element was removed as it was marked as SelectionNone
+current selection was not removed.
+
+Due to this fix, the regression detected in bug #131982 arose again.
+Reverted changes from r167675 and reopened bug as previous fix was not
+right. Updated TestExpectations accordingly.
+
+Test: fast/regions/selection/crash-select-all.html
+
+* rendering/RenderView.cpp:
+(WebCore::RenderView::splitSelectionBetweenSubtrees): We need to include
+non selection leafs in the range, otherwise we won't be marking
+selection state of some elements properly.
+
+LayoutTests:
+* TestExpectations: Marked
+fast/regions/cssom/region-range-for-box-crash.html as crashing on
+debug due to regression detected in bug #131982.
+* fast/regions/selection/crash-select-all-expected.txt: Added.
+* fast/regions/selection/crash-select-all.html: Added.
+
+

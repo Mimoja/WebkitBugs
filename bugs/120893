@@ -1,0 +1,102 @@
+------------------------------------------------------------------------
+r157341 | akling@apple.com | 2013-10-12 20:03:39 +0200 (Sa, 12. Okt 2013) | 70 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/BumpPointerAllocator.h
+   M /trunk/Source/WTF/wtf/FastMalloc.cpp
+   M /trunk/Source/WTF/wtf/StringPrintStream.cpp
+   M /trunk/Source/WTF/wtf/dtoa/utils.h
+   M /trunk/Source/WTF/wtf/text/WTFString.cpp
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBKeyPath.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/leveldb/IDBLevelDBCoding.cpp
+   M /trunk/Source/WebCore/bindings/js/JSCSSStyleDeclarationCustom.cpp
+   M /trunk/Source/WebCore/css/CSSFontSelector.cpp
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+   M /trunk/Source/WebCore/html/HTMLCollection.cpp
+   M /trunk/Source/WebCore/html/HTMLFontElement.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLParserIdioms.cpp
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.h
+   M /trunk/Source/WebCore/platform/graphics/StringTruncator.cpp
+   M /trunk/Source/WebCore/platform/graphics/TextRun.h
+   M /trunk/Source/WebCore/platform/text/BidiRunList.h
+   M /trunk/Source/WebCore/rendering/svg/SVGInlineTextBox.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGTextChunkBuilder.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGTextLayoutEngine.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGTextQuery.cpp
+   M /trunk/Source/WebCore/svg/SVGAnimationElement.cpp
+   M /trunk/Source/WebCore/svg/SVGPathByteStreamSource.h
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/Shared/Plugins/PluginQuirks.h
+
+Replace bounds checking ASSERTs with ASSERT_WITH_SECURITY_IMPLICATION
+https://bugs.webkit.org/show_bug.cgi?id=120893
+
+Patch by Jessica Pease <jessica_n_pease@apple.com> on 2013-09-06
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+* Modules/indexeddb/IDBKeyPath.cpp:
+(WebCore::IDBKeyPathLexer::lex):
+* Modules/indexeddb/IDBLevelDBCoding.cpp:
+(WebCore::IDBLevelDBCoding::compareEncodedIDBKeys):
+* bindings/js/JSCSSStyleDeclarationCustom.cpp:
+(WebCore::cssPropertyIDForJSCSSPropertyName):
+* css/CSSFontSelector.cpp:
+(WebCore::compareFontFaces):
+* css/CSSParser.cpp:
+(WebCore::CSSParser::rewriteSpecifiers):
+* html/HTMLCollection.cpp:
+(WebCore::traverseMatchingElementsForwardToOffset):
+(WebCore::LiveNodeListBase::traverseChildNodeListForwardToOffset):
+(WebCore::HTMLCollection::traverseForwardToOffset):
+* html/HTMLFontElement.cpp:
+(WebCore::parseFontSize):
+* html/parser/HTMLParserIdioms.cpp:
+(WebCore::parseHTMLIntegerInternal):
+(WebCore::parseHTMLNonNegativeIntegerInternal):
+* inspector/InspectorStyleSheet.h:
+(WebCore::InspectorStyleProperty::setRawTextFromStyleDeclaration):
+* platform/graphics/StringTruncator.cpp:
+(WebCore::centerTruncateToBuffer):
+(WebCore::rightTruncateToBuffer):
+(WebCore::truncateString):
+* platform/graphics/TextRun.h:
+(WebCore::TextRun::subRun):
+* platform/text/BidiRunList.h:
+(WebCore::::reverseRuns):
+* rendering/svg/SVGInlineTextBox.cpp:
+(WebCore::SVGInlineTextBox::selectionRectForTextFragment):
+(WebCore::SVGInlineTextBox::mapStartEndPositionsIntoFragmentCoordinates):
+* rendering/svg/SVGTextChunkBuilder.cpp:
+(WebCore::SVGTextChunkBuilder::buildTextChunks):
+* rendering/svg/SVGTextLayoutEngine.cpp:
+(WebCore::SVGTextLayoutEngine::currentLogicalCharacterMetrics):
+* rendering/svg/SVGTextQuery.cpp:
+(WebCore::SVGTextQuery::mapStartEndPositionsIntoFragmentCoordinates):
+* svg/SVGAnimationElement.cpp:
+(WebCore::SVGAnimationElement::currentValuesForValuesAnimation):
+* svg/SVGPathByteStreamSource.h:
+(WebCore::SVGPathByteStreamSource::readType):
+
+Source/WebKit2:
+
+* Shared/Plugins/PluginQuirks.h:
+(WebKit::PluginQuirks::add):
+
+Source/WTF:
+
+* wtf/BumpPointerAllocator.h:
+(WTF::BumpPointerPool::ensureCapacity):
+(WTF::BumpPointerPool::alloc):
+(WTF::BumpPointerPool::ensureCapacityCrossPool):
+* wtf/FastMalloc.cpp:
+(WTF::TCMalloc_ThreadCache::CreateCacheIfNecessary):
+* wtf/StringPrintStream.cpp:
+(WTF::StringPrintStream::increaseSize):
+* wtf/dtoa/utils.h:
+(WTF::double_conversion::BufferReference::SubBufferReference):
+* wtf/text/WTFString.cpp:
+(WTF::String::fromUTF8):
+

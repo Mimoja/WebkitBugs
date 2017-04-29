@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r55167 | enrica@apple.com | 2010-02-23 22:31:11 +0100 (Di, 23. Feb 2010) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/insert-list-xml-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/insert-list-xml.xhtml
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/Element.cpp
+   M /trunk/WebCore/dom/Element.h
+   M /trunk/WebCore/editing/markup.cpp
+   M /trunk/WebCore/html/HTMLElement.cpp
+
+WebCore: Crash in createContextualFragment when inserting a list in a non HTML document.
+<rdar://problem/7666670>
+https://bugs.webkit.org/show_bug.cgi?id=35305
+        
+Reviewed by Darin Adler.
+
+createFragmentFromMarkup did not handle correctly the case where documentElement is
+not an HTMLElement. The static cast to HTMLElement was causing createContextualFragment to
+crash.
+        
+Test: editing/execCommand/insert-list-xml.xhtml
+
+* dom/Element.cpp:
+(WebCore::Element::createContextualFragment): Added.
+* dom/Element.h: Added createContextualFragment virtual function.
+* editing/markup.cpp:
+(WebCore::createFragmentFromMarkup): Removed static cast to HTMLElement.
+* html/HTMLElement.cpp:
+(WebCore::HTMLElement::createContextualFragment): Modified to perform only checks
+that are specific for an HTMLElement object. The rest of the logic has been moved to the
+corresponding method in the Element class.
+
+LayoutTests: Crash in createContextualFragment when inserting a list in a non HTML document.
+<rdar://problem/7666670>
+https://bugs.webkit.org/show_bug.cgi?id=35305
+
+Reviewed by Darin Adler.
+
+* editing/execCommand/insert-list-xml-expected.txt: Added.
+* editing/execCommand/insert-list-xml.xhtml: Added.
+
+
+

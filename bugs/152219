@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r194016 | zalan@apple.com | 2015-12-13 17:18:07 +0100 (So, 13. Dez 2015) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/positioning/crash-when-positioned-inline-has-positioned-child-expected.txt
+   A /trunk/LayoutTests/fast/block/positioning/crash-when-positioned-inline-has-positioned-child.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+   M /trunk/Source/WebCore/rendering/RenderInline.h
+
+Clean up absolute positioned map properly.
+https://bugs.webkit.org/show_bug.cgi?id=152219
+rdar://problem/23861165
+
+Reviewed by Simon Fraser.
+
+We insert positioned renderers into a static map (RenderBlock::gPositionedDescendantsMap) to keep track of them.
+Since this static map is at block level, (positioned)inline renderers use their containing block to store
+their positioned descendants.
+This patch ensures that when an inline element can no longer hold positioned children, we remove them from
+the inline's containing block's map. -unless the container itself can hold positioned renderers(see RenderElement::canContainAbsolutelyPositionedObjects).
+
+Source/WebCore:
+
+Test: fast/block/positioning/crash-when-positioned-inline-has-positioned-child.html
+
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::styleWillChange):
+* rendering/RenderInline.h:
+
+LayoutTests:
+
+* fast/block/positioning/crash-when-positioned-inline-has-positioned-child-expected.txt: Added.
+* fast/block/positioning/crash-when-positioned-inline-has-positioned-child.html: Added.
+

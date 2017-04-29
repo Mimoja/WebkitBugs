@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r131640 | commit-queue@webkit.org | 2012-10-17 23:09:45 +0200 (Mi, 17. Okt 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/gamepad/gamepad-out-of-range-crasher-expected.txt
+   A /trunk/LayoutTests/gamepad/gamepad-out-of-range-crasher.html
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/chromium/TestRunner/GamepadController.cpp
+
+Integer overflows/underflows in all Gamepad controller api calls.
+https://bugs.webkit.org/show_bug.cgi?id=97262
+
+Patch by Scott Graham <scottmg@chromium.org> on 2012-10-17
+Reviewed by Abhishek Arya.
+
+Tools:
+
+Range check controller inputs. This code is not exposed to the web,
+but makes fuzzers try less hard to break uninteresting code.
+
+* DumpRenderTree/chromium/TestRunner/GamepadController.cpp:
+(GamepadController::setButtonCount):
+(GamepadController::setButtonData):
+(GamepadController::setAxisCount):
+(GamepadController::setAxisData):
+
+LayoutTests:
+
+* gamepad/gamepad-out-of-range-crasher.html: Added.
+* gamepad/gamepad-out-of-range-crasher-expected.txt: Added.
+

@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r83351 | enrica@apple.com | 2011-04-09 00:39:42 +0200 (Sa, 09. Apr 2011) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/style/bold-with-dom-changes-expected.txt
+   A /trunk/LayoutTests/editing/style/bold-with-dom-changes.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/ReplaceNodeWithSpanCommand.cpp
+
+Improve lifetime management of nodes in ReplaceNodeWithSpanCommand.
+https://bugs.webkit.org/show_bug.cgi?id=57595
+<rdar://problem/9222122>
+
+Reviewed by Maciej Stachowiak.
+
+Source/WebCore: 
+
+Test: editing/style/bold-with-dom-changes.html
+
+* editing/ReplaceNodeWithSpanCommand.cpp:
+(WebCore::swapInNodePreservingAttributesAndChildren):
+
+LayoutTests: 
+
+* editing/style/bold-with-dom-changes-expected.txt: Added.
+* editing/style/bold-with-dom-changes.html: Added.
+
+
+

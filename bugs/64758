@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r91637 | rwlbuis@webkit.org | 2011-07-23 20:17:03 +0200 (Sa, 23. Jul 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/mac/svg/custom/text-linking-expected.txt
+   A /trunk/LayoutTests/platform/mac/svg/custom/tref-own-content-removal-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/custom/tref-own-content-removal-expected.txt
+   M /trunk/LayoutTests/platform/mac/svg/dynamic-updates/SVGTRefElement-dom-href-attr-expected.png
+   M /trunk/LayoutTests/svg/custom/invalid-text-content-expected.txt
+   M /trunk/LayoutTests/svg/custom/text-tref-03-b-dynamic-expected.txt
+   M /trunk/LayoutTests/svg/custom/text-tref-03-b-dynamic2-expected.txt
+   A /trunk/LayoutTests/svg/custom/tref-own-content-removal.svg
+   M /trunk/LayoutTests/svg/dynamic-updates/SVGTRefElement-dom-href-attr-expected.txt
+   M /trunk/LayoutTests/svg/dynamic-updates/script-tests/SVGTRefElement-dom-href-attr.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Text.cpp
+   M /trunk/Source/WebCore/dom/Text.h
+   M /trunk/Source/WebCore/svg/SVGTRefElement.cpp
+
+2011-07-23  Rob Buis  <rbuis@rim.com>
+
+        Freed SVGTRefElement used in SVGStyledElement::buildPendingResourcesIfNeeded
+        https://bugs.webkit.org/show_bug.cgi?id=64758
+
+        Reviewed by Nikolas Zimmermann.
+
+        Fix the crash by storing referenced content inside a shadow tree. This way removing child nodes of
+        the <tref> does not remove the referenced content.
+
+        * dom/Text.cpp:
+        (WebCore::Text::recalcStyle):
+        * dom/Text.h:
+        * svg/SVGTRefElement.cpp:
+        (WebCore::SVGShadowText::create):
+        (WebCore::SVGShadowText::SVGShadowText):
+        (WebCore::SVGShadowText::createRenderer):
+        (WebCore::SVGShadowText::recalcStyle):
+        (WebCore::SVGTRefElement::updateReferencedText):
+        (WebCore::SVGTRefElement::childShouldCreateRenderer):
+

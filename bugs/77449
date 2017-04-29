@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r106715 | rniwa@webkit.org | 2012-02-04 02:22:38 +0100 (Sa, 04. Feb 2012) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/remove-body-during-title-creation-expected.txt
+   A /trunk/LayoutTests/fast/dom/remove-body-during-title-creation.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+Crash in Node::dispatchSubtreeModifiedEvent
+https://bugs.webkit.org/show_bug.cgi?id=77449
+
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore: 
+
+The bug was caused by appendChild not retaining this pointer.
+This is normally okay because there's another owner within JSC/V8 binding code that
+holds onto the node but this isn't the case when nodes are created as a part
+of setting document.title. Fixed the crash by retaining the pointer as needed.
+
+Test: fast/dom/remove-body-during-title-creation.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::appendChild):
+
+LayoutTests: 
+
+Add a regression test for the crash.
+
+* fast/dom/remove-body-during-title-creation-expected.txt: Added.
+* fast/dom/remove-body-during-title-creation.html: Added.
+
+

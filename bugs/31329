@@ -1,0 +1,66 @@
+------------------------------------------------------------------------
+r51295 | abarth@webkit.org | 2009-11-22 18:22:39 +0100 (So, 22. Nov 2009) | 58 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebKitTools/ChangeLog
+
+2009-11-22  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Disable access to file:/// directory listings
+        https://bugs.webkit.org/show_bug.cgi?id=31329
+
+        Updates the test to make sure it is disabling universal access for
+        file:/// URLs (if the API is supported). This is required to do
+        effective intra-file:/// access tests.
+        Note that Safari only passes by virtual of supporting no directory
+        listings at all.
+
+        * fast/xmlhttprequest/resources/xmlhttprequest-nonexistent-file-real.html: Added.
+        * fast/xmlhttprequest/xmlhttprequest-nonexistent-file-expected.txt:
+        * fast/xmlhttprequest/xmlhttprequest-nonexistent-file.html:
+        Disable universal access for file:/// URLs (if API available).
+        Run the real test in an iframe without universal access.
+2009-11-22  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Disable access to file:/// directory listings
+        https://bugs.webkit.org/show_bug.cgi?id=31329
+
+        Deny access to directory listings. This needs doing in WebKit for
+        WebKit clients that do permit top-level navigation to file:///dir.
+        This matches Firefox, plus the existing Safari implementation (which
+        does not support any directory access at all). It will fix the
+        LayoutTest named below for Chromium.
+
+        Test: fast/xmlhttprequest/xmlhttprequest-nonexistent-file.html
+
+        * page/SecurityOrigin.cpp: Deny access to directory listings.
+        (WebCore::SecurityOrigin::SecurityOrigin):
+        (WebCore::SecurityOrigin::canRequest):
+2009-11-22  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Disable access to file:/// directory listings
+        https://bugs.webkit.org/show_bug.cgi?id=31329
+
+        Implemented setAllowUniversalAccessFromFileURLs to support testing of
+        file URL security.
+
+        * DumpRenderTree/LayoutTestController.cpp:
+        (setAllowUniversalAccessFromFileURLsCallback):
+        (LayoutTestController::staticFunctions):
+        * DumpRenderTree/LayoutTestController.h:
+        * DumpRenderTree/gtk/LayoutTestControllerGtk.cpp:
+        (LayoutTestController::setAllowUniversalAccessFromFileURLs):
+        * DumpRenderTree/mac/LayoutTestControllerMac.mm:
+        (LayoutTestController::setAllowUniversalAccessFromFileURLs):
+        * DumpRenderTree/win/LayoutTestControllerWin.cpp:
+        (LayoutTestController::setAllowUniversalAccessFromFileURLs):
+        * DumpRenderTree/wx/LayoutTestControllerWx.cpp:
+        (LayoutTestController::setAllowUniversalAccessFromFileURLs):
+

@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r115297 | mihnea@adobe.com | 2012-04-26 09:59:09 +0200 (Do, 26. Apr 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/symbol-in-named-flow-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/symbol-in-named-flow-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/Element.h
+   M /trunk/Source/WebCore/dom/NodeRenderingContext.cpp
+
+Crash when collecting svg symbol element in named flow.
+https://bugs.webkit.org/show_bug.cgi?id=84493
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test: fast/regions/symbol-in-named-flow-crash.svg
+
+* dom/Element.cpp:
+(WebCore::Element::~Element):
+Add an assert that an element that was collected into a named flow was already removed at this point
+(when the document is not in the process of destruction)
+(WebCore::Element::unregisterNamedFlowContentNode):
+Created a new function for unregistering a content node. In the future, this function may be used for
+content nodes from shadow dom.
+(WebCore::Element::detach):
+* dom/Element.h:
+(Element):
+* dom/NodeRenderingContext.cpp:
+(WebCore::NodeRenderingContext::moveToFlowThreadIfNeeded):
+Prevent elements that are part of shadow dom to be collected into a named flow.
+
+LayoutTests:
+
+* fast/regions/symbol-in-named-flow-crash-expected.txt: Added.
+* fast/regions/symbol-in-named-flow-crash.svg: Added.
+
+

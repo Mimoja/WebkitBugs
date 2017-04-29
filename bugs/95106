@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r127071 | inferno@chromium.org | 2012-08-30 02:42:04 +0200 (Do, 30. Aug 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/style-element-process-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/style-element-process-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/StyleSheetContents.cpp
+
+Crash in WebCore::StyleSheetContents::checkLoadCompleted.
+https://bugs.webkit.org/show_bug.cgi?id=95106
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+RefPtr StyleSheetContents since it can get blown away in script execution inside
+sheetLoaded().
+
+Test: fast/css/style-element-process-crash.html
+
+* css/StyleSheetContents.cpp:
+(WebCore::StyleSheetContents::checkLoadCompleted):
+
+LayoutTests:
+
+* fast/css/style-element-process-crash-expected.txt: Added.
+* fast/css/style-element-process-crash.html: Added.
+
+

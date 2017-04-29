@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r55822 | abarth@webkit.org | 2010-03-11 03:07:36 +0100 (Do, 11. Mär 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-window-open-javascript-url-leading-format-char-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-window-open-javascript-url-leading-format-char.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/KURLGoogle.cpp
+
+2010-03-10  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Make Chrome consistently handle leading format characters in URLs
+
+        https://bugs.webkit.org/show_bug.cgi?id=35948
+
+        * http/tests/security/xss-DENIED-window-open-javascript-url-leading-format-char-expected.txt: Added.
+        * http/tests/security/xss-DENIED-window-open-javascript-url-leading-format-char.html: Added.
+2010-03-10  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Make Chrome consistently handle leading format characters in URLs
+
+        https://bugs.webkit.org/show_bug.cgi?id=35948
+
+        Test: http/tests/security/xss-DENIED-window-open-javascript-url-leading-format-char.html
+
+        * platform/KURLGoogle.cpp:
+

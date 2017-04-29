@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r104441 | abarth@webkit.org | 2012-01-09 09:53:36 +0100 (Mo, 09. Jan 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/insertAdjacentHTML-DocumentFragment-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/insertAdjacentHTML-DocumentFragment-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLElement.cpp
+
+insertAdjacentHTML doesn't play nice with DocumentFragment
+https://bugs.webkit.org/show_bug.cgi?id=75826
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Test: fast/dom/insertAdjacentHTML-DocumentFragment-crash.html
+
+Document nodes aren't the only non-Element ContainerNodes.
+
+* html/HTMLElement.cpp:
+(WebCore::contextElementForInsertion):
+
+LayoutTests:
+
+* fast/dom/insertAdjacentHTML-DocumentFragment-crash-expected.txt: Added.
+* fast/dom/insertAdjacentHTML-DocumentFragment-crash.html: Added.
+
+

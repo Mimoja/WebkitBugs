@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r81795 | inferno@chromium.org | 2011-03-23 20:35:01 +0100 (Mi, 23. Mär 2011) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/plugins/change-widget-and-click-crash-expected.txt
+   A /trunk/LayoutTests/plugins/change-widget-and-click-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLPlugInElement.cpp
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WebPluginContainerImpl.cpp
+
+2011-03-23  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add refptr for widget. Mutations can happen within the event handler.
+        https://bugs.webkit.org/show_bug.cgi?id=56774
+
+        * src/WebPluginContainerImpl.cpp:
+        (WebKit::WebPluginContainerImpl::handleEvent):
+2011-03-23  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add refptr for widget. Mutations can happen within the event handler.
+        https://bugs.webkit.org/show_bug.cgi?id=56774
+
+        Test: plugins/change-widget-and-click-crash.html
+
+        * html/HTMLPlugInElement.cpp:
+        (WebCore::HTMLPlugInElement::defaultEventHandler):
+2011-03-23  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add test for crash when modifying a widget object within an event handler.
+        https://bugs.webkit.org/show_bug.cgi?id=56774
+
+        * plugins/change-widget-and-click-crash-expected.txt: Added.
+        * plugins/change-widget-and-click-crash.html: Added.
+
+

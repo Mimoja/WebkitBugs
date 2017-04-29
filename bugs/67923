@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r117289 | rwlbuis@webkit.org | 2012-05-16 16:47:05 +0200 (Mi, 16. Mai 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/intersection-list-null-expected.txt
+   A /trunk/LayoutTests/svg/custom/intersection-list-null.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGSVGElement.cpp
+
+SVGSVGElement checkIntersection and checkEnclosure Mem corruption
+https://bugs.webkit.org/show_bug.cgi?id=67923
+
+Patch by Rob Buis <rbuis@rim.com> on 2012-05-16
+Reviewed by Nikolas Zimmermann.
+
+Source/WebCore:
+
+Only call checkIntersection/checkEnclosure when we have a valid renderer.
+
+Test: svg/custom/intersection-list-null.svg
+
+* svg/SVGSVGElement.cpp:
+(WebCore::SVGSVGElement::checkIntersection):
+(WebCore::SVGSVGElement::checkEnclosure):
+
+LayoutTests:
+
+Add test to check that checkIntersection/checkEnclosure do not
+crash when null is used for the element parameter.
+
+* svg/custom/intersection-list-null-expected.txt: Added.
+* svg/custom/intersection-list-null.svg: Added.
+

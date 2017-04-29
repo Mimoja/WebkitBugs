@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r146282 | dmazzoni@google.com | 2013-03-20 01:27:16 +0100 (Mi, 20. Mär 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/table-remove-cell-crash-expected.txt
+   A /trunk/LayoutTests/accessibility/table-remove-cell-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityTable.cpp
+
+Security: Heap-use-after-free in WebCore::AXObjectCache::getOrCreate
+https://bugs.webkit.org/show_bug.cgi?id=112044
+
+Reviewed by Chris Fleizach.
+
+Source/WebCore:
+
+Always call recalcSectionsIfNeeded before accessing
+table sections.
+
+Test: accessibility/table-remove-cell-crash.html
+
+* accessibility/AccessibilityTable.cpp:
+(WebCore::AccessibilityTable::addChildren):
+
+LayoutTests:
+
+Adds test showing a crash / assertion failure if a cell is
+deleted from a table and the table's AX object is accessed.
+
+* accessibility/table-remove-cell-crash-expected.txt: Added.
+* accessibility/table-remove-cell-crash.html: Added.
+
+

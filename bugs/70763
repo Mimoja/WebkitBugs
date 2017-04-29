@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r98344 | jschuh@chromium.org | 2011-10-25 16:24:59 +0200 (Di, 25. Okt 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/path-arc-invalid-expected.txt
+   A /trunk/LayoutTests/svg/path-arc-invalid.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGParserUtilities.cpp
+
+Check for empty string in parseArcFlag
+https://bugs.webkit.org/show_bug.cgi?id=70763
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+Test: svg/path-invalid.html
+
+* svg/SVGParserUtilities.cpp:
+(WebCore::parseArcFlag):
+
+LayoutTests:
+
+* svg/path-arc-invalid-expected.txt: Added.
+* svg/path-arc-invalid.html: Added.
+
+

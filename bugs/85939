@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r116669 | inferno@chromium.org | 2012-05-10 20:39:43 +0200 (Do, 10. Mai 2012) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/style/apply-style-join-child-text-nodes-crash-expected.txt
+   A /trunk/LayoutTests/editing/style/apply-style-join-child-text-nodes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/ApplyStyleCommand.cpp
+
+Crash in ApplyStyleCommand::joinChildTextNodes.
+https://bugs.webkit.org/show_bug.cgi?id=85939
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: editing/style/apply-style-join-child-text-nodes-crash.html
+
+* editing/ApplyStyleCommand.cpp:
+(WebCore::ApplyStyleCommand::applyRelativeFontStyleChange): add conditions
+to bail out if our start and end position nodes are removed due to
+mutation events in joinChildTextNodes.
+(WebCore::ApplyStyleCommand::applyInlineStyle): this executes after
+applyRelativeFontStyleChange in ApplyStyleCommand::doApply. So, need
+to bail out if our start and end position nodes are removed due to
+mutation events.
+(WebCore::ApplyStyleCommand::joinChildTextNodes): hold all the children
+in a ref vector to prevent them from getting destroyed due to mutation events.
+
+LayoutTests:
+
+* editing/style/apply-style-join-child-text-nodes-crash-expected.txt: Added.
+* editing/style/apply-style-join-child-text-nodes-crash.html: Added.
+

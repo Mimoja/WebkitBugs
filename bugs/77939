@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r106968 | inferno@chromium.org | 2012-02-07 20:37:26 +0100 (Di, 07. Feb 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/span/split-inline-wrong-post-block-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/span/split-inline-wrong-post-block-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+
+Source/WebCore: Crash due to column style not updated on post block
+in splitInlines.
+https://bugs.webkit.org/show_bug.cgi?id=77939
+
+Reviewed by Julien Chaffraix.
+
+Test: fast/multicol/span/split-inline-wrong-post-block-crash.html
+
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::splitFlow):
+
+LayoutTests: Crash due to column style not updated on post block
+in splitInlines.
+https://bugs.webkit.org/show_bug.cgi?id=77939
+
+Reviewed by Julien Chaffraix.
+
+* fast/multicol/span/split-inline-wrong-post-block-crash-expected.txt: Added.
+* fast/multicol/span/split-inline-wrong-post-block-crash.html: Added.
+
+

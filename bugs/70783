@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r98374 | cevans@google.com | 2011-10-25 21:28:15 +0200 (Di, 25. Okt 2011) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+
+Manage the CSS property array length correctly
+https://bugs.webkit.org/show_bug.cgi?id=70783
+
+Reviewed by Adam Barth.
+
+* css/CSSParser.cpp:
+(WebCore::CSSParser::addProperty): don't allow max length to get out of sync with the buffer.
+
+

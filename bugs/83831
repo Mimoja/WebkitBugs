@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r114320 | arv@chromium.org | 2012-04-17 01:53:38 +0200 (Di, 17. Apr 2012) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/isolatedWorld/context-destroy-expected.txt
+   A /trunk/LayoutTests/http/tests/security/isolatedWorld/context-destroy.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/V8IsolatedContext.cpp
+
+[V8] Don't delete the per context data until the V8IsolatedContext is deleted
+https://bugs.webkit.org/show_bug.cgi?id=83831
+
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Test: http/tests/security/isolatedWorld/context-destroy.html
+
+* bindings/v8/V8IsolatedContext.cpp:
+(WebCore::V8IsolatedContext::destroy):
+
+LayoutTests:
+
+* http/tests/security/isolatedWorld/context-destroy-expected.txt: Added.
+* http/tests/security/isolatedWorld/context-destroy.html: Added.
+

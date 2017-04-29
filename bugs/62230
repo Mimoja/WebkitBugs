@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r91965 | andersca@apple.com | 2011-07-29 02:38:32 +0200 (Fr, 29. Jul 2011) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   D /trunk/LayoutTests/fast/dom/body-link-decl-parent-crash-expected.txt
+   D /trunk/LayoutTests/fast/dom/body-link-decl-parent-crash.html
+   D /trunk/LayoutTests/fast/dom/styled-inline-style-decl-parent-crash-expected.txt
+   D /trunk/LayoutTests/fast/dom/styled-inline-style-decl-parent-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/StyledElement.cpp
+   M /trunk/Source/WebCore/dom/StyledElement.h
+   M /trunk/Source/WebCore/html/HTMLBodyElement.cpp
+   M /trunk/Source/WebCore/html/HTMLBodyElement.h
+
+Unreviewed, rolling out r88601. (Requested by Sam Weinig).
+http://trac.webkit.org/changeset/88601
+https://bugs.webkit.org/show_bug.cgi?id=62230
+
+Caused a regression, see https://bugs.webkit.org/show_bug.cgi?id=64378
+
+Source/WebCore: 
+
+* dom/StyledElement.cpp:
+* dom/StyledElement.h:
+* html/HTMLBodyElement.cpp:
+(WebCore::HTMLBodyElement::parseMappedAttribute):
+(WebCore::HTMLBodyElement::insertedIntoDocument):
+(WebCore::HTMLBodyElement::didMoveToNewOwnerDocument):
+* html/HTMLBodyElement.h:
+
+LayoutTests: 
+
+* fast/dom/body-link-decl-parent-crash-expected.txt: Removed.
+* fast/dom/body-link-decl-parent-crash.html: Removed.
+* fast/dom/styled-inline-style-decl-parent-crash-expected.txt: Removed.
+* fast/dom/styled-inline-style-decl-parent-crash.html: Removed.
+
+
+

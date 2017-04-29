@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r210457 | msaboff@apple.com | 2017-01-07 00:30:57 +0100 (Sa, 07. Jan 2017) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/regress-153486.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/SparseArrayValueMap.cpp
+
+@putByValDirect in Array.of and Array.from overwrites non-writable/configurable properties
+https://bugs.webkit.org/show_bug.cgi?id=153486
+
+Reviewed by Saam Barati.
+
+JSTests:
+
+New regression test.
+
+* stress/regress-153486.js: Added.
+(shouldEqual):
+(makeUnwriteableUnconfigurableObject):
+(testArrayOf):
+(testArrayFrom):
+(runTest):
+
+Source/JavaScriptCore:
+
+Moved read only check in putDirect() to all paths.
+
+* runtime/SparseArrayValueMap.cpp:
+(JSC::SparseArrayValueMap::putDirect):
+
+

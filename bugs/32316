@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r52184 | rolandsteiner@chromium.org | 2009-12-16 03:02:12 +0100 (Mi, 16. Dez 2009) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/ruby-illegal-expected.txt
+   A /trunk/LayoutTests/fast/ruby/ruby-illegal.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderRuby.h
+   M /trunk/WebCore/rendering/RenderRubyRun.h
+
+Fix crash when encountering illegal HTML within a continuation inside <ruby>.
+(https://bugs.webkit.org/show_bug.cgi?id=32316)
+
+Reviewed by Adam Barth.
+
+Avoid having the anonymous blocks utilized in the ruby renderers being
+re-used as continuation blocks.
+Avoid having ruby runs collected as "leftover blocks".
+
+Test: fast/ruby/ruby-illegal.html
+
+WebCore:
+
+* rendering/RenderRuby.h:
+(WebCore::RenderRubyAsInline::removeLeftoverAnonymousBlock): mustn't be called
+(WebCore::RenderRubyAsInline::isRuby): made private
+(WebCore::RenderRubyAsInline::renderName): made private
+(WebCore::RenderRubyAsInline::createsAnonymousWrapper): return true
+(WebCore::RenderRubyAsBlock::removeLeftoverAnonymousBlock): mustn't be called
+(WebCore::RenderRubyAsBlock::isRuby): made private
+(WebCore::RenderRubyAsBlock::renderName): made private
+(WebCore::RenderRubyAsBlock::createsAnonymousWrapper): return true
+* rendering/RenderRubyRun.h:
+(WebCore::RenderRubyRun::removeLeftoverAnonymousBlock): avoid
+(WebCore::RenderRubyRun::isRubyRun): made private
+(WebCore::RenderRubyRun::renderName): made private
+(WebCore::RenderRubyRun::createsAnonymousWrapper): return true
+
+LayoutTests: 
+
+* fast/ruby/ruby-illegal-expected.txt: Added.
+* fast/ruby/ruby-illegal.html: Added.
+
+
+

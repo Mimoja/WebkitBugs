@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r113597 | inferno@chromium.org | 2012-04-09 20:21:05 +0200 (Mo, 09. Apr 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/ChangeLog
+   A /trunk/ManualTests/svg-text-float-not-removed-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+
+Crash due to floats not cleared before starting SVG <text> layout.
+https://bugs.webkit.org/show_bug.cgi?id=83021
+
+Reviewed by Dirk Schulze.
+
+.:
+
+* ManualTests/svg-text-float-not-removed-crash.html: Added.
+
+Source/WebCore:
+
+Manual Test - ManualTests/svg-text-float-not-removed-crash.html.
+Can't reproduce the failure in DRT.
+
+forceLayoutInlineChildren is used in SVG <text> layout and overrides
+RenderBlock::layoutBlock. However, it missed the 'clearFloats' step,
+which will cause a crash when trying to access removed renderers.
+
+* rendering/RenderBlock.h:
+(WebCore::RenderBlock::forceLayoutInlineChildren):
+

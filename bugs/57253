@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r82421 | leviw@chromium.org | 2011-03-30 12:46:13 +0200 (Mi, 30. Mär 2011) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/crash-breaking-blockquote-with-list-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/crash-breaking-blockquote-with-list.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/BreakBlockquoteCommand.cpp
+
+2011-03-30  Levi Weintraub  <leviw@chromium.org>
+
+        Reviewed by Ryosuke Niwa.
+
+        BreakBlockQuoteCommand assumes all li tags have list item renderers
+        https://bugs.webkit.org/show_bug.cgi?id=57253
+
+        Checking that the renderers of li nodes are actually RenderListItems
+        before treating them as such.
+
+        * editing/execCommand/crash-breaking-blockquote-with-list.html: Added.
+        * editing/execCommand/crash-breaking-blockquote-with-list-expected.txt: Added.
+2011-03-30  Levi Weintraub  <leviw@chromium.org>
+
+        Reviewed by Ryosuke Niwa.
+
+        BreakBlockQuoteCommand assumes all li tags have list item renderers
+        https://bugs.webkit.org/show_bug.cgi?id=57253
+
+        Checking that the renderers of li nodes are actually RenderListItems
+        before treating them as such.
+
+        Test: editing/execCommand/crash-breaking-blockquote-with-list.html
+
+        * editing/BreakBlockquoteCommand.cpp:
+        (WebCore::BreakBlockQuoteCommand::doApply):
+
+

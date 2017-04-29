@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r122918 | tkent@chromium.org | 2012-07-18 06:18:19 +0200 (Mi, 18. Jul 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/date/calendar-picker-type-change-onclick-expected.txt
+   A /trunk/LayoutTests/fast/forms/date/calendar-picker-type-change-onclick.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/shadow/CalendarPickerElement.cpp
+
+Fix an assertion failure in CalendarPickerElement::hostInput().
+https://bugs.webkit.org/show_bug.cgi?id=91568
+
+Reviewed by Hajime Morita.
+
+Source/WebCore:
+
+Test: fast/forms/date/calendar-picker-type-change-onclick.html
+
+* html/shadow/CalendarPickerElement.cpp:
+(WebCore::CalendarPickerElement::defaultEventHandler):
+It's possible that this function is called when the element is detached
+from the document tree.
+
+LayoutTests:
+
+* fast/forms/date/calendar-picker-type-change-onclick-expected.txt: Added.
+* fast/forms/date/calendar-picker-type-change-onclick.html: Added.
+

@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r53501 | ap@apple.com | 2010-01-20 00:32:15 +0100 (Mi, 20. Jan 2010) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Attr/child-nodes-cache-expected.txt
+   A /trunk/LayoutTests/fast/dom/Attr/child-nodes-cache.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/Node.cpp
+
+        Reviewed by Oliver Hunt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=33850
+        Attr.childNodes does not get updated after DOM mutations
+
+        Test: fast/dom/Attr/child-nodes-cache.html
+
+        * dom/Node.cpp: (WebCore::Node::notifyLocalNodeListsAttributeChanged): If the node is an
+        attribute, then changing it shouldn't take the shortcut that only resets a subset of caches.
+
+
+

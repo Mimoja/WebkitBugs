@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r100550 | jcivelli@chromium.org | 2011-11-17 04:08:21 +0100 (Do, 17. Nov 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/mhtml/check_domain-expected.txt
+   A /trunk/LayoutTests/mhtml/check_domain.mht
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+
+Make sure MHTML documents use the domain of the MHTML file.
+https://bugs.webkit.org/show_bug.cgi?id=72445
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+* dom/Document.h:
+(WebCore::Document::setBaseURL):
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::receivedFirstData):
+
+LayoutTests:
+
+* mhtml/check_domain-expected.txt: Added.
+* mhtml/check_domain.mht: Added.
+
+

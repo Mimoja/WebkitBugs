@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r127000 | apavlov@chromium.org | 2012-08-29 16:48:31 +0200 (Mi, 29. Aug 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/inspector/styles/import-pseudoclass-crash-expected.txt
+   A /trunk/LayoutTests/inspector/styles/import-pseudoclass-crash.html
+   A /trunk/LayoutTests/inspector/styles/resources/import-pseudoclass-crash-empty.css
+   A /trunk/LayoutTests/inspector/styles/resources/import-pseudoclass-crash.css
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.cpp
+
+Web Inspector: Page with @import and :last-child in an edited stylesheet will crash
+https://bugs.webkit.org/show_bug.cgi?id=95324
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+Ensure the destroyed StyleRules removal from StyleResolver by creating a separate RuleMutationScope for clearing the StyleSheetContents.
+
+Test: inspector/styles/import-pseudoclass-crash.html
+
+* inspector/InspectorStyleSheet.cpp:
+(WebCore::InspectorStyleSheet::reparseStyleSheet):
+
+LayoutTests:
+
+* inspector/styles/import-pseudoclass-crash-expected.txt: Added.
+* inspector/styles/import-pseudoclass-crash.html: Added.
+* inspector/styles/resources/import-pseudoclass-crash-empty.css: Added.
+* inspector/styles/resources/import-pseudoclass-crash.css: Added.
+(:last-child):
+

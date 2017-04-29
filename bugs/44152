@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r72924 | ap@apple.com | 2010-11-30 18:54:26 +0100 (Di, 30. Nov 2010) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-parent-rule-without-wrapper-expected.txt
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-parent-rule-without-wrapper.html
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-stylesheet-without-wrapper-expected.txt
+   A /trunk/LayoutTests/fast/dom/StyleSheet/detached-stylesheet-without-wrapper.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/css/StyleSheet.cpp
+   M /trunk/WebCore/svg/SVGFontFaceElement.cpp
+
+        Reviewed by Darin Adler and Geoff Garen.
+
+        https://bugs.webkit.org/show_bug.cgi?id=44152
+        <rdar://problem/8324423> CSSOM should match DOM in discarding wrapper-less parents.
+
+        We have existing behaviors where parent objects in detached subtrees are not preserved:
+        - if a root of a node tree doesn't have a wrapper, it's immediately destroyed, making
+        its children parentNode attribute null;
+        - relationship between a <style> or <link> node and its stylesheet is immediately broken
+        when the node is removed from document (in this case, regardless of wrapper existence).
+
+        Both match Firefox. For consistency, CSSOM should do the same. In fact, it already partially
+        does - CSSRule.parentRule gets zeroed out when the parent rule is destroyed.
+
+        Tests: fast/dom/StyleSheet/detached-parent-rule-without-wrapper.html
+               fast/dom/StyleSheet/detached-stylesheet-without-wrapper.html
+
+        * css/StyleSheet.cpp: (WebCore::StyleSheet::~StyleSheet): Clear out child rule parent.
+
+        * svg/SVGFontFaceElement.cpp: (WebCore::SVGFontFaceElement::insertedIntoDocument): Keep
+        the new assertion from firing. This function was adding a rule to style sheet, without
+        telling the rule about it.
+
+
+

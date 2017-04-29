@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r70681 | inferno@chromium.org | 2010-10-27 20:46:12 +0200 (Mi, 27. Okt 2010) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/inline/inline-child-height-width-calc-crash-expected.txt
+   A /trunk/LayoutTests/fast/inline/inline-child-height-width-calc-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderView.cpp
+   M /trunk/WebCore/rendering/RenderView.h
+
+2010-10-27  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Add a function to make sure child is allowed before adding to a
+        render view. 
+        https://bugs.webkit.org/show_bug.cgi?id=48328 
+
+        Test: fast/inline/inline-child-height-width-calc-crash.html
+
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::isChildAllowed):
+        * rendering/RenderView.h:
+2010-10-27  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that adding a br element to a new document does not result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=48328 
+
+        * fast/inline/inline-child-height-width-calc-crash-expected.txt: Added.
+        * fast/inline/inline-child-height-width-calc-crash.html: Added.
+
+

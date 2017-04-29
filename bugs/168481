@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r212554 | bfulgham@apple.com | 2017-02-17 19:41:50 +0100 (Fr, 17. Feb 2017) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/page/Frame.cpp
+
+RenderView needs to be updated when FrameView changes
+https://bugs.webkit.org/show_bug.cgi?id=168481
+<rdar://problem/30339638>
+
+Reviewed by Andreas Kling.
+
+The state of the Document's RenderView can get out of sync with the Frame's FrameView.
+We need a notification mechanism so that modifications to the Frame's view are properly
+relayed to Document so that it can have a correct RenderView.
+
+* dom/Document.cpp:
+(WebCore::Document::didBecomeCurrentDocumentInView): Create an updated render tree (if
+one does not already exist).
+(WebCore::Document::destroyRenderTree): Remove an incorrect ASSERT. We may enter this
+code when the Frame uses 'setView(nullptr)', which happens during certain  updates.
+* dom/Document.h:
+* page/Frame.cpp:
+(WebCore::Frame::setView): Destroy the old render tree (if present) before switching to
+the new view. Then notify the document that it is now the current document in the new view.
+
+

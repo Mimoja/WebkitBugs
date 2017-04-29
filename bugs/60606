@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r86219 | tkent@chromium.org | 2011-05-11 08:12:42 +0200 (Mi, 11. Mai 2011) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WebFrameImpl.cpp
+
+2011-05-10  Kent Tamura  <tkent@chromium.org>
+
+        Reviewed by Hajime Morita.
+
+        [Chromium] Fix a bug of WebFrameImpl::forms()
+        https://bugs.webkit.org/show_bug.cgi?id=60606
+
+        If document()->forms() contained non-HTML element, the second for
+        loop didn't stop.
+
+        * src/WebFrameImpl.cpp:
+        (WebKit::WebFrameImpl::forms): Simplify the function by wtf::Vector().
+

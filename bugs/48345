@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r70550 | inferno@chromium.org | 2010-10-26 20:55:10 +0200 (Di, 26. Okt 2010) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/html/ImageDocument.cpp
+   M /trunk/WebCore/inspector/InspectorDOMStorageResource.cpp
+
+2010-10-26  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Added checks to ensure that events types are right before casting. 
+        https://bugs.webkit.org/show_bug.cgi?id=48345
+
+        * html/ImageDocument.cpp:
+        (WebCore::ImageEventListener::handleEvent):
+        * inspector/InspectorDOMStorageResource.cpp:
+        (WebCore::InspectorDOMStorageResource::handleEvent):
+
+

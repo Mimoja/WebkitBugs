@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r96260 | commit-queue@webkit.org | 2011-09-28 23:01:37 +0200 (Mi, 28. Sep 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/cookies/cookie-theft-with-javascript-doc-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cookies/cookie-theft-with-javascript-doc.html
+   A /trunk/LayoutTests/http/tests/security/cookies/resources/innocent-victim-with-cookies.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/loader/DocumentWriter.cpp
+   M /trunk/Source/WebCore/loader/DocumentWriter.h
+
+JavaScript generated documents don't inherit the cookie URL
+https://bugs.webkit.org/show_bug.cgi?id=69003
+
+Patch by Sergey Glazunov <serg.glazunov@gmail.com> on 2011-09-28
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: http/tests/security/cookies/cookie-theft-with-javascript-doc.html
+
+* dom/Document.h:
+(WebCore::Document::setCookieURL):
+* loader/DocumentWriter.cpp:
+(WebCore::DocumentWriter::replaceDocument):
+(WebCore::DocumentWriter::begin):
+* loader/DocumentWriter.h:
+
+LayoutTests:
+
+* http/tests/security/cookies/cookie-theft-with-javascript-doc-expected.txt: Added.
+* http/tests/security/cookies/cookie-theft-with-javascript-doc.html: Added.
+* http/tests/security/cookies/resources/innocent-victim-with-cookies.html: Added.
+

@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r209821 | dbates@webkit.org | 2016-12-14 21:17:28 +0100 (Mi, 14. Dez 2016) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/script-src-parsing-implicit-and-explicit-port-number-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/script-src-parsing-implicit-and-explicit-port-number.html
+   M /trunk/LayoutTests/platform/wk2/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/csp/ContentSecurityPolicySource.cpp
+
+CSP: Allow HTTPS URL to match HTTP source expression
+https://bugs.webkit.org/show_bug.cgi?id=159520
+<rdar://problem/27287177>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+Test: http/tests/security/contentSecurityPolicy/script-src-parsing-implicit-and-explicit-port-number.html
+
+* page/csp/ContentSecurityPolicySource.cpp:
+(WebCore::ContentSecurityPolicySource::schemeMatches):
+(WebCore::ContentSecurityPolicySource::portMatches):
+
+LayoutTests:
+
+* http/tests/security/contentSecurityPolicy/script-src-parsing-implicit-and-explicit-port-number-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/script-src-parsing-implicit-and-explicit-port-number.html: Added.
+* platform/wk2/TestExpectations: Skip the test on WebKit2 because it makes use of Internals.registerDefaultPortForProtocol(),
+which does not work with NetworkProcess.
+

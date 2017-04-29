@@ -1,0 +1,66 @@
+------------------------------------------------------------------------
+r117012 | japhet@chromium.org | 2012-05-15 01:37:39 +0200 (Di, 15. Mai 2012) | 45 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-getProperty-expected.txt
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-getProperty.html
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-hasProperty-return-false-expected.txt
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-hasProperty-return-false.html
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-hasProperty-return-true-expected.txt
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-hasProperty-return-true.html
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-invoke-expected.txt
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-invoke.html
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-setProperty-expected.txt
+   A /trunk/LayoutTests/plugins/npruntime/delete-plugin-within-setProperty.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/NPV8Object.cpp
+   M /trunk/Source/WebCore/bindings/v8/V8NPObject.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/TestNetscapePlugIn/PluginObject.cpp
+
+Source/WebCore: [V8] Crash in npObjectGetProperty() in V8NPObject.cpp
+https://bugs.webkit.org/show_bug.cgi?id=86131
+
+Reviewed by Adam Barth.
+
+Tests: plugins/npruntime/delete-plugin-within-getProperty.html
+       plugins/npruntime/delete-plugin-within-hasProperty-return-false.html
+       plugins/npruntime/delete-plugin-within-hasProperty-return-true.html
+       plugins/npruntime/delete-plugin-within-invoke.html
+       plugins/npruntime/delete-plugin-within-setProperty.html
+
+* bindings/v8/NPV8Object.cpp:
+(_NPN_EvaluateHelper):
+* bindings/v8/V8NPObject.cpp: Check NPN_IsAlive in a bunch of places we're not currently.
+(WebCore::npObjectInvokeImpl):
+(WebCore::npObjectGetProperty):
+(WebCore::npObjectSetProperty):
+
+Tools: Add end-of-life test cases for https://bugs.webkit.org/show_bug.cgi?id=86131.
+
+Reviewed by Adam Barth.
+
+* DumpRenderTree/TestNetscapePlugIn/PluginObject.cpp:
+(callDeletePlugin):
+(pluginHasProperty):
+(pluginHasMethod):
+(pluginGetProperty):
+(pluginSetProperty):
+(pluginInvoke):
+
+LayoutTests: Test for https://bugs.webkit.org/show_bug.cgi?id=86131.
+
+Reviewed by Adam Barth.
+
+* plugins/npruntime/delete-plugin-within-getProperty-expected.txt: Added.
+* plugins/npruntime/delete-plugin-within-getProperty.html: Added.
+* plugins/npruntime/delete-plugin-within-hasProperty-return-false-expected.txt: Added.
+* plugins/npruntime/delete-plugin-within-hasProperty-return-false.html: Added.
+* plugins/npruntime/delete-plugin-within-hasProperty-return-true-expected.txt: Added.
+* plugins/npruntime/delete-plugin-within-hasProperty-return-true.html: Added.
+* plugins/npruntime/delete-plugin-within-invoke-expected.txt: Added.
+* plugins/npruntime/delete-plugin-within-invoke.html: Added.
+* plugins/npruntime/delete-plugin-within-setProperty-expected.txt: Added.
+* plugins/npruntime/delete-plugin-within-setProperty.html: Added.
+
+

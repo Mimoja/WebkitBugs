@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r184779 | antti@apple.com | 2015-05-22 19:41:46 +0200 (Fr, 22. Mai 2015) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLayerMaskImageInfo.cpp
+
+MaskImageOperation code does not manage CachedImageClients correctly
+https://bugs.webkit.org/show_bug.cgi?id=145276
+rdar://problem/20959822
+
+* rendering/RenderLayerMaskImageInfo.cpp:
+(WebCore::RenderLayer::MaskImageInfo::removeMaskImageClients):
+
+    Followup fix: clear m_maskImageOperations vector.
+
+
+

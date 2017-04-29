@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r87827 | inferno@chromium.org | 2011-06-01 20:12:53 +0200 (Mi, 01. Jun 2011) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+2011-06-01  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Antti Koivisto.
+
+        Do not use the pushed style selector if it is not equal to the
+        parent document's style selector. It usually means that it is
+        in a bad state, e.g. already cleared.
+        https://bugs.webkit.org/show_bug.cgi?id=61737
+
+        * dom/Element.cpp:
+        (WebCore::StyleSelectorParentPusher::~StyleSelectorParentPusher):
+
+

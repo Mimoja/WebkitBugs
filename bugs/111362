@@ -1,0 +1,93 @@
+------------------------------------------------------------------------
+r149778 | xingnan.wang@intel.com | 2013-05-09 01:38:46 +0200 (Do, 09. Mai 2013) | 64 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webaudio/AudioBuffer.cpp
+   M /trunk/Source/WebCore/Modules/webaudio/AudioNodeInput.cpp
+   M /trunk/Source/WebCore/Modules/webaudio/AudioNodeInput.h
+   M /trunk/Source/WebCore/Modules/webaudio/AudioNodeOutput.cpp
+   M /trunk/Source/WebCore/Modules/webaudio/AudioNodeOutput.h
+   M /trunk/Source/WebCore/Modules/webaudio/OfflineAudioDestinationNode.cpp
+   M /trunk/Source/WebCore/Modules/webaudio/OfflineAudioDestinationNode.h
+   M /trunk/Source/WebCore/platform/audio/AudioBus.cpp
+   M /trunk/Source/WebCore/platform/audio/AudioBus.h
+   M /trunk/Source/WebCore/platform/audio/AudioFileReader.h
+   M /trunk/Source/WebCore/platform/audio/AudioResampler.cpp
+   M /trunk/Source/WebCore/platform/audio/AudioResampler.h
+   M /trunk/Source/WebCore/platform/audio/HRTFElevation.cpp
+   M /trunk/Source/WebCore/platform/audio/MultiChannelResampler.cpp
+   M /trunk/Source/WebCore/platform/audio/Reverb.cpp
+   M /trunk/Source/WebCore/platform/audio/Reverb.h
+   M /trunk/Source/WebCore/platform/audio/efl/AudioBusEfl.cpp
+   M /trunk/Source/WebCore/platform/audio/gstreamer/AudioFileReaderGStreamer.cpp
+   M /trunk/Source/WebCore/platform/audio/gtk/AudioBusGtk.cpp
+   M /trunk/Source/WebCore/platform/audio/mac/AudioBusMac.mm
+   M /trunk/Source/WebCore/platform/audio/mac/AudioFileReaderMac.cpp
+   M /trunk/Source/WebCore/platform/audio/mac/AudioFileReaderMac.h
+   M /trunk/Source/WebCore/platform/audio/qt/AudioBusQt.cpp
+
+Heap-use-after-free in WebCore::AudioNodeOutput::pull
+https://bugs.webkit.org/show_bug.cgi?id=111362
+
+Reviewed by Chris Rogers.
+
+* Modules/webaudio/AudioBuffer.cpp:
+(WebCore::AudioBuffer::createFromAudioFileData):
+* Modules/webaudio/AudioNodeInput.cpp:
+(WebCore::AudioNodeInput::AudioNodeInput):
+(WebCore::AudioNodeInput::updateInternalBus):
+* Modules/webaudio/AudioNodeInput.h:
+(AudioNodeInput):
+* Modules/webaudio/AudioNodeOutput.cpp:
+(WebCore::AudioNodeOutput::AudioNodeOutput):
+(WebCore::AudioNodeOutput::updateInternalBus):
+(WebCore::AudioNodeOutput::pull):
+(WebCore::AudioNodeOutput::bus):
+* Modules/webaudio/AudioNodeOutput.h:
+(AudioNodeOutput):
+* Modules/webaudio/OfflineAudioDestinationNode.cpp:
+(WebCore::OfflineAudioDestinationNode::OfflineAudioDestinationNode):
+* Modules/webaudio/OfflineAudioDestinationNode.h:
+(OfflineAudioDestinationNode):
+* platform/audio/AudioBus.cpp:
+(WebCore::AudioBus::createBufferFromRange):
+(WebCore::AudioBus::createBySampleRateConverting):
+(WebCore::AudioBus::createByMixingToMono):
+* platform/audio/AudioBus.h:
+(AudioBus):
+* platform/audio/AudioFileReader.h:
+(WebCore):
+* platform/audio/AudioResampler.cpp:
+(WebCore::AudioResampler::AudioResampler):
+(WebCore::AudioResampler::configureChannels):
+* platform/audio/AudioResampler.h:
+(AudioResampler):
+* platform/audio/HRTFElevation.cpp:
+(WebCore::getConcatenatedImpulseResponsesForSubject):
+(WebCore::HRTFElevation::calculateKernelsForAzimuthElevation):
+* platform/audio/MultiChannelResampler.cpp:
+* platform/audio/Reverb.cpp:
+(WebCore::Reverb::initialize):
+* platform/audio/Reverb.h:
+(Reverb):
+* platform/audio/efl/AudioBusEfl.cpp:
+(WebCore::AudioBus::loadPlatformResource):
+* platform/audio/gstreamer/AudioFileReaderGStreamer.cpp:
+(AudioFileReader):
+(WebCore::AudioFileReader::createBus):
+(WebCore::createBusFromAudioFile):
+(WebCore::createBusFromInMemoryAudioFile):
+* platform/audio/gtk/AudioBusGtk.cpp:
+(WebCore::AudioBus::loadPlatformResource):
+* platform/audio/mac/AudioBusMac.mm:
+(WebCore::AudioBus::loadPlatformResource):
+* platform/audio/mac/AudioFileReaderMac.cpp:
+(WebCore::AudioFileReader::createBus):
+(WebCore::createBusFromAudioFile):
+(WebCore::createBusFromInMemoryAudioFile):
+* platform/audio/mac/AudioFileReaderMac.h:
+(AudioFileReader):
+* platform/audio/qt/AudioBusQt.cpp:
+(WebCore::AudioBus::loadPlatformResource):
+
+

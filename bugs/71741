@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r100502 | jschuh@chromium.org | 2011-11-16 23:07:23 +0100 (Mi, 16. Nov 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/filters/reparent-animated-filter-target-expected.txt
+   A /trunk/LayoutTests/svg/filters/reparent-animated-filter-target.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/SVGResourcesCache.cpp
+
+Clear SVG filter client when its node is detached
+https://bugs.webkit.org/show_bug.cgi?id=71741
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Test: svg/filters/reparent-animated-filter-target.html
+
+* rendering/svg/SVGResourcesCache.cpp:
+(WebCore::SVGResourcesCache::clientDestroyed):
+
+LayoutTests:
+
+* svg/filters/reparent-animated-filter-target-expected.txt: Added.
+* svg/filters/reparent-animated-filter-target.html: Added.
+
+

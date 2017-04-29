@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r131670 | tsepez@chromium.org | 2012-10-18 01:57:05 +0200 (Do, 18. Okt 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/video-poster-cross-origin-crash2-expected.txt
+   A /trunk/LayoutTests/http/tests/security/video-poster-cross-origin-crash2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/ImageLoader.cpp
+   M /trunk/Source/WebCore/loader/ImageLoader.h
+
+Crash in ContainerNode::removeAllChildren()
+https://bugs.webkit.org/show_bug.cgi?id=98443
+
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+This patch makes the errorEventSender added in WebKit Revision 112190 interact
+with the updatedHasPendingLoadEvent() mechanism in the same manner as the other
+existing event senders.
+
+Test: http/tests/security/video-poster-cross-origin-crash2.html
+
+* loader/ImageLoader.cpp:
+(WebCore::ImageLoader::setImage):
+(WebCore::ImageLoader::updateFromElement):
+(WebCore::ImageLoader::notifyFinished):
+(WebCore::ImageLoader::updatedHasPendingEvent):
+(WebCore::ImageLoader::dispatchPendingBeforeLoadEvent):
+(WebCore::ImageLoader::dispatchPendingLoadEvent):
+* loader/ImageLoader.h:
+(ImageLoader):
+
+LayoutTests:
+
+* http/tests/security/video-poster-cross-origin-crash2-expected.txt: Added.
+* http/tests/security/video-poster-cross-origin-crash2.html: Added.
+
+

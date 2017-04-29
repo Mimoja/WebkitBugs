@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r68160 | ap@apple.com | 2010-09-23 19:29:05 +0200 (Do, 23. Sep 2010) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/plugins/get-javascript-url-expected.txt
+   A /trunk/LayoutTests/plugins/get-javascript-url.html
+   M /trunk/WebKit/mac/ChangeLog
+   M /trunk/WebKit/mac/Plugins/Hosted/NetscapePluginInstanceProxy.mm
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=43667
+        ASSERT failure in NetscapePluginInstanceProxy::disconnectStream
+
+        Test: plugins/get-javascript-url.html
+
+        * Plugins/Hosted/NetscapePluginInstanceProxy.mm:
+        (WebKit::NetscapePluginInstanceProxy::evaluateJavaScript): Add the stream to m_streams, just
+        like any other one.
+
+
+

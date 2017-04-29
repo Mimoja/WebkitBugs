@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r105087 | bbudge@chromium.org | 2012-01-16 22:18:39 +0100 (Mo, 16. Jan 2012) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/AssociatedURLLoader.cpp
+   M /trunk/Source/WebKit/chromium/tests/AssociatedURLLoaderTest.cpp
+
+Changes AssociatedURLLoader to remove non-whitelisted HTTP response headers for CORS requests,
+and Set-Cookie and Set-Cookie2 response headers for all requests.
+https://bugs.webkit.org/show_bug.cgi?id=76228
+
+Reviewed by Adam Barth.
+
+* src/AssociatedURLLoader.cpp:
+(WebKit::AssociatedURLLoader::ClientAdapter::create):
+(WebKit::AssociatedURLLoader::ClientAdapter::ClientAdapter):
+(WebKit::AssociatedURLLoader::ClientAdapter::didReceiveResponse):
+(WebKit::AssociatedURLLoader::loadAsynchronously):
+* tests/AssociatedURLLoaderTest.cpp:
+(WebKit::AssociatedURLLoaderTest::didReceiveResponse):
+(WebKit::TEST_F):
+
+

@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r203695 | beidson@apple.com | 2016-07-25 21:57:47 +0200 (Mo, 25. Jul 2016) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   D /trunk/LayoutTests/storage/domstorage/localstorage/blocked-file-access-expected.txt
+   D /trunk/LayoutTests/storage/domstorage/localstorage/blocked-file-access.html
+   A /trunk/LayoutTests/storage/domstorage/localstorage/file-can-access-expected.txt
+   A /trunk/LayoutTests/storage/domstorage/localstorage/file-can-access.html (von /trunk/LayoutTests/storage/domstorage/localstorage/blocked-file-access.html:203694)
+   D /trunk/LayoutTests/storage/domstorage/localstorage/resources/blocked-example.html
+   A /trunk/LayoutTests/storage/domstorage/localstorage/resources/unblocked-example.html (von /trunk/LayoutTests/storage/domstorage/localstorage/resources/blocked-example.html:203694)
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/SecurityOrigin.cpp
+
+Allow LocalStorage by default for file URLs.
+https://bugs.webkit.org/show_bug.cgi?id=160169
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+Test: storage/domstorage/localstorage/file-can-access.html
+
+* page/SecurityOrigin.cpp:
+(WebCore::SecurityOrigin::canAccessStorage): Remove the m_universalAccess check for local URLs.
+
+LayoutTests:
+
+* storage/domstorage/localstorage/blocked-file-access-expected.txt: Removed.
+* storage/domstorage/localstorage/file-can-access-expected.txt: Added.
+* storage/domstorage/localstorage/file-can-access.html: Renamed from LayoutTests/storage/domstorage/localstorage/blocked-file-access.html.
+* storage/domstorage/localstorage/resources/unblocked-example.html: Renamed from LayoutTests/storage/domstorage/localstorage/resources/blocked-example.html.
+

@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r144613 | mkwst@chromium.org | 2013-03-04 12:25:13 +0100 (Mo, 04. Mär 2013) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/security/xssAuditor/resources/echo-intertag.pl
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/svg-animate-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/svg-animate.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/XSSAuditor.cpp
+
+XSSAuditor should strip dangerous attributes from SMIL animation elements.
+https://bugs.webkit.org/show_bug.cgi?id=111071
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+SMIL animation elements can, amusingly enough, animate the 'href' of a
+link. This patch teaches XSSAuditor how to deal with the
+semicolon-separated 'animation[values]' attribute in order to ensure
+that it doesn't contain JavaScript URLs that could be animated into
+place for an unsuspecting user to click on.
+
+Test: http/tests/security/xssAuditor/svg-animate.html
+
+* html/parser/XSSAuditor.cpp:
+(WebCore::isSemicolonSeparatedAttribute): Added.
+    This returns true if the given attribute is SVGNames::valuesAttr,
+    but makes it possible to easily extend the list with additional
+    attributes with this strange property.
+(WebCore::semicolonSeparatedValueContainsJavaScriptURL): Added.
+    Given a semicolon-separated string, determine if it contains any
+    JavaScript URLs.
+(WebCore::XSSAuditor::eraseDangerousAttributesIfInjected):
+    When looking for dangerousness, determine whether or not we should
+    be comparing against each member of a semicolon-separated list.
+
+LayoutTests:
+
+* http/tests/security/xssAuditor/resources/echo-intertag.pl:
+    Add a new mode that dumps an element and its attributes, which is a
+    bit more robust than adding a new mode for each attribute type we're
+    interested in.
+* http/tests/security/xssAuditor/svg-animate-expected.txt: Added.
+* http/tests/security/xssAuditor/svg-animate.html: Added.
+
+

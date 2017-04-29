@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r169665 | beidson@apple.com | 2014-06-07 01:07:47 +0200 (Sa, 07. Jun 2014) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/sql/SQLiteStatement.cpp
+
+Initialize a char* that needs to be initialized.
+<rdar://problem/15840022> and https://bugs.webkit.org/show_bug.cgi?id=133585
+
+Reviewed by Mark Rowe.
+
+r152134 (erroneously) removed this initialization.
+
+* platform/sql/SQLiteStatement.cpp:
+(WebCore::SQLiteStatement::prepare): tail should start out initialized to 0.
+

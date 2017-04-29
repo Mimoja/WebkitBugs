@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r90908 | zimmermann@webkit.org | 2011-07-13 14:54:52 +0200 (Mi, 13. Jul 2011) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineTextBox.cpp
+
+2011-07-13  Nikolas Zimmermann  <nzimmermann@rim.com>
+
+        Regression: OOB read in svg text run
+        https://bugs.webkit.org/show_bug.cgi?id=63627
+
+        Not reviewed.
+
+        Fixed last minute typo leading to assertions.
+
+        * rendering/InlineTextBox.cpp:
+        (WebCore::InlineTextBox::paintSelection):
+
+

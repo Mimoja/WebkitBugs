@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r96991 | commit-queue@webkit.org | 2011-10-08 01:58:42 +0200 (Sa, 08. Okt 2011) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.gypi
+   A /trunk/Source/WebCore/bindings/v8/NPObjectWrapper.cpp
+   A /trunk/Source/WebCore/bindings/v8/NPObjectWrapper.h
+   M /trunk/Source/WebCore/bindings/v8/NPV8Object.cpp
+   M /trunk/Source/WebCore/bindings/v8/ScriptController.cpp
+   M /trunk/Source/WebCore/bindings/v8/ScriptController.h
+
+ https://bugs.webkit.org/show_bug.cgi?id=69471
+
+ We now wrap the window script NPObject which is requested by NPAPI plugins for
+ scripting. The wrapped NPObject pointer maintains a weak reference to the
+ window script NPObject and is cleared out when the window script object is destroyed.
+ The NPObject wrapper is destroyed when the last outstanding reference is released.
+
+ Reviewed by Nate Chapin.
+
+ No tests added as there is no change in functionality.
+
+Patch by Anantanarayanan G Iyengar <ananta@chromium.org> on 2011-10-07
+
+* WebCore.gypi:
+* bindings/v8/NPObjectWrapper.cpp: Added.
+(WebCore::NPObjectWrapper::NPObjectWrapper):
+(WebCore::NPObjectWrapper::create):
+(WebCore::NPObjectWrapper::clear):
+(WebCore::NPObjectWrapper::getWrapper):
+(WebCore::NPObjectWrapper::getUnderlyingNPObject):
+(WebCore::NPObjectWrapper::getObjectForCall):
+(WebCore::NPObjectWrapper::NPAllocate):
+(WebCore::NPObjectWrapper::NPDeallocate):
+(WebCore::NPObjectWrapper::NPPInvalidate):
+(WebCore::NPObjectWrapper::NPHasMethod):
+(WebCore::NPObjectWrapper::NPInvoke):
+(WebCore::NPObjectWrapper::NPInvokeDefault):
+(WebCore::NPObjectWrapper::NPHasProperty):
+(WebCore::NPObjectWrapper::NPGetProperty):
+(WebCore::NPObjectWrapper::NPSetProperty):
+(WebCore::NPObjectWrapper::NPRemoveProperty):
+(WebCore::NPObjectWrapper::NPNEnumerate):
+(WebCore::NPObjectWrapper::NPNConstruct):
+(WebCore::NPObjectWrapper::NPInvokePrivate):
+* bindings/v8/NPObjectWrapper.h: Added.
+* bindings/v8/NPV8Object.cpp:
+(_NPN_EvaluateHelper):
+* bindings/v8/ScriptController.cpp:
+(WebCore::ScriptController::ScriptController):
+(WebCore::ScriptController::clearScriptObjects):
+(WebCore::ScriptController::windowScriptNPObject):
+* bindings/v8/ScriptController.h:
+

@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r206244 | bfulgham@apple.com | 2016-09-22 03:23:26 +0200 (Do, 22. Sep 2016) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/StdLibExtras.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.cpp
+   M /trunk/Source/WebCore/platform/graphics/BitmapImage.cpp
+   M /trunk/Source/WebCore/platform/graphics/cg/PDFDocumentImage.cpp
+
+Correct uses of 'safeCast'
+https://bugs.webkit.org/show_bug.cgi?id=162301
+<rdar://problem/28343658>
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+A number of integer calculations in BitmapImage and PDFDocumentImage
+are not properly checked for overflow. Correct this.
+
+Tested by fast/images/large-size-image-crash.html
+
+* loader/cache/MemoryCache.cpp:
+(WebCore::MemoryCache::adjustSize): RELEASE_ASSERT on overflow.
+* platform/graphics/BitmapImage.cpp:
+(WebCore::BitmapImage::destroyMetadataAndNotify):
+(WebCore::BitmapImage::cacheFrame):
+(WebCore::BitmapImage::didDecodeProperties):
+(WebCore::BitmapImage::dataChanged):
+(WebCore::BitmapImage::ensureFrameAtIndexIsCached):
+(WebCore::BitmapImage::frameImageAtIndex):
+* platform/graphics/BitmapImage.h:
+* platform/graphics/cg/PDFDocumentImage.cpp:
+(WebCore::PDFDocumentImage::decodedSizeChanged):
+(WebCore::PDFDocumentImage::updateCachedImageIfNeeded):
+
+Source/WTF:
+
+* wtf/StdLibExtras.h:
+(WTF::safeCast): RELEASE_ASSERT on overflow.
+
+

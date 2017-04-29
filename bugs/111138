@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r146132 | alecflett@chromium.org | 2013-03-18 23:31:47 +0100 (Mo, 18. Mär 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBBackingStore.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBBackingStore.h
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBDatabaseBackendImpl.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBLevelDBCoding.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBLevelDBCoding.h
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBObjectStoreBackendImpl.cpp
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/tests/IDBBackingStoreTest.cpp
+   M /trunk/Source/WebKit/chromium/tests/IDBFakeBackingStore.h
+   M /trunk/Source/WebKit/chromium/tests/IDBLevelDBCodingTest.cpp
+
+IndexedDB: Protect against key prefix overflows
+https://bugs.webkit.org/show_bug.cgi?id=111138
+
+Reviewed by Tony Chang.
+
+Source/WebCore:
+
+This reworks the boundary checking for all databaseId,
+objectStoreId, and indexId, including negative and
+zero-based ids. All entrypoints into IDBLevelDBCoding
+are protected with explicit checks and all internal
+uses of KeyPrefix are protected with ASSERTs in the
+various constructors.
+
+Tests: WebKit unit tests IDBBackingStoreTest.cpp in WebKit/chromium
+
+* Modules/indexeddb/IDBBackingStore.h: Make all public methods boolean-based for errors.
+* Modules/indexeddb/IDBLevelDBCoding.h: Add methods for checking databaseId, objectStoreId, and indexId.
+
+Source/WebKit/chromium:
+
+Add tests for invalid indexIds in basic get/put operations.
+
+

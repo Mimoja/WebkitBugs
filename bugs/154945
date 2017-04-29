@@ -1,0 +1,115 @@
+------------------------------------------------------------------------
+r198289 | jiewen_tan@apple.com | 2016-03-16 19:31:32 +0100 (Mi, 16. Mär 2016) | 86 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/url/host-expected.txt
+   M /trunk/LayoutTests/fast/url/idna2003-expected.txt
+   A /trunk/LayoutTests/fast/url/invalid-idn-expected.txt
+   A /trunk/LayoutTests/fast/url/invalid-idn.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/URL.cpp
+   M /trunk/Source/WebCore/platform/mac/WebCoreNSURLExtras.h
+   M /trunk/Source/WebCore/platform/mac/WebCoreNSURLExtras.mm
+   M /trunk/Source/WebKit/ios/ChangeLog
+   M /trunk/Source/WebKit/ios/Misc/WebNSStringExtrasIOS.m
+   M /trunk/Source/WebKit/ios/WebView/WebPDFViewPlaceholder.mm
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/History/WebHistoryItem.mm
+   M /trunk/Source/WebKit/mac/Misc/WebKitErrors.m
+   M /trunk/Source/WebKit/mac/Misc/WebNSFileManagerExtras.mm
+   M /trunk/Source/WebKit/mac/Misc/WebNSPasteboardExtras.mm
+   M /trunk/Source/WebKit/mac/Misc/WebNSURLExtras.h
+   M /trunk/Source/WebKit/mac/Misc/WebNSURLExtras.mm
+   M /trunk/Source/WebKit/mac/Panels/WebAuthenticationPanel.m
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebEditorClient.mm
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/MiniBrowser/mac/WK2BrowserWindowController.m
+   M /trunk/Tools/TestWebKitAPI/Tests/Cocoa/URLExtras.mm
+
+URL Parsing should signal failure for illegal IDN
+https://bugs.webkit.org/show_bug.cgi?id=154945
+<rdar://problem/8014795>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+WebCore::URL will now invalidate URLs with illegal IDN. And functions inside WebCoreNSURLExtras.h
+that deal with IDN mapping will now return nil to signal error.
+
+Test: fast/url/invalid-idn.html
+
+* platform/URL.cpp:
+(WebCore::isSchemeFirstChar):
+(WebCore::URL::init):
+(WebCore::appendEncodedHostname):
+(WebCore::encodeHostnames):
+(WebCore::encodeRelativeString):
+* platform/mac/WebCoreNSURLExtras.h:
+* platform/mac/WebCoreNSURLExtras.mm:
+(WebCore::mapHostNameWithRange):
+(WebCore::hostNameNeedsDecodingWithRange):
+(WebCore::hostNameNeedsEncodingWithRange):
+(WebCore::decodeHostNameWithRange):
+(WebCore::encodeHostNameWithRange):
+(WebCore::decodeHostName):
+(WebCore::encodeHostName):
+(WebCore::collectRangesThatNeedMapping):
+(WebCore::mapHostNames):
+(WebCore::URLWithData):
+(WebCore::dataWithUserTypedString):
+(WebCore::URLWithUserTypedString):
+(WebCore::URLWithUserTypedStringDeprecated):
+(WebCore::userVisibleString):
+
+Source/WebKit/ios:
+
+* Misc/WebNSStringExtrasIOS.m:
+(-[NSString _web_possibleURLsForForUserTypedString:]):
+* WebView/WebPDFViewPlaceholder.mm:
+(-[WebPDFViewPlaceholder _updateTitleForURL:]):
+
+Source/WebKit/mac:
+
+In this patch, we add new SPIs _webkit_URLWithUserTypedString, _webkit_decodeHostName and
+_webkit_encodeHostName which will return nil while dealing with illegal IDN.
+
+Old SPIs _web_URLWithUserTypedString, _web_decodeHostName and _web_encodeHostName are marked
+deprecated as they ignore URL parsing failure.
+
+* History/WebHistoryItem.mm:
+(-[WebHistoryItem initFromDictionaryRepresentation:]):
+* Misc/WebKitErrors.m:
+(+[NSError _webKitErrorWithCode:failingURL:]):
+* Misc/WebNSFileManagerExtras.mm:
+(-[NSFileManager _webkit_setMetadataURL:referrer:atPath:]):
+* Misc/WebNSPasteboardExtras.mm:
+(-[NSPasteboard _web_bestURL]):
+* Misc/WebNSURLExtras.h:
+* Misc/WebNSURLExtras.mm:
+(+[NSURL _web_URLWithUserTypedString:]):
+(+[NSURL _webkit_URLWithUserTypedString:relativeToURL:]):
+(+[NSURL _webkit_URLWithUserTypedString:]):
+(-[NSString _web_decodeHostName]):
+(-[NSString _web_encodeHostName]):
+(-[NSString _webkit_decodeHostName]):
+(-[NSString _webkit_encodeHostName]):
+* Panels/WebAuthenticationPanel.m:
+(-[WebAuthenticationPanel setUpForChallenge:]):
+* WebCoreSupport/WebEditorClient.mm:
+(WebEditorClient::canonicalizeURLString):
+
+Tools:
+
+* MiniBrowser/mac/WK2BrowserWindowController.m:
+(-[WK2BrowserWindowController fetch:]):
+* TestWebKitAPI/Tests/Cocoa/URLExtras.mm:
+(TestWebKitAPI::TEST):
+
+LayoutTests:
+
+* fast/url/host-expected.txt:
+* fast/url/idna2003-expected.txt:
+* fast/url/invalid-idn-expected.txt: Added.
+* fast/url/invalid-idn.html: Added.
+

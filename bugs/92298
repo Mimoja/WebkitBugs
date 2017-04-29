@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r124520 | rniwa@webkit.org | 2012-08-03 01:02:30 +0200 (Fr, 03. Aug 2012) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/editing/pasteboard/paste-noscript-expected.txt
+   M /trunk/LayoutTests/editing/pasteboard/paste-noscript-xhtml-expected.txt
+   M /trunk/LayoutTests/editing/pasteboard/paste-noscript.html
+   M /trunk/LayoutTests/editing/pasteboard/resources/paste-noscript-content.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+scripts in formaction should be stripped upon paste
+https://bugs.webkit.org/show_bug.cgi?id=92298
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Strip formaction attribute values when the URL is of javascript protocol.
+
+Test: editing/pasteboard/paste-noscript-xhtml.html
+      editing/pasteboard/paste-noscript.html
+
+* dom/Element.cpp:
+(WebCore::isAttributeToRemove): Explicitly compare with href and nohref instead of comparing
+the ends of strings since comparing two AtomicString is much faster.
+
+LayoutTests:
+
+Added formaction attributes to tests.
+
+* editing/pasteboard/paste-noscript-expected.txt:
+* editing/pasteboard/paste-noscript-xhtml-expected.txt:
+* editing/pasteboard/paste-noscript.html:
+* editing/pasteboard/resources/paste-noscript-content.html:
+
+

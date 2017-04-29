@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r42365 | weinig@apple.com | 2009-04-09 20:30:32 +0200 (Do, 09. Apr 2009) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/resources/pass.html
+   A /trunk/LayoutTests/fast/events/resources/subframe-stop-load-in-unload-handler-using-document-write.html
+   A /trunk/LayoutTests/fast/events/resources/subframe-stop-load-in-unload-handler-using-window-stop.html
+   A /trunk/LayoutTests/fast/events/stop-load-in-unload-handler-using-document-write-expected.txt
+   A /trunk/LayoutTests/fast/events/stop-load-in-unload-handler-using-document-write.html
+   A /trunk/LayoutTests/fast/events/stop-load-in-unload-handler-using-window-stop-expected.txt
+   A /trunk/LayoutTests/fast/events/stop-load-in-unload-handler-using-window-stop.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/FrameLoader.cpp
+   M /trunk/WebCore/loader/FrameLoader.h
+
+WebCore:
+
+2009-04-08  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey "Big Boy" Garen.
+
+        Fix for <rdar://problem/5745677> Possible to stop load during an unload event
+        Also fixes https://bugs.webkit.org/show_bug.cgi?id=20605
+
+        Tests: fast/events/stop-load-in-unload-handler-using-document-write.html
+               fast/events/stop-load-in-unload-handler-using-window-stop.html
+
+        Don't allow calling methods that would stop the new load inside the unload
+        event.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::FrameLoader):
+        (WebCore::FrameLoader::stopLoading):
+        (WebCore::FrameLoader::stopAllLoaders):
+        * loader/FrameLoader.h:
+
+LayoutTests:
+
+2009-04-08  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey "Big Boy" Garen.
+
+        Tests for <rdar://problem/5745677> Possible to stop load during an unload event
+
+        * fast/events/resources/pass.html: Added.
+        * fast/events/resources/subframe-stop-load-in-unload-handler-using-document-write.html: Added.
+        * fast/events/resources/subframe-stop-load-in-unload-handler-using-window-stop.html: Added.
+        * fast/events/stop-load-in-unload-handler-using-document-write-expected.txt: Added.
+        * fast/events/stop-load-in-unload-handler-using-document-write.html: Added.
+        * fast/events/stop-load-in-unload-handler-using-window-stop-expected.txt: Added.
+        * fast/events/stop-load-in-unload-handler-using-window-stop.html: Added.
+
+
+

@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r110919 | jamesr@google.com | 2012-03-16 01:28:20 +0100 (Fr, 16. Mär 2012) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/chromium/RateLimiter.cpp
+   M /trunk/Source/WebCore/platform/graphics/chromium/RateLimiter.h
+
+[chromium] RateLimiter should hold a reference to its context
+https://bugs.webkit.org/show_bug.cgi?id=80761
+
+Reviewed by Stephen White.
+
+* platform/graphics/chromium/RateLimiter.h:
+(RateLimiter):
+

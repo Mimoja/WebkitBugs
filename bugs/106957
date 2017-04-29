@@ -1,0 +1,76 @@
+------------------------------------------------------------------------
+r140975 | schenney@chromium.org | 2013-01-28 18:45:45 +0100 (Mo, 28. Jan 2013) | 60 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/efl/TestExpectations
+   M /trunk/LayoutTests/platform/gtk/TestExpectations
+   M /trunk/LayoutTests/platform/mac/TestExpectations
+   M /trunk/LayoutTests/platform/qt/TestExpectations
+   M /trunk/LayoutTests/platform/win/TestExpectations
+   A /trunk/LayoutTests/svg/dom/SVGViewSpec-invalid-ref-crash-expected.txt
+   A /trunk/LayoutTests/svg/dom/SVGViewSpec-invalid-ref-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGViewSpec.cpp
+   M /trunk/Source/WebCore/svg/SVGViewSpec.h
+
+SVGViewSpec fails when corresponding element has been removed
+https://bugs.webkit.org/show_bug.cgi?id=106957
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+When JS holds an SVGViewSpec object while deleting the object that
+defines the spec (an SVGSVGElement, or one of a few others) the
+pointer to the target is cleared in the SVGViewSpec but the methods
+that serve JS queries do not check and try to access the now null
+target. This patch fixes the prooblem, returning null when the
+corresponding object has been deleted.
+
+Also removing SVGViewSpec::setPreserveAspectRatioString, which is no
+longer used by any callers.
+
+Test: svg/dom/SVGViewSpec-invalid-ref-crash.html
+
+* svg/SVGViewSpec.cpp:
+(WebCore):
+(WebCore::SVGViewSpec::viewTarget): Check for null target and return null.
+(WebCore::SVGViewSpec::transform): Check for null target and return null..
+(WebCore::SVGViewSpec::viewBoxAnimated): Check for null target and return null.
+(WebCore::SVGViewSpec::preserveAspectRatioAnimated): Check for null target and return null.
+(WebCore::SVGViewSpec::lookupOrCreateViewBoxWrapper): ASSERT non-null target.
+(WebCore::SVGViewSpec::lookupOrCreatePreserveAspectRatioWrapper): ASSERT non-null target.
+(WebCore::SVGViewSpec::lookupOrCreateTransformWrapper): ASSERT non-null target.
+* svg/SVGViewSpec.h:
+(SVGViewSpec): Move some methods out of the header and into the implementation file.
+
+* svg/SVGViewSpec.cpp:
+(WebCore):
+(WebCore::SVGViewSpec::transform):
+(WebCore::SVGViewSpec::viewBoxAnimated):
+(WebCore::SVGViewSpec::preserveAspectRatioAnimated):
+(WebCore::SVGViewSpec::lookupOrCreateViewBoxWrapper):
+(WebCore::SVGViewSpec::lookupOrCreatePreserveAspectRatioWrapper):
+(WebCore::SVGViewSpec::lookupOrCreateTransformWrapper):
+* svg/SVGViewSpec.h:
+(SVGViewSpec):
+
+LayoutTests:
+
+Test for the situation in which the target of an SVGViewSpec is
+removed while the view spec lives on in JS. The test is expected to
+fail on all JSC based platforms because the element that must be
+deleted to trigger the results is not deleted upon GC.
+
+* svg/dom/SVGViewSpec-invalid-ref-crash-expected.txt: Added.
+* svg/dom/SVGViewSpec-invalid-ref-crash.html: Added.
+
+* platform/efl/TestExpectations:
+* platform/gtk/TestExpectations:
+* platform/mac/TestExpectations:
+* platform/qt/TestExpectations:
+* platform/win/TestExpectations:
+* svg/dom/SVGViewSpec-invalid-ref-crash-expected.txt: Added.
+* svg/dom/SVGViewSpec-invalid-ref-crash.html: Added.
+
+

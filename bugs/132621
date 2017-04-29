@@ -1,0 +1,112 @@
+------------------------------------------------------------------------
+r169475 | jhoneycutt@apple.com | 2014-05-30 01:52:32 +0200 (Fr, 30. Mai 2014) | 66 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/compositing/plugins/composited-plugin.html
+   M /trunk/LayoutTests/compositing/plugins/no-backing-store.html
+   M /trunk/LayoutTests/fast/dom/beforeload/flash-before-load.html
+   A /trunk/LayoutTests/fast/events/beforeload-assertion-expected.txt
+   A /trunk/LayoutTests/fast/events/beforeload-assertion.html
+   A /trunk/LayoutTests/fast/events/beforeload-iframe-crash-expected.txt
+   A /trunk/LayoutTests/fast/events/beforeload-iframe-crash.html
+   A /trunk/LayoutTests/fast/events/beforeload-input-time-crash-expected.txt
+   A /trunk/LayoutTests/fast/events/beforeload-input-time-crash.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/plugintypes-notype-data.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/plugintypes-nourl-blocked.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/object-src-no-url-allowed.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/object-src-no-url-blocked.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/object-src-none-allowed.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/object-src-none-blocked.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/resources/multiple-iframe-plugin-test.js
+   M /trunk/LayoutTests/http/tests/security/mixedContent/insecure-plugin-in-iframe.html
+   M /trunk/LayoutTests/platform/mac/plugins/supports-carbon-event-model.html
+   M /trunk/LayoutTests/platform/mac/plugins/testplugin-onnew-onpaint.html
+   M /trunk/LayoutTests/plugins/get-user-agent-with-null-npp-from-npp-new.html
+   M /trunk/LayoutTests/plugins/mouse-click-plugin-clears-selection.html
+   M /trunk/LayoutTests/plugins/netscape-plugin-map-data-to-src.html
+   M /trunk/LayoutTests/plugins/no-mime-with-valid-extension.html
+   M /trunk/LayoutTests/plugins/plugin-initiate-popup-window.html
+   M /trunk/LayoutTests/plugins/windowless_plugin_paint_test.html
+   A /trunk/LayoutTests/resources/plugin.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.exp.in
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/html/HTMLAppletElement.cpp
+   M /trunk/Source/WebCore/html/HTMLEmbedElement.cpp
+   M /trunk/Source/WebCore/html/HTMLObjectElement.cpp
+   M /trunk/Source/WebCore/page/FrameView.cpp
+   M /trunk/Source/WebCore/page/FrameView.h
+   M /trunk/Source/WebCore/testing/Internals.cpp
+   M /trunk/Source/WebCore/testing/Internals.h
+   M /trunk/Source/WebCore/testing/Internals.idl
+   M /trunk/Source/WebKit/ChangeLog
+   M /trunk/Source/WebKit/WebKit.vcxproj/WebKitExportGenerator/WebKitExports.def.in
+
+Roll r168668 back in.
+
+<https://bugs.webkit.org/show_bug.cgi?id=132621>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+Tests: fast/events/beforeload-assertion.html
+       fast/events/beforeload-iframe-crash.html
+       fast/events/beforeload-input-time-crash.html
+
+* WebCore.exp.in:
+* dom/Document.cpp:
+(WebCore::Document::updateLayoutIgnorePendingStylesheets):
+* dom/Document.h:
+* html/HTMLAppletElement.cpp:
+(WebCore::HTMLAppletElement::renderWidgetForJSBindings):
+* html/HTMLEmbedElement.cpp:
+(WebCore::HTMLEmbedElement::renderWidgetForJSBindings):
+* html/HTMLObjectElement.cpp:
+(WebCore::HTMLObjectElement::renderWidgetForJSBindings):
+* page/FrameView.cpp:
+(WebCore::FrameView::FrameView):
+(WebCore::FrameView::reset):
+(WebCore::FrameView::updateEmbeddedObjectsTimerFired):
+(WebCore::FrameView::flushAnyPendingPostLayoutTasks):
+(WebCore::FrameView::performPostLayoutTasks):
+* page/FrameView.h:
+* testing/Internals.cpp:
+(WebCore::Internals::updateLayoutIgnorePendingStylesheetsAndRunPostLayoutTasks):
+* testing/Internals.h:
+* testing/Internals.idl:
+
+Source/WebKit:
+* WebKit.vcxproj/WebKitExportGenerator/WebKitExports.def.in:
+
+LayoutTests:
+* compositing/plugins/composited-plugin.html:
+* compositing/plugins/no-backing-store.html:
+* fast/dom/beforeload/flash-before-load.html:
+* fast/events/beforeload-assertion-expected.txt: Added.
+* fast/events/beforeload-assertion.html: Added.
+* fast/events/beforeload-iframe-crash-expected.txt: Added.
+* fast/events/beforeload-iframe-crash.html: Added.
+* fast/events/beforeload-input-time-crash-expected.txt: Added.
+* fast/events/beforeload-input-time-crash.html: Added.
+* http/tests/security/contentSecurityPolicy/1.1/plugintypes-notype-data.html:
+* http/tests/security/contentSecurityPolicy/1.1/plugintypes-nourl-blocked.html:
+* http/tests/security/contentSecurityPolicy/object-src-no-url-allowed.html:
+* http/tests/security/contentSecurityPolicy/object-src-no-url-blocked.html:
+* http/tests/security/contentSecurityPolicy/object-src-none-allowed.html:
+* http/tests/security/contentSecurityPolicy/object-src-none-blocked.html:
+* http/tests/security/contentSecurityPolicy/resources/multiple-iframe-plugin-test.js:
+(testImpl.iframe.onload):
+(testImpl):
+* http/tests/security/mixedContent/insecure-plugin-in-iframe.html:
+* platform/mac/plugins/supports-carbon-event-model.html:
+* platform/mac/plugins/testplugin-onnew-onpaint.html:
+* plugins/get-user-agent-with-null-npp-from-npp-new.html:
+* plugins/mouse-click-plugin-clears-selection.html:
+* plugins/netscape-plugin-map-data-to-src.html:
+* plugins/no-mime-with-valid-extension.html:
+* plugins/plugin-initiate-popup-window.html:
+* plugins/windowless_plugin_paint_test.html:
+* resources/plugin.js: Added.
+(runAfterPluginLoad):
+

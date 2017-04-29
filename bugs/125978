@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r160847 | rniwa@webkit.org | 2013-12-19 20:10:31 +0100 (Do, 19. Dez 2013) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/overflowchanged-inside-selection-collapse-crash-expected.txt
+   A /trunk/LayoutTests/fast/events/overflowchanged-inside-selection-collapse-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/page/FrameView.cpp
+   M /trunk/Source/WebCore/page/FrameView.h
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderLayer.cpp
+   M /trunk/Source/WebCore/rendering/RenderMarquee.cpp
+
+overflowchanged event could cause a crash
+https://bugs.webkit.org/show_bug.cgi?id=125978
+
+Reviewed by Tim Horton.
+
+Source/WebCore: 
+
+Made the event asynchrnous by re-using Document's event queuing ability. Also removed
+the infrastructure to queue up events in FrameView.
+
+Test: fast/events/overflowchanged-inside-selection-collapse-crash.html
+
+* dom/Document.cpp:
+(WebCore::Document::recalcStyle):
+(WebCore::Document::enqueueOverflowEvent):
+* dom/Document.h:
+* page/FrameView.cpp:
+(WebCore::FrameView::FrameView):
+(WebCore::FrameView::~FrameView):
+(WebCore::FrameView::layout):
+(WebCore::FrameView::performPostLayoutTasks):
+(WebCore::FrameView::updateOverflowStatus):
+* page/FrameView.h:
+* rendering/RenderBlock.cpp:
+(WebCore::OverflowEventDispatcher::~OverflowEventDispatcher):
+* rendering/RenderLayer.cpp:
+(WebCore::RenderLayer::scrollRectToVisible):
+* rendering/RenderMarquee.cpp:
+(WebCore::RenderMarquee::start):
+
+LayoutTests: 
+
+Add a regression test.
+
+* fast/events/overflowchanged-inside-selection-collapse-crash-expected.txt: Added.
+* fast/events/overflowchanged-inside-selection-collapse-crash.html: Added.
+
+

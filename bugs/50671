@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r73681 | inferno@chromium.org | 2010-12-10 05:43:06 +0100 (Fr, 10. Dez 2010) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/html/details-element-render-inline-crash-expected.txt
+   A /trunk/LayoutTests/fast/html/details-element-render-inline-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderDetails.cpp
+   M /trunk/WebCore/rendering/RenderDetails.h
+
+2010-12-09  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by James Robinson.
+
+        For details element, ensure that if we ended up being inline that we set out replaced
+        flag so that we are treated like an inline block.
+        https://bugs.webkit.org/show_bug.cgi?id=50671
+
+        Test: fast/html/details-element-render-inline-crash.html
+
+        * rendering/RenderDetails.cpp:
+        (WebCore::RenderDetails::styleDidChange): setReplaced to true if we are set as inline.
+        * rendering/RenderDetails.h: function definition.
+2010-12-09  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by James Robinson.
+
+        Tests that we do not crash when we set details element with children to show as inline.
+        https://bugs.webkit.org/show_bug.cgi?id=50671
+
+        * fast/html/details-element-render-inline-crash-expected.txt: Added.
+        * fast/html/details-element-render-inline-crash.html: Added.
+
+

@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r149780 | rniwa@webkit.org | 2013-05-09 01:51:19 +0200 (Do, 09. Mai 2013) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/Frame.cpp
+
+Potential use-after-free of Frame
+https://bugs.webkit.org/show_bug.cgi?id=115774
+
+Reviewed by Simon Fraser.
+
+Merge https://chromium.googlesource.com/chromium/blink/+/c5b4a6db82e8280c7fc55ee3dc3a84c6b026e66e.
+
+* page/Frame.cpp:
+(WebCore::Frame::setPrinting):
+(WebCore::Frame::setPageAndTextZoomFactors):
+(WebCore::Frame::deviceOrPageScaleFactorChanged):
+
+

@@ -1,0 +1,168 @@
+------------------------------------------------------------------------
+r141816 | inferno@chromium.org | 2013-02-04 23:36:56 +0100 (Mo, 04. Feb 2013) | 116 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/AVLTree.h
+   M /trunk/Source/WTF/wtf/BitArray.h
+   M /trunk/Source/WTF/wtf/FastBitVector.h
+   M /trunk/Source/WTF/wtf/FixedArray.h
+   M /trunk/Source/WTF/wtf/RefCountedArray.h
+   M /trunk/Source/WTF/wtf/TypedArrayBase.h
+   M /trunk/Source/WTF/wtf/text/StringBuffer.h
+   M /trunk/Source/WTF/wtf/text/StringBuilder.h
+   M /trunk/Source/WTF/wtf/text/StringImpl.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/SerializedScriptValue.cpp
+   M /trunk/Source/WebCore/css/CSSCalculationValue.cpp
+   M /trunk/Source/WebCore/css/CSSImageSetValue.cpp
+   M /trunk/Source/WebCore/css/CSSParserValues.h
+   M /trunk/Source/WebCore/css/CSSValueList.h
+   M /trunk/Source/WebCore/css/StyleSheetContents.cpp
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/ElementAttributeData.cpp
+   M /trunk/Source/WebCore/dom/ElementAttributeData.h
+   M /trunk/Source/WebCore/dom/SpaceSplitString.h
+   M /trunk/Source/WebCore/editing/TextIterator.cpp
+   M /trunk/Source/WebCore/html/HTMLFormElement.cpp
+   M /trunk/Source/WebCore/html/HTMLSelectElementWin.cpp
+   M /trunk/Source/WebCore/html/canvas/WebGLRenderingContext.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLFormattingElementList.cpp
+   M /trunk/Source/WebCore/inspector/InspectorStyleSheet.cpp
+   M /trunk/Source/WebCore/inspector/InspectorStyleTextEditor.cpp
+   M /trunk/Source/WebCore/inspector/InspectorValues.cpp
+   M /trunk/Source/WebCore/page/WindowFeatures.cpp
+   M /trunk/Source/WebCore/platform/audio/AudioArray.h
+   M /trunk/Source/WebCore/platform/audio/AudioFIFO.cpp
+   M /trunk/Source/WebCore/platform/graphics/GlyphPage.h
+   M /trunk/Source/WebCore/platform/graphics/TextRun.h
+   M /trunk/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzShaper.cpp
+   M /trunk/Source/WebCore/platform/graphics/openvg/TiledImageOpenVG.cpp
+   M /trunk/Source/WebCore/platform/image-decoders/ico/ICOImageDecoder.cpp
+   M /trunk/Source/WebCore/platform/text/QuotedPrintable.cpp
+   M /trunk/Source/WebCore/platform/text/SegmentedString.cpp
+   M /trunk/Source/WebCore/platform/win/WebCoreTextRenderer.cpp
+   M /trunk/Source/WebCore/rendering/InlineTextBox.cpp
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/ContextFeaturesClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebFrameImpl.cpp
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/Shared/mac/SandboxExtensionMac.mm
+
+Add ASSERT_WITH_SECURITY_IMPLICATION to detect out of bounds access
+https://bugs.webkit.org/show_bug.cgi?id=108668
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+* bindings/v8/SerializedScriptValue.cpp:
+* css/CSSCalculationValue.cpp:
+(WebCore::CSSCalcExpressionNodeParser::parseCalc):
+* css/CSSImageSetValue.cpp:
+(WebCore::CSSImageSetValue::fillImageSet):
+(WebCore::CSSImageSetValue::customCssText):
+* css/CSSParserValues.h:
+(WebCore::CSSParserString::operator[]):
+* css/CSSValueList.h:
+(WebCore::CSSValueListInspector::item):
+* css/StyleSheetContents.cpp:
+(WebCore::StyleSheetContents::ruleAt):
+(WebCore::StyleSheetContents::wrapperInsertRule):
+(WebCore::StyleSheetContents::wrapperDeleteRule):
+* dom/Document.cpp:
+(WebCore::Document::processArguments):
+* dom/Element.cpp:
+(WebCore::Element::removeAttributeInternal):
+* dom/ElementAttributeData.cpp:
+(WebCore::ElementAttributeData::removeAttribute):
+* dom/ElementAttributeData.h:
+(WebCore::ElementAttributeData::attributeItem):
+* dom/SpaceSplitString.h:
+(WebCore::SpaceSplitStringData::operator[]):
+(WebCore::SpaceSplitString::operator[]):
+* editing/TextIterator.cpp:
+(WebCore::TextIterator::characterAt):
+* html/HTMLFormElement.cpp:
+(WebCore::HTMLFormElement::removeFormElement):
+* html/HTMLSelectElementWin.cpp:
+(WebCore::HTMLSelectElement::platformHandleKeydownEvent):
+* html/canvas/WebGLRenderingContext.cpp:
+(WebCore):
+* html/parser/HTMLFormattingElementList.cpp:
+(WebCore::HTMLFormattingElementList::swapTo):
+* inspector/InspectorStyleSheet.cpp:
+(WebCore::InspectorStyleSheet::styleSheetTextWithChangedStyle):
+* inspector/InspectorStyleTextEditor.cpp:
+(WebCore::InspectorStyleTextEditor::replaceProperty):
+* inspector/InspectorValues.cpp:
+(WebCore::InspectorArrayBase::get):
+* page/WindowFeatures.cpp:
+(WebCore::WindowFeatures::WindowFeatures):
+* platform/audio/AudioArray.h:
+(WebCore::AudioArray::at):
+* platform/audio/AudioFIFO.cpp:
+(WebCore::AudioFIFO::findWrapLengths):
+* platform/graphics/GlyphPage.h:
+(WebCore::GlyphPage::glyphDataForIndex):
+(WebCore::GlyphPage::glyphAt):
+(WebCore::GlyphPage::setGlyphDataForIndex):
+* platform/graphics/TextRun.h:
+(WebCore::TextRun::operator[]):
+(WebCore::TextRun::data8):
+(WebCore::TextRun::data16):
+* platform/graphics/harfbuzz/HarfBuzzShaper.cpp:
+(WebCore::HarfBuzzShaper::setDrawRange):
+* platform/graphics/openvg/TiledImageOpenVG.cpp:
+(WebCore::TiledImageOpenVG::setTile):
+(WebCore::TiledImageOpenVG::tile):
+* platform/image-decoders/ico/ICOImageDecoder.cpp:
+(WebCore::ICOImageDecoder::decodeAtIndex):
+(WebCore::ICOImageDecoder::imageTypeAtIndex):
+* platform/text/QuotedPrintable.cpp:
+(WebCore::lengthOfLineEndingAtIndex):
+* platform/text/SegmentedString.cpp:
+(WebCore::SegmentedString::advance):
+* platform/win/WebCoreTextRenderer.cpp:
+(WebCore::doDrawTextAtPoint):
+* rendering/InlineTextBox.cpp:
+(WebCore::InlineTextBox::paint):
+(WebCore::InlineTextBox::paintSelection):
+
+Source/WebKit/chromium:
+
+* src/ContextFeaturesClientImpl.cpp:
+(WebKit::ContextFeaturesCache::entryFor):
+* src/WebFrameImpl.cpp:
+(WebKit::WebFrameImpl::selectFindMatch):
+
+Source/WebKit2:
+
+* Shared/mac/SandboxExtensionMac.mm:
+(WebKit::SandboxExtension::HandleArray::operator[]):
+
+Source/WTF:
+
+* wtf/AVLTree.h:
+(WTF::AVLTreeDefaultBSet::operator[]):
+* wtf/BitArray.h:
+(WTF::BitArray::set):
+(WTF::BitArray::get):
+* wtf/FastBitVector.h:
+(WTF::FastBitVector::set):
+(WTF::FastBitVector::clear):
+(WTF::FastBitVector::get):
+* wtf/FixedArray.h:
+(WTF::FixedArray::operator[]):
+* wtf/RefCountedArray.h:
+(WTF::RefCountedArray::at):
+* wtf/TypedArrayBase.h:
+(WTF::TypedArrayBase::item):
+* wtf/text/StringBuffer.h:
+(WTF::StringBuffer::operator[]):
+* wtf/text/StringBuilder.h:
+(WTF::StringBuilder::operator[]):
+* wtf/text/StringImpl.h:
+(WTF::StringImpl::operator[]):
+
+

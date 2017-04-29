@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r93048 | barraclough@apple.com | 2011-08-15 20:51:42 +0200 (Mo, 15. Aug 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/js/preventExtensions-expected.txt
+   M /trunk/LayoutTests/fast/js/script-tests/preventExtensions.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSObject.h
+
+Crash accessing static property on sealed object
+https://bugs.webkit.org/show_bug.cgi?id=66242
+
+Reviewed by Sam Weinig.
+
+Source/JavaScriptCore: 
+
+* runtime/JSObject.h:
+(JSC::JSObject::putDirectInternal):
+    - should only check isExtensible if checkReadOnly.
+
+LayoutTests: 
+
+* fast/js/preventExtensions-expected.txt:
+* fast/js/script-tests/preventExtensions.js:
+    - added test case.
+
+
+

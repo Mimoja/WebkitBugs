@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r69936 | jschuh@chromium.org | 2010-10-18 02:47:44 +0200 (Mo, 18. Okt 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/use-nested-children-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-nested-children.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/svg/SVGUseElement.cpp
+
+2010-10-17  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Duplicate use element children in shadow tree.
+        https://bugs.webkit.org/show_bug.cgi?id=47561
+
+        Test: svg/custom/use-nested-children.svg
+
+        * svg/SVGUseElement.cpp:
+        (WebCore::SVGUseElement::expandUseElementsInShadowTree):
+2010-10-17  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Duplicate use element children in shadow tree.
+        https://bugs.webkit.org/show_bug.cgi?id=47561
+
+        * svg/custom/use-nested-children-expected.txt: Added.
+        * svg/custom/use-nested-children.svg: Added.
+
+

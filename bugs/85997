@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r116551 | commit-queue@webkit.org | 2012-05-09 21:48:51 +0200 (Mi, 09. Mai 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/line-layout/line-break-removal-near-textarea-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/line-layout/line-break-removal-near-textarea-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+Crash from removal of a line break object
+https://bugs.webkit.org/show_bug.cgi?id=85997
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-05-09
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Regression from r115343. That replaced a call to setNeedsLayout()
+with a separate call that used a different bit during linebox
+invalidation after renderer child removal. There are special cases
+where layout isn't marked on parent nodes just from the removal, so
+line dirtying needs to explicitly mark ancestors for layout.
+
+* rendering/RenderObject.h:
+(WebCore::RenderObject::setAncestorLineBoxDirty):
+
+LayoutTests:
+
+Test case to exercise crashing condition in bug 85997.
+
+* fast/block/line-layout/line-break-removal-near-textarea-crash-expected.txt: Added
+* fast/block/line-layout/line-break-removal-near-textarea-crash.html: Added
+

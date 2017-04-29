@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r147645 | eae@chromium.org | 2013-04-04 20:10:07 +0200 (Do, 04. Apr 2013) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/invalid-frameset-compute-edge-expected.html
+   A /trunk/LayoutTests/fast/frames/invalid-frameset-compute-edge.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderFrameSet.cpp
+
+Source/WebCore: Change RenderFrameSet::computeEdgeInfo to use m-rows/m_cols directly
+https://bugs.webkit.org/show_bug.cgi?id=113825
+
+Reviewed by Eric Seidel.
+
+Tests: fast/frames/invalid-frameset-compute-edge.html
+
+* rendering/RenderFrameSet.cpp:
+(WebCore::RenderFrameSet::computeEdgeInfo):
+
+LayoutTests: Change RenderFrameSet::computeEdgeInfo to use m-rows/m_cols directly
+https://bugs.webkit.org/show_bug.cgi?id=113825
+        
+Reviewed by Eric Seidel.
+        
+Add test for accessing an invalid frame.
+
+* fast/frames/invalid-frameset-compute-edge-expected.html: Added.
+* fast/frames/invalid-frameset-compute-edge.html: Added.
+
+

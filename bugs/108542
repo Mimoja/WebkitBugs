@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r144417 | xingnan.wang@intel.com | 2013-03-01 07:07:55 +0100 (Fr, 01. Mär 2013) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webaudio/AudioNodeInput.cpp
+   M /trunk/Source/WebCore/Modules/webaudio/AudioNodeOutput.cpp
+
+Heap-use-after-free in WebCore::AudioNodeInput::updateInternalBus
+https://bugs.webkit.org/show_bug.cgi?id=108542
+
+Replace the wrong AudioNodeOutput::bus() usage out of safe peroid,
+which causes this issue.
+
+Reviewed by Chris Rogers.
+
+* Modules/webaudio/AudioNodeInput.cpp:
+(WebCore::AudioNodeInput::numberOfChannels):
+* Modules/webaudio/AudioNodeOutput.cpp:
+(WebCore::AudioNodeOutput::bus):
+
+

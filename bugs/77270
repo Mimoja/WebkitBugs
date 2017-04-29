@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r107749 | rniwa@webkit.org | 2012-02-15 00:54:40 +0100 (Mi, 15. Feb 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Range/surround-contents-font-face-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/Range/surround-contents-font-face-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNodeAlgorithms.h
+
+Crash in WebCore::SVGElement::removedFromDocument
+https://bugs.webkit.org/show_bug.cgi?id=77270
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Add a protector before calling NodeRemovalDispatcher::dispatch since
+NodeRemovalDispatcher::dispatch may remove the last RefPtr to this node.
+
+Test: fast/dom/Range/surround-contents-font-face-crash.svg
+
+* dom/ContainerNodeAlgorithms.h:
+(WebCore::Private::addChildNodesToDeletionQueue):
+
+LayoutTests:
+
+Add a regression test for the crash.
+
+* fast/dom/Range/surround-contents-font-face-crash-expected.txt: Added.
+* fast/dom/Range/surround-contents-font-face-crash.svg: Added.
+
+

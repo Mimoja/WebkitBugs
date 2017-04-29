@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r83209 | inferno@chromium.org | 2011-04-07 23:17:44 +0200 (Do, 07. Apr 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/non-styled-element-id-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/non-styled-element-id-crash.html
+   M /trunk/LayoutTests/svg/custom/embedded-svg-disallowed-in-dashboard.xml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/Element.h
+   M /trunk/Source/WebCore/dom/StyledElement.cpp
+
+2011-04-07  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        setHasID() is only called for styled elements
+        https://bugs.webkit.org/show_bug.cgi?id=57267
+
+        Test: fast/dom/non-styled-element-id-crash.html
+
+        * dom/Element.cpp:
+        (WebCore::Element::attributeChanged):
+        (WebCore::Element::idAttributeChanged):
+        * dom/Element.h:
+        * dom/StyledElement.cpp:
+        (WebCore::StyledElement::parseMappedAttribute):
+2011-04-07  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        setHasID() is only called for styled elements
+        https://bugs.webkit.org/show_bug.cgi?id=57267
+
+        * fast/dom/non-styled-element-id-crash-expected.txt: Added.
+        * fast/dom/non-styled-element-id-crash.html: Added.
+        * svg/custom/embedded-svg-disallowed-in-dashboard.xml: Fix the failing test.
+
+

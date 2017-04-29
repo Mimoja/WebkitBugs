@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r86500 | inferno@chromium.org | 2011-05-15 03:51:14 +0200 (So, 15. Mai 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/invalid-font-family-in-font-face-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/invalid-font-family-in-font-face-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+
+2011-05-14  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        Tests that we do not crash when trying to parse an invalid font family
+        value of 'inherit' or 'initial' in a font face rule.
+        https://bugs.webkit.org/show_bug.cgi?id=60837
+
+        * fast/css/invalid-font-family-in-font-face-crash-expected.txt: Added.
+        * fast/css/invalid-font-family-in-font-face-crash.html: Added.
+2011-05-14  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        As per spec, only allow one font family name in a font face rule.
+        Other things like initial value, inherited value or multiple names
+        are discarded.
+        https://bugs.webkit.org/show_bug.cgi?id=60837
+
+        Test: fast/css/invalid-font-family-in-font-face-crash.html
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::createFontFaceRule):
+

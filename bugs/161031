@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r204868 | keith_miller@apple.com | 2016-08-24 01:24:47 +0200 (Mi, 24. Aug 2016) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   M /trunk/JSTests/stress/typedarray-slice.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSGenericTypedArrayViewPrototypeFunctions.h
+
+%TypedArray%.prototype.slice needs to check that the source and destination have not been detached.
+https://bugs.webkit.org/show_bug.cgi?id=161031
+<rdar://problem/27937019>
+
+Reviewed by Geoffrey Garen.
+
+JSTests:
+
+* stress/typedarray-slice.js:
+(get let):
+(get try):
+(testSpeciesWithTransferring):
+
+Source/JavaScriptCore:
+
+* runtime/JSGenericTypedArrayViewPrototypeFunctions.h:
+(JSC::speciesConstruct):
+(JSC::genericTypedArrayViewProtoFuncSlice):
+

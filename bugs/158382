@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r201712 | cdumez@apple.com | 2016-06-06 18:40:02 +0200 (Mo, 06. Jun 2016) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/dom/getOwnPropertyDescriptor-crash-expected.txt
+   A /trunk/LayoutTests/js/dom/getOwnPropertyDescriptor-crash.html
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSObject.h
+
+Crash under JSObject::getOwnPropertyDescriptor()
+https://bugs.webkit.org/show_bug.cgi?id=158382
+<rdar://problem/26605004>
+
+Reviewed by Mark Lam.
+
+Source/JavaScriptCore:
+
+* runtime/JSObject.h:
+(JSC::JSObject::putDirectInternal):
+We were crashing under getOwnPropertyDescriptor() because the
+CustomAccessor was not properly reset on window.statusbar when
+setting it to false (which is allowed because the property is
+marked as [Replaceable] in the IDL). We now property reset the
+CustomAccessor flag in putDirectInternal() when needed. This
+fixes the crash.
+
+LayoutTests:
+
+Add layout test to cover the crash in JSObject::getOwnPropertyDescriptor().
+
+* js/dom/getOwnPropertyDescriptor-crash-expected.txt: Added.
+* js/dom/getOwnPropertyDescriptor-crash.html: Added.
+

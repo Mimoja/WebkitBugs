@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r160819 | rniwa@webkit.org | 2013-12-19 04:09:56 +0100 (Do, 19. Dez 2013) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/text/select-text-inside-non-static-position-expected.txt
+   A /trunk/LayoutTests/svg/text/select-text-inside-non-static-position.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/LogicalSelectionOffsetCaches.h
+
+Crash in WebCore::LogicalSelectionOffsetCaches::LogicalSelectionOffsetCaches
+https://bugs.webkit.org/show_bug.cgi?id=125970
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore: 
+
+The bug was caused by containingBlockForAbsolutePosition returning a non-RenderBlock render object.
+Fixed the bug by obtaining its containg block.
+
+Also changed the return type of containingBlockForFixedPosition, containingBlockForAbsolutePosition,
+containingBlockForObjectInFlow from RenderElement to RenderBlock as all callers of these functions
+had assumed the return value to be an instance of RenderBlock.
+
+Test: svg/text/select-text-inside-non-static-position.html
+
+* rendering/LogicalSelectionOffsetCaches.h:
+(WebCore::containingBlockForFixedPosition):
+(WebCore::containingBlockForAbsolutePosition):
+(WebCore::containingBlockForObjectInFlow):
+(WebCore::LogicalSelectionOffsetCaches::LogicalSelectionOffsetCaches):
+
+LayoutTests: 
+
+Added a regression test.
+
+* svg/text/select-text-inside-non-static-position-expected.txt: Added.
+* svg/text/select-text-inside-non-static-position.html: Added.
+
+

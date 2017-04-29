@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r91571 | commit-queue@webkit.org | 2011-07-22 19:07:15 +0200 (Fr, 22. Jul 2011) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/storage/IDBRequest.cpp
+
+Fix crash in IDBRequest::abort
+https://bugs.webkit.org/show_bug.cgi?id=64740
+
+Patch by David Grogan <dgrogan@chromium.org> on 2011-07-22
+Reviewed by Nate Chapin.
+
+Tested manually with the testcase in the bug.
+
+* storage/IDBRequest.cpp:
+(WebCore::IDBRequest::~IDBRequest):
+(WebCore::IDBRequest::abort):
+

@@ -1,0 +1,112 @@
+------------------------------------------------------------------------
+r113138 | yutak@chromium.org | 2012-04-04 07:00:54 +0200 (Mi, 04. Apr 2012) | 88 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/websocket/tests/hybi/workers/resources/worker-reload-iframe.html
+   A /trunk/LayoutTests/http/tests/websocket/tests/hybi/workers/resources/worker-reload.js
+   A /trunk/LayoutTests/http/tests/websocket/tests/hybi/workers/worker-reload-expected.txt
+   A /trunk/LayoutTests/http/tests/websocket/tests/hybi/workers/worker-reload.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/websockets/ThreadableWebSocketChannelClientWrapper.cpp
+   M /trunk/Source/WebCore/Modules/websockets/ThreadableWebSocketChannelClientWrapper.h
+   M /trunk/Source/WebCore/Modules/websockets/WorkerThreadableWebSocketChannel.cpp
+   M /trunk/Source/WebCore/Modules/websockets/WorkerThreadableWebSocketChannel.h
+   M /trunk/Source/WebCore/workers/DefaultSharedWorkerRepository.cpp
+   M /trunk/Source/WebCore/workers/WorkerLoaderProxy.h
+   M /trunk/Source/WebCore/workers/WorkerMessagingProxy.cpp
+   M /trunk/Source/WebCore/workers/WorkerMessagingProxy.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WebSharedWorkerImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebSharedWorkerImpl.h
+   M /trunk/Source/WebKit/chromium/src/WebWorkerClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebWorkerClientImpl.h
+
+Crash in WebCore::WorkerThreadableWebSocketChannel::Bridge::mainThreadCreateWebSocketChannel
+https://bugs.webkit.org/show_bug.cgi?id=82873
+
+Reviewed by David Levin.
+
+Source/WebCore:
+
+WorkerThreadableWebSocketChannel::Bridge should properly handle the cases where inter-thread
+callback is not called due to the termination of the worker run loop. Specifically, the bridge
+should not send its "this" pointer to the main thread, because the bridge object may be freed
+in the worker thread before the main thread starts to process.
+
+Test: http/tests/websocket/tests/hybi/workers/worker-reload.html
+
+* Modules/websockets/ThreadableWebSocketChannelClientWrapper.cpp:
+(WebCore::ThreadableWebSocketChannelClientWrapper::ThreadableWebSocketChannelClientWrapper):
+(WebCore::ThreadableWebSocketChannelClientWrapper::peer):
+(WebCore::ThreadableWebSocketChannelClientWrapper::didCreateWebSocketChannel):
+Renamed from setUseHixie76Protocol, as this funtion now also sets m_peer.
+Sets m_syncMethodDone to true, because this function is called in the end of
+synchronous wait of Bridge::initialize().
+(WebCore::ThreadableWebSocketChannelClientWrapper::clearPeer):
+(WebCore::ThreadableWebSocketChannelClientWrapper::useHixie76Protocol):
+* Modules/websockets/ThreadableWebSocketChannelClientWrapper.h:
+Add WorkerThreadableWebSocketChannel::Peer which is initialized after the creation of
+WebSocketChannel in the main thread.
+(ThreadableWebSocketChannelClientWrapper):
+* Modules/websockets/WorkerThreadableWebSocketChannel.cpp:
+(WebCore::WorkerThreadableWebSocketChannel::WorkerThreadableWebSocketChannel):
+Don't do synchronous wait in the constructor, as a member function may be called
+during the wait before the constructor finishes. The meat of the constructor has
+moved to initialize() function.
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::Bridge):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::~Bridge):
+(WorkerContextDidInitializeTask):
+(WebCore::WorkerContextDidInitializeTask::create):
+(WebCore::WorkerContextDidInitializeTask::~WorkerContextDidInitializeTask):
+(WebCore::WorkerContextDidInitializeTask::WorkerContextDidInitializeTask):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::mainThreadInitialize):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::initialize):
+Don't pass "this" object to the main thread. Receive the pointer to the peer object
+via ThreadableWebSocketChannelClientWrapper which is ThreadSafeRefCounted<>.
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::connect):
+m_peer may be NULL, and we should not do anything in that case.
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::send):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::bufferedAmount):
+(WebCore::WorkerThreadableWebSocketChannel::mainThreadClose):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::close):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::fail):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::suspend):
+(WebCore::WorkerThreadableWebSocketChannel::Bridge::resume):
+* Modules/websockets/WorkerThreadableWebSocketChannel.h:
+(WorkerThreadableWebSocketChannel):
+(WebCore::WorkerThreadableWebSocketChannel::refThreadableWebSocketChannel):
+(WebCore::WorkerThreadableWebSocketChannel::derefThreadableWebSocketChannel):
+(Bridge):
+* workers/DefaultSharedWorkerRepository.cpp:
+(SharedWorkerProxy):
+(WebCore::SharedWorkerProxy::postTaskForModeToWorkerContext):
+* workers/WorkerLoaderProxy.h:
+(WorkerLoaderProxy::postTaskForModeToWorkerContext):
+Return bool to indicate whether postTask was successful or not. This is necessary
+to avoid memory leaks of Peer object in Bridge::initialize() function.
+* workers/WorkerMessagingProxy.cpp:
+(WebCore::WorkerMessagingProxy::postTaskForModeToWorkerContext):
+* workers/WorkerMessagingProxy.h:
+(WorkerMessagingProxy):
+
+Source/WebKit/chromium:
+
+Change the function signature of WorkerLoaderProxy::postTaskForModeToWorkerContext().
+
+* src/WebSharedWorkerImpl.cpp:
+(WebKit::WebSharedWorkerImpl::postTaskForModeToWorkerContext):
+* src/WebSharedWorkerImpl.h:
+(WebSharedWorkerImpl):
+* src/WebWorkerClientImpl.cpp:
+(WebKit::WebWorkerClientImpl::postTaskForModeToWorkerContext):
+* src/WebWorkerClientImpl.h:
+(WebWorkerClientImpl):
+
+LayoutTests:
+
+* http/tests/websocket/tests/hybi/workers/resources/worker-reload-iframe.html: Added.
+* http/tests/websocket/tests/hybi/workers/resources/worker-reload.js: Added.
+* http/tests/websocket/tests/hybi/workers/worker-reload-expected.txt: Added.
+* http/tests/websocket/tests/hybi/workers/worker-reload.html: Added.
+
+

@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r146727 | cfleizach@apple.com | 2013-03-24 10:20:01 +0100 (So, 24. Mär 2013) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/mac/accessibility/aria-spinbutton-crash-expected.txt
+   A /trunk/LayoutTests/platform/mac/accessibility/aria-spinbutton-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityObject.h
+   M /trunk/Source/WebCore/accessibility/AccessibilitySpinButton.h
+   M /trunk/Source/WebCore/accessibility/mac/WebAccessibilityObjectWrapperMac.mm
+
+AX: Crash in WebCore::AccessibilitySpinButton::incrementButton()
+https://bugs.webkit.org/show_bug.cgi?id=111582
+
+Reviewed by Tim Horton.
+
+Source/WebCore: 
+
+There are two ways to create a spin button: from a textfield counter or from ARIA.
+If an ARIA spin button is created, it was returning true for isSpinButton, so we were 
+casting to the other kind of spin button, leading to a crash.
+
+We need to be more specific about our class types.
+
+Test: platform/mac/accessibility/aria-spinbutton-crash.html
+
+* accessibility/AccessibilityObject.h:
+(WebCore::AccessibilityObject::isNativeSpinButton):
+* accessibility/AccessibilitySpinButton.h:
+(WebCore::AccessibilitySpinButton::isNativeSpinButton):
+(WebCore::toAccessibilitySpinButton):
+* accessibility/mac/WebAccessibilityObjectWrapperMac.mm:
+(-[WebAccessibilityObjectWrapper accessibilityAttributeValue:]):
+
+LayoutTests: 
+
+* platform/mac/accessibility/aria-spinbutton-crash-expected.txt: Added.
+* platform/mac/accessibility/aria-spinbutton-crash.html: Added.
+
+
+

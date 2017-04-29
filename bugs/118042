@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r193969 | jiewen_tan@apple.com | 2015-12-11 20:49:56 +0100 (Fr, 11. Dez 2015) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/images/image-load-event-crash-expected.txt
+   A /trunk/LayoutTests/fast/images/image-load-event-crash.html
+
+Do not fire load events from frames with scripting disabled
+https://bugs.webkit.org/show_bug.cgi?id=118042
+<rdar://problem/14272857>
+
+Reviewed by Brent Fulgham.
+
+Since the crash is not reproducible, only test case from Blink r153029 is merged:
+https://codereview.chromium.org/17682003
+
+* fast/images/image-load-event-crash-expected.txt: Added.
+* fast/images/image-load-event-crash.html: Added.
+

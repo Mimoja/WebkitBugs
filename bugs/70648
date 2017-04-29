@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r108999 | msaboff@apple.com | 2012-02-27 18:22:29 +0100 (Mo, 27. Feb 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/regex/overflow-expected.txt
+   M /trunk/LayoutTests/fast/regex/script-tests/overflow.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/yarr/YarrParser.h
+
+Error check regexp min quantifier
+https://bugs.webkit.org/show_bug.cgi?id=70648
+
+Reviewed by Gavin Barraclough.
+
+Source/JavaScriptCore: 
+
+Added checking for min or only quantifier being UINT_MAX.
+When encountered this becomes a SyntaxError during parsing.
+
+* yarr/YarrParser.h:
+(JSC::Yarr::Parser::parseQuantifier):
+(JSC::Yarr::Parser::parse):
+(Parser):
+
+LayoutTests: 
+
+New test added to check for newly generated SyntaxError.
+
+* fast/regex/overflow-expected.txt:
+* fast/regex/script-tests/overflow.js:
+(quantifyMaxInt):
+
+

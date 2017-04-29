@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r157299 | dino@apple.com | 2013-10-11 11:44:39 +0200 (Fr, 11. Okt 2013) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+   M /trunk/LayoutTests/fast/animation/request-animation-frame-remove-client-expected.txt
+   M /trunk/LayoutTests/fast/animation/request-animation-frame-remove-client.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/DisplayRefreshMonitor.cpp
+   M /trunk/Source/WebCore/platform/graphics/DisplayRefreshMonitor.h
+   M /trunk/Source/WebCore/platform/graphics/blackberry/DisplayRefreshMonitorBlackBerry.cpp
+
+Source/WebCore: Use after free in WebCore::DisplayRefreshMonitorClient::fireDisplayRefreshIfNeeded
+https://bugs.webkit.org/show_bug.cgi?id=121033
+
+Patch by Darin Adler <darin@apple.com> on 2013-10-10
+Reviewed by Dean Jackson.
+
+For safe iteration, use a set rather than a vector, and remove the clients from
+the set if they are removed during iteration.
+
+Test: fast/animation/request-animation-frame-remove-client.html
+
+* platform/graphics/DisplayRefreshMonitor.cpp:
+(WebCore::DisplayRefreshMonitor::DisplayRefreshMonitor): Initialize the
+m_clientsToBeNotified pointer to null.
+(WebCore::DisplayRefreshMonitor::removeClient): If there is a m_clientsToBeNotified
+set, remove from it as well as the real m_clients set.
+(WebCore::DisplayRefreshMonitor::displayDidRefresh): Use a HashSet instead of a
+vector for the copy of the clients set we iterate.
+
+* platform/graphics/DisplayRefreshMonitor.h: Moved some of the BlackBerry-specific
+part of this out of the header. Added a new HashSet pointer, m_clientsToBeNotified,
+to be used to remove clients during the notification process. Also added a FIXME.
+
+* platform/graphics/blackberry/DisplayRefreshMonitorBlackBerry.cpp: Moved the
+DisplayAnimationClient class in here.
+
+LayoutTests: Use after free in WebCore::DisplayRefreshMonitorClient::fireDisplayRefreshIfNeeded
+http://webkit.org/b/121033
+
+Update test to indicate it no longer crashes.
+
+* TestExpectations: Mark test as passing.
+* fast/animation/request-animation-frame-remove-client-expected.txt:
+* fast/animation/request-animation-frame-remove-client.html:
+

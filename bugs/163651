@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r207547 | zalan@apple.com | 2016-10-19 20:15:08 +0200 (Mi, 19. Okt 2016) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/crash-when-table-has-continuation-and-content-inserted-expected.txt
+   A /trunk/LayoutTests/fast/table/crash-when-table-has-continuation-and-content-inserted.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableRow.cpp
+
+Use anonymous table row for new child at RenderTableRow::addChild() if available.
+https://bugs.webkit.org/show_bug.cgi?id=163651
+<rdar://problem/28705022>
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+We should try to prevent the continuation siblings from getting separated and inserted into
+wrapper renderers. It makes finding these continuation siblings difficult.
+This patch adds a checks for anonymous table rows so that we could find a closer common ancestor of
+beforeChild/new child.
+
+Test: fast/table/crash-when-table-has-continuation-and-content-inserted.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::showRenderObject): Add continuation information.
+* rendering/RenderTableRow.cpp:
+(WebCore::RenderTableRow::addChild):
+
+LayoutTests:
+
+* fast/table/crash-when-table-has-continuation-and-content-inserted-expected.txt: Added.
+* fast/table/crash-when-table-has-continuation-and-content-inserted.html: Added.
+

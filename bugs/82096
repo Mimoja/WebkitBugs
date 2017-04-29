@@ -1,0 +1,56 @@
+------------------------------------------------------------------------
+r112200 | commit-queue@webkit.org | 2012-03-27 05:16:34 +0200 (Di, 27. Mär 2012) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/first-letter-capitalized-edit-select-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/first-letter-capitalized-edit-select-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderText.cpp
+   M /trunk/Source/WebCore/rendering/RenderText.h
+   M /trunk/Source/WebCore/rendering/RenderTextFragment.cpp
+   M /trunk/Source/WebCore/rendering/RenderTextFragment.h
+
+Assert failure from capitalized RenderTextFragment
+https://bugs.webkit.org/show_bug.cgi?id=82096
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-03-26
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+The cause of this bug was the call to RenderTextFragment::setTextInternal
+resulting from a style change from RenderObject::addChild. The idea here
+is to better separate the code path for transforming existing text from
+the code path for replacing the underlying text of a node. For
+RenderTextFragment this has to be clear because only in the latter case
+does the first-letter get reset.
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::addChild): Added call to transformText
+* rendering/RenderText.cpp:
+(WebCore::RenderText::styleDidChange): Added call to transformText
+(WebCore::RenderText::transformText): Added
+* rendering/RenderText.h:
+(WebCore::RenderText::setText): Changed to virtual so RenderTextFragment can override
+(WebCore::RenderText::transformText): Added
+* rendering/RenderTextFragment.cpp:
+(WebCore::RenderTextFragment::styleDidChange): Removed references to
+m_allowFragmentReset which was the previous approach to separating the
+code paths
+(WebCore::RenderTextFragment::setTextInternal): Deleted
+(WebCore::RenderTextFragment::setText): Added with most of logic that was
+previously in setTextInternal
+(WebCore::RenderTextFragment::transformText): Added
+* rendering/RenderTextFragment.h:
+(WebCore::RenderTextFragment::setText): Added
+(WebCore::RenderTextFragment::transformText): Added
+(WebCore::RenderTextFragment::setTextInternal): Deleted
+
+LayoutTests:
+
+Test that exercises failure condition in bug 82096.
+
+* fast/css/first-letter-capitalized-edit-select-crash-expected.txt: Added
+* fast/css/first-letter-capitalized-edit-select-crash.html: Added
+

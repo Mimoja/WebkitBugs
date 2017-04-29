@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r164170 | commit-queue@webkit.org | 2014-02-15 09:57:21 +0100 (Sa, 15. Feb 2014) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/indent-with-uneditable-crash-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/indent-with-uneditable-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/CompositeEditCommand.cpp
+
+ASSERT_WITH_SECURITY_IMPLICATION in WebCore::toElement
+https://bugs.webkit.org/show_bug.cgi?id=128810
+
+Patch by Renata Hodovan <rhodovan.u-szeged@partner.samsung.com> on 2014-02-15
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Make CompositeEditCommand::cloneParagraphUnderNewElement() to work when |outerNode|
+doesn't contain |start|.
+
+Before this patch, CompositeEditCommand::cloneParagraphUnderNewElement() tried to copy
+ancestry nodes from |start| to Document node when |start| position isn't in |outerNode|. This
+patch changes CompositeEditCommand::cloneParagraphUnderNewElement() to copy |start| to
+|outerNode| only if |outerNode| contains |start| position.
+
+Merged from Blink https://src.chromium.org/viewvc/blink?revision=161762&view=revision by yosin@chromium.org.
+
+Test: editing/execCommand/indent-with-uneditable-crash.html
+
+* editing/CompositeEditCommand.cpp:
+(WebCore::CompositeEditCommand::cloneParagraphUnderNewElement):
+
+LayoutTests:
+
+* editing/execCommand/indent-with-uneditable-crash-expected.txt: Added.
+* editing/execCommand/indent-with-uneditable-crash.html: Added.
+

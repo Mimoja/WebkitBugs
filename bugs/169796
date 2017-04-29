@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r214079 | mark.lam@apple.com | 2017-03-17 00:51:19 +0100 (Fr, 17. Mär 2017) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/ArrayPrototype.cpp
+
+Array concat operation should check for length overflows.
+https://bugs.webkit.org/show_bug.cgi?id=169796
+<rdar://problem/31095276>
+
+Reviewed by Keith Miller.
+
+* runtime/ArrayPrototype.cpp:
+(JSC::concatAppendOne):
+(JSC::arrayProtoPrivateFuncConcatMemcpy):
+
+
+

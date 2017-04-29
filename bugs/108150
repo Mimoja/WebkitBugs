@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r141228 | shinyak@chromium.org | 2013-01-30 08:28:38 +0100 (Mi, 30. Jan 2013) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-change-type-on-focus-2-expected.txt
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-change-type-on-focus-2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLInputElement.cpp
+
+Renderer is recreated unexpectedly after detach in HTMLInputElement
+https://bugs.webkit.org/show_bug.cgi?id=108150
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+After r140659, destoryShadowSubtree() may update style in removeChild(). It causes
+attaching HTMLInputElement before creating shadowsubtree in HTMLInputElement::updateType().
+
+For safe, destroyShadowSubtree() should be done before detach().
+
+Test: fast/forms/number/number-change-type-on-focus-2.html
+
+* html/HTMLInputElement.cpp:
+(WebCore::HTMLInputElement::updateType):
+
+LayoutTests:
+
+* fast/forms/time-multiple-fields/time-multiple-fields-change-type-on-focus-2.html: Added.
+* fast/forms/time-multiple-fields/time-multiple-fields-change-type-on-focus-2-expected.txt: Added.
+
+

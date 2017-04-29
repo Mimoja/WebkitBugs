@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r80043 | simonjam@chromium.org | 2011-03-01 23:34:38 +0100 (Di, 01. Mär 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/MainResourceLoader.cpp
+
+2011-03-01  James Simonsen  <simonjam@chromium.org>
+
+        Reviewed by Tony Gentilcore.
+
+        [Web Timing] Handle the case where no responseEnd time is available.
+        https://bugs.webkit.org/show_bug.cgi?id=55444
+
+        * platform/chromium/test_expectations.txt: Remove CRASH from fast/dom/prototype-inheritance-2.html
+2011-03-01  James Simonsen  <simonjam@chromium.org>
+
+        Reviewed by Tony Gentilcore.
+
+        [Web Timing] Handle the case where no responseEnd time is available.
+        https://bugs.webkit.org/show_bug.cgi?id=55444
+
+        * loader/MainResourceLoader.cpp:
+        (WebCore::MainResourceLoader::MainResourceLoader): Initialize to 0.
+        (WebCore::MainResourceLoader::didFinishLoading): Fall back to current time if no other time is available.
+

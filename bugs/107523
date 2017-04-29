@@ -1,0 +1,80 @@
+------------------------------------------------------------------------
+r140539 | pfeldman@chromium.org | 2013-01-23 18:57:26 +0100 (Mi, 23. Jan 2013) | 54 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.exp.in
+   M /trunk/Source/WebCore/inspector/InspectorController.cpp
+   M /trunk/Source/WebCore/inspector/InspectorController.h
+   M /trunk/Source/WebCore/inspector/InspectorFrontendClient.h
+   M /trunk/Source/WebCore/inspector/InspectorFrontendClientLocal.cpp
+   M /trunk/Source/WebCore/inspector/InspectorFrontendClientLocal.h
+   M /trunk/Source/WebCore/inspector/InspectorFrontendHost.cpp
+   M /trunk/Source/WebCore/inspector/InspectorFrontendHost.h
+   M /trunk/Source/WebCore/inspector/InspectorFrontendHost.idl
+   M /trunk/Source/WebCore/inspector/front-end/DOMExtension.js
+   M /trunk/Source/WebCore/inspector/front-end/InspectorFrontendHostStub.js
+   M /trunk/Source/WebCore/inspector/front-end/TestController.js
+   M /trunk/Source/WebCore/inspector/front-end/externs.js
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/public/WebDevToolsFrontendClient.h
+   M /trunk/Source/WebKit/chromium/src/InspectorFrontendClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/InspectorFrontendClientImpl.h
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/chromium/DRTDevToolsClient.cpp
+   M /trunk/Tools/DumpRenderTree/chromium/DRTDevToolsClient.h
+
+Web Inspector: only allow evaluateForTestInFrontend for front-ends under test.
+https://bugs.webkit.org/show_bug.cgi?id=107523
+
+Reviewed by Yury Semikhatsky.
+
+Source/WebCore:
+
+* inspector/InspectorController.cpp:
+(WebCore::InspectorController::InspectorController):
+(WebCore::InspectorController::isUnderTest):
+(WebCore):
+(WebCore::InspectorController::evaluateForTestInFrontend):
+* inspector/InspectorController.h:
+(InspectorController):
+* inspector/InspectorFrontendClient.h:
+(InspectorFrontendClient):
+* inspector/InspectorFrontendClientLocal.cpp:
+(WebCore::InspectorFrontendClientLocal::canAttachWindow):
+(WebCore::InspectorFrontendClientLocal::isUnderTest):
+(WebCore):
+* inspector/InspectorFrontendClientLocal.h:
+(InspectorFrontendClientLocal):
+* inspector/InspectorFrontendHost.cpp:
+(WebCore::InspectorFrontendHost::isUnderTest):
+(WebCore):
+* inspector/InspectorFrontendHost.h:
+(InspectorFrontendHost):
+* inspector/InspectorFrontendHost.idl:
+* inspector/front-end/DOMExtension.js:
+* inspector/front-end/InspectorFrontendHostStub.js:
+(.WebInspector.InspectorFrontendHostStub.prototype.canInspectWorkers):
+(.WebInspector.InspectorFrontendHostStub.prototype.isUnderTest):
+* inspector/front-end/TestController.js:
+(.invokeMethod):
+(WebInspector.evaluateForTestInFrontend):
+* inspector/front-end/externs.js:
+
+Source/WebKit/chromium:
+
+* public/WebDevToolsFrontendClient.h:
+(WebKit::WebDevToolsFrontendClient::isUnderTest):
+(WebDevToolsFrontendClient):
+* src/InspectorFrontendClientImpl.cpp:
+(WebKit::InspectorFrontendClientImpl::isUnderTest):
+* src/InspectorFrontendClientImpl.h:
+(InspectorFrontendClientImpl):
+
+Tools:
+
+* DumpRenderTree/chromium/DRTDevToolsClient.cpp:
+(DRTDevToolsClient::isUnderTest):
+(DRTDevToolsClient::call):
+* DumpRenderTree/chromium/DRTDevToolsClient.h:
+(DRTDevToolsClient):
+

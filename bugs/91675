@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r123131 | commit-queue@webkit.org | 2012-07-19 21:06:11 +0200 (Do, 19. Jul 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/webaudio/delaynode-maxdelaylimit-expected.txt
+   A /trunk/LayoutTests/webaudio/delaynode-maxdelaylimit.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webaudio/DelayNode.cpp
+
+Limit maximum delay of DelayNode.
+https://bugs.webkit.org/show_bug.cgi?id=91675
+
+Patch by Raymond Toy <rtoy@google.com> on 2012-07-19
+Reviewed by Kenneth Russell.
+
+Source/WebCore:
+
+Clip the maximum delay of a DelayNode to a reasonable maximum.
+
+Test: webaudio/delaynode-maxdelaylimit.html
+
+* Modules/webaudio/DelayNode.cpp:
+(WebCore): Add maximumAllowedDelayTime.
+(WebCore::DelayNode::DelayNode): Clip max delay.
+
+LayoutTests:
+
+Test that a DelayNode limits the specified max delay to the
+expected maximum allowed delay.
+
+* webaudio/delaynode-maxdelaylimit-expected.txt: Added.
+* webaudio/delaynode-maxdelaylimit.html: Added.
+

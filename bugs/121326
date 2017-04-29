@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r155748 | andersca@apple.com | 2013-09-14 08:22:12 +0200 (Sa, 14. Sep 2013) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/Vector.h
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/Tests/WTF/Vector.cpp
+
+Pick the correct overload when a const reference is passed to appendSlowCase.
+https://bugs.webkit.org/show_bug.cgi?id=121326
+
+Reviewed by Darin Adler.
+
+Source/WTF:
+
+* wtf/Vector.h:
+(WTF::Vector::appendSlowCase):
+Make sure that the pointer to the element isn't const so we'll pick the right expandCapacity overload.
+
+Tools:
+
+* TestWebKitAPI/Tests/WTF/Vector.cpp:
+(TestWebKitAPI::TEST):
+

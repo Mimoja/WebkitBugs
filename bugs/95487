@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r127206 | jchaffraix@webkit.org | 2012-08-31 01:22:56 +0200 (Fr, 31. Aug 2012) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/crash-clearSelection-collapsed-borders-expected.txt
+   A /trunk/LayoutTests/fast/table/crash-clearSelection-collapsed-borders.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+Crash in RenderTable::calcBorderEnd
+https://bugs.webkit.org/show_bug.cgi?id=95487
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+r126590 opened the window for a race condition in RenderObjectChildList::removeChildNode.
+This is caused because willBeRemovedFromTree should be strictly following by the actual removal
+and wasn't.
+
+This race condition was caused by clearSelection() being called just after willBeRemovedFromTree,
+which forced a section's cells recalc and would re-add the soon-to-be-removed child, causing the
+crash.
+
+Test: fast/table/crash-clearSelection-collapsed-borders.html
+
+* rendering/RenderObjectChildList.cpp:
+(WebCore::RenderObjectChildList::removeChildNode):
+Moved the clearSeletion call before willBeRemovedFromTree. Added a warning about running code
+after willBeRemovedFromTree and before removing the child from the tree.
+
+LayoutTests:
+
+* fast/table/crash-clearSelection-collapsed-borders-expected.txt: Added.
+* fast/table/crash-clearSelection-collapsed-borders.html: Added.
+
+

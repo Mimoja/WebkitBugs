@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r121160 | kinuko@chromium.org | 2012-06-25 18:30:49 +0200 (Mo, 25. Jun 2012) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WorkerFileSystemCallbacksBridge.cpp
+
+Heap-use-after-free in WebKit::MainThreadFileSystemCallbacks
+https://bugs.webkit.org/show_bug.cgi?id=87019
+
+Reviewed by David Levin.
+
+Should not access the CallbacksBridge's member field after it's freed.
+
+* src/WorkerFileSystemCallbacksBridge.cpp:
+(WebKit::WorkerFileSystemCallbacksBridge::cleanUpAfterCallback):
+
+

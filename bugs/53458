@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r77548 | jschuh@chromium.org | 2011-02-04 01:07:45 +0100 (Fr, 04. Feb 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/use-animation-in-fill-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-animation-in-fill.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.cpp
+
+2011-02-03  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        startAnimations should use a local, RefCounted Vector.
+        https://bugs.webkit.org/show_bug.cgi?id=53458
+
+        Test: svg/custom/use-animation-in-fill.html
+
+        * svg/SVGDocumentExtensions.cpp:
+        (WebCore::SVGDocumentExtensions::startAnimations):
+2011-02-03  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        startAnimations should use a local, RefCounted Vector.
+        https://bugs.webkit.org/show_bug.cgi?id=53458
+
+        * svg/custom/use-animation-in-fill-expected.txt: Added.
+        * svg/custom/use-animation-in-fill.html: Added.
+
+

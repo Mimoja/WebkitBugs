@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r110326 | tsepez@chromium.org | 2012-03-09 22:34:04 +0100 (Fr, 09. Mär 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/css/cross-fade-reload-expected.txt
+   A /trunk/LayoutTests/http/tests/css/cross-fade-reload.html
+   A /trunk/LayoutTests/http/tests/css/resources/abe.png
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSCrossfadeValue.h
+
+Hold cached images with a CachedResourceHandle rather than a raw pointer for CSSCrossfadeValue
+https://bugs.webkit.org/show_bug.cgi?id=80186
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+Test: http/tests/css/cross-fade-reload.html
+
+* css/CSSCrossfadeValue.h:
+(CSSCrossfadeValue):
+
+LayoutTests:
+
+* http/tests/css/cross-fade-reload-expected.txt: Added.
+* http/tests/css/cross-fade-reload.html: Added.
+* http/tests/css/resources/abe.png: Added.
+
+

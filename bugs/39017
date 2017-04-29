@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r105554 | ap@apple.com | 2012-01-21 01:09:34 +0100 (Sa, 21. Jan 2012) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMWindow.cpp
+
+        WebCore should not send invalid URLs to client createWindow methods.
+        https://bugs.webkit.org/show_bug.cgi?id=39017
+
+        Unreviewed test fix.
+
+        * page/DOMWindow.cpp: (WebCore::DOMWindow::createWindow): Let empty URLs through.
+
+
+

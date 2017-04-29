@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r115646 | jschuh@chromium.org | 2012-04-30 18:59:50 +0200 (Mo, 30. Apr 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/loader/javascript-url-iframe-remove-on-navigate-expected.txt
+   A /trunk/LayoutTests/fast/loader/javascript-url-iframe-remove-on-navigate.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/SubframeLoader.cpp
+
+loadOrRedirectSubframe should return the owner element's frame
+https://bugs.webkit.org/show_bug.cgi?id=84780
+
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Test: fast/loader/javascript-url-iframe-remove-on-navigate.html
+
+* loader/SubframeLoader.cpp:
+(WebCore::SubframeLoader::loadOrRedirectSubframe):
+
+LayoutTests:
+
+* fast/loader/javascript-url-iframe-remove-on-navigate-expected.txt: Added.
+* fast/loader/javascript-url-iframe-remove-on-navigate.html: Added.
+
+

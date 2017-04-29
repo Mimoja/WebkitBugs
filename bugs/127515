@@ -1,0 +1,58 @@
+------------------------------------------------------------------------
+r164323 | jhoneycutt@apple.com | 2014-02-18 23:55:39 +0100 (Di, 18. Feb 2014) | 45 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/ruby-base-merge-block-children-crash-2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockFlow.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlockFlow.h
+   M /trunk/Source/WebCore/rendering/RenderRubyBase.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyBase.h
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.cpp
+
+Crash when merging ruby bases that contain floats
+
+https://bugs.webkit.org/show_bug.cgi?id=127515
+<rdar://problem/15896562>
+
+Source/WebCore:
+
+This crash occurs when we remove a ruby text object and decide to merge
+two adjacent ruby base objects. The right ruby base's children were
+being merged into the left ruby base, but the right ruby base's floats
+were not being moved to the left base. This could cause us not to
+descend into all nodes containing a FloatingObject in
+RenderBlockFlow::markAllDescendantsWithFloatsForLayout(), because we
+assume that if a block does not have a particular float in its float
+list, none of its descendants will, either.
+
+Reviewed by David Hyatt.
+
+Test: fast/ruby/ruby-base-merge-block-children-crash-2.html
+
+* rendering/RenderBlockFlow.cpp:
+(WebCore::RenderBlockFlow::moveFloatsTo):
+Code split out of moveAllChildrenIncludingFloatsTo().
+(WebCore::RenderBlockFlow::moveAllChildrenIncludingFloatsTo):
+Call moveFloatsTo().
+
+* rendering/RenderBlockFlow.h:
+Add declaration of moveFloatsTo().
+
+* rendering/RenderRubyBase.cpp:
+(WebCore::RenderRubyBase::mergeChildrenWithBase):
+Move children and floats to the new base.
+
+* rendering/RenderRubyBase.h:
+Declare mergeChildrenWithBase().
+
+* rendering/RenderRubyRun.cpp:
+(WebCore::RenderRubyRun::removeChild):
+Call mergeChildrenWithBase().
+
+LayoutTests:
+
+Reviewed by David Hyatt.
+
+* fast/ruby/ruby-base-merge-block-children-crash-2.html: Added.
+

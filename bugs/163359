@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r207275 | zalan@apple.com | 2016-10-13 05:48:54 +0200 (Do, 13. Okt 2016) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/rubyrun-has-bad-child-expected.txt
+   A /trunk/LayoutTests/fast/ruby/rubyrun-has-bad-child.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.h
+
+RenderRubyRun should not mark child renderers dirty at the end of layout.
+https://bugs.webkit.org/show_bug.cgi?id=163359
+<rdar://problem/28711840>
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+The current layout logic does not support marking renderers dirty for subsequent layouts.
+Layout needs to exit with a clean tree.
+Should relayoutChild be insufficient, we could also mark the base/text dirty for the justified content.
+
+Test: fast/ruby/rubyrun-has-bad-child.html
+
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlockFlow::updateRubyForJustifiedText):
+* rendering/RenderRubyRun.cpp:
+(WebCore::RenderRubyRun::layout):
+(WebCore::RenderRubyRun::layoutBlock):
+* rendering/RenderRubyRun.h:
+
+LayoutTests:
+
+* fast/ruby/rubyrun-has-bad-child-expected.txt: Added.
+* fast/ruby/rubyrun-has-bad-child.html: Added.
+

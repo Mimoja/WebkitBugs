@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r124682 | michaeln@google.com | 2012-08-04 03:28:22 +0200 (Sa, 04. Aug 2012) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/chromium/ResourceResponse.cpp
+   M /trunk/Source/WebCore/platform/network/chromium/ResourceResponse.h
+
+[Chromium] Cross-thread-copy a couple more recently added ResourceResponse data members, apparently
+these got missed when they were added. And fix a bug with how the m_remoteIPAddress
+data member is handled, an isolatedCopy() is needed for thread safety.
+https://bugs.webkit.org/show_bug.cgi?id=93158
+
+Reviewed by David Levin.
+
+No new tests, minor cleanup.
+
+* platform/network/chromium/ResourceResponse.cpp:
+(WebCore::ResourceResponse::doPlatformCopyData): make deep copies
+(WebCore::ResourceResponse::doPlatformAdopt): take ownership of them
+* platform/network/chromium/ResourceResponse.h:
+(ResourceResponse):
+(CrossThreadResourceResponseData):
+
+

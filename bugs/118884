@@ -1,0 +1,90 @@
+------------------------------------------------------------------------
+r186955 | mark.lam@apple.com | 2015-07-17 20:11:40 +0200 (Fr, 17. Jul 2015) | 60 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/events/constructors/custom-event-constructor-expected.txt
+   M /trunk/LayoutTests/fast/events/constructors/custom-event-constructor.html
+   M /trunk/LayoutTests/fast/events/event-leak-objects-expected.txt
+   M /trunk/LayoutTests/fast/events/event-leak-objects.html
+   M /trunk/LayoutTests/fast/events/event-properties-gc-expected.txt
+   M /trunk/LayoutTests/fast/events/event-properties-gc.html
+   M /trunk/Source/WebCore/CMakeLists.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.xcodeproj/project.pbxproj
+   M /trunk/Source/WebCore/bindings/js/DOMWrapperWorld.h
+   M /trunk/Source/WebCore/bindings/js/JSBindingsAllInOne.cpp
+   M /trunk/Source/WebCore/bindings/js/JSCustomEventCustom.cpp
+   M /trunk/Source/WebCore/bindings/js/JSMessageEventCustom.cpp
+   M /trunk/Source/WebCore/bindings/js/JSPopStateEventCustom.cpp
+   M /trunk/Source/WebCore/dom/CustomEvent.cpp
+   M /trunk/Source/WebCore/dom/CustomEvent.h
+   M /trunk/Source/WebCore/dom/CustomEvent.idl
+   M /trunk/Source/WebCore/dom/MessageEvent.cpp
+   M /trunk/Source/WebCore/dom/MessageEvent.h
+   M /trunk/Source/WebCore/dom/PopStateEvent.cpp
+   M /trunk/Source/WebCore/dom/PopStateEvent.h
+   M /trunk/Source/WebCore/testing/Internals.cpp
+   M /trunk/Source/WebCore/testing/Internals.h
+   M /trunk/Source/WebCore/testing/Internals.idl
+
+Remove leak of objects between isolated worlds on custom events, message events, and pop state events.
+https://bugs.webkit.org/show_bug.cgi?id=118884
+
+Reviewed by Filip Pizlo and Mark Lam.
+Patch by Keith Miller  <keith_miller@apple.com>.
+
+Source/WebCore:
+
+Tests: fast/events/event-leak-objects.html
+       fast/events/event-properties-gc.html
+
+Fixes an issue where objects passed as certain properties of events could cross isolated worlds. This
+was fixed by checking that any object passed by an event must be serializable or originate from the same
+isolated world as the one it is currently being accessed in. In the case of MessageEvents and PopStateEvents we
+cache the values of the data and state properties, respectively, as they may be a deserialized object. In case
+an object was deserialized in a world with elevated privileges we also check the cached value is from the same
+world, if it is from a different world we recompute it. For testing purposes, I added a new function to Internals
+that determines whether a JSObject originated in the current world.
+
+* CMakeLists.txt:
+* WebCore.xcodeproj/project.pbxproj:
+* bindings/js/DOMWrapperWorld.h:
+(WebCore::worldForDOMObject):
+* bindings/js/JSBindingsAllInOne.cpp:
+* bindings/js/JSCustomEventCustom.cpp: Copied from Source/WebCore/dom/CustomEvent.cpp.
+(WebCore::JSCustomEvent::detail):
+* bindings/js/JSMessageEventCustom.cpp:
+(WebCore::JSMessageEvent::data):
+* bindings/js/JSPopStateEventCustom.cpp:
+(WebCore::JSPopStateEvent::state):
+* dom/CustomEvent.cpp:
+(WebCore::CustomEvent::initCustomEvent):
+(WebCore::CustomEvent::trySerializeDetail):
+* dom/CustomEvent.h:
+* dom/CustomEvent.idl:
+* dom/MessageEvent.cpp:
+(WebCore::MessageEvent::initMessageEvent):
+(WebCore::MessageEvent::trySerializeData):
+* dom/MessageEvent.h:
+* dom/PopStateEvent.cpp:
+(WebCore::PopStateEvent::trySerializeState):
+* dom/PopStateEvent.h:
+* testing/Internals.cpp:
+(WebCore::Internals::isFromCurrentWorld):
+* testing/Internals.h:
+* testing/Internals.idl:
+
+LayoutTests:
+
+These tests ensure ensure objects are not leaked across isolated worlds and that those properties are not prematurely
+garbage collected.
+
+* fast/events/constructors/custom-event-constructor-expected.txt:
+* fast/events/constructors/custom-event-constructor.html:
+* fast/events/event-leak-objects-expected.txt: Added.
+* fast/events/event-leak-objects.html: Added.
+* fast/events/event-properties-gc-expected.txt: Added.
+* fast/events/event-properties-gc.html: Added.
+
+
+

@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r69476 | inferno@chromium.org | 2010-10-11 08:29:29 +0200 (Mo, 11. Okt 2010) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/flexbox/overhanging-floats-removed-expected.checksum
+   A /trunk/LayoutTests/fast/flexbox/overhanging-floats-removed-expected.png
+   A /trunk/LayoutTests/fast/flexbox/overhanging-floats-removed-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/overhanging-floats-removed.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderBox.cpp
+
+2010-10-10  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        Overhanging floats are not added to flexible boxes since they behave like
+        block formatting contexts. This causes the intruding floats added in siblings
+        to not get cleared. Enforce the float release by checking if the parent is a
+        flexible box and if yes, use that as the outermost block.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=47104
+
+        Test: fast/flexbox/overhanging-floats-removed.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::removeFloatingOrPositionedChildFromBlockLists):
+2010-10-10  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        Tests that intruding floats get properly cleared in flexible box layout.
+        https://bugs.webkit.org/show_bug.cgi?id=47104
+
+        * fast/flexbox/overhanging-floats-removed-expected.checksum: Added.
+        * fast/flexbox/overhanging-floats-removed-expected.png: Added.
+        * fast/flexbox/overhanging-floats-removed-expected.txt: Added.
+        * fast/flexbox/overhanging-floats-removed.html: Added.
+
+

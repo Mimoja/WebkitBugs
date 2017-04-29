@@ -1,0 +1,55 @@
+------------------------------------------------------------------------
+r76728 | inferno@chromium.org | 2011-01-27 00:43:02 +0100 (Do, 27. Jan 2011) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/css-delete-doc-expected.txt
+   A /trunk/LayoutTests/fast/dom/css-delete-doc.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSMediaRule.cpp
+   M /trunk/Source/WebCore/css/CSSStyleSheet.cpp
+   M /trunk/Source/WebCore/css/CSSStyleSheet.h
+   M /trunk/Source/WebCore/xml/XSLStyleSheet.h
+   M /trunk/Source/WebCore/xml/XSLStyleSheetLibxslt.cpp
+   M /trunk/Source/WebCore/xml/XSLStyleSheetQt.cpp
+
+2011-01-26  Emil A Eklund  <eae@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove cached document reference from CSSStyleSheet and XSLStyleSheet.
+        https://bugs.webkit.org/show_bug.cgi?id=52084
+
+        Test: fast/dom/css-delete-doc.html
+
+        * css/CSSMediaRule.cpp:
+        (WebCore::CSSMediaRule::insertRule):
+        (WebCore::CSSMediaRule::deleteRule):
+        * css/CSSStyleSheet.cpp:
+        (WebCore::CSSStyleSheet::CSSStyleSheet):
+        (WebCore::CSSStyleSheet::document):
+        * css/CSSStyleSheet.h:
+        * xml/XSLStyleSheet.h:
+        (WebCore::XSLStyleSheet::parentStyleSheet):
+        * xml/XSLStyleSheetLibxslt.cpp:
+        (WebCore::XSLStyleSheet::XSLStyleSheet):
+        (WebCore::XSLStyleSheet::cachedResourceLoader):
+        (WebCore::XSLStyleSheet::setParentStyleSheet):
+        (WebCore::XSLStyleSheet::ownerDocument):
+        * xml/XSLStyleSheetQt.cpp:
+        (WebCore::XSLStyleSheet::XSLStyleSheet):
+        (WebCore::XSLStyleSheet::cachedResourceLoader):
+        (WebCore::XSLStyleSheet::ownerDocument):
+2011-01-26  Emil A Eklund  <eae@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove cached document reference from CSSStyleSheet and XSLStyleSheet.
+        https://bugs.webkit.org/show_bug.cgi?id=52084
+
+        Added test for accessing a style sheet associated with a document that
+        has been removed.
+
+        * fast/dom/css-delete-doc-expected.txt: Added.
+        * fast/dom/css-delete-doc.html: Added.
+
+

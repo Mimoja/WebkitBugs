@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r194666 | bfulgham@apple.com | 2016-01-06 23:07:51 +0100 (Mi, 06. Jan 2016) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/blocked-on-redirect-expected.txt
+   A /trunk/LayoutTests/http/tests/security/blocked-on-redirect.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+   M /trunk/Source/WebCore/loader/FrameLoader.h
+
+Port blocking bypass issue using 307 redirect
+https://bugs.webkit.org/show_bug.cgi?id=152801
+<rdar://problem/24048554>
+
+Reviewed by Anders Carlsson.
+
+Source/WebCore:
+
+Tested by http/tests/security/blocked-on-redirect.html.
+
+Make sure that 307 redirects check the requested URL via 'portAllowed'. 
+
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::willSendRequest): Confirm that the requested port
+is valid, and block load if it is not.
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::reportBlockedPortFailed): Added.
+(WebCore::FrameLoader::blockedError): Added.
+* loader/FrameLoader.h:
+
+LayoutTests:
+
+* http/tests/security/blocked-on-redirect-expected.txt: Added.
+* http/tests/security/blocked-on-redirect.html: Added.
+
+

@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r142642 | inferno@chromium.org | 2013-02-12 19:49:38 +0100 (Di, 12. Feb 2013) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/CompositeEditCommand.cpp
+
+Heap-use-after-free in WebCore::DeleteButtonController::enable
+https://bugs.webkit.org/show_bug.cgi?id=109447
+
+Reviewed by Ryosuke Niwa.
+
+RefPtr frame pointer since it can get deleted due to mutation events
+fired inside AppendNodeCommand::doUnapply.
+
+No new tests. Testcase is hard to minimize due to recursive
+calls with DOMNodeRemovedFromDocument mutation event.
+
+* editing/CompositeEditCommand.cpp:
+(WebCore::EditCommandComposition::unapply):
+(WebCore::EditCommandComposition::reapply):
+

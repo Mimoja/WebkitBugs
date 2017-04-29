@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r77468 | commit-queue@webkit.org | 2011-02-03 07:21:07 +0100 (Do, 03. Feb 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/window-find-expected.txt
+   A /trunk/LayoutTests/fast/text/window-find.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/TextIterator.cpp
+
+2011-02-02  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        window.find() can fail when switching case sensitivity
+        https://bugs.webkit.org/show_bug.cgi?id=53654
+
+        The test coverage for this area is very poor, so I took the liberty
+        of adding a more general test than is needed.
+
+        * fast/text/find-window.html: Added.
+        * fast/text/find-window-expected.txt: Added.
+2011-02-02  Chris Evans  <cevans@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        window.find() can fail when switching case sensitivity
+        https://bugs.webkit.org/show_bug.cgi?id=53654
+
+        Reset the pattern to a safe one when done, to avoid usearch_reset()
+        indirectly touching the old, stale text pointer.
+
+        Test: fast/text/find-window.html
+
+        * editing/TextIterator.cpp:
+        (WebCore::SearchBuffer::~SearchBuffer): leave a safe pattern buffer when done.
+

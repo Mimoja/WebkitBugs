@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r175197 | zalan@apple.com | 2014-10-25 04:37:41 +0200 (Sa, 25. Okt 2014) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/css3/infinite-word-spacing-expected.txt
+   A /trunk/LayoutTests/css3/infinite-word-spacing.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSPrimitiveValue.cpp
+   M /trunk/Source/WebCore/css/CSSPrimitiveValue.h
+   M /trunk/Source/WebCore/css/DeprecatedStyleBuilder.cpp
+
+Clamp wordSpacing percentage value.
+https://bugs.webkit.org/show_bug.cgi?id=129350.
+
+Patch by Said Abou-Hallawa <sabouhallawa@apple.com> on 2014-10-24
+Reviewed by Zalan Bujtas.
+
+Source/WebCore:
+
+When the CSS wordSpacing property is percentage, its value has to be within the
+pre-defined min/max values for the CSS length type. This is done the same way
+the wordSpacing of type <length> is handled.
+
+Tests: css3/infinite-word-spacing.html.
+
+Move the definitions of minValueForCssLength and maxValueForCssLength from the
+.cpp file to the .h file.
+* css/CSSPrimitiveValue.cpp:
+* css/CSSPrimitiveValue.h:
+
+Clamp the wordSpacing value to minValueForCssLength and maxValueForCssLength when
+its type is percentage.
+* css/DeprecatedStyleBuilder.cpp:
+(WebCore::ApplyPropertyWordSpacing::applyValue):
+
+LayoutTests:
+
+Make sure that setting the CSS style wordSpacing property to very huge percentage
+value and blending this value with other values for animating key frames does
+not assert or crash. The expectation is to have this huge value to be clamped to
+the pre-defined min/max values for the CSS length type. So when blending the clamped
+value with other wordSpacing values, the result can't be NaN. This should be very
+similar to the case when it is set to a huge <length> value.
+
+* css3/infinite-word-spacing-expected.txt: Added.
+* css3/infinite-word-spacing.html: Added.
+

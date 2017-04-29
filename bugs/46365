@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r68158 | inferno@chromium.org | 2010-09-23 19:21:07 +0200 (Do, 23. Sep 2010) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/compositing/overflow/get-transform-from-non-box-container-expected.txt
+   A /trunk/LayoutTests/compositing/overflow/get-transform-from-non-box-container.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderObject.cpp
+
+2010-09-23  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Fix the memory safety issue by checking containerObject is a RenderBox
+        before doing the transforms.
+        https://bugs.webkit.org/show_bug.cgi?id=46365
+
+        Test: compositing/overflow/get-transform-from-non-box-container.html
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::getTransformFromContainer):
+2010-09-23  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we donot assert on object->isBox.
+        https://bugs.webkit.org/show_bug.cgi?id=46365
+
+        * compositing/overflow/get-transform-from-non-box-container-expected.txt: Added.
+        * compositing/overflow/get-transform-from-non-box-container.html: Added.
+
+

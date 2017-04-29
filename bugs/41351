@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r62456 | darin@apple.com | 2010-07-04 01:49:59 +0200 (So, 04. Jul 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/JavaScriptCore/ChangeLog
+   M /trunk/JavaScriptCore/interpreter/Interpreter.cpp
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/js/function-apply-expected.txt
+   M /trunk/LayoutTests/fast/js/script-tests/function-apply.js
+
+2010-07-03  Yong Li  <yoli@rim.com>
+
+        Reviewed by Darin Adler.
+
+        Make Arguments::MaxArguments clamping work for numbers >= 0x80000000 in
+        the interpreter as well as the JIT.
+
+        https://bugs.webkit.org/show_bug.cgi?id=41351
+        rdar://problem/8142141
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::privateExecute): Fix signed integer overflow problem
+        in op_load_varargs handling. 0xFFFFFFFF was read as -1.
+2010-07-03  Darin Adler  <darin@apple.com>
+
+        Added test cases for edge cases in apply function on arrays.
+        https://bugs.webkit.org/show_bug.cgi?id=41351
+
+        * fast/js/function-apply-expected.txt: Updated to expect success.
+        * fast/js/script-tests/function-apply.js: Added test cases.
+
+

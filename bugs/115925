@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r150029 | commit-queue@webkit.org | 2013-05-13 21:30:37 +0200 (Mo, 13. Mai 2013) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-crash2-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-crash2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderBox.h
+
+Source/WebCore: Floats should not overhang from flex items
+https://bugs.webkit.org/show_bug.cgi?id=115925
+
+Patch by Bem Jones-Bey <bjonesbe@adobe.com> on 2013-05-13
+Reviewed by David Hyatt.
+
+Allowing floats to overhand from flex items is not only against the
+spec, it causes bad bugs. Fix this by having flex items properly avoid
+floats.
+
+Test: fast/block/float/float-not-removed-crash2.html
+
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::avoidsFloats): Add flex items to avoid floats.
+* rendering/RenderBox.h:
+(WebCore::RenderBox::isFlexItemIncludingDeprecated): Determine if the current box is a
+    flex item or deprecated flex item.
+
+LayoutTests: Fix the float logic to not return an anonymous block ancestor
+https://bugs.webkit.org/show_bug.cgi?id=115925
+
+Patch by Bem Jones-Bey <bjonesbe@adobe.com> on 2013-05-13
+Reviewed by David Hyatt.
+
+Cleaned up fuzzer test. Note that this will only crash when run under
+a memory checker like ASAN.
+
+* fast/block/float/float-not-removed-crash2-expected.txt: Added.
+* fast/block/float/float-not-removed-crash2.html: Added.
+

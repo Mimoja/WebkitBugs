@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r209926 | zalan@apple.com | 2016-12-16 19:48:31 +0100 (Fr, 16. Dez 2016) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/accessibility-crash-with-dynamic-inline-content-expected.txt
+   A /trunk/LayoutTests/accessibility/accessibility-crash-with-dynamic-inline-content.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AXObjectCache.cpp
+   M /trunk/Source/WebCore/accessibility/AXObjectCache.h
+   M /trunk/Source/WebCore/page/FrameView.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+
+Defer certain accessibility callbacks until after layout is finished.
+https://bugs.webkit.org/show_bug.cgi?id=165861
+rdar://problem/29646301
+
+Reviewed by Chris Fleizach.
+
+Source/WebCore:
+
+Currently with certain AXObjectCache callbacks, we can end up in a layout while the render tree is being mutated.
+This patch ensures that such callbacks are deferred until after tree mutation/layout is finished.
+
+Test: accessibility/accessibility-crash-with-dynamic-inline-content.html
+
+* accessibility/AXObjectCache.cpp:
+(WebCore::AXObjectCache::remove):
+(WebCore::AXObjectCache::performDeferredIsIgnoredChange):
+(WebCore::AXObjectCache::insertDeferredIsIgnoredChange):
+* accessibility/AXObjectCache.h:
+* page/FrameView.cpp:
+(WebCore::FrameView::performPostLayoutTasks):
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::deleteLines):
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlockFlow::createAndAppendRootInlineBox):
+
+LayoutTests:
+
+* accessibility/accessibility-crash-with-dynamic-inline-content-expected.txt: Added.
+* accessibility/accessibility-crash-with-dynamic-inline-content.html: Added.
+

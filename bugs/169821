@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r214119 | zalan@apple.com | 2017-03-17 22:12:47 +0100 (Fr, 17. Mär 2017) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/fix-inherit-when-container-is-replaced-expected.txt
+   A /trunk/LayoutTests/fast/multicol/fix-inherit-when-container-is-replaced.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+
+Fix the flow thread state on the descendants of out of flow positioned replaced elements.
+https://bugs.webkit.org/show_bug.cgi?id=169821
+<rdar://problem/30964017>
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+Descendants of a replaced out of flow elmement should inherit the flowthread state
+from the replaced element and not from the replaced element's parent.
+
+Test: fast/multicol/fix-inherit-when-container-is-replaced.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::computedFlowThreadState):
+
+LayoutTests:
+
+* fast/multicol/fix-inherit-when-container-is-replaced-expected.txt: Added.
+* fast/multicol/fix-inherit-when-container-is-replaced.html: Added.
+

@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r145594 | oliver@apple.com | 2013-03-12 23:15:54 +0100 (Di, 12. Mär 2013) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSStringJoiner.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSStringJoiner.h
+
+Harden JSStringJoiner
+https://bugs.webkit.org/show_bug.cgi?id=112093
+
+Reviewed by Filip Pizlo.
+
+Harden JSStringJoiner, make it use our CheckedArithmetic
+class to simplify everything.
+
+* runtime/JSStringJoiner.cpp:
+(JSC::JSStringJoiner::build):
+* runtime/JSStringJoiner.h:
+(JSStringJoiner):
+(JSC::JSStringJoiner::JSStringJoiner):
+(JSC::JSStringJoiner::append):
+

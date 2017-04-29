@@ -1,0 +1,46 @@
+------------------------------------------------------------------------
+r65329 | steveblock@google.com | 2010-08-13 19:02:07 +0200 (Fr, 13. Aug 2010) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Geolocation/disconnected-frame-already-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/disconnected-frame-already.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/resources/disconnected-frame-already-inner1.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/resources/disconnected-frame-already-inner2.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/script-tests/disconnected-frame-already.js
+   M /trunk/LayoutTests/platform/gtk/Skipped
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/page/Geolocation.cpp
+
+2010-08-13  Steve Block  <steveblock@google.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Geolocation activity started after frame has been disconnected can cause crash
+        https://bugs.webkit.org/show_bug.cgi?id=39879
+
+        New requests started after the Frame has been disconnected are ignored. We do
+        not invoke the error callback as this would allow buggy or malicious pages to
+        hose the CPU. Such a page could hold a reference to a Geolocation object from
+        a since closed Page and register new requests from the error callback to
+        create an infinite loop.
+
+        Tests: fast/dom/Geolocation/disconnected-frame-already.html
+
+        * page/Geolocation.cpp:
+2010-08-13  Steve Block  <steveblock@google.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Geolocation activity started after frame has been disconnected can cause crash
+        https://bugs.webkit.org/show_bug.cgi?id=39879
+
+        Added new tests to GTK skipped list.
+
+        * fast/dom/Geolocation/disconnected-frame-already.html: Added.
+        * fast/dom/Geolocation/disconnected-frame-already-expected.txt: Added.
+        * fast/dom/Geolocation/script-tests/disconnected-frame-already.js: Added.
+        * fast/dom/Geolocation/resources/disconnected-frame-already-inner1.html: Added.
+        * fast/dom/Geolocation/resources/disconnected-frame-already-inner2.html: Added.
+        * platform/gtk/Skipped:
+
+

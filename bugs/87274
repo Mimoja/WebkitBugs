@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r118236 | inferno@chromium.org | 2012-05-23 22:41:11 +0200 (Mi, 23. Mai 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/runin/progress-run-in-crash-expected.txt
+   A /trunk/LayoutTests/fast/runin/progress-run-in-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLProgressElement.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+ASSERT failure toRenderProgress in HTMLProgressElement::didElementStateChange
+https://bugs.webkit.org/show_bug.cgi?id=87274
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Progress bar can't run-in. Prevent it from becoming a run-in, leading to an
+unworkable RenderInline.
+
+Test: fast/runin/progress-run-in-crash.html
+
+* html/HTMLProgressElement.cpp:
+(WebCore::HTMLProgressElement::didElementStateChange):
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::moveRunInUnderSiblingBlockIfNeeded):
+
+LayoutTests:
+
+* fast/runin/progress-run-in-crash-expected.txt: Added.
+* fast/runin/progress-run-in-crash.html: Added.
+
+

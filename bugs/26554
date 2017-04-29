@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r44906 | weinig@apple.com | 2009-06-21 04:05:30 +0200 (So, 21. Jun 2009) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-put-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-put.html
+   M /trunk/LayoutTests/http/tests/security/resources/cross-frame-iframe-for-put-test.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/page/DOMWindow.idl
+
+WebCore:
+
+2009-06-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Adam Barth.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=26554
+        Shadowing of top and parent
+
+        * page/DOMWindow.idl:
+
+LayoutTests:
+
+2009-06-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Adam Barth.
+
+        Test for https://bugs.webkit.org/show_bug.cgi?id=26554
+
+        Test writing to parent and top.
+
+        * http/tests/security/cross-frame-access-put-expected.txt:
+        * http/tests/security/cross-frame-access-put.html:
+        * http/tests/security/resources/cross-frame-iframe-for-put-test.html:
+
+
+

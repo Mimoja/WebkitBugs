@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r208517 | bfulgham@apple.com | 2016-11-10 02:36:34 +0100 (Do, 10. Nov 2016) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/win/TestExpectations
+
+Windows localStorage tests will fail until Bug 155185 is fixed.
+https://bugs.webkit.org/show_bug.cgi?id=155185
+
+* platform/win/TestExpectations: Mark localStorage tests as expected
+to fail for now.
+
+
+

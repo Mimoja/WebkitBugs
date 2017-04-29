@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r124997 | mario@webkit.org | 2012-08-08 08:47:46 +0200 (Mi, 08. Aug 2012) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/gtk/AXObjectCacheAtk.cpp
+
+REGRESSION(r65062): out of bound access in TextIterator (5 editing tests) on GTK
+https://bugs.webkit.org/show_bug.cgi?id=63611
+
+Reviewed by Ryosuke Niwa.
+
+Ensure document's layout is up-to-date before using TextIterator
+to properly calculate the offset for a text change when emitting
+accessibility related signals in GTK.
+
+* accessibility/gtk/AXObjectCacheAtk.cpp:
+(WebCore::AXObjectCache::nodeTextChangePlatformNotification): Call
+to document->updateLayout() before using TextIterator.
+

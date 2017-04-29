@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r173178 | msaboff@apple.com | 2014-09-02 18:52:35 +0200 (Di, 02. Sep 2014) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/arity-mismatch-at-vmentry-expected.txt
+   A /trunk/LayoutTests/js/arity-mismatch-at-vmentry.html
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/interpreter/ProtoCallFrame.cpp
+   M /trunk/Source/JavaScriptCore/interpreter/ProtoCallFrame.h
+   M /trunk/Source/JavaScriptCore/jit/JITCode.cpp
+
+Out of bounds write in vmEntryToJavaScript / JSC::JITCode::execute
+https://bugs.webkit.org/show_bug.cgi?id=136305
+
+Reviewed by Filip Pizlo.
+
+Source/JavaScriptCore:
+
+While preparing the callee's CallFrame, ProtoCallFrame fixes any arity mismatch
+and then JITCode::execute() calls the normal entrypoint.  This is incompatible
+with the expectation of FTL generated functions.  Changed ProtoCallFrame to not 
+perform the arity fix, but just flag an arity mismatch.  now JITCode::execute()
+uses that arity mismatch condition to select the normal or arity check
+entrypoint.  The entrypoint selection is only done for functions, programs
+and eval always have one parameter.
+
+* interpreter/ProtoCallFrame.cpp:
+(JSC::ProtoCallFrame::init): Changed to flag arity mismatch instead of fixing it.
+* interpreter/ProtoCallFrame.h:
+(JSC::ProtoCallFrame::needArityCheck): New boolean to signify what entrypoint
+should be called.
+* jit/JITCode.cpp:
+(JSC::JITCode::execute): Select normal or arity check entrypoint as appropriate.
+
+LayoutTests:
+
+* js/arity-mismatch-at-vmentry-expected.txt: Added.
+* js/arity-mismatch-at-vmentry.html: Added.
+
+

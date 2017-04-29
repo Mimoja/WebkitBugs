@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r164950 | dino@apple.com | 2014-03-02 23:26:05 +0100 (So, 02. Mär 2014) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/css3/filters/animation-from-initial-values-with-color-matrix-expected.html
+   A /trunk/LayoutTests/css3/filters/animation-from-initial-values-with-color-matrix.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/ca/mac/PlatformCAFiltersMac.mm
+   M /trunk/Source/WebCore/platform/graphics/filters/FilterOperation.cpp
+   M /trunk/Source/WebCore/platform/graphics/filters/FilterOperation.h
+
+Add protected casting to FilterOperation classes.
+https://bugs.webkit.org/show_bug.cgi?id=124062
+
+Reviewed by Sam Weinig.
+
+Source/WebCore:
+
+Use the type cast macro generators to produce some toFilterOperation-style
+functions, and then use them in our PlatformCA filter code.
+
+Test: css3/filters/animation-from-initial-values-with-color-matrix.html
+
+* platform/graphics/ca/mac/PlatformCAFiltersMac.mm: Use the toFilterOperation methods, in
+some cases removing the unnecessary double cast.
+(PlatformCAFilters::filterValueForOperation):
+(PlatformCAFilters::colorMatrixValueForFilter):
+* platform/graphics/filters/FilterOperation.cpp:
+(WebCore::BasicColorMatrixFilterOperation::blend):
+(WebCore::BasicColorMatrixFilterOperation::operator==): Move this to the .cpp file so it can use the casting methods.
+(WebCore::BasicComponentTransferFilterOperation::blend):
+(WebCore::BasicComponentTransferFilterOperation::operator==): Ditto.
+* platform/graphics/filters/FilterOperation.h: Add the casting macros.
+
+LayoutTests:
+
+* css3/filters/animation-from-initial-values-with-color-matrix-expected.html: Added.
+* css3/filters/animation-from-initial-values-with-color-matrix.html: Added.
+

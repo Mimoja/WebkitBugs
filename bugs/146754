@@ -1,0 +1,68 @@
+------------------------------------------------------------------------
+r186663 | dbates@webkit.org | 2015-07-10 07:10:18 +0200 (Fr, 10. Jul 2015) | 45 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/cookies/resources/setCookies.cgi
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-enabled-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-enabled.html
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-toggled-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-toggled.html
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies.html
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-same-origin-no-cookies-when-private-browsing-toggled-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-same-origin-no-cookies-when-private-browsing-toggled.html
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-when-private-browsing-enabled-expected.txt
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-when-private-browsing-enabled.html
+   A /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies.html
+   M /trunk/LayoutTests/http/tests/security/contentSecurityPolicy/resources/save-report.php
+   M /trunk/LayoutTests/platform/wk2/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/PingLoader.cpp
+
+Fetching Content Security Policy report URL should respect same origin policy
+https://bugs.webkit.org/show_bug.cgi?id=146754
+<rdar://problem/18860259>
+
+Reviewed by Brady Eidson.
+
+Inspired by Blink r149791 (by Mike West <mkwst@chromium.org>):
+<https://src.chromium.org/viewvc/blink?revision=149791&view=revision>
+
+Source/WebCore:
+
+As per <http://www.w3.org/TR/2015/CR-CSP2-20150219/#send-violation-reports>, fetching the
+Content Security Policy report URL should include cookies if and only if the origin of
+the protected resource is equal to the origin of the report URL.
+
+Tests: http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-enabled.html
+       http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-toggled.html
+       http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies.html
+       http/tests/security/contentSecurityPolicy/report-same-origin-no-cookies-when-private-browsing-toggled.html
+       http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-when-private-browsing-enabled.html
+       http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies.html
+
+* loader/PingLoader.cpp:
+(WebCore::PingLoader::sendViolationReport):
+
+LayoutTests:
+
+Added additional tests for private browsing mode.
+
+* http/tests/cookies/resources/setCookies.cgi:
+* http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-enabled-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-enabled.html: Added.
+* http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-toggled-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies-when-private-browsing-toggled.html: Added.
+* http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies.html: Added.
+* http/tests/security/contentSecurityPolicy/report-same-origin-no-cookies-when-private-browsing-toggled-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/report-same-origin-no-cookies-when-private-browsing-toggled.html: Added.
+* http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-when-private-browsing-enabled-expected.txt: Added.
+* http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies-when-private-browsing-enabled.html: Added.
+* http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies.html: Added.
+* http/tests/security/contentSecurityPolicy/resources/save-report.php:
+* platform/wk2/TestExpectations: Skip private browsing mode tests in WebKit2 until we fix <https://bugs.webkit.org/show_bug.cgi?id=115274>.
+
+

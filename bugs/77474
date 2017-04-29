@@ -1,0 +1,60 @@
+------------------------------------------------------------------------
+r106694 | mihnea@adobe.com | 2012-02-03 23:23:48 +0100 (Fr, 03. Feb 2012) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/flexbox-in-region-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/flexbox-in-region-crash.html
+   A /trunk/LayoutTests/fast/regions/select-in-region-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/select-in-region-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderDeprecatedFlexibleBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlexibleBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderRegion.cpp
+   M /trunk/Source/WebCore/rendering/RenderRegion.h
+
+Crash in RenderFlowThread::setRegionBoxesRegionStyle
+https://bugs.webkit.org/show_bug.cgi?id=77474
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Flexbox and deprecated flexible box should also compute their region range
+when they are part of a named flow. Until now, only RenderBlock elements
+were doing that. Flexbox and deprecated flexible box, while implementing
+their own layoutBlock method, were not doing that.
+
+Tests: fast/regions/flexbox-in-region-crash.html
+       fast/regions/select-in-region-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::computeInitialRegionRangeForBlock):
+(WebCore):
+(WebCore::RenderBlock::computeRegionRangeForBlock):
+(WebCore::RenderBlock::layoutBlock):
+* rendering/RenderBlock.h:
+(RenderBlock):
+* rendering/RenderDeprecatedFlexibleBox.cpp:
+(WebCore::RenderDeprecatedFlexibleBox::layoutBlock):
+* rendering/RenderFlexibleBox.cpp:
+(WebCore::RenderFlexibleBox::layoutBlock):
+* rendering/RenderFlowThread.cpp:
+(WebCore::RenderFlowThread::removeRegionFromThread):
+(WebCore::RenderFlowThread::removeRenderBoxRegionInfo):
+* rendering/RenderRegion.cpp:
+(WebCore::RenderRegion::RenderRegion):
+(WebCore::RenderRegion::paintReplaced):
+* rendering/RenderRegion.h:
+(RenderRegion):
+
+LayoutTests:
+
+* fast/regions/flexbox-in-region-crash-expected.txt: Added.
+* fast/regions/flexbox-in-region-crash.html: Added.
+* fast/regions/select-in-region-crash-expected.txt: Added.
+* fast/regions/select-in-region-crash.html: Added.
+
+

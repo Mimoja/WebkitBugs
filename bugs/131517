@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r167541 | darin@apple.com | 2014-04-19 20:57:46 +0200 (Sa, 19. Apr 2014) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/simplified-layout-no-regions-expected.txt
+   A /trunk/LayoutTests/fast/regions/simplified-layout-no-regions.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderRegion.cpp
+
+[CSS Regions] Harden the layout in case there are no regions
+https://bugs.webkit.org/show_bug.cgi?id=131517
+
+Patch by Andrei Bucur <abucur@adobe.com> on 2014-04-19
+Reviewed by Mihnea Ovidenie.
+
+Source/WebCore:
+The patch fixes the cases when the content of a flow thread is not
+properly invalidated when all the regions of its chain are removed.
+
+Test: fast/regions/simplified-layout-no-regions.html
+
+* rendering/RenderFlowThread.cpp:
+(WebCore::RenderFlowThread::logicalWidthChangedInRegionsForBlock):
+* rendering/RenderRegion.cpp:
+(WebCore::RenderRegion::ensureOverflowForBox):
+
+LayoutTests:
+Add a test that verifies the content of a flow thread is updated when all
+the regions are removed.
+
+* fast/regions/simplified-layout-no-regions-expected.txt: Added.
+* fast/regions/simplified-layout-no-regions.html: Added.
+

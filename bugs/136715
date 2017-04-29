@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r189512 | bburg@apple.com | 2015-09-09 00:38:44 +0200 (Mi, 09. Sep 2015) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorFrontendClientLocal.cpp
+   M /trunk/Source/WebCore/inspector/InspectorFrontendClientLocal.h
+
+Several inspector-protocol tests are flaky with GuardMalloc
+https://bugs.webkit.org/show_bug.cgi?id=136715
+
+Reviewed by Joseph Pecoraro.
+
+Sometimes, the async dispatch task can outlive its owning frontend client.
+To avoid problems, make it refcounted instead and add a protector reference.
+
+No new tests, covered by existing tests.
+
+* inspector/InspectorFrontendClientLocal.cpp:
+(WebCore::InspectorBackendDispatchTask::create):
+(WebCore::InspectorBackendDispatchTask::dispatch):
+(WebCore::InspectorBackendDispatchTask::reset):
+(WebCore::InspectorBackendDispatchTask::timerFired):
+(WebCore::InspectorBackendDispatchTask::InspectorBackendDispatchTask):
+(WebCore::InspectorFrontendClientLocal::InspectorFrontendClientLocal):
+(WebCore::InspectorFrontendClientLocal::~InspectorFrontendClientLocal):
+* inspector/InspectorFrontendClientLocal.h:
+

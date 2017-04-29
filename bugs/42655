@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r63773 | inferno@chromium.org | 2010-07-20 23:11:52 +0200 (Di, 20. Jul 2010) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/editing-nontext-node-crash-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/editing-nontext-node-crash.xhtml
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/editing/DeleteSelectionCommand.cpp
+   M /trunk/WebCore/editing/InsertLineBreakCommand.cpp
+   M /trunk/WebCore/editing/InsertParagraphSeparatorCommand.cpp
+
+2010-07-20  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by David Hyatt.
+
+        Check the node is a text node before doing the static cast
+        for editing commands.
+        https://bugs.webkit.org/show_bug.cgi?id=42655
+
+        Test: editing/execCommand/editing-nontext-node-crash.xhtml
+
+        * editing/DeleteSelectionCommand.cpp:
+        (WebCore::DeleteSelectionCommand::fixupWhitespace):
+        * editing/InsertLineBreakCommand.cpp:
+        (WebCore::InsertLineBreakCommand::doApply):
+        * editing/InsertParagraphSeparatorCommand.cpp:
+        (WebCore::InsertParagraphSeparatorCommand::doApply):
+2010-07-20  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by David Hyatt.
+
+        Tests that applying an editing command on a non text node does not
+        result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=42655
+
+        * editing/execCommand/editing-nontext-node-crash-expected.txt: Added.
+        * editing/execCommand/editing-nontext-node-crash.xhtml: Added.
+
+

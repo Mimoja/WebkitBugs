@@ -1,0 +1,52 @@
+------------------------------------------------------------------------
+r90308 | michaeln@google.com | 2011-07-02 04:20:16 +0200 (Sa, 02. Jul 2011) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/fileapi/File.cpp
+   M /trunk/Source/WebCore/platform/MIMETypeRegistry.cpp
+   M /trunk/Source/WebCore/platform/MIMETypeRegistry.h
+   M /trunk/Source/WebCore/platform/chromium/MIMETypeRegistryChromium.cpp
+   M /trunk/Source/WebCore/platform/chromium/PlatformBridge.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/public/WebMimeRegistry.h
+   M /trunk/Source/WebKit/chromium/src/PlatformBridge.cpp
+
+2011-07-01  Michael Nordman  <michaeln@google.com>
+
+        Reviewed by Darin Fisher.
+
+        [Chromium] FileSystem API can be used to learn about installed software on the user's computer
+        https://bugs.webkit.org/show_bug.cgi?id=63220
+
+        * public/WebMimeRegistry.h:
+        (WebKit::WebMimeRegistry::wellKnownMimeTypeForExtension):
+        * src/PlatformBridge.cpp:
+        (WebCore::PlatformBridge::wellKnownMimeTypeForExtension):
+2011-07-01  Michael Nordman  <michaeln@google.com>
+
+        Reviewed by Darin Fisher.
+
+        [Chromium] FileSystem API can be used to learn about installed software on the user's computer.
+        Added a new MIMETypeRegistry method to return a type based on a well known set of mappings
+        without consulting the OS/registry.
+        https://bugs.webkit.org/show_bug.cgi?id=63220
+
+        No new tests, existing layout tests that invoke file.type apply.
+
+        * fileapi/File.cpp: Refactored the factory methods.
+        (WebCore::createBlobDataForFileWithType):
+        (WebCore::createBlobDataForFile):
+        (WebCore::createBlobDataForFileSystemFile):
+        (WebCore::File::File):
+        * platform/MIMETypeRegistry.cpp: Added getWellKnownMIMETypeForExtension() method.
+        (WebCore::mediaMIMETypeMap):
+        (WebCore::findMimeType):
+        (WebCore::MIMETypeRegistry::getWellKnownMIMETypeForExtension):
+        * platform/MIMETypeRegistry.h:
+        * platform/chromium/MIMETypeRegistryChromium.cpp: Added getWellKnownMIMETypeForExtension() method.
+        (WebCore::MIMETypeRegistry::getMIMETypeForExtension):
+        (WebCore::MIMETypeRegistry::getWellKnownMIMETypeForExtension):
+        (WebCore::findMimeType):
+        * platform/chromium/PlatformBridge.h:
+
+

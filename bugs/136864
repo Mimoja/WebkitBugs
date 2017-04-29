@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r174273 | betravis@adobe.com | 2014-10-03 20:35:53 +0200 (Fr, 03. Okt 2014) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/fontloader-tab-index-expected.html
+   A /trunk/LayoutTests/fast/css/fontloader-tab-index.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/FontLoader.cpp
+   M /trunk/Source/WebCore/css/FontLoader.h
+
+REGRESSION (r173531): Use after free in WebCore::RenderStyle::fontMetrics /
+WebCore::CSSPrimitiveValue::computeLengthDouble
+https://bugs.webkit.org/show_bug.cgi?id=136864
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+FontLoader previously called updateDocumentStyleIfNeeded,
+which would reset styles currently in use as part of
+the tabIndex calculation. The FontLoader should instead
+wait for pending stylesheets to load.
+
+Tests: fast/css/fontloader-tab-index.html
+
+* css/FontLoader.cpp:
+(WebCore::FontLoader::notifyWhenFontsReady): Do not immediately
+call loadingDone().
+(WebCore::FontLoader::loadingDone): Wait for stylesheets to
+finish loading rather than updating document styles.
+* css/FontLoader.h:
+(WebCore::FontLoader::loading): Include JS font loads when testing
+for the loading state.
+
+LayoutTests:
+
+Test that getting the tab index on a body element with
+font-relative measurements to a local @font-face do not
+cause a crash.
+
+* fast/css/fontloader-tab-index-expected.html: Added.
+* fast/css/fontloader-tab-index.html: Added.
+

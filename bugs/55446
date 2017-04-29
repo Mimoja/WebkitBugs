@@ -1,0 +1,61 @@
+------------------------------------------------------------------------
+r80797 | eae@chromium.org | 2011-03-11 02:46:48 +0100 (Fr, 11. Mär 2011) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLFormElement/invalid-form-field-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLFormElement/invalid-form-field.html
+   A /trunk/LayoutTests/fast/dom/HTMLFormElement/move-option-between-documents-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLFormElement/move-option-between-documents.html
+   A /trunk/LayoutTests/fast/dom/collection-nameditem-move-between-documents-expected.txt
+   A /trunk/LayoutTests/fast/dom/collection-nameditem-move-between-documents.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/dom/Node.cpp
+   M /trunk/Source/WebCore/html/FormAssociatedElement.cpp
+   M /trunk/Source/WebCore/html/HTMLCollection.cpp
+   M /trunk/Source/WebCore/xml/XPathResult.h
+
+2011-03-10  Emil A Eklund  <eae@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Collection cache not reset when moving base node between documents
+        https://bugs.webkit.org/show_bug.cgi?id=55446
+
+        Add tests for accessing elements moved across documents using namedItem.
+
+        * fast/dom/HTMLFormElement/invalid-form-field-expected.txt: Added.
+        * fast/dom/HTMLFormElement/invalid-form-field.html: Added.
+        * fast/dom/HTMLFormElement/move-option-between-documents-expected.txt: Added.
+        * fast/dom/HTMLFormElement/move-option-between-documents.html: Added.
+        * fast/dom/collection-nameditem-move-between-documents-expected.txt: Added.
+        * fast/dom/collection-nameditem-move-between-documents.html: Added.
+2011-03-10  Emil A Eklund  <eae@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Collection cache not reset when moving base node between documents
+        https://bugs.webkit.org/show_bug.cgi?id=55446
+
+        Fix bug where HTMLCollection::resetCollectionInfo does not reset the
+        cache when the base node is moved to a different document by making sure
+        that the DOMVersion is updated and that it's unique across documents.
+
+        Tests: fast/dom/HTMLFormElement/invalid-form-field.html
+               fast/dom/HTMLFormElement/move-option-between-documents.html
+               fast/dom/collection-nameditem-move-between-documents.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::Document):
+        * dom/Document.h:
+        (WebCore::Document::incDOMTreeVersion):
+        (WebCore::Document::domTreeVersion):
+        * dom/Node.cpp:
+        (WebCore::Node::setDocumentRecursively):
+        * html/FormAssociatedElement.cpp:
+        (WebCore::FormAssociatedElement::resetFormOwner):
+        * html/HTMLCollection.cpp:
+        (WebCore::HTMLCollection::resetCollectionInfo):
+        * xml/XPathResult.h:
+

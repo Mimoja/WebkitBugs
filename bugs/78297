@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r107729 | inferno@chromium.org | 2012-02-14 22:02:36 +0100 (Di, 14. Feb 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/navigation/navigation-redirect-schedule-crash-expected.txt
+   A /trunk/LayoutTests/http/tests/navigation/navigation-redirect-schedule-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/NavigationScheduler.cpp
+
+Crash in NavigationScheduler::schedule.
+https://bugs.webkit.org/show_bug.cgi?id=78297
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Protect frame pointer and navigation scheduler when we stop the
+load (when redirect is scheduled during a load). Also, dont fire
+the navigation scheduler timer when we know that frameloader is
+going away.
+
+Test: http/tests/navigation/navigation-redirect-schedule-crash.html
+
+* loader/NavigationScheduler.cpp:
+(WebCore::NavigationScheduler::schedule):
+
+LayoutTests:
+
+* http/tests/navigation/navigation-redirect-schedule-crash-expected.txt: Added.
+* http/tests/navigation/navigation-redirect-schedule-crash.html: Added.
+
+

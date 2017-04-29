@@ -1,0 +1,104 @@
+------------------------------------------------------------------------
+r93794 | inferno@chromium.org | 2011-08-25 18:58:38 +0200 (Do, 25. Aug 2011) | 64 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/table-after-child-in-table.html
+   A /trunk/LayoutTests/fast/table/table-before-child-in-table.html
+   A /trunk/LayoutTests/fast/table/table-cell-after-child-in-block.html
+   A /trunk/LayoutTests/fast/table/table-cell-after-child-in-table.html
+   A /trunk/LayoutTests/fast/table/table-cell-before-child-in-block.html
+   A /trunk/LayoutTests/fast/table/table-cell-before-child-in-table.html
+   A /trunk/LayoutTests/fast/table/table-row-after-child-in-block.html
+   A /trunk/LayoutTests/fast/table/table-row-after-child-in-table.html
+   A /trunk/LayoutTests/fast/table/table-row-before-child-in-block.html
+   A /trunk/LayoutTests/fast/table/table-row-before-child-in-table.html
+   A /trunk/LayoutTests/platform/mac/fast/table/table-after-child-in-table-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-after-child-in-table-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-before-child-in-table-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-before-child-in-table-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-after-child-in-block-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-after-child-in-block-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-after-child-in-table-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-after-child-in-table-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-before-child-in-block-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-before-child-in-block-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-before-child-in-table-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-cell-before-child-in-table-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-block-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-block-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-table-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-table-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-block-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-block-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-table-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-table-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableRow.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+
+Incorrect layout of :before and :after content, with display
+table, table-row and table-cell.
+https://bugs.webkit.org/show_bug.cgi?id=66699
+
+Reviewed by David Hyatt.
+
+Source/WebCore: 
+
+Tests: fast/table/table-after-child-in-table.html
+       fast/table/table-before-child-in-table.html
+       fast/table/table-cell-after-child-in-block.html
+       fast/table/table-cell-after-child-in-table.html
+       fast/table/table-cell-before-child-in-block.html
+       fast/table/table-cell-before-child-in-table.html
+       fast/table/table-row-after-child-in-block.html
+       fast/table/table-row-after-child-in-table.html
+       fast/table/table-row-before-child-in-block.html
+       fast/table/table-row-before-child-in-table.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::addChildIgnoringAnonymousColumnBlocks):
+Fix the looping condition to detect :after child correctly.
+isAnonymousBlock() does not apply to tables, instead
+using isAnonymous().
+* rendering/RenderTableRow.cpp:
+(WebCore::RenderTableRow::addChild): Don't add the new child
+in the generatedContainer with :before, :after content.
+* rendering/RenderTableSection.cpp:
+(WebCore::RenderTableSection::addChild): Don't add the new child
+in the generatedContainer with :before, :after content.
+
+LayoutTests: 
+
+* fast/table/table-after-child-in-table.html: Added.
+* fast/table/table-before-child-in-table.html: Added.
+* fast/table/table-cell-after-child-in-block.html: Added.
+* fast/table/table-cell-after-child-in-table.html: Added.
+* fast/table/table-cell-before-child-in-block.html: Added.
+* fast/table/table-cell-before-child-in-table.html: Added.
+* fast/table/table-row-after-child-in-block.html: Added.
+* fast/table/table-row-after-child-in-table.html: Added.
+* fast/table/table-row-before-child-in-block.html: Added.
+* fast/table/table-row-before-child-in-table.html: Added.
+* platform/mac/fast/table/table-after-child-in-table-expected.png: Added.
+* platform/mac/fast/table/table-after-child-in-table-expected.txt: Added.
+* platform/mac/fast/table/table-before-child-in-table-expected.png: Added.
+* platform/mac/fast/table/table-before-child-in-table-expected.txt: Added.
+* platform/mac/fast/table/table-cell-after-child-in-block-expected.png: Added.
+* platform/mac/fast/table/table-cell-after-child-in-block-expected.txt: Added.
+* platform/mac/fast/table/table-cell-after-child-in-table-expected.png: Added.
+* platform/mac/fast/table/table-cell-after-child-in-table-expected.txt: Added.
+* platform/mac/fast/table/table-cell-before-child-in-block-expected.png: Added.
+* platform/mac/fast/table/table-cell-before-child-in-block-expected.txt: Added.
+* platform/mac/fast/table/table-cell-before-child-in-table-expected.png: Added.
+* platform/mac/fast/table/table-cell-before-child-in-table-expected.txt: Added.
+* platform/mac/fast/table/table-row-after-child-in-block-expected.png: Added.
+* platform/mac/fast/table/table-row-after-child-in-block-expected.txt: Added.
+* platform/mac/fast/table/table-row-after-child-in-table-expected.png: Added.
+* platform/mac/fast/table/table-row-after-child-in-table-expected.txt: Added.
+* platform/mac/fast/table/table-row-before-child-in-block-expected.png: Added.
+* platform/mac/fast/table/table-row-before-child-in-block-expected.txt: Added.
+* platform/mac/fast/table/table-row-before-child-in-table-expected.png: Added.
+* platform/mac/fast/table/table-row-before-child-in-table-expected.txt: Added.
+
+

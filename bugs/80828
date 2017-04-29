@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r110487 | inferno@chromium.org | 2012-03-12 23:17:55 +0100 (Mo, 12. Mär 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/split-text-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/split-text-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Range.cpp
+
+Crash in Text::splitText due to mutation events.
+https://bugs.webkit.org/show_bug.cgi?id=80828
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: fast/text/split-text-crash.xhtml
+
+* dom/Range.cpp:
+(WebCore::Range::insertNode): replace m_start.container() calls with ref protected node.
+
+LayoutTests:
+
+* fast/text/split-text-crash-expected.txt: Added.
+* fast/text/split-text-crash.xhtml: Added.
+
+

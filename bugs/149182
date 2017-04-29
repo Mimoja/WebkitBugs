@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r189953 | dino@apple.com | 2015-09-18 03:09:23 +0200 (Fr, 18. Sep 2015) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/pattern-content-cycle-w-resourceless-container-expected.txt
+   A /trunk/LayoutTests/svg/custom/pattern-content-cycle-w-resourceless-container.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/SVGResourcesCycleSolver.cpp
+
+Cyclic resources were not detected if the reference had deep containers
+https://bugs.webkit.org/show_bug.cgi?id=149182
+
+Reviewed by John Honeycutt.
+
+Source/WebCore:
+
+During our examination of the SVG rendering tree looking for cycles,
+if a resource pointed to something that had a nested structure, and
+one of the parent nodes in that structure was a container object
+without resources itself, we were not looking into the children.
+
+Test: svg/custom/pattern-content-cycle-w-resourceless-container.html
+
+* rendering/svg/SVGResourcesCycleSolver.cpp:
+(WebCore::SVGResourcesCycleSolver::resourceContainsCycles): We should still
+check all children resources, but not exit early if there are none. Instead
+we should recurse into any children.
+(WebCore::SVGResourcesCycleSolver::resolveCycles): Changes to some debug
+code that no longer compiled (it's still off by default, but at least
+it will work now).
+
+LayoutTests:
+
+This test was ported from Blink. I believe it originally
+came from:
+https://code.google.com/p/chromium/issues/detail?id=351713
+
+* svg/custom/pattern-content-cycle-w-resourceless-container-expected.txt: Added.
+* svg/custom/pattern-content-cycle-w-resourceless-container.html: Added.
+

@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r150498 | rniwa@webkit.org | 2013-05-22 04:36:37 +0200 (Mi, 22. Mai 2013) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/contains-node-crash-expected.txt
+   A /trunk/LayoutTests/editing/selection/contains-node-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMSelection.cpp
+   M /trunk/Source/WebCore/page/DOMSelection.h
+
+Use-after-free in DOMSelection::containsNode
+https://bugs.webkit.org/show_bug.cgi?id=116468
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+Retain the node pointer. Also bail out early if the node was not in the document
+since Range::compareBoundaryPoints sets ec to WRONG_DOCUMENT_ERR otherwise.
+
+Test: editing/selection/contains-node-crash.html
+
+* page/DOMSelection.cpp:
+(WebCore::DOMSelection::containsNode):
+* page/DOMSelection.h:
+(DOMSelection):
+
+LayoutTests: 
+
+Add a regression test from https://chromium.googlesource.com/chromium/blink/+/40bb8089352b15dd034641b4c131111cd79b44f1.
+
+* editing/selection/contains-node-crash-expected.txt: Added.
+* editing/selection/contains-node-crash.html: Added.
+
+

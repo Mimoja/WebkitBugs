@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r89165 | inferno@chromium.org | 2011-06-17 22:19:10 +0200 (Fr, 17. Jun 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling5-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling5.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+
+2011-06-17  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not crash when unable to remove floats from
+        parent's next siblings blocks.
+        https://bugs.webkit.org/show_bug.cgi?id=62875
+
+        * fast/block/float/float-not-removed-from-next-sibling5-expected.txt: Added.
+        * fast/block/float/float-not-removed-from-next-sibling5.html: Added.
+2011-06-17  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        When we lose ability to propagate floats, need to find topmost
+        parent with that overhanging float, and then iterate over its
+        sibling blocks to remove the float.
+        https://bugs.webkit.org/show_bug.cgi?id=62875
+
+        Test: fast/block/float/float-not-removed-from-next-sibling5.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::styleDidChange):
+        (WebCore::RenderBlock::hasOverhangingFloat):
+        * rendering/RenderBlock.h:
+
+

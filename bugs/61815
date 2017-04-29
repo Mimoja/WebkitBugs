@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r124588 | abarth@webkit.org | 2012-08-03 12:14:44 +0200 (Fr, 03. Aug 2012) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DragController.cpp
+
+WebCore::DragController::cleanupAfterSystemDrag should null-check page
+https://bugs.webkit.org/show_bug.cgi?id=61815
+
+Reviewed by Eric Seidel.
+
+* page/DragController.cpp:
+(WebCore::DragController::dragEnteredOrUpdated):
+(WebCore::DragController::doSystemDrag):
+
+

@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r138684 | cdn@chromium.org | 2013-01-03 02:10:24 +0100 (Do, 03. Jan 2013) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/public/WebInputEvent.h
+
+Initialize WebInputEvent to prevent sending uninitialized bytes with IPC messages.
+https://bugs.webkit.org/show_bug.cgi?id=105934
+
+Reviewed by James Robinson.
+
+* public/WebInputEvent.h:
+(WebKit::WebInputEvent::WebInputEvent):
+
+

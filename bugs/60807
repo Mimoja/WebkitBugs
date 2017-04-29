@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r86556 | pfeldman@chromium.org | 2011-05-16 14:00:10 +0200 (Mo, 16. Mai 2011) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/http/tests/inspector/change-iframe-src.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/InspectorDOMAgent.cpp
+   M /trunk/Source/WebCore/inspector/front-end/DOMAgent.js
+   M /trunk/Source/WebCore/inspector/front-end/ElementsTreeOutline.js
+
+2011-05-16  Pavel Feldman  <pfeldman@chromium.org>
+
+        Reviewed by Yury Semikhatsky.
+
+        Web Inspector: parse edited attributes by means of InspectorDOMAgent.
+        https://bugs.webkit.org/show_bug.cgi?id=60807
+
+        This change moves attribute parsing from the front-end to the backend.
+
+        * inspector/InspectorDOMAgent.cpp:
+        (WebCore::InspectorDOMAgent::setAttribute):
+        * inspector/front-end/DOMAgent.js:
+        (WebInspector.DOMNode.prototype.setAttribute):
+        * inspector/front-end/ElementsTreeOutline.js:
+        (WebInspector.ElementsTreeElement.prototype._attributeEditingCommitted.moveToNextAttributeIfNeeded):
+        (WebInspector.ElementsTreeElement.prototype._attributeEditingCommitted):
+

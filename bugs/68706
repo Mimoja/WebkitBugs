@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r96610 | commit-queue@webkit.org | 2011-10-04 20:00:32 +0200 (Di, 04. Okt 2011) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/redirect-BLOCKED-to-localURL-expected.txt
+   A /trunk/LayoutTests/http/tests/security/redirect-BLOCKED-to-localURL.html
+   A /trunk/LayoutTests/http/tests/security/resources/file-redirect-target.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+   M /trunk/Source/WebCore/loader/MainResourceLoader.cpp
+   M /trunk/Source/WebCore/page/SecurityOrigin.cpp
+
+Resource loader should block HTTP redirects to local resources
+https://bugs.webkit.org/show_bug.cgi?id=68706
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-10-03
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Modified MainResourceLoader to add an extra security check on
+HTTP redirects. Also, moved isFeedWithNestedProtocolInHTTPFamily
+to SecurityOrigin.cpp.
+
+* loader/FrameLoader.cpp:
+(WebCore::isFeedWithNestedProtocolInHTTPFamily):
+(WebCore::FrameLoader::loadFrameRequest):
+* loader/MainResourceLoader.cpp:
+(WebCore::MainResourceLoader::willSendRequest):
+* page/SecurityOrigin.cpp:
+(WebCore::isFeedWithNestedProtocolInHTTPFamily):
+(WebCore::SecurityOrigin::canDisplay):
+
+LayoutTests:
+
+Adding a test to attempt an HTTP redirect to a file: URL.
+
+* http/tests/security/redirect-BLOCKED-to-localURL.html: Added.
+* http/tests/security/redirect-BLOCKED-to-localURL-expected.txt: Added.
+* http/tests/security/resources/file-redirect-target.html: Added.
+

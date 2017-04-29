@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r201895 | bfulgham@apple.com | 2016-06-10 02:21:16 +0200 (Fr, 10. Jun 2016) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+   M /trunk/Source/WebCore/loader/ResourceLoader.cpp
+
+Restrict HTTP/0.9 responses to default ports and cancel HTTP/0.9 resource loads if the document was loaded with another HTTP protocol
+https://bugs.webkit.org/show_bug.cgi?id=158589
+<rdar://problem/25757454>
+
+Patch by John Wilander <wilander@apple.com> on 2016-06-09
+Reviewed by Brent Fulgham.
+
+No new tests. Our layout test environment does not allow for headerless responses
+nor does it allow you to set an explicit HTTP/0.9 status header in PHP. I have
+manually tested this change with a Python socket setup doing both headerless and
+HTTP/0.9 header tests for positive and negative cases.
+
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::responseReceived):
+    Cancel loads if the request was made to a non-default port.
+* loader/ResourceLoader.cpp:
+(WebCore::ResourceLoader::didReceiveResponse):
+    Cancel loads if the request was made to a non-default port or if the document
+    was loaded with another protocol. Cancelation is handled as a fail so as to
+    fire the onerror event and allow sites to handle it gracefully.
+
+

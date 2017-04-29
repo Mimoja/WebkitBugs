@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r151204 | mihnea@adobe.com | 2013-06-05 11:19:30 +0200 (Mi, 05. Jun 2013) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/br-content-node-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/br-content-node-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderNamedFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderNamedFlowThread.h
+
+[CSSRegions] Respect renderer creation constraints when element is part of named flow
+https://bugs.webkit.org/show_bug.cgi?id=116790
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Before adding a child to a named flow, we have to make sure that the rules for
+creation are properly checked.
+
+Test: fast/regions/br-content-node-crash.xhtml
+
+* rendering/RenderNamedFlowThread.cpp:
+(WebCore::RenderNamedFlowThread::isChildAllowed):
+Call isChildAllowed on the original parent renderer, before reparenting to
+named flow.
+* rendering/RenderNamedFlowThread.h:
+
+LayoutTests:
+
+The test needs to be xhtml so that br element, child of frame set, remains
+child of the frame set when the document is parsed.
+
+* fast/regions/br-content-node-crash-expected.txt: Added.
+* fast/regions/br-content-node-crash.xhtml: Added.
+
+

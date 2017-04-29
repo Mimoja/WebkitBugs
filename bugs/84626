@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r115398 | jpfau@apple.com | 2012-04-27 04:35:47 +0200 (Fr, 27. Apr 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/htmlcollection-non-html-expected.txt
+   A /trunk/LayoutTests/fast/dom/htmlcollection-non-html.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLCollection.cpp
+
+Invalid cast in WebCore::HTMLCollection::isAcceptableElement
+https://bugs.webkit.org/show_bug.cgi?id=84626
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Check if the object is an HTMLElement before casting.
+
+Test: fast/dom/htmlcollection-non-html.html
+
+* html/HTMLCollection.cpp:
+(WebCore::HTMLCollection::isAcceptableElement):
+
+LayoutTests:
+
+Add tests to make sure only HTML elements are present in most HTMLCollection objects.
+
+* fast/dom/htmlcollection-non-html-option-expected.txt: Added.
+* fast/dom/htmlcollection-non-html.html: Added.
+
+

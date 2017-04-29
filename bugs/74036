@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r102405 | jamesr@google.com | 2011-12-09 02:33:41 +0100 (Fr, 09. Dez 2011) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/animation/request-animation-frame-detach-element-expected.txt
+   A /trunk/LayoutTests/fast/animation/request-animation-frame-detach-element.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/dom/ScriptedAnimationController.cpp
+   M /trunk/Source/WebCore/dom/ScriptedAnimationController.h
+   M /trunk/Source/WebCore/page/FrameView.cpp
+
+Source/WebCore: Improve handling of frame removal during requestAnimationFrame callback invocation
+https://bugs.webkit.org/show_bug.cgi?id=74036
+
+Reviewed by Adam Barth.
+
+See bug for details.
+
+Test: fast/animation/request-animation-frame-detach-element.html
+
+* dom/Document.cpp:
+(WebCore::Document::removedLastRef):
+(WebCore::Document::detach):
+* dom/Document.h:
+* dom/ScriptedAnimationController.cpp:
+(WebCore::ScriptedAnimationController::~ScriptedAnimationController):
+(WebCore::ScriptedAnimationController::serviceScriptedAnimations):
+(WebCore::ScriptedAnimationController::scheduleAnimation):
+* dom/ScriptedAnimationController.h:
+(WebCore::ScriptedAnimationController::create):
+(WebCore::ScriptedAnimationController::clearDocumentPointer):
+* page/FrameView.cpp:
+(WebCore::FrameView::serviceScriptedAnimations):
+
+LayoutTests: Add some tests for removing frames from the document while servicing requestAnimationFrame callbacks
+https://bugs.webkit.org/show_bug.cgi?id=74036
+
+Reviewed by Adam Barth.
+
+* fast/animation/request-animation-frame-detach-element-expected.txt: Added.
+* fast/animation/request-animation-frame-detach-element.html: Added.
+

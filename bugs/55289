@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r79808 | inferno@chromium.org | 2011-02-26 22:26:04 +0100 (Sa, 26. Feb 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/iframe-plugin-load-remove-document-crash-expected.txt
+   A /trunk/LayoutTests/fast/frames/iframe-plugin-load-remove-document-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+
+2011-02-25  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Tests that removing a document during a plugin load does not result
+        in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=55289
+
+        * fast/frames/iframe-plugin-load-remove-document-crash-expected.txt: Added.
+        * fast/frames/iframe-plugin-load-remove-document-crash.html: Added.
+2011-02-25  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        When plugin document parser finishes parsing, it runs the raw
+        document's parser finish functions which call the pending document
+        onload events that removes the frame from underneath. So, we protect
+        frame (and hence frameloader) in DocumentLoader::commitLoad.
+        https://bugs.webkit.org/show_bug.cgi?id=55289
+
+        Test: fast/frames/iframe-plugin-load-remove-document-crash.html
+
+        * loader/DocumentLoader.cpp:
+        (WebCore::DocumentLoader::commitLoad):
+
+

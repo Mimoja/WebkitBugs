@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r83699 | commit-queue@webkit.org | 2011-04-13 07:07:59 +0200 (Mi, 13. Apr 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/id-attribute-with-namespace-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/id-attribute-with-namespace-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+2011-04-12  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        Element::setAttribute should check the namespace of an id attribute
+        https://bugs.webkit.org/show_bug.cgi?id=58359
+
+        * fast/dom/id-attribute-with-namespace-crash-expected.txt: Added.
+        * fast/dom/id-attribute-with-namespace-crash.html: Added.
+2011-04-12  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        Element::setAttribute should check the namespace of an id attribute
+        https://bugs.webkit.org/show_bug.cgi?id=58359
+
+        Test: fast/dom/id-attribute-with-namespace-crash.html
+
+        * dom/Element.cpp:
+        (WebCore::Element::setAttribute):
+

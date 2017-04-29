@@ -1,0 +1,78 @@
+------------------------------------------------------------------------
+r189421 | mmaxfield@apple.com | 2015-09-05 07:33:16 +0200 (Sa, 05. Sep 2015) | 61 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/canvas/font-selector-crash-expected.txt
+   A /trunk/LayoutTests/fast/canvas/font-selector-crash.html
+   A /trunk/LayoutTests/fast/canvas/resources/font-selector-crash.ttf
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSFontSelector.cpp
+   M /trunk/Source/WebCore/css/CSSFontSelector.h
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/html/canvas/CanvasRenderingContext2D.cpp
+   M /trunk/Source/WebCore/html/canvas/CanvasRenderingContext2D.h
+   M /trunk/Source/WebCore/platform/graphics/FontSelector.h
+
+Crash when font completes downloading after calling 2D canvas setText() multiple times
+https://bugs.webkit.org/show_bug.cgi?id=148789
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+The CSSFontSelector has a list of clients, and when fonts complete downloading, these
+clients get a call back. CanvasRenderingContext2D::State is one such of these clients. However,
+the CSSFontSelector may be destroyed and recreated at any time. We were getting into a case
+where multiple CSSFontSelectors were thinking that the same CanvasRenderingContext2D::State were
+their client. When the CanvasRenderingContext2D::State was destroyed, it only unregistered
+itself from one of the CSSFontSelectors, which means the CSSFontSelector left over has a dangling
+pointer to it.
+
+The solution is to implement a new helper class, FontProxy, to hold the
+CanvasRenderingContext2D::State's font, and maintain the invariant that this object is always
+registered to exactly one CSSFontSelector, and this CSSFontSelector is the one which is associated
+with the FontProxy's FontCascade object. This patch maintains this invariant, as well as protecting
+all access to the State's FontCascade object so no one can reach in and change it without going
+through functions which maintain the invariant.
+
+Test: fast/canvas/font-selector-crash.html
+
+* css/CSSFontSelector.cpp:
+(WebCore::CSSFontSelector::registerForInvalidationCallbacks):
+(WebCore::CSSFontSelector::unregisterForInvalidationCallbacks):
+(WebCore::CSSFontSelector::dispatchInvalidationCallbacks):
+* css/CSSFontSelector.h:
+* dom/Document.cpp:
+(WebCore::Document::fontsNeedUpdate):
+(WebCore::Document::fontSelector):
+(WebCore::Document::clearStyleResolver):
+* dom/Document.h:
+* html/canvas/CanvasRenderingContext2D.cpp:
+(WebCore::CanvasRenderingContext2D::State::State):
+(WebCore::CanvasRenderingContext2D::State::operator=):
+(WebCore::CanvasRenderingContext2D::FontProxy::~FontProxy):
+(WebCore::CanvasRenderingContext2D::FontProxy::FontProxy):
+(WebCore::CanvasRenderingContext2D::FontProxy::update):
+(WebCore::CanvasRenderingContext2D::FontProxy::fontsNeedUpdate):
+(WebCore::CanvasRenderingContext2D::FontProxy::initialize):
+(WebCore::CanvasRenderingContext2D::FontProxy::fontMetrics):
+(WebCore::CanvasRenderingContext2D::FontProxy::fontDescription):
+(WebCore::CanvasRenderingContext2D::FontProxy::width):
+(WebCore::CanvasRenderingContext2D::FontProxy::drawBidiText):
+(WebCore::CanvasRenderingContext2D::font):
+(WebCore::CanvasRenderingContext2D::setFont):
+(WebCore::CanvasRenderingContext2D::measureText):
+(WebCore::CanvasRenderingContext2D::drawTextInternal):
+(WebCore::CanvasRenderingContext2D::State::~State): Deleted.
+(WebCore::CanvasRenderingContext2D::State::fontsNeedUpdate): Deleted.
+(WebCore::CanvasRenderingContext2D::accessFont): Deleted.
+* html/canvas/CanvasRenderingContext2D.h:
+* platform/graphics/FontSelector.h:
+
+LayoutTests:
+
+* fast/canvas/font-selector-crash-expected.txt: Added.
+* fast/canvas/font-selector-crash.html: Added.
+* fast/canvas/resources/font-selector-crash.ttf: Added.
+

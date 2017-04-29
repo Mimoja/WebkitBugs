@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r204422 | bfulgham@apple.com | 2016-08-12 23:38:26 +0200 (Fr, 12. Aug 2016) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/multiline-function-crash-expected.txt
+   A /trunk/LayoutTests/js/multiline-function-crash.html
+   A /trunk/LayoutTests/js/script-tests/multiline-function-crash.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/parser/Parser.h
+
+ASSERTION FAILED: : line >= firstLine in BytecodeGenerator::emitExpressionInfo.
+https://bugs.webkit.org/show_bug.cgi?id=160535
+<rdar://problem/27328151>
+Source/JavaScriptCore:
+
+        
+Patch by Pranjal Jumde <pjumde@apple.com> on 2016-08-12
+Reviewed by Saam Barati.
+
+lineNumber from the savePoint was not being restored before calling next() causing discrepancy in the offset and line for the token
+
+* parser/Parser.h:
+(JSC::Parser::restoreLexerState):
+
+LayoutTests:
+
+
+Patch by Pranjal Jumde <pjumde@apple.com> on 2016-08-12
+Reviewed by Saam Barati.
+
+lineNumber from the savePoint was not being restored before calling next() causing discrepancy in the offset and line for the token
+
+* js/multiline-function-crash-expected.txt: Added.
+* js/multiline-function-crash.html: Added.
+* js/script-tests/multiline-function-crash.js: Added.
+
+

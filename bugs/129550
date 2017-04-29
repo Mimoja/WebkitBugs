@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r165044 | rniwa@webkit.org | 2014-03-04 10:45:55 +0100 (Di, 04. Mär 2014) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/uniquing-attributes-via-setAttribute-expected.txt
+   A /trunk/LayoutTests/fast/dom/uniquing-attributes-via-setAttribute.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+REGRESSION(r164856): Use after free in WebCore::QualifiedName::operator== / WebCore::StyledElement::attributeChanged
+https://bugs.webkit.org/show_bug.cgi?id=129550
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+We can't store a reference to QualifiedName here because ensureUniqueElementData could delete QualifiedName inside Attribute.
+
+Test: fast/dom/uniquing-attributes-via-setAttribute.html
+
+* dom/Element.cpp:
+(WebCore::Element::setAttributeInternal):
+
+LayoutTests: 
+
+Added a regression test.
+
+* fast/dom/uniquing-attributes-via-setAttribute-expected.txt: Added.
+* fast/dom/uniquing-attributes-via-setAttribute.html: Added.
+
+

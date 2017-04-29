@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r185756 | zalan@apple.com | 2015-06-19 20:18:05 +0200 (Fr, 19. Jun 2015) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/crash-when-ruby-rt-is-non-block-expected.txt
+   A /trunk/LayoutTests/fast/ruby/crash-when-ruby-rt-is-non-block.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/RubyTextElement.cpp
+
+RenderRubyText requires RenderRubyRun parent.
+https://bugs.webkit.org/show_bug.cgi?id=146148
+rdar://problem/21423319
+
+Reviewed by Simon Fraser.
+
+RenderRubyText expects its parent to be RenderRubyRun and since a
+a non-block <rt> requires anonymous wrapper, we should check whether
+the display type is actually block.
+
+Source/WebCore:
+
+Test: fast/ruby/crash-when-ruby-rt-is-non-block.html
+
+* html/RubyTextElement.cpp:
+(WebCore::RubyTextElement::createElementRenderer):
+
+LayoutTests:
+
+* fast/ruby/crash-when-ruby-rt-is-non-block-expected.txt: Added.
+* fast/ruby/crash-when-ruby-rt-is-non-block.html: Added.
+

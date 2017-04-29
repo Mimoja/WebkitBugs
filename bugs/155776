@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r198592 | msaboff@apple.com | 2016-03-23 22:03:02 +0100 (Mi, 23. Mär 2016) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/regress-155776-expected.txt
+   A /trunk/LayoutTests/js/regress-155776.html
+   A /trunk/LayoutTests/js/script-tests/regress-155776.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/ArrayPrototype.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSStringJoiner.h
+
+JavaScriptCore ArrayPrototype::join shouldn't cache butterfly when it makes effectful calls
+https://bugs.webkit.org/show_bug.cgi?id=155776
+
+Reviewed by Saam Barati.
+
+Source/JavaScriptCore:
+
+Array.join ends up calling toString, possibly on some object.  Since these calls
+could be effectful and could change the array itself, we can't hold the butterfly
+pointer while making effectful calls.  Changed the code to fall back to the general
+case when an effectful toString() call might be made.
+
+* runtime/ArrayPrototype.cpp:
+(JSC::join):
+* runtime/JSStringJoiner.h:
+(JSC::JSStringJoiner::appendWithoutSideEffects): New helper that doesn't make effectful
+toString() calls.
+(JSC::JSStringJoiner::append): Built upon appendWithoutSideEffects.
+
+LayoutTests:
+
+New test.
+
+* js/regress-155776-expected.txt: Added.
+* js/regress-155776.html: Added.
+* js/script-tests/regress-155776.js: Added.
+(fillBigArrayViaToString):
+(Function.prototype.toString):
+
+

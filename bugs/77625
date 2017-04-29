@@ -1,0 +1,107 @@
+------------------------------------------------------------------------
+r139111 | tsepez@chromium.org | 2013-01-08 23:11:02 +0100 (Di, 08. Jan 2013) | 77 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/pasteboard/paste-noplugin-expected.txt
+   A /trunk/LayoutTests/editing/pasteboard/paste-noplugin.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/FragmentScriptingPermission.h
+   M /trunk/Source/WebCore/editing/markup.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+   M /trunk/Source/WebCore/page/Settings.in
+   M /trunk/Source/WebCore/platform/blackberry/PasteboardBlackBerry.cpp
+   M /trunk/Source/WebCore/platform/chromium/DragDataChromium.cpp
+   M /trunk/Source/WebCore/platform/chromium/PasteboardChromium.cpp
+   M /trunk/Source/WebCore/platform/gtk/PasteboardGtk.cpp
+   M /trunk/Source/WebCore/platform/mac/PasteboardMac.mm
+   M /trunk/Source/WebCore/platform/qt/DragDataQt.cpp
+   M /trunk/Source/WebCore/platform/qt/PasteboardQt.cpp
+   M /trunk/Source/WebCore/platform/win/ClipboardUtilitiesWin.cpp
+   M /trunk/Source/WebCore/platform/wx/PasteboardWx.cpp
+   M /trunk/Source/WebCore/xml/parser/XMLDocumentParserLibxml2.cpp
+   M /trunk/Source/WebCore/xml/parser/XMLDocumentParserQt.cpp
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/public/WebSettings.h
+   M /trunk/Source/WebKit/chromium/src/WebSettingsImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebSettingsImpl.h
+
+Copy-paste preserves <embed> tags containing active content.
+https://bugs.webkit.org/show_bug.cgi?id=77625
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: editing/pasteboard/paste-noplugin.html
+
+* dom/FragmentScriptingPermission.h:
+(WebCore::scriptingContentIsAllowed):
+(WebCore::pluginContentIsAllowed):
+Add new permission to restrict plugin pasting.  Add inline functions to check
+the implications of each permission rather than having a list of raw comparisions
+sprinkled throughout the code.
+
+* editing/markup.cpp:
+(WebCore::createFragmentFromMarkup):
+Revert back to unsafe plugin pasting regardless of caller's intentions when
+the settings allow it.
+
+* dom/Element.cpp:
+(WebCore::Element::parserSetAttributes):
+* html/parser/HTMLConstructionSite.cpp:
+(WebCore::HTMLConstructionSite::insertScriptElement):
+* xml/parser/XMLDocumentParserLibxml2.cpp:
+(WebCore::XMLDocumentParser::endElementNs):
+* xml/parser/XMLDocumentParserQt.cpp:
+(WebCore::XMLDocumentParser::parseEndElement):
+Use new inline functions to check implications of permissions rather than raw
+comparisions.
+
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::processStartTagForInBody):
+(WebCore::HTMLTreeBuilder::processEndTag):
+Check if plugin pasting is allowed before inserting applet/embed/oject elements.
+
+* page/Settings.in:
+Declaration of new unsafePluginPastingEnabled setting.
+
+* platform/mac/PasteboardMac.mm:
+(WebCore::Pasteboard::documentFragment):
+* platform/blackberry/PasteboardBlackBerry.cpp:
+(WebCore::Pasteboard::documentFragment):
+* platform/chromium/DragDataChromium.cpp:
+(WebCore::DragData::asFragment):
+* platform/chromium/PasteboardChromium.cpp:
+(WebCore::Pasteboard::documentFragment):
+* platform/gtk/PasteboardGtk.cpp:
+(WebCore::Pasteboard::documentFragment):
+* platform/qt/DragDataQt.cpp:
+(WebCore::DragData::asFragment):
+* platform/qt/PasteboardQt.cpp:
+(WebCore::Pasteboard::documentFragment):
+* platform/win/ClipboardUtilitiesWin.cpp:
+(WebCore::fragmentFromCFHTML):
+(WebCore::fragmentFromHTML):
+* platform/wx/PasteboardWx.cpp:
+(WebCore::Pasteboard::documentFragment):
+Pass DisallowScriptingAndPluginContent enum value.
+
+Source/WebKit/chromium:
+
+Adds chromium API to new unsafePluginPastingEnabled setting.
+
+* public/WebSettings.h:
+* src/WebSettingsImpl.cpp:
+(WebKit::WebSettingsImpl::setUnsafePluginPastingEnabled):
+(WebKit):
+* src/WebSettingsImpl.h:
+(WebSettingsImpl):
+
+LayoutTests:
+
+* editing/pasteboard/paste-noplugin-expected.txt: Added.
+* editing/pasteboard/paste-noplugin.html: Added.
+
+

@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r81643 | inferno@chromium.org | 2011-03-22 05:32:26 +0100 (Di, 22. Mär 2011) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/inline/inline-box-adjust-position-crash-expected.txt
+   A /trunk/LayoutTests/fast/inline/inline-box-adjust-position-crash.html
+   A /trunk/LayoutTests/fast/inline/inline-box-adjust-position-crash2-expected.txt
+   A /trunk/LayoutTests/fast/inline/inline-box-adjust-position-crash2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineBox.cpp
+
+2011-03-21  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Tests that we do not crash when adjusting position for inline boxes.
+        https://bugs.webkit.org/show_bug.cgi?id=56300
+
+        * fast/inline/inline-box-adjust-position-crash-expected.txt: Added.
+        * fast/inline/inline-box-adjust-position-crash.html: Added.
+        * fast/inline/inline-box-adjust-position-crash2-expected.txt: Added.
+        * fast/inline/inline-box-adjust-position-crash2.html: Added.
+2011-03-21  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Revert small change made in r78846 of replacing move with positionLineBox
+        in the adjusting position function for inline box.
+        https://bugs.webkit.org/show_bug.cgi?id=56300
+
+        The change in r78846 caused positioning line boxes during the step of adjusting
+        position for inline box, thereby causing line boxes to be nuked. This happens as
+        part of aligning boxes in block direction in RenderBlock::computeBlockDirectionPositionsForLine.
+        Later on, we do the positioning of line boxes again later in that function. This
+        causes use of removed inline box leading to crash. Also, it is unnecessary to do
+        this twice.
+
+        Tests: fast/inline/inline-box-adjust-position-crash.html
+               fast/inline/inline-box-adjust-position-crash2.html
+
+        * rendering/InlineBox.cpp:
+        (WebCore::InlineBox::adjustPosition):
+

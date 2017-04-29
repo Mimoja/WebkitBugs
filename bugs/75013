@@ -1,0 +1,55 @@
+------------------------------------------------------------------------
+r105120 | robert@webkit.org | 2012-01-17 03:25:52 +0100 (Di, 17. Jan 2012) | 39 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/multiple-captions-crash3-expected.html
+   A /trunk/LayoutTests/fast/table/multiple-captions-crash3.html
+   A /trunk/LayoutTests/fast/table/multiple-captions-crash4-expected.html
+   A /trunk/LayoutTests/fast/table/multiple-captions-crash4.html
+   A /trunk/LayoutTests/fast/table/multiple-captions-crash5-expected.html
+   A /trunk/LayoutTests/fast/table/multiple-captions-crash5.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+
+Heap-use-after-free in WebCore::RenderBlock::selectionGaps
+https://bugs.webkit.org/show_bug.cgi?id=75013
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test: fast/table/multiple-captions-crash3.html
+      fast/table/multiple-captions-crash4.html
+      fast/table/multiple-captions-crash5.html
+
+When a child float is removed, the parent needs to ensure any reference to the
+child is also removed from the floating objects list in any sibling block that
+it intruded into.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::markSiblingsWithFloatsForLayout):
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::removeFloatingOrPositionedChildFromBlockLists):
+
+LayoutTests:
+
+In multiple-captions-crash3.html a floating object is added as a child to a caption element, then removed and
+added as a child to another caption element. When added to the first caption element it is added
+to the floating objects list of both the parent tbody element and the keygen element, as it intrudes
+into the latter. When removed, a stale reference to the floating object remains in the keygen element.
+When the keygen element is in layout it attempts to access the stale reference to the floating object and
+crashes. The fix is to ensure that any floats added as intruding floats to sibling blocks are removed
+when the child is removed from the tree.
+
+multiple-captions-crash4.html and multiple-captions-crash5.html are variants of this scenario.
+
+* fast/table/multiple-captions-crash3-expected.html: Added.
+* fast/table/multiple-captions-crash3.html: Added.
+* fast/table/multiple-captions-crash4-expected.html: Added.
+* fast/table/multiple-captions-crash4.html: Added.
+* fast/table/multiple-captions-crash5-expected.html: Added.
+* fast/table/multiple-captions-crash5.html: Added.
+
+

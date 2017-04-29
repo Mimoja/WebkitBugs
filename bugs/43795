@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r65090 | inferno@chromium.org | 2010-08-10 22:46:43 +0200 (Di, 10. Aug 2010) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/ruby-remove-no-base-expected.txt
+   A /trunk/LayoutTests/fast/ruby/ruby-remove-no-base.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderRubyRun.cpp
+
+2010-08-10  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by David Hyatt.
+
+        Take checks for ruby base existence out of the ASSERTs.
+        https://bugs.webkit.org/show_bug.cgi?id=43795
+
+        Test: fast/ruby/ruby-remove-no-base.html
+
+        * rendering/RenderRubyRun.cpp:
+        (WebCore::RenderRubyRun::addChild):
+        (WebCore::RenderRubyRun::removeChild):
+2010-08-10  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by David Hyatt.
+
+        Tests that removing a ruby child which causes merging of ruby base withe
+        a non existant base of the right sibling run does not result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=43795
+
+        * fast/ruby/ruby-remove-no-base-expected.txt: Added.
+        * fast/ruby/ruby-remove-no-base.html: Added.
+
+

@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r114412 | fpizlo@apple.com | 2012-04-17 21:22:29 +0200 (Di, 17. Apr 2012) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGByteCodeParser.cpp
+
+use after free in JSC::DFG::Node::op / JSC::DFG::ByteCodeParser::flushArgument
+https://bugs.webkit.org/show_bug.cgi?id=83942
+<rdar://problem/11247370>
+
+Reviewed by Gavin Barraclough.
+        
+Don't use references to the graph after resizing the graph.
+
+* dfg/DFGByteCodeParser.cpp:
+(JSC::DFG::ByteCodeParser::flushArgument):
+
+
+

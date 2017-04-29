@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r158739 | rniwa@webkit.org | 2013-11-06 12:11:07 +0100 (Mi, 06. Nov 2013) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/selection-change-in-blur-event-by-remove-children-expected.txt
+   A /trunk/LayoutTests/editing/selection/selection-change-in-blur-event-by-remove-children.html
+   A /trunk/LayoutTests/editing/selection/selection-change-in-mutation-event-by-remove-children-expected.txt
+   A /trunk/LayoutTests/editing/selection/selection-change-in-mutation-event-by-remove-children.html
+   A /trunk/LayoutTests/fast/dom/Range/range-created-during-remove-children-expected.txt
+   A /trunk/LayoutTests/fast/dom/Range/range-created-during-remove-children.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+Notify nodes removal to Range/Selection after dispatching blur and mutation event
+https://bugs.webkit.org/show_bug.cgi?id=123880
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+Merge https://chromium.googlesource.com/chromium/blink/+/b60576a0560d14f8757e58d55d37b7cefa48a6ac
+
+In willRemoveChildren in ContainerNode.cpp, call Document::nodeChildrenWillBeRemoved after instead of
+before dispatching mutation events because we need to update ranges created by those mutation event
+listeners. willRemoveChild was fixed in r115686.
+
+Tests: editing/selection/selection-change-in-blur-event-by-remove-children.html
+       editing/selection/selection-change-in-mutation-event-by-remove-children.html
+       fast/dom/Range/range-created-during-remove-children.html
+
+* dom/ContainerNode.cpp:
+(WebCore::willRemoveChildren):
+
+LayoutTests:
+
+* editing/selection/selection-change-in-blur-event-by-remove-children-expected.txt: Added.
+* editing/selection/selection-change-in-blur-event-by-remove-children.html: Added.
+* editing/selection/selection-change-in-mutation-event-by-remove-children-expected.txt: Added.
+* editing/selection/selection-change-in-mutation-event-by-remove-children.html: Added.
+* fast/dom/Range/range-created-during-remove-children-expected.txt: Added.
+* fast/dom/Range/range-created-during-remove-children.html: Added.
+

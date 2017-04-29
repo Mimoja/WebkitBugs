@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r111143 | weinig@apple.com | 2012-03-19 01:39:44 +0100 (Mo, 19. Mär 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.cpp
+   M /trunk/Source/WebCore/platform/graphics/cg/PatternCG.cpp
+
+WebCore::BitmapImage::getCGImageRef should not be used off the main thread.
+https://bugs.webkit.org/show_bug.cgi?id=81441
+
+Reviewed by Anders Carlsson.
+
+Covered by existing tests.
+
+* loader/cache/MemoryCache.cpp:
+(WebCore::memoryCache):
+(WebCore::MemoryCache::add):
+(WebCore::MemoryCache::revalidationFailed):
+(WebCore::MemoryCache::resourceForURL):
+(WebCore::MemoryCache::evict):
+Add back main thread assertions.
+
+* platform/graphics/cg/PatternCG.cpp:
+(PatternCallbackData):
+(WebCore::patternCallback):
+(WebCore::patternReleaseOnMainThreadCallback):
+(WebCore::Pattern::createPlatformPattern):
+Instead of pulling out the CGImageRef in the pattern callback, do it upfront.
+
+
+

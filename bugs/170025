@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r214334 | mark.lam@apple.com | 2017-03-24 05:53:37 +0100 (Fr, 24. Mär 2017) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/ArrayPrototype.cpp
+
+Array.prototype.splice behaves incorrectly when the VM is "having a bad time".
+https://bugs.webkit.org/show_bug.cgi?id=170025
+<rdar://problem/31228679>
+
+Reviewed by Saam Barati.
+
+* runtime/ArrayPrototype.cpp:
+(JSC::copySplicedArrayElements):
+(JSC::arrayProtoFuncSplice):
+
+
+

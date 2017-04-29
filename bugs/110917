@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r144203 | acolwell@chromium.org | 2013-02-27 18:35:04 +0100 (Mi, 27. Feb 2013) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/media/media-source/video-media-source-reject-append-after-reopening-expected.txt
+   A /trunk/LayoutTests/http/tests/media/media-source/video-media-source-reject-append-after-reopening.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/mediasource/SourceBufferList.cpp
+
+Fix SourceBufferList so SourceBuffer.append() calls are always rejected after the MediaSource is closed.
+https://bugs.webkit.org/show_bug.cgi?id=110917
+
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Test: http/tests/media/media-source/video-media-source-reject-append-after-reopening.html
+
+* Modules/mediasource/SourceBufferList.cpp:
+(WebCore::SourceBufferList::clear):
+
+LayoutTests:
+
+* http/tests/media/media-source/video-media-source-reject-append-after-reopening-expected.txt: Added.
+* http/tests/media/media-source/video-media-source-reject-append-after-reopening.html: Added.
+
+

@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r65742 | inferno@chromium.org | 2010-08-20 20:00:21 +0200 (Fr, 20. Aug 2010) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/notifications/notifications-window-close-crash-expected.txt
+   A /trunk/LayoutTests/fast/notifications/notifications-window-close-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/notifications/Notification.cpp
+   M /trunk/WebCore/notifications/Notification.h
+   M /trunk/WebCore/notifications/NotificationCenter.h
+
+2010-08-20  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        Prevent use of stale notification presenter pointer in notifications by instead using
+        a notification center pointer and deriving the presenter from it. Notification presenter
+        gets properly destroyed using disconnectFrame function inside notification center. Add
+        null checks for notification presenter.
+        https://bugs.webkit.org/show_bug.cgi?id=43645
+
+        Test: fast/notifications/notifications-window-close-crash.html
+
+        * notifications/Notification.cpp:
+        (WebCore::Notification::Notification):
+        (WebCore::Notification::create):
+        (WebCore::Notification::show):
+        (WebCore::Notification::cancel):
+        (WebCore::Notification::contextDestroyed):
+        (WebCore::Notification::finishLoading):
+        * notifications/Notification.h:
+        (WebCore::Notification::detachPresenter):
+        * notifications/NotificationCenter.h:
+        (WebCore::NotificationCenter::createHTMLNotification):
+        (WebCore::NotificationCenter::createNotification):
+2010-08-20  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        Manual test to check that canceling the notification on a closed window does
+        not result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=43645
+
+        * fast/notifications/notifications-window-close-crash-expected.txt: Added.
+        * fast/notifications/notifications-window-close-crash.html: Added.
+
+

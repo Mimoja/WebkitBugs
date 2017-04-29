@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r126657 | fmalita@chromium.org | 2012-08-25 02:06:39 +0200 (Sa, 25. Aug 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/system-language-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/system-language-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGTests.cpp
+
+ASSERTION FAILED: !attached() in WebCore::Node::attach()
+https://bugs.webkit.org/show_bug.cgi?id=94650
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Prevent SVGTests::handleAttributeChange() from attaching elements with detached parents.
+
+Test: svg/custom/system-language-crash.html
+
+* svg/SVGTests.cpp:
+(WebCore::SVGTests::handleAttributeChange):
+
+LayoutTests:
+
+* svg/custom/system-language-crash-expected.txt: Added.
+* svg/custom/system-language-crash.html: Added.
+
+

@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r97786 | inferno@chromium.org | 2011-10-18 22:42:23 +0200 (Di, 18. Okt 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/flexbox/layoutHorizontalBox-crash-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/layoutHorizontalBox-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash in RenderDeprecatedFlexibleBox::layoutHorizontalBox
+https://bugs.webkit.org/show_bug.cgi?id=70183
+
+Patch by Julien Chaffraix <jchaffraix@webkit.org> on 2011-10-18
+Reviewed by David Hyatt.
+
+Source/WebCore: 
+
+Test: fast/flexbox/layoutHorizontal-crash.html
+
+The deferred scroll information update logic was not updated when an object was destroy'ed.
+
+The fix is very simple. As the deferred logic was only used with deprecated flexbox, it is a
+pretty uncommon cases so let's optimize the new code for the common case.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::willBeDestroyed):
+
+LayoutTests: 
+
+* fast/flexbox/layoutHorizontal-crash-expected.txt: Added.
+* fast/flexbox/layoutHorizontal-crash.html: Added.
+
+

@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r95671 | inferno@chromium.org | 2011-09-22 00:05:07 +0200 (Do, 22. Sep 2011) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/quote-text-around-iframe.html
+   M /trunk/LayoutTests/fast/table/table-cell-before-after-content-around-table-block-expected.txt
+   M /trunk/LayoutTests/fast/table/table-cell-before-after-content-around-table-expected.txt
+   M /trunk/LayoutTests/fast/table/table-row-before-after-content-around-block-expected.txt
+   M /trunk/LayoutTests/fast/table/table-row-before-after-content-around-table-expected.txt
+   M /trunk/LayoutTests/fast/table/table-row-style-not-updated-with-after-content-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-cell-before-content-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/table/quote-text-around-iframe-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/quote-text-around-iframe-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-cell-after-child-in-block-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-cell-before-child-in-block-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-row-after-child-in-block-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/table/table-row-before-child-in-block-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderTable.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableRow.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+
+Source/WebCore: Not use anonymousContainer on beforeChild calculation
+and let later code handle it. Fix style update on block-level
+anonymous objects.
+https://bugs.webkit.org/show_bug.cgi?id=67656
+
+Reviewed by David Hyatt.
+
+Test: fast/table/quote-text-around-iframe.html
+
+* rendering/RenderTable.cpp:
+(WebCore::RenderTable::addChild):
+* rendering/RenderTableCell.cpp:
+(WebCore::RenderTableCell::styleDidChange):
+* rendering/RenderTableRow.cpp:
+(WebCore::RenderTableRow::addChild):
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::propagateStyleToAnonymousChildren):
+
+LayoutTests: Not use anonymousContainer on beforeChild calculation
+and let later code handle it.
+https://bugs.webkit.org/show_bug.cgi?id=67656
+
+Reviewed by David Hyatt.
+
+* fast/table/quote-text-around-iframe.html: Added.
+* fast/table/table-row-style-not-updated-with-after-content-expected.txt:
+* platform/mac/fast/table/quote-text-around-iframe-expected.png: Added.
+* platform/mac/fast/table/quote-text-around-iframe-expected.txt: Added.
+and lot of style propagation rebaselines.
+
+

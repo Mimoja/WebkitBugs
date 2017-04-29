@@ -1,0 +1,56 @@
+------------------------------------------------------------------------
+r112030 | schenney@chromium.org | 2012-03-25 19:41:18 +0200 (So, 25. Mär 2012) | 43 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/svg/change-id-with-pending-resources-expected.txt
+   A /trunk/LayoutTests/http/tests/svg/change-id-with-pending-resources.html
+   A /trunk/LayoutTests/http/tests/svg/resources/svg-use-defs-rect.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.cpp
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.h
+   M /trunk/Source/WebCore/svg/SVGStyledElement.cpp
+
+Avoid race condition when iterating over pending resources
+https://bugs.webkit.org/show_bug.cgi?id=82115
+
+Patch by Philip Rogers <pdr@google.com> on 2012-03-25
+Reviewed by Nikolas Zimmermann.
+
+Source/WebCore: 
+
+We can hit a race condition in SVGStyledElement::buildPendingResourcesIfNeeded
+where pending elements can become non-pending while we iterate over them.
+
+This patch cleans up buildPendingResourcesIfNeeded and re-works how pending
+resources are removed. Because pending resources can be modified while
+iterating over them, we introduce m_pendingResourcesForRemoval that
+holds pending resources that are marked for removal. Instead of iterating
+over this list we simply remove each pending resource from
+m_pendingResourcesForRemoval; if a pending resource is modified or removed
+during the processing of another pending resource this list is updated before
+the next element can be accessed.
+
+This change also removes removePendingResourceForElement which is no longer
+referenced.
+
+Test: http/tests/svg/change-id-with-pending-resources.html
+
+* svg/SVGDocumentExtensions.cpp:
+(WebCore::SVGDocumentExtensions::~SVGDocumentExtensions):
+(WebCore::SVGDocumentExtensions::removeElementFromPendingResources):
+(WebCore::SVGDocumentExtensions::removePendingResourceForRemoval):
+(WebCore):
+(WebCore::SVGDocumentExtensions::markPendingResourcesForRemoval):
+(WebCore::SVGDocumentExtensions::removeElementFromPendingResourcesForRemoval):
+* svg/SVGDocumentExtensions.h:
+(SVGDocumentExtensions):
+* svg/SVGStyledElement.cpp:
+(WebCore::SVGStyledElement::buildPendingResourcesIfNeeded):
+
+LayoutTests: 
+
+* http/tests/svg/change-id-with-pending-resources-expected.txt: Added.
+* http/tests/svg/change-id-with-pending-resources.html: Added.
+* http/tests/svg/resources/svg-use-defs-rect.svg: Added.
+
+

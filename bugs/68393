@@ -1,0 +1,49 @@
+------------------------------------------------------------------------
+r95489 | abarth@webkit.org | 2011-09-20 00:57:30 +0200 (Di, 20. Sep 2011) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/document-all-expected.txt
+   A /trunk/LayoutTests/http/tests/security/document-all.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/V8Collection.h
+   M /trunk/Source/WebCore/bindings/v8/custom/V8DOMStringMapCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8HTMLAllCollectionCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8HTMLCollectionCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8NamedNodeMapCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8StorageCustom.cpp
+
+[V8] document.all gets confused about its prototype chain
+https://bugs.webkit.org/show_bug.cgi?id=68393
+
+Reviewed by Eric Seidel.
+
+Source/WebCore: 
+
+GetRealNamedPropertyInPrototypeChain doesn't call interceptors, so it's
+not a good idea to use its return value.  It turns out that all the
+callers of the API only cared about whether it returns a null handle.
+
+Test: http/tests/security/document-all.html
+
+* bindings/v8/V8Collection.h:
+(WebCore::collectionNamedPropertyGetter):
+* bindings/v8/custom/V8DOMStringMapCustom.cpp:
+(WebCore::V8DOMStringMap::namedPropertyDeleter):
+(WebCore::V8DOMStringMap::namedPropertySetter):
+* bindings/v8/custom/V8HTMLAllCollectionCustom.cpp:
+(WebCore::V8HTMLAllCollection::namedPropertyGetter):
+* bindings/v8/custom/V8HTMLCollectionCustom.cpp:
+(WebCore::V8HTMLCollection::namedPropertyGetter):
+* bindings/v8/custom/V8NamedNodeMapCustom.cpp:
+(WebCore::V8NamedNodeMap::namedPropertyGetter):
+* bindings/v8/custom/V8StorageCustom.cpp:
+(WebCore::storageSetter):
+
+LayoutTests: 
+
+Test how document.all behaves when you change its prototype chain.
+
+* http/tests/security/document-all-expected.txt: Added.
+* http/tests/security/document-all.html: Added.
+
+

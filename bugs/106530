@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r142899 | pdr@google.com | 2013-02-14 21:16:48 +0100 (Do, 14. Feb 2013) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/animateMotion-path-change-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/animateMotion-path-change-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNodeAlgorithms.h
+
+Prevent inconsistent firstChild during document destruction
+https://bugs.webkit.org/show_bug.cgi?id=106530
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+During document destruction, addChildNodesToDeletionQueue can allow a container
+node to have an invalid first child, causing a crash. This patch updates
+addChildNodesToDeletionQueue to maintain a valid value for firstChild() even
+while updating its children.
+
+Test: svg/custom/animateMotion-path-change-crash.svg
+
+* dom/ContainerNodeAlgorithms.h:
+(WebCore::Private::addChildNodesToDeletionQueue):
+    To ensure prevoiusSibling() is also valid, this code was slightly refactored
+    to call setPreviousSibling(0) on the next node instead of the current node.
+
+LayoutTests:
+
+* svg/custom/animateMotion-path-change-crash-expected.txt: Added.
+* svg/custom/animateMotion-path-change-crash.svg: Added.
+
+

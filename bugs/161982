@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r205939 | cdumez@apple.com | 2016-09-15 02:03:05 +0200 (Do, 15. Sep 2016) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/js/object-literal-shorthand-construction-expected.txt
+   M /trunk/LayoutTests/js/script-tests/object-literal-shorthand-construction.js
+   M /trunk/LayoutTests/js/script-tests/sloppy-getter-setter-global-object.js
+   M /trunk/LayoutTests/js/sloppy-getter-setter-global-object-expected.txt
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSProxy.cpp
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSDOMWindowCustom.cpp
+   M /trunk/Source/WebCore/page/DOMWindow.idl
+
+REGRESSION (r205670): ASSERTION FAILED: methodTable(vm)->toThis(this, exec, NotStrictMode) == this
+https://bugs.webkit.org/show_bug.cgi?id=161982
+
+Reviewed by Saam Barati.
+
+Source/JavaScriptCore:
+
+Update JSProxy::setPrototype() to return false unconditionally instead
+of forwarding the call to its target. We used to forward to the target
+and then the JSDOMWindow's [[SetPrototypeOf]] would return false.
+However, the JSC tests use a different GlobalObject and forwarding
+the setPrototypeOf() call to the GlobalObject lead to hitting an
+assertion. This patch aligns the behavior of the GlobalObject used by
+the JSC tests with JSDOMWindow.
+
+* runtime/JSProxy.cpp:
+(JSC::JSProxy::setPrototype):
+
+Source/WebCore:
+
+We no longer need a custom [[SetPrototypeOf]] anymore as JSProxy::setPrototypeOf()
+no longer forwards the call to its target.
+
+No new layout tests because the behavior only changes in the context of the JSC
+tests (which were updated in this patch).
+
+* bindings/js/JSDOMWindowCustom.cpp:
+(WebCore::JSDOMWindow::setPrototype): Deleted.
+* page/DOMWindow.idl:
+
+LayoutTests:
+
+Bring back JSC test coverage that got lost in r205670.
+
+* js/object-literal-shorthand-construction-expected.txt:
+* js/script-tests/object-literal-shorthand-construction.js:
+* js/script-tests/sloppy-getter-setter-global-object.js:
+* js/sloppy-getter-setter-global-object-expected.txt:
+

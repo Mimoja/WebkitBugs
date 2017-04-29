@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r93032 | inferno@chromium.org | 2011-08-15 01:08:11 +0200 (Mo, 15. Aug 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/html/process-end-tag-for-inbody-crash-expected.txt
+   A /trunk/LayoutTests/fast/html/process-end-tag-for-inbody-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+
+Source/WebCore: Crash in HTMLTreeBuilder::processAnyOtherEndTagForInBody
+https://bugs.webkit.org/show_bug.cgi?id=66187
+
+Reviewed by Adam Barth.
+
+RefPtr a few ContainerNodes to prevent premature deletion.
+
+Test: fast/html/process-end-tag-for-inbody-crash.html
+
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::processCloseWhenNestedTag):
+(WebCore::HTMLTreeBuilder::processAnyOtherEndTagForInBody):
+(WebCore::HTMLTreeBuilder::callTheAdoptionAgency):
+
+LayoutTests: Crash in HTMLTreeBuilder::processAnyOtherEndTagForInBody.
+https://bugs.webkit.org/show_bug.cgi?id=66187
+
+Reviewed by Adam Barth.
+
+* fast/html/process-end-tag-for-inbody-crash-expected.txt: Added.
+* fast/html/process-end-tag-for-inbody-crash.html: Added.
+
+

@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r129448 | yosin@chromium.org | 2012-09-25 05:26:31 +0200 (Di, 25. Sep 2012) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/shadow-removechild-and-blur-event-expected.txt (von /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur-expected.txt:129447)
+   A /trunk/LayoutTests/fast/dom/shadow/shadow-removechild-and-blur-event.html
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-crash-after-adoptnode-expected.txt
+   A /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-crash-after-adoptnode.html
+   M /trunk/LayoutTests/fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+Document::adoptNode for multiple fields time input UI should not crash
+https://bugs.webkit.org/show_bug.cgi?id=97428
+
+Reviewed by Dimitri Glazkov.
+
+Source/WebCore:
+
+This patch changes Document::removeFocusedNodeOfSubtree() to check
+focused node in shadow DOM tree for avoiding Document::m_focusedNode
+not to have dangling pointer to field owner in DateTimeFieldElement.
+
+Test:
+ - fast/dom/shadow/shadow-removechild-and-blur-event.html: test for removeChild dispatches blur event.
+ - fast/forms/time-multiple-fields/time-multiple-fields-crash-after-adoptnode.html: test for adoptNode not to crash.
+ - fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur.html: removeChild of input type "time" dispatches blur event, existing test.
+
+* dom/Document.cpp:
+(WebCore::Document::removeFocusedNodeOfSubtree): Changed to check
+focused node in shadow DOM tree in addition to descendant node.
+
+LayoutTests:
+
+This patch adds a test for checking removeChild() of shadow host
+dispatches blur event if focused node in shadow tree, a test for
+checking adoptNode() doesn't causes crash and dispatches blur event
+during document.adoptNode() and updates expectation for focus/blur event test.
+
+* fast/dom/shadow/shadow-removechild-and-blur-event-expectation.txt: Added.
+* fast/dom/shadow/shadow-removechild-and-blur-event.html: Added for checking removeChild of shadow host dispatchs blur event when focused node in shadow tree.
+* fast/forms/time-multiple-fields/time-multiple-fields-crash-after-adoptnode-expected.txt: Added.
+* fast/forms/time-multiple-fields/time-multiple-fields-crash-after-adoptnode.html: Added.
+* fast/forms/time-multiple-fields/time-multiple-fields-state-change-on-focus-or-blur-expected.txt: Updated to expectation to have output from blur event handler.
+

@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r89782 | abarth@webkit.org | 2011-06-27 06:49:46 +0200 (Mo, 27. Jun 2011) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/location-prototype-expected.txt
+   A /trunk/LayoutTests/http/tests/security/location-prototype.html
+   A /trunk/LayoutTests/http/tests/security/resources/location-prototype-overwrite.html
+   M /trunk/LayoutTests/platform/chromium/fast/dom/prototype-inheritance-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorV8.pm
+
+2011-06-26  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        window.location should use the holder's prototype chain
+        https://bugs.webkit.org/show_bug.cgi?id=63411
+
+        * http/tests/security/location-prototype-expected.txt: Added.
+        * http/tests/security/location-prototype.html: Added.
+        * http/tests/security/resources/location-prototype-overwrite.html: Added.
+2011-06-26  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        window.location should use the holder's prototype chain
+        https://bugs.webkit.org/show_bug.cgi?id=63411
+
+        This patch corrects the prototype chain for Location, but we really
+        should do a complete cleanup of the prototype chain generation, like we
+        did for JavaScriptCore.
+
+        Test: http/tests/security/location-prototype.html
+
+        * bindings/scripts/CodeGeneratorV8.pm:
+

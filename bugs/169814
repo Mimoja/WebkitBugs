@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r214124 | jer.noble@apple.com | 2017-03-17 22:31:49 +0100 (Fr, 17. Mär 2017) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/mediastream/mac/RealtimeOutgoingAudioSource.cpp
+
+Explicitly resize the audio buffer in RealtimeOutgoingAudioSource.
+https://bugs.webkit.org/show_bug.cgi?id=169814
+<rdar://problem/30975496>
+
+Reviewed by Eric Carlson.
+
+Rather than just reserving sufficient capacity, actually change the buffer's underlying size to match.
+
+* platform/mediastream/mac/RealtimeOutgoingAudioSource.cpp:
+(WebCore::RealtimeOutgoingAudioSource::pullAudioData):
+

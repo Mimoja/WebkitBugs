@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r173738 | dbates@webkit.org | 2014-09-19 00:49:24 +0200 (Fr, 19. Sep 2014) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/remove-subtree-including-use-with-child-textpath-that-references-earlier-path-expected.txt
+   A /trunk/LayoutTests/svg/custom/remove-subtree-including-use-with-child-textpath-that-references-earlier-path.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGDocumentExtensions.cpp
+
+REGRESSION (r168921): SVG elements may be unnecessarily rebuilt
+https://bugs.webkit.org/show_bug.cgi?id=136373
+
+Reviewed by David Kilzer.
+
+Source/WebCore:
+
+Fixes an issue where a SVG element may be unnecessarily rebuilt. In particular,
+it is unnecessary to rebuild a SVG element that will be removed from the document.
+
+Test: svg/custom/remove-subtree-including-use-with-child-textpath-that-references-earlier-path.html
+
+* svg/SVGDocumentExtensions.cpp:
+(WebCore::SVGDocumentExtensions::removeAllElementReferencesForTarget): Modified to remove a SVG element
+from the list of elements to be rebuilt.
+
+LayoutTests:
+
+Add a test to ensure that we don't rebuild a SVG element that will be removed from the document.
+
+* svg/custom/remove-subtree-including-use-with-child-textpath-that-references-earlier-path-expected.txt: Added.
+* svg/custom/remove-subtree-including-use-with-child-textpath-that-references-earlier-path.html: Added.
+

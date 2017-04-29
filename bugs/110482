@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r144338 | japhet@chromium.org | 2013-02-28 20:40:02 +0100 (Do, 28. Feb 2013) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients-expected.txt
+   A /trunk/LayoutTests/http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients.html
+   A /trunk/LayoutTests/platform/chromium/http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedRawResource.cpp
+
+Source/WebCore: Crash in CachedRawResource::responseReceived().
+https://bugs.webkit.org/show_bug.cgi?id=110482
+
+Reviewed by Adam Barth.
+
+Test: http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients.html
+
+* loader/cache/CachedRawResource.cpp:
+(WebCore::CachedRawResource::responseReceived):
+
+LayoutTests: Test for https://bugs.webkit.org/show_bug.cgi?id=110482
+
+Reviewed by Adam Barth.
+
+* http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients-expected.txt: Added.
+* http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients.html: Added.
+* platform/chromium/http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients-expected.txt: Added.
+
+

@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r184825 | zalan@apple.com | 2015-05-23 18:06:36 +0200 (Sa, 23. Mai 2015) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/simple-line-layout-inner-text-with-flow-content-expected.txt
+   A /trunk/LayoutTests/fast/text/simple-line-layout-inner-text-with-flow-content.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/TextIterator.cpp
+   M /trunk/Source/WebCore/editing/TextIterator.h
+
+Simple line layout: Ignore -webkit-flow-*content while collecting text content for innerText.
+https://bugs.webkit.org/show_bug.cgi?id=145344
+rdar://problem/20959522
+
+Reviewed by Antti Koivisto.
+
+This patch ensures that when a -webkit-flow-into content is present in a simple line layout container,
+we skip it while collecting the text content for innerText.
+It's not always guaranteed that a simple line layout container only contains simple text nodes. In such cases,
+we need to ensure that text offset computing only takes the simple text nodes into account.
+
+Source/WebCore:
+
+Test: fast/text/simple-line-layout-inner-text-with-flow-content.html
+
+* editing/TextIterator.cpp:
+(WebCore::TextIterator::handleTextNode):
+* editing/TextIterator.h:
+
+LayoutTests:
+
+* fast/text/simple-line-layout-inner-text-with-flow-content-expected.txt: Added.
+* fast/text/simple-line-layout-inner-text-with-flow-content.html: Added.
+

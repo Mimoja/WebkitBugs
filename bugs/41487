@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r68446 | pkasting@chromium.org | 2010-09-28 01:44:36 +0200 (Di, 28. Sep 2010) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/images/resources/large-size-image-crash.jpeg
+   M /trunk/WebCore/ChangeLog
+   A /trunk/WebCore/manual-tests/large-size-image-crash.html
+   A /trunk/WebCore/manual-tests/resources/large-size-image-crash.gif
+   M /trunk/WebCore/platform/image-decoders/ImageDecoder.cpp
+   M /trunk/WebCore/platform/image-decoders/ImageDecoder.h
+   M /trunk/WebCore/platform/image-decoders/gif/GIFImageDecoder.cpp
+   M /trunk/WebCore/platform/image-decoders/qt/RGBA32BufferQt.cpp
+   M /trunk/WebCore/platform/image-decoders/skia/ImageDecoderSkia.cpp
+
+WebCore: ImageDecoderSkia.cpp needs to check for allocator failure when copying
+bitmaps.
+https://bugs.webkit.org/show_bug.cgi?id=46437
+
+Reviewed by James Robinson.
+
+* manual-tests/large-size-image-crash.html: Added.
+* manual-tests/resources/large-size-image-crash.gif: Added.
+* platform/image-decoders/ImageDecoder.cpp:
+(WebCore::RGBA32Buffer::copyBitmapData):
+* platform/image-decoders/ImageDecoder.h:
+* platform/image-decoders/gif/GIFImageDecoder.cpp:
+(WebCore::GIFImageDecoder::initFrameBuffer):
+* platform/image-decoders/qt/RGBA32BufferQt.cpp:
+(WebCore::RGBA32Buffer::copyBitmapData):
+* platform/image-decoders/skia/ImageDecoderSkia.cpp:
+(WebCore::RGBA32Buffer::copyBitmapData):
+
+LayoutTests: This resource should have been in r62399; without it the test no-ops.
+https://bugs.webkit.org/show_bug.cgi?id=41487
+
+Reviewed by James Robinson.
+
+* fast/images/resources/large-size-image-crash.jpeg: Added.
+
+
+

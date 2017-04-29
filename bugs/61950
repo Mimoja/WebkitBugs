@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r87959 | beidson@apple.com | 2011-06-03 00:03:49 +0200 (Fr, 03. Jun 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/webarchive/loading/javascript-url-iframe-crash-expected.txt
+   A /trunk/LayoutTests/webarchive/loading/javascript-url-iframe-crash.html
+   A /trunk/LayoutTests/webarchive/loading/resources/javascript-url-iframe-crash.webarchive
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/ScriptControllerBase.cpp
+
+<rdar://problem/9539920> and https://bugs.webkit.org/show_bug.cgi?id=61950
+Repro crash loading certain webarchives after r87566.
+
+Reviewed by Oliver Hunt.
+
+Source/WebCore: 
+
+Test: webarchive/loading/javascript-url-iframe-crash.html
+
+* bindings/ScriptControllerBase.cpp:
+(WebCore::ScriptController::executeIfJavaScriptURL): DocumentWriter::replaceDocument can
+  cause the DocumentLoader to be destroyed, so protect it with a Ref here.
+
+LayoutTests: 
+
+* webarchive/loading/javascript-url-iframe-crash-expected.txt: Added.
+* webarchive/loading/javascript-url-iframe-crash.html: Added.
+* webarchive/loading/resources/javascript-url-iframe-crash.webarchive: Added.
+
+
+

@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r125326 | mario@webkit.org | 2012-08-10 23:09:08 +0200 (Fr, 10. Aug 2012) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+
+[GTK] Broken implementation of AtkText and AtkEditableText for password fields
+https://bugs.webkit.org/show_bug.cgi?id=93621
+
+Rubber-stamped by Ryosuke Niwa.
+
+Fix Apple Win build, by avoiding to generate unreachable sections
+of code in AccessibilityRenderObject::passwordFieldValue().
+
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::passwordFieldValue):
+

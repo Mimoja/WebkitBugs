@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r183275 | mmirman@apple.com | 2015-04-24 21:08:01 +0200 (Fr, 24. Apr 2015) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/script-tests/sloppy-getter-setter-global-object.js
+   A /trunk/LayoutTests/js/sloppy-getter-setter-global-object-expected.txt
+   A /trunk/LayoutTests/js/sloppy-getter-setter-global-object.html
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSGlobalObjectFunctions.cpp
+
+Source/JavaScriptCore:
+Made Object.prototype.__proto__ native getter and setter check that this object not null or undefined
+https://bugs.webkit.org/show_bug.cgi?id=141865
+rdar://problem/19927273
+
+Reviewed by Filip Pizlo.
+
+* runtime/JSGlobalObjectFunctions.cpp:
+(JSC::globalFuncProtoGetter):
+(JSC::globalFuncProtoSetter):
+
+LayoutTests:
+Added tests to ensure that Object.prototype.__proto__ native getter and setter do not coerce undefined to this
+https://bugs.webkit.org/show_bug.cgi?id=141865
+rdar://problem/19927273
+
+Reviewed by Filip Pizlo.
+
+* js/script-tests/sloppy-getter-setter-global-object.js: Added.
+* js/sloppy-getter-setter-global-object-expected.txt: Added.
+* js/sloppy-getter-setter-global-object.html: Added.
+

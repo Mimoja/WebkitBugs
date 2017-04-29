@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r109790 | adamk@chromium.org | 2012-03-05 22:29:44 +0100 (Mo, 05. Mär 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/suppress-mutation-events-in-shadow-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/suppress-mutation-events-in-shadow.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+   M /trunk/Source/WebCore/dom/Node.cpp
+
+Never dispatch mutation events in shadow DOM
+https://bugs.webkit.org/show_bug.cgi?id=79278
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: fast/dom/shadow/suppress-mutation-events-in-shadow.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::removeChildren): Move allowEventDispatch() call later,
+now that childrenChanged won't trigger mutation events in shadow dom.
+(WebCore::dispatchChildInsertionEvents): Bail out if in shadow tree.
+(WebCore::dispatchChildRemovalEvents): ditto.
+* dom/Node.cpp:
+(WebCore::Node::dispatchSubtreeModifiedEvent): ditto.
+
+LayoutTests:
+
+* fast/dom/shadow/suppress-mutation-events-in-shadow-expected.txt: Added.
+* fast/dom/shadow/suppress-mutation-events-in-shadow.html: Added.
+
+

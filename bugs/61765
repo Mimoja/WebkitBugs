@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r87743 | inferno@chromium.org | 2011-05-31 20:16:13 +0200 (Di, 31. Mai 2011) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/media-controls-clone-crash-expected.txt
+   A /trunk/LayoutTests/media/media-controls-clone-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Node.h
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/Source/WebCore/html/shadow/MediaControls.h
+
+2011-05-31  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Improve hasMediaControls logic to check that node has
+        media controls. This can be false when cloning nodes.
+        https://bugs.webkit.org/show_bug.cgi?id=61765
+
+        Test: media/media-controls-clone-crash.html
+
+        * dom/Node.h:
+        (WebCore::Node::isMediaControls):
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::mediaControls):
+        (WebCore::HTMLMediaElement::hasMediaControls):
+        * html/shadow/MediaControls.h:
+        (WebCore::MediaControls::isMediaControls):
+        (WebCore::toMediaControls):
+2011-05-31  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Tests that cloning an audio element with media controls does
+        not result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=61765
+
+        * media/media-controls-clone-crash-expected.txt: Added.
+        * media/media-controls-clone-crash.html: Added.
+
+

@@ -1,0 +1,73 @@
+------------------------------------------------------------------------
+r165821 | antti@apple.com | 2014-03-18 19:06:52 +0100 (Di, 18. Mär 2014) | 59 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/getMatchedCSSProperties-rule-mutation-expected.txt
+   A /trunk/LayoutTests/fast/css/getMatchedCSSProperties-rule-mutation.html
+   A /trunk/LayoutTests/fast/css/getMatchedCSSRules-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/getMatchedCSSRules-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSStyleRule.cpp
+   M /trunk/Source/WebCore/css/PropertySetCSSStyleDeclaration.cpp
+   M /trunk/Source/WebCore/css/PropertySetCSSStyleDeclaration.h
+
+Mutating rules returned by getMatchedCSSRules can result in crash
+https://bugs.webkit.org/show_bug.cgi?id=130209
+
+Source/WebCore: 
+
+Reviewed by Andreas Kling.
+        
+The non-standard getMatchedCSSRules API returns CSSStyleRule objects that don't
+have parent stylesheet pointer (as we don't know which sheet the rule originated from).
+Mutating the rule via such wrapper can lead to crashes later as we fail to invalidate
+the underlying stylesheet.
+        
+Fix by disallowing mutation of style rules that don't have parent sheet pointer. CSSStyleRule
+has two mutable properties selectorText and style. The latter gives back CSSStyleDeclaration.
+This patch disallows mutations in both cases for CSSStyleRules that don't have parent stylesheet
+pointer.
+        
+While it is technically possible to have CSSRules that are legitimately disconnected
+from stylesheet (by removing rule from sheet while holding a reference to it) it never
+makes sense to mutate such rule as there is no way to do anything with it afterwards.
+
+Tests: fast/css/getMatchedCSSProperties-rule-mutation.html
+       fast/css/getMatchedCSSRules-crash.html
+
+* css/CSSStyleRule.cpp:
+(WebCore::CSSStyleRule::setSelectorText):
+
+    Bail out if parent stylesheet is null.
+
+* css/PropertySetCSSStyleDeclaration.cpp:
+(WebCore::PropertySetCSSStyleDeclaration::setCssText):
+(WebCore::PropertySetCSSStyleDeclaration::setProperty):
+(WebCore::PropertySetCSSStyleDeclaration::removeProperty):
+(WebCore::PropertySetCSSStyleDeclaration::setPropertyInternal):
+        
+    Allow StyleRuleCSSStyleDeclaration subclass cancel the mutation via
+    boolean return value from willMutate.
+
+(WebCore::StyleRuleCSSStyleDeclaration::willMutate):
+        
+    Disallow mutation if the owning CSSStyleRule is null or has null stylesheet.
+
+(WebCore::StyleRuleCSSStyleDeclaration::didMutate):
+        
+    We never get here with null rule or stylesheet anymore.
+
+* css/PropertySetCSSStyleDeclaration.h:
+(WebCore::PropertySetCSSStyleDeclaration::willMutate):
+
+LayoutTests: 
+
+Reviewed by Andreas Kling.
+
+* fast/css/getMatchedCSSProperties-rule-mutation-expected.txt: Added.
+* fast/css/getMatchedCSSProperties-rule-mutation.html: Added.
+* fast/css/getMatchedCSSRules-crash-expected.txt: Added.
+* fast/css/getMatchedCSSRules-crash.html: Added.
+
+
+

@@ -1,0 +1,46 @@
+------------------------------------------------------------------------
+r72817 | commit-queue@webkit.org | 2010-11-29 20:45:27 +0100 (Mo, 29. Nov 2010) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   D /trunk/LayoutTests/fast/loader/unloadable-script-expected.txt
+   D /trunk/LayoutTests/fast/loader/unloadable-script.html
+   A /trunk/LayoutTests/http/tests/misc/unloadable-script-expected.txt (von /trunk/LayoutTests/fast/loader/unloadable-script-expected.txt:72815)
+   A /trunk/LayoutTests/http/tests/misc/unloadable-script.html (von /trunk/LayoutTests/fast/loader/unloadable-script.html:72815)
+   A /trunk/LayoutTests/loader/reload-subresource-when-type-changes-expected.txt
+   A /trunk/LayoutTests/loader/reload-subresource-when-type-changes.html
+   A /trunk/LayoutTests/loader/resources
+   A /trunk/LayoutTests/loader/resources/image1.png
+   A /trunk/LayoutTests/loader/resources/image2.png
+   A /trunk/LayoutTests/loader/resources/reload-subresource-when-type-changes.js
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/cache/MemoryCache.cpp
+
+2010-11-29  Gavin Peters  <gavinp@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Web page can prevent WebKit from loading subresources on other
+        pages (cache poisoning)
+        https://bugs.webkit.org/show_bug.cgi?id=35404
+
+        * http/tests/misc/unloadable-script-expected.txt: Renamed from LayoutTests/fast/loader/unloadable-script-expected.txt.
+        * http/tests/misc/unloadable-script.html: Renamed from LayoutTests/fast/loader/unloadable-script.html.
+        * loader/reload-subresource-when-type-changes-expected.txt: Added.
+        * loader/reload-subresource-when-type-changes.html: Added.
+        * loader/resources/image1.png: Added.
+        * loader/resources/image2.png: Added.
+        * loader/resources/reload-subresource-when-type-changes.js: Added.
+2010-11-29  Gavin Peters  <gavinp@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Web page can prevent WebKit from loading subresources on other
+        pages (cache poisoning)
+        https://bugs.webkit.org/show_bug.cgi?id=35404
+
+        Tests: http/tests/misc/unloadable-script.html
+               loader/reload-subresource-when-type-changes.html
+
+        * loader/cache/MemoryCache.cpp:
+        (WebCore::MemoryCache::requestResource):
+

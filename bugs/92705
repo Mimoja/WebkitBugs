@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r124282 | rniwa@webkit.org | 2012-08-01 04:03:23 +0200 (Mi, 01. Aug 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/NodeList/nodelist-namespace-invalidation-expected.txt
+   A /trunk/LayoutTests/fast/dom/NodeList/nodelist-namespace-invalidation.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Node.cpp
+
+REGRESSION(r120979): Node list returned by getElementsByTagNameNS isn't invalidated when children changes
+https://bugs.webkit.org/show_bug.cgi?id=92705
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore: 
+
+The bug was caused by a typo in NodeListsNodeData::invalidateCaches. We need to invalidate
+tag name node lists when child nodes change and not when attributes change.
+
+Test: fast/dom/NodeList/nodelist-namespace-invalidation.html
+
+* dom/Node.cpp:
+(WebCore::NodeListsNodeData::invalidateCaches):
+
+LayoutTests: 
+
+Add a regression test to ensure node lists returned by getElementsByTagNameNS are invalidated
+when child nodes are added or removed.
+
+* fast/dom/NodeList/nodelist-namespace-invalidation-expected.txt: Added.
+* fast/dom/NodeList/nodelist-namespace-invalidation.html: Added.
+
+

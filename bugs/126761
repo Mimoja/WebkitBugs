@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r162820 | ddkilzer@apple.com | 2014-01-27 02:34:45 +0100 (Mo, 27. Jan 2014) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/objc/DOM.mm
+   M /trunk/Source/WebCore/platform/gtk/PasteboardGtk.cpp
+   M /trunk/Source/WebCore/platform/win/PasteboardWin.cpp
+   M /trunk/Source/WebCore/rendering/HitTestResult.cpp
+
+Part 2: Assertion failure in WebCore::PseudoElement::didRecalcStyle()
+<https://bugs.webkit.org/show_bug.cgi?id=126761>
+<rdar://problem/15793540>
+
+Reviewed by Simon Fraser.
+
+* bindings/objc/DOM.mm:
+(-[DOMElement image]):
+(-[DOMElement _imageTIFFRepresentation]):
+* platform/gtk/PasteboardGtk.cpp:
+(WebCore::Pasteboard::writeImage):
+* platform/win/PasteboardWin.cpp:
+(WebCore::Pasteboard::writeImage):
+(WebCore::getCachedImage):
+* rendering/HitTestResult.cpp:
+(WebCore::HitTestResult::image):
+- More places where toRenderImage() should be used instead of
+  toImage().
+- Fixed last two places where static_cast<WebCore::RenderImage*>
+  was being used instead of toRenderImage().
+
+

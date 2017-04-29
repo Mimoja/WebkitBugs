@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r141858 | tkent@chromium.org | 2013-02-05 07:20:33 +0100 (Di, 05. Feb 2013) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/select/select-change-type-on-focus-expected.txt
+   A /trunk/LayoutTests/fast/forms/select/select-change-type-on-focus.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLSelectElement.cpp
+
+Fix crash by <select> type change on focus
+https://bugs.webkit.org/show_bug.cgi?id=108830
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Test: fast/forms/select/select-change-type-on-focus.html
+
+* html/HTMLSelectElement.cpp:
+(WebCore::HTMLSelectElement::menuListDefaultEventHandler):
+focus() calls may change the renderer type.
+
+LayoutTests:
+
+* fast/forms/select/select-change-type-on-focus-expected.txt: Added.
+* fast/forms/select/select-change-type-on-focus.html: Added.
+
+

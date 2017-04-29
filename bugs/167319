@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r212021 | bfulgham@apple.com | 2017-02-10 03:02:30 +0100 (Fr, 10. Feb 2017) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/sloppy-mode-hoist-arguments-function-non-simple-parameter-list.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/bytecompiler/BytecodeGenerator.cpp
+
+Sloppy mode: We don't properly hoist functions names "arguments" when we have a non-simple parameter list
+https://bugs.webkit.org/show_bug.cgi?id=167319
+<rdar://problem/30149432>
+
+Patch by Saam Barati <sbarati@apple.com> on 2017-02-09
+Reviewed by Mark Lam.
+
+JSTests:
+
+* stress/sloppy-mode-hoist-arguments-function-non-simple-parameter-list.js: Added.
+(assert):
+(assert.arguments):
+(assert.b):
+(x.arguments):
+(x.b):
+(x):
+
+Source/JavaScriptCore:
+
+When hoisting a function inside sloppy mode, we were assuming all "var"s are inside
+what we call the "var" SymbolTableEntry. This was almost true, execpt for "arguments",
+which has sufficiently weird behavior. "arguments" can be visible to the default
+parameter expressions inside a function, therefore can't go inside the "var"
+SymbolTableEntry since the parameter SymbolTableEntry comes before the "var"
+SymbolTableEntry in the scope chain.  Therefore, if we hoist a function named
+"arguments", then we must also look for that variable inside the parameter scope
+stack entry.
+
+* bytecompiler/BytecodeGenerator.cpp:
+(JSC::BytecodeGenerator::hoistSloppyModeFunctionIfNecessary):
+
+

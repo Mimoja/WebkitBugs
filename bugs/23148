@@ -1,0 +1,116 @@
+------------------------------------------------------------------------
+r42216 | weinig@apple.com | 2009-04-04 01:13:12 +0200 (Sa, 04. Apr 2009) | 82 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-history-prototype-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-history-prototype.html
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-location-prototype-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-location-prototype.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-frame-history-prototype-iframe.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-frame-location-prototype-iframe.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/JSAudioConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSDOMBinding.cpp
+   M /trunk/WebCore/bindings/js/JSDOMBinding.h
+   M /trunk/WebCore/bindings/js/JSDOMWindowCustom.cpp
+   M /trunk/WebCore/bindings/js/JSDocumentCustom.cpp
+   M /trunk/WebCore/bindings/js/JSImageConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSMessageChannelConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSNamedNodesCollection.h
+   M /trunk/WebCore/bindings/js/JSOptionConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSRGBColor.h
+   M /trunk/WebCore/bindings/js/JSWebKitCSSMatrixConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebKitPointConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWorkerConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSXMLHttpRequestConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSXSLTProcessorConstructor.cpp
+   M /trunk/WebCore/bindings/scripts/CodeGeneratorJS.pm
+   M /trunk/WebCore/bridge/objc/objc_runtime.h
+   M /trunk/WebCore/bridge/runtime_array.h
+   M /trunk/WebCore/bridge/runtime_method.h
+   M /trunk/WebCore/bridge/runtime_object.h
+   M /trunk/WebCore/page/DOMWindow.idl
+
+WebCore:
+
+2009-04-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Fix for <rdar://problem/6476356>
+        https://bugs.webkit.org/show_bug.cgi?id=23148
+
+        - Use the window object the Location and History objects are directly associated with
+          instead of the lexical global object to pick the object prototype to serve as the
+          base of the their respective prototype chains.
+        - Re-factor as necessary to allow passing the correct global object to the createPrototype
+          functions.
+
+        Tests: http/tests/security/cross-frame-access-history-prototype.html
+               http/tests/security/cross-frame-access-location-prototype.html
+
+        * bindings/js/JSAudioConstructor.cpp:
+        (WebCore::JSAudioConstructor::JSAudioConstructor):
+        * bindings/js/JSDOMBinding.cpp:
+        (WebCore::getCachedDOMStructure):
+        (WebCore::cacheDOMStructure):
+        * bindings/js/JSDOMBinding.h:
+        (WebCore::getDOMStructure):
+        (WebCore::getDOMPrototype):
+        * bindings/js/JSDOMWindowCustom.cpp:
+        (WebCore::JSDOMWindow::history):
+        (WebCore::JSDOMWindow::location):
+        * bindings/js/JSDocumentCustom.cpp:
+        (WebCore::JSDocument::location):
+        * bindings/js/JSImageConstructor.cpp:
+        (WebCore::JSImageConstructor::JSImageConstructor):
+        * bindings/js/JSMessageChannelConstructor.cpp:
+        (WebCore::JSMessageChannelConstructor::JSMessageChannelConstructor):
+        * bindings/js/JSNamedNodesCollection.h:
+        (WebCore::JSNamedNodesCollection::createPrototype):
+        * bindings/js/JSOptionConstructor.cpp:
+        (WebCore::JSOptionConstructor::JSOptionConstructor):
+        * bindings/js/JSRGBColor.h:
+        (WebCore::JSRGBColor::createPrototype):
+        * bindings/js/JSWebKitCSSMatrixConstructor.cpp:
+        (WebCore::JSWebKitCSSMatrixConstructor::JSWebKitCSSMatrixConstructor):
+        * bindings/js/JSWebKitPointConstructor.cpp:
+        (WebCore::JSWebKitPointConstructor::JSWebKitPointConstructor):
+        * bindings/js/JSWorkerConstructor.cpp:
+        (WebCore::JSWorkerConstructor::JSWorkerConstructor):
+        * bindings/js/JSXMLHttpRequestConstructor.cpp:
+        (WebCore::JSXMLHttpRequestConstructor::JSXMLHttpRequestConstructor):
+        * bindings/js/JSXSLTProcessorConstructor.cpp:
+        (WebCore::JSXSLTProcessorConstructor::JSXSLTProcessorConstructor):
+        * bindings/scripts/CodeGeneratorJS.pm:
+        * bridge/objc/objc_runtime.h:
+        (JSC::Bindings::ObjcFallbackObjectImp::createPrototype):
+        * bridge/runtime_array.h:
+        (JSC::RuntimeArray::createPrototype):
+        * bridge/runtime_method.h:
+        (JSC::RuntimeMethod::createPrototype):
+        * bridge/runtime_object.h:
+        (JSC::RuntimeObjectImp::createPrototype):
+        * page/DOMWindow.idl:
+
+LayoutTests:
+
+2009-04-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Tests for <rdar://problem/6476356>
+        https://bugs.webkit.org/show_bug.cgi?id=23148
+
+        Test for using the correct global object for location and history object
+        prototype chain creation.
+
+        * http/tests/security/cross-frame-access-history-prototype-expected.txt: Added.
+        * http/tests/security/cross-frame-access-history-prototype.html: Added.
+        * http/tests/security/cross-frame-access-location-prototype-expected.txt: Added.
+        * http/tests/security/cross-frame-access-location-prototype.html: Added.
+        * http/tests/security/resources/cross-frame-history-prototype-iframe.html: Added.
+        * http/tests/security/resources/cross-frame-location-prototype-iframe.html: Added.
+
+
+

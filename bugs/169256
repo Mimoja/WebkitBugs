@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r213547 | ryanhaddad@apple.com | 2017-03-08 00:12:34 +0100 (Mi, 08. Mär 2017) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webdatabase/DatabaseTracker.cpp
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/Storage/WebDatabaseManager.mm
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+   A /trunk/Tools/TestWebKitAPI/Tests/WebCore/DatabaseTrackerTest.cpp
+
+Correctly check for an empty database file.
+<rdar://problem/30542242> Removing Website Data not working (WebSQL directories being left behind)
+https://bugs.webkit.org/show_bug.cgi?id=169256
+
+Patch by Maureen Daum <mdaum@apple.com> on 2017-03-07
+Reviewed by Brady Eidson.
+
+Source/WebCore:
+
+Tests: DatabaseTrackerTest.DeleteDatabaseFileIfEmpty verifies that we actually delete an empty file.
+
+Instead of checking that a database file's size is zero bytes, we should check if it contains
+any tables. Once we open an empty database file and set its journal mode to WAL, it will have a
+valid SQLite header and therefore will no longer be empty. We can know that the database was empty
+if it does not contain any tables.
+
+* Modules/webdatabase/DatabaseTracker.cpp:
+(WebCore::DatabaseTracker::deleteDatabaseFileIfEmpty):
+Use BEGIN EXCLUSIVE TRANSACTION in order to obtain the exclusive lock. If the database doesn't contain
+any tables, it is empty and can be deleted.
+
+Source/WebKit/mac:
+
+Check if the folder for an origin's WebSQL databases is empty after trying to delete
+all of its files. Currently we check if the deletedDatabaseFileCount matches the number
+of files that were in the folder. However, when we delete the actual database file in
+DatabaseTracker::deleteDatabaseFileIfEmpty(), the shm and wal files get deleted along with
+the database file, but deletedDatabaseFileCount only gets incremented once.
+
+* Storage/WebDatabaseManager.mm:
+(+[WebDatabaseManager removeEmptyDatabaseFiles]):
+Delete the folder if it is empty.
+
+Tools:
+
+Add a test for DatabaseTracker::deleteDatabaseFileIfEmpty that verifies
+that if we pass in an empty file it actually gets deleted.
+
+* TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+Add TestWebKitAPI/Tests/WebCore/DatabaseTrackerTest.cpp.
+* TestWebKitAPI/Tests/WebCore/DatabaseTrackerTest.cpp: Added.
+(TestWebKitAPI::TEST):
+

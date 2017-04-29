@@ -1,0 +1,65 @@
+------------------------------------------------------------------------
+r210939 | cdumez@apple.com | 2017-01-20 00:04:37 +0100 (Fr, 20. Jan 2017) | 45 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/resources/form-validation-iframe.html
+   A /trunk/LayoutTests/fast/forms/validation-message-detached-iframe-expected.txt
+   A /trunk/LayoutTests/fast/forms/validation-message-detached-iframe.html
+   A /trunk/LayoutTests/fast/forms/validation-message-detached-iframe2-expected.txt
+   A /trunk/LayoutTests/fast/forms/validation-message-detached-iframe2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/page/ValidationMessageClient.h
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebValidationMessageClient.h
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebValidationMessageClient.mm
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebValidationMessageClient.cpp
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebValidationMessageClient.h
+
+Make sure HTML validation bubble gets dismissed when its associated element's frame gets detached
+https://bugs.webkit.org/show_bug.cgi?id=167215
+<rdar://problem/29885052>
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+Make sure HTML validation bubble gets dismissed when its associated
+element's frame gets detached and that we do not crash.
+
+Tests: fast/forms/validation-message-detached-iframe.html
+       fast/forms/validation-message-detached-iframe2.html
+
+* dom/Document.cpp:
+(WebCore::Document::prepareForDestruction):
+* page/ValidationMessageClient.h:
+
+Source/WebKit/mac:
+
+Make sure HTML validation bubble gets dismissed when its associated
+element's frame gets detached and that we do not crash.
+
+* WebCoreSupport/WebValidationMessageClient.h:
+* WebCoreSupport/WebValidationMessageClient.mm:
+(WebValidationMessageClient::documentDetached):
+
+Source/WebKit2:
+
+Make sure HTML validation bubble gets dismissed when its associated
+element's frame gets detached and that we do not crash.
+
+* WebProcess/WebCoreSupport/WebValidationMessageClient.cpp:
+(WebKit::WebValidationMessageClient::documentDetached):
+* WebProcess/WebCoreSupport/WebValidationMessageClient.h:
+
+LayoutTests:
+
+Add layout test coverage.
+
+* fast/forms/resources/form-validation-iframe.html: Added.
+* fast/forms/validation-message-detached-iframe-expected.txt: Added.
+* fast/forms/validation-message-detached-iframe.html: Added.
+* fast/forms/validation-message-detached-iframe2-expected.txt: Added.
+* fast/forms/validation-message-detached-iframe2.html: Added.
+

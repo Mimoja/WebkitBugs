@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r88448 | mikelawther@chromium.org | 2011-06-09 16:12:56 +0200 (Do, 09. Jun 2011) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/css3/calc/regression-62276-expected.txt
+   A /trunk/LayoutTests/css3/calc/regression-62276.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+
+2011-06-09  Mike Lawther  <mikelawther@chromium.org>
+
+        Reviewed by Kent Tamura.
+
+        Parsing issue with -webkit-calc
+        https://bugs.webkit.org/show_bug.cgi?id=62276
+
+        Set the CSSParserString for the calc functions.
+
+        * css3/calc/regression-62276-expected.txt: Added.
+        * css3/calc/regression-62276.html: Added.
+2011-06-09  Mike Lawther  <mikelawther@chromium.org>
+
+        Reviewed by Kent Tamura.
+
+        Parsing issue with -webkit-calc
+        https://bugs.webkit.org/show_bug.cgi?id=62276
+
+        Set the CSSParserString for the calc functions.
+
+        Test: css3/calc/regression-62276.html
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::lex):
+

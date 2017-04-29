@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r105524 | inferno@chromium.org | 2012-01-20 19:17:47 +0100 (Fr, 20. Jan 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/xsl/xslt-transform-to-fragment-crash-expected.txt
+   A /trunk/LayoutTests/fast/xsl/xslt-transform-to-fragment-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/xml/XSLTProcessorLibxslt.cpp
+
+Crash in xsltParseGlobalVariable.
+https://bugs.webkit.org/show_bug.cgi?id=75978
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+The code missed to reset the stylesheet pointer after we fail
+to compile the XSLT stylesheet. As a result, the stylesheet gets
+reused with a removed document in the next transformToFragment call.
+
+Test: fast/xsl/xslt-transform-to-fragment-crash.html
+
+* xml/XSLTProcessorLibxslt.cpp:
+(WebCore::XSLTProcessor::transformToString):
+
+LayoutTests: 
+
+* fast/xsl/xslt-transform-to-fragment-crash-expected.txt: Added.
+* fast/xsl/xslt-transform-to-fragment-crash.html: Added.
+
+

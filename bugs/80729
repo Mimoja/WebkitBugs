@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r110593 | schenney@chromium.org | 2012-03-13 20:48:20 +0100 (Di, 13. Mär 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/delete-text-crash-expected.png
+   A /trunk/LayoutTests/svg/custom/delete-text-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/delete-text-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineBox.h
+   M /trunk/Source/WebCore/rendering/svg/SVGInlineTextBox.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGInlineTextBox.h
+
+Fix the use of stale text fragments
+https://bugs.webkit.org/show_bug.cgi?id=80729
+
+Patch by Philip Rogers <pdr@google.com> on 2012-03-13
+Reviewed by Nikolas Zimmermann.
+
+Source/WebCore: 
+
+Previously, we were allowing SVGTextFragments to get out of sync with the
+actual text in RenderSVGInlineTextBox. This patch reuses the dirty line
+box code in RenderText::setTextWithOffset to force
+clearTextFragments() when setTextWithOffset is called, preventing the use
+of stale SVGTextFragments.
+
+Test: svg/custom/delete-text-crash.html
+
+* rendering/InlineBox.h:
+(InlineBox):
+* rendering/svg/SVGInlineTextBox.cpp:
+(WebCore::SVGInlineTextBox::dirtyLineBoxes):
+(WebCore):
+* rendering/svg/SVGInlineTextBox.h:
+(SVGInlineTextBox):
+
+LayoutTests: 
+
+* svg/custom/delete-text-crash-expected.png: Added.
+* svg/custom/delete-text-crash-expected.txt: Added.
+* svg/custom/delete-text-crash.html: Added.
+
+

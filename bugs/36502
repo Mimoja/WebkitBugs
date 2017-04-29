@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r56651 | abarth@webkit.org | 2010-03-27 03:15:16 +0100 (Sa, 27. Mär 2010) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-iframe-src-alias-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-iframe-src-alias.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/JSAttrCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8AttrCustom.cpp
+   M /trunk/WebCore/dom/Attr.idl
+
+2010-03-26  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Security: iFrame.src accepts JavaScript URL via nodeValue or textContent
+        https://bugs.webkit.org/show_bug.cgi?id=36502
+
+        Overrode inherited nodeValue and textContent in Attr.idl so they proxy
+        to value, which performs a security check.
+
+        * http/tests/security/xss-DENIED-iframe-src-alias-expected.txt: Added.
+        * http/tests/security/xss-DENIED-iframe-src-alias.html: Added.
+2010-03-26  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Security: iFrame.src accepts JavaScript URL via nodeValue or textContent
+        https://bugs.webkit.org/show_bug.cgi?id=36502
+
+        Overrode inherited nodeValue and textContent in Attr.idl so they proxy
+        to value, which performs a security check.
+
+        Test: http/tests/security/xss-DENIED-iframe-src-alias.html
+
+        * bindings/js/JSAttrCustom.cpp:
+        (WebCore::JSAttr::nodeValue):
+        (WebCore::JSAttr::setNodeValue):
+        (WebCore::JSAttr::textContent):
+        (WebCore::JSAttr::setTextContent):
+        * bindings/v8/custom/V8AttrCustom.cpp:
+        (WebCore::V8Attr::nodeValueAccessorSetter):
+        (WebCore::V8Attr::nodeValueAccessorGetter):
+        (WebCore::V8Attr::textContentAccessorSetter):
+        (WebCore::V8Attr::textContentAccessorGetter):
+        * dom/Attr.idl:
+

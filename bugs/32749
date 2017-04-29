@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r52527 | mitz@apple.com | 2009-12-23 20:49:25 +0100 (Mi, 23. Dez 2009) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/remove-zero-length-run-expected.txt
+   A /trunk/LayoutTests/fast/text/remove-zero-length-run.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderText.cpp
+
+<rdar://problem/7487164> First line of text cannot be selected
+https://bugs.webkit.org/show_bug.cgi?id=32749
+
+Reviewed by Darin Adler.
+
+WebCore: 
+
+Test: fast/text/remove-zero-length-run.html
+
+* rendering/RenderText.cpp:
+(WebCore::RenderText::positionLineBox): Changed code that assumed that if a box was being
+    removed, it was the only box in the RenderText. Instead, correctly preserve the list of
+    text boxes.
+(WebCore::RenderText::checkConsistency): Updated for earlier rename.
+
+LayoutTests: 
+
+* fast/text/remove-zero-length-run-expected.txt: Added.
+* fast/text/remove-zero-length-run.html: Added.
+
+
+

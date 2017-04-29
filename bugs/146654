@@ -1,0 +1,141 @@
+------------------------------------------------------------------------
+r186476 | beidson@apple.com | 2015-07-07 23:13:31 +0200 (Di, 07. Jul 2015) | 105 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/private-browsing-http-auth-expected.txt
+   A /trunk/LayoutTests/http/tests/security/private-browsing-http-auth.html
+   A /trunk/LayoutTests/http/tests/security/resources/auth-echo.php
+   A /trunk/LayoutTests/http/tests/security/resources/basic-auth.php
+   M /trunk/LayoutTests/platform/wk2/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/websockets/WebSocketChannel.cpp
+   M /trunk/Source/WebCore/platform/network/CredentialStorage.cpp
+   M /trunk/Source/WebCore/platform/network/CredentialStorage.h
+   M /trunk/Source/WebCore/platform/network/NetworkStorageSession.h
+   M /trunk/Source/WebCore/platform/network/cf/ResourceHandleCFNet.cpp
+   M /trunk/Source/WebCore/platform/network/cf/SocketStreamHandle.h
+   M /trunk/Source/WebCore/platform/network/cf/SocketStreamHandleCFNet.cpp
+   M /trunk/Source/WebCore/platform/network/curl/ResourceHandleCurl.cpp
+   M /trunk/Source/WebCore/platform/network/curl/ResourceHandleManager.cpp
+   M /trunk/Source/WebCore/platform/network/mac/ResourceHandleMac.mm
+   M /trunk/Source/WebCore/platform/network/soup/ResourceHandleSoup.cpp
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/Misc/WebCache.h
+   M /trunk/Source/WebKit/mac/Misc/WebCache.mm
+   M /trunk/Source/WebKit/mac/Misc/WebDownload.mm
+   M /trunk/Source/WebKit/mac/Plugins/WebBaseNetscapePluginView.mm
+   M /trunk/Source/WebKit/mac/WebView/WebView.mm
+   M /trunk/Source/WebKit/mac/WebView/WebViewInternal.h
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebDownloadCFNet.cpp
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/Plugins/PluginView.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/mac/DumpRenderTree.mm
+
+HTTP Auth cached after disabling private browsing/reset.
+<rdar://problem/8293055> and https://bugs.webkit.org/show_bug.cgi?id=146654
+
+Reviewed by Tim Horton.
+
+Source/WebCore:
+
+Test: http/tests/security/private-browsing-http-auth.html
+
+- Change most static CredentialStorage methods to be instance methods instead.
+- Make a CredentialStorage objects be per-NetworkStorageSession.
+
+* Modules/websockets/WebSocketChannel.cpp:
+(WebCore::WebSocketChannel::WebSocketChannel):
+(WebCore::WebSocketChannel::connect): Only start the web socket load if a networking
+  context is available.
+
+* platform/network/CredentialStorage.cpp:
+(WebCore::CredentialStorage::defaultCredentialStorage): Returns the credential storage
+  from the default NetworkStorageSession.
+(WebCore::CredentialStorage::set):
+(WebCore::CredentialStorage::get):
+(WebCore::CredentialStorage::remove):
+(WebCore::CredentialStorage::findDefaultProtectionSpaceForURL):
+(WebCore::CredentialStorage::clearCredentials):
+(WebCore::protectionSpaceToCredentialMap): Deleted.
+(WebCore::originsWithCredentials): Deleted.
+(WebCore::pathToDefaultProtectionSpaceMap): Deleted.
+(WebCore::findDefaultProtectionSpaceForURL): Deleted.
+(WebCore::CredentialStorage::setPrivateMode): Deleted. Was a no-op anyways.
+* platform/network/CredentialStorage.h:
+
+* platform/network/NetworkStorageSession.h:
+(WebCore::NetworkStorageSession::credentialStorage):
+
+* platform/network/cf/ResourceHandleCFNet.cpp:
+(WebCore::ResourceHandle::createCFURLConnection):
+(WebCore::ResourceHandle::willSendRequest):
+(WebCore::ResourceHandle::didReceiveAuthenticationChallenge):
+(WebCore::ResourceHandle::receivedCredential):
+
+* platform/network/cf/SocketStreamHandle.h:
+(WebCore::SocketStreamHandle::create):
+* platform/network/cf/SocketStreamHandleCFNet.cpp:
+(WebCore::SocketStreamHandle::SocketStreamHandle):
+(WebCore::SocketStreamHandle::getStoredCONNECTProxyCredentials):
+(WebCore::getStoredCONNECTProxyCredentials): Deleted.
+
+* platform/network/curl/ResourceHandleCurl.cpp:
+(WebCore::ResourceHandle::didReceiveAuthenticationChallenge):
+(WebCore::ResourceHandle::receivedCredential):
+* platform/network/curl/ResourceHandleManager.cpp:
+(WebCore::ResourceHandleManager::applyAuthenticationToRequest):
+
+* platform/network/mac/ResourceHandleMac.mm:
+(WebCore::ResourceHandle::createNSURLConnection):
+(WebCore::ResourceHandle::willSendRequest):
+(WebCore::ResourceHandle::didReceiveAuthenticationChallenge):
+(WebCore::ResourceHandle::receivedCredential):
+
+* platform/network/soup/ResourceHandleSoup.cpp:
+(WebCore::applyAuthenticationToRequest):
+(WebCore::ResourceHandle::didReceiveAuthenticationChallenge):
+(WebCore::ResourceHandle::receivedCredential):
+
+Source/WebKit/mac:
+
+* Misc/WebCache.h:
+* Misc/WebCache.mm:
+(+[WebCache clearCachedCredentials]): Clear the global CredentialStorage as well as the
+  storages belonging to each main frame of each WebView. This method is for DRT.
+
+* Misc/WebDownload.mm:
+(-[WebDownloadInternal download:didReceiveAuthenticationChallenge:]):
+
+* Plugins/WebBaseNetscapePluginView.mm:
+(WebKit::getAuthenticationInfo):
+
+* WebView/WebView.mm:
+(-[WebView _clearCredentials]): Clear the storage belonging to the current networking session
+  of the main frame of this WebView.
+* WebView/WebViewInternal.h:
+
+Source/WebKit/win:
+
+* WebDownloadCFNet.cpp:
+(WebDownload::didReceiveAuthenticationChallenge):
+
+Source/WebKit2:
+
+* WebProcess/Plugins/PluginView.cpp:
+(WebKit::PluginView::getAuthenticationInfo):
+
+Tools:
+
+* DumpRenderTree/mac/DumpRenderTree.mm:
+(resetWebViewToConsistentStateBeforeTesting): Clear in-memory credentials in between test runs.
+
+LayoutTests:
+
+* http/tests/security/private-browsing-http-auth-expected.txt: Added.
+* http/tests/security/private-browsing-http-auth.html: Added.
+* http/tests/security/resources/auth-echo.php: Added.
+* http/tests/security/resources/basic-auth.php: Added.
+* platform/wk2/TestExpectations:
+

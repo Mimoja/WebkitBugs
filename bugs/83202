@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r113291 | dslomov@google.com | 2012-04-05 07:15:10 +0200 (Do, 05. Apr 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/workers/WorkerEventQueue.cpp
+
+WorkerEventQueue::close might access deleted WorkerEventQueue::EventDispatcherTask.
+https://bugs.webkit.org/show_bug.cgi?id=83202
+
+On closing the event queue, WorkerEventQueue cancels all the tasks associated with events.
+The tasks in their turn delete themselves from the map whenever task gets executed.
+However if shutdown occurs when task is in queue but before task gets executed, the task will be deleted without execution.
+This patch makes sure that no deleted tasks stay in WorkerEventQueue, by task removing itself in destructor.
+
+Reviewed by David Levin.
+
+Covered by existing tests.
+
+* workers/WorkerEventQueue.cpp:
+(WebCore::WorkerEventQueue::EventDispatcherTask::~EventDispatcherTask):
+(WorkerEventQueue::EventDispatcherTask):
+(WebCore::WorkerEventQueue::EventDispatcherTask::performTask):
+
+

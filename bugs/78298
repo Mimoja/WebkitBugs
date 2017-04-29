@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r107622 | mihnea@adobe.com | 2012-02-14 00:28:30 +0100 (Di, 14. Feb 2012) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/set-box-style-in-region-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/set-box-style-in-region-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Node.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.h
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+
+Crash in RenderFlowThread::setRegionBoxesRegionStyle
+https://bugs.webkit.org/show_bug.cgi?id=78298
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test: fast/regions/set-box-style-in-region-crash.html
+
+We have to make sure that anonymous block objects get their information in RenderFlowThread
+removed properly.
+
+* dom/Node.cpp:
+(WebCore::Node::diff):
+Correct a comment.
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::collapseAnonymousBoxChild):
+Remove the information for anonymous block from render flow thread.
+* rendering/RenderFlowThread.cpp:
+(WebCore::RenderFlowThread::removeFlowChildInfo):
+(WebCore):
+(WebCore::RenderFlowThread::setRegionRangeForBox):
+Do not set region range if the flow thread does not have regions.
+* rendering/RenderFlowThread.h:
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::willBeDestroyed):
+Add an assert to make sure that after we remove an object, there is no remaining info
+in any render flow thread.
+
+LayoutTests:
+
+* fast/regions/set-box-style-in-region-crash-expected.txt: Added.
+* fast/regions/set-box-style-in-region-crash.html: Added.
+
+

@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r106744 | commit-queue@webkit.org | 2012-02-04 23:40:52 +0100 (Sa, 04. Feb 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/remove-div-from-flexible-box-with-floating-after-content-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/remove-div-from-flexible-box-with-floating-after-content-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash when reparenting children of flexible boxes
+https://bugs.webkit.org/show_bug.cgi?id=77458
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-02-04
+Reviewed by Ojan Vafai.
+
+Source/WebCore:
+
+This fixes some regressions I introduced in r106150. RenderBlock::
+removeChild needs to be careful about not collapsing anonymous
+blocks underneath flexible boxes, and also about node ordering
+when there is an after block.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::removeChild):
+(WebCore::RenderBlock::collapseAnonymousBoxChild):
+
+LayoutTests:
+
+This test case reparents a block node from under a flexible box so
+that only anonymous blocks and floating generated blocks remain.
+A recent patch caused these anonymous blocks to be collapsed, which
+is incorrect.
+
+* fast/css-generated-content/remove-div-from-flexible-box-with-floating-after-content-crash-expected.txt: Added
+* fast/css-generated-content/remove-div-from-flexible-box-with-floating-after-content-crash.html: Added
+

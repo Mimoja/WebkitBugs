@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r185403 | zalan@apple.com | 2015-06-10 07:59:54 +0200 (Mi, 10. Jun 2015) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+Protect FrameView from being destroyed in Document::recalcStyle()
+https://bugs.webkit.org/show_bug.cgi?id=143033
+rdar://problem/20326871
+
+Reviewed by Andreas Kling.
+
+This patch ensures that FrameView stays valid in Document::recalcStyle().
+It follows the defensive pattern we use to deal with the refcounted FrameView (see EventDispatcher::dispatchEvent)
+
+When the iframe destroys itself in the onBeforeLoad callback (as the result of
+PostResolutionCallbackDisabler -> HTMLObjectElement::updateWidget -> guardedDispatchBeforeLoadEvent),
+we detach the frame and release the FrameView. However Document::recalcStyle() expects
+the FrameView to stay valid.
+
+Covered by fast/frames/flattening/crash-remove-iframe-during-object-beforeload.html.
+
+* dom/Document.cpp:
+(WebCore::Document::recalcStyle):
+

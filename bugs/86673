@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r118703 | commit-queue@webkit.org | 2012-05-28 21:37:04 +0200 (Mo, 28. Mai 2012) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/crash-on-incomplete-not-expected.txt
+   A /trunk/LayoutTests/fast/css/crash-on-incomplete-not.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSSelector.cpp
+   M /trunk/Source/WebCore/css/SelectorChecker.cpp
+
+Crash on incomplete :not().
+https://bugs.webkit.org/show_bug.cgi?id=86673
+
+Patch by Yong Li <yoli@rim.com> on 2012-05-28
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+Add back null-checks for incomplete :not() class
+which were dropped by r81845.
+
+* css/CSSSelector.cpp:
+(WebCore::CSSSelector::specificityForOneSelector):
+(WebCore::CSSSelector::selectorText):
+* css/SelectorChecker.cpp:
+(WebCore::SelectorChecker::checkOneSelector):
+(WebCore::SelectorChecker::determineLinkMatchType):
+
+LayoutTests:
+
+Add a test case that makes CSS parser create incomplete
+:not selector.
+
+* fast/css/crash-on-incomplete-not.html: Added.
+* fast/css/crash-on-incomplete-not-expected.txt: Added.
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r108109 | inferno@chromium.org | 2012-02-17 21:51:45 +0100 (Fr, 17. Feb 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/before-content-continuation-chain-expected.png
+   A /trunk/LayoutTests/fast/css-generated-content/before-content-continuation-chain-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/before-content-continuation-chain.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+:before content incorrectly placed in continuation
+when we don't have a first child.
+https://bugs.webkit.org/show_bug.cgi?id=78380
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test: fast/css-generated-content/before-content-continuation-chain.html
+
+* rendering/RenderObjectChildList.cpp:
+(WebCore::RenderObjectChildList::updateBeforeAfterContent):
+
+LayoutTests:
+
+* fast/css-generated-content/before-content-continuation-chain-expected.png: Added.
+* fast/css-generated-content/before-content-continuation-chain-expected.txt: Added.
+* fast/css-generated-content/before-content-continuation-chain.html: Added.
+
+

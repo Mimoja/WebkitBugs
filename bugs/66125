@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r92966 | inferno@chromium.org | 2011-08-12 18:27:57 +0200 (Fr, 12. Aug 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/select-start-remove-root-crash-expected.txt
+   A /trunk/LayoutTests/editing/selection/select-start-remove-root-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/FrameSelection.cpp
+   M /trunk/Source/WebCore/editing/ReplaceSelectionCommand.cpp
+
+Crash in WebCore::editingIgnoresContent
+https://bugs.webkit.org/show_bug.cgi?id=66125
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore: 
+
+RefPtr a few nodes in case they get blown away in
+dispatchEvent calls.
+
+Test: editing/selection/select-start-remove-root-crash.html
+
+* editing/FrameSelection.cpp:
+(WebCore::FrameSelection::selectAll):
+* editing/ReplaceSelectionCommand.cpp:
+(WebCore::ReplacementFragment::ReplacementFragment):
+
+LayoutTests: 
+
+Tests that we do not crash when we blow away the root
+during the firing of selectstart event in selection.
+
+* editing/selection/select-start-remove-root-crash-expected.txt: Added.
+* editing/selection/select-start-remove-root-crash.html: Added.
+
+

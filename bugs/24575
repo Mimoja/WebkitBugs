@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r41667 | ap@webkit.org | 2009-03-13 14:25:52 +0100 (Fr, 13. Mär 2009) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/cross-site-denied-response-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/cross-site-denied-response-sync-2-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/cross-site-denied-response-sync-2.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/cross-site-denied-response-sync-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/cross-site-denied-response-sync.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/cross-site-denied-response.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/xml/XMLHttpRequest.cpp
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24575
+        XHR response is incorrect after a network error.
+
+        Tests: http/tests/xmlhttprequest/cross-site-denied-response-sync-2.html
+               http/tests/xmlhttprequest/cross-site-denied-response-sync.html
+               http/tests/xmlhttprequest/cross-site-denied-response.html
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::networkError): Call internalAbort() to fully reset the request.
+        (WebCore::XMLHttpRequest::didFailRedirectCheck): No need to call internalAbort() here. Note
+        that since internalAbort() can drop GC protection, it is not safe to use the object after
+        this call.
+        (WebCore::XMLHttpRequest::didReceiveData): Check that the request wasn't aborted, and
+        return early if it was. This can happen during sync requests, as the loader does not know
+        that it was aborted, and just synthesizes all callbacks.
+
+
+

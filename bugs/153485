@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r203229 | mark.lam@apple.com | 2016-07-14 20:18:55 +0200 (Do, 14. Jul 2016) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/js/JSON-parse-reviver-expected.txt
+   M /trunk/LayoutTests/js/script-tests/JSON-parse-reviver.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/JSONObject.cpp
+   A /trunk/Source/JavaScriptCore/tests/stress/JSON-parse-should-cache-array-lengths.js
+
+JSONObject Walker::walk must save array length before processing array elements.
+https://bugs.webkit.org/show_bug.cgi?id=153485
+
+Reviewed by Darin Adler and Michael Saboff.
+
+Source/JavaScriptCore:
+
+According to https://tc39.github.io/ecma262/#sec-internalizejsonproperty,
+JSON.parse() should cache the length of an array and use the cached length when
+iterating array elements (see section 24.3.1.1 2.b.iii).
+
+* runtime/JSONObject.cpp:
+(JSC::Walker::walk):
+* tests/stress/JSON-parse-should-cache-array-lengths.js: Added.
+(toString):
+(shouldBe):
+(test):
+(test2):
+
+LayoutTests:
+
+* js/JSON-parse-reviver-expected.txt:
+* js/script-tests/JSON-parse-reviver.js:
+- Fixed a bug in arrayReviver() where it was setting the array length to 3,
+  but was immediately returning a value from the reviver for index 3.  This
+  effectively forces array.length to 4.  As a result, case 4 always failed
+  silently, and case 5 never executed.
+- Added tracking of cases visited by the revivers so that they can be verified.
+
+
+

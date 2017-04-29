@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r207804 | zalan@apple.com | 2016-10-25 06:19:09 +0200 (Di, 25. Okt 2016) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/dynamic-first-letter-selection-clear-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/dynamic-first-letter-selection-clear-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderListItem.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.h
+   M /trunk/Source/WebCore/rendering/RenderTable.cpp
+   M /trunk/Source/WebCore/rendering/RenderTable.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGText.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGText.h
+
+Do not update selection rect on dirty lineboxes.
+https://bugs.webkit.org/show_bug.cgi?id=163862
+<rdar://problem/28813156>
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+In certain cases RenderBlock::updateFirstLetter() triggers
+unwanted render tree mutation while the caller assumes intact renderers.
+This patch ensures that no renderers gets destroyed while computing the preferred widths
+when we are outside of layout context.
+
+Test: fast/css-generated-content/dynamic-first-letter-selection-clear-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::computePreferredLogicalWidths):
+(WebCore::RenderBlock::updateFirstLetter):
+* rendering/RenderBlock.h:
+* rendering/RenderListItem.cpp:
+(WebCore::RenderListItem::insertOrMoveMarkerRendererIfNeeded):
+* rendering/RenderRubyRun.cpp:
+(WebCore::RenderRubyRun::updateFirstLetter):
+* rendering/RenderRubyRun.h:
+* rendering/RenderTable.cpp:
+(WebCore::RenderTable::updateFirstLetter):
+* rendering/RenderTable.h:
+* rendering/svg/RenderSVGText.cpp:
+(WebCore::RenderSVGText::updateFirstLetter):
+* rendering/svg/RenderSVGText.h:
+
+LayoutTests:
+
+* fast/css-generated-content/dynamic-first-letter-selection-clear-crash-expected.txt: Added.
+* fast/css-generated-content/dynamic-first-letter-selection-clear-crash.html: Added.
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r116642 | keishi@webkit.org | 2012-05-10 16:11:37 +0200 (Do, 10. Mai 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFormControlElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFormControlElement.h
+
+Crash in HTMLFormControlElement::m_fieldSetAncestor
+https://bugs.webkit.org/show_bug.cgi?id=86070
+
+Reviewed by Kent Tamura.
+
+No new tests.
+
+The previous patch r115990 didn't completely resolve the crash (Bug 85453)
+We don't have a reproducible test case, so we are reverting to the old code for setting m_fieldSetAncestor.
+
+* html/HTMLFormControlElement.cpp:
+(WebCore::HTMLFormControlElement::HTMLFormControlElement):
+(WebCore::HTMLFormControlElement::updateFieldSetAndLegendAncestor):
+(WebCore::HTMLFormControlElement::insertedInto): Set m_dataListAncestorState to Unknown because ancestor has changed. Call setNeedsWillValidateCheck because style might need to be updated.
+(WebCore::HTMLFormControlElement::removedFrom):
+(WebCore::HTMLFormControlElement::disabled):
+(WebCore::HTMLFormControlElement::recalcWillValidate):
+(WebCore::HTMLFormControlElement::willValidate):
+(WebCore::HTMLFormControlElement::setNeedsWillValidateCheck):
+* html/HTMLFormControlElement.h:
+(HTMLFormControlElement): Added m_dataListAncestorState.
+
+

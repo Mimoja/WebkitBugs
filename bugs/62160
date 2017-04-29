@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r88434 | abarth@webkit.org | 2011-06-09 10:41:56 +0200 (Do, 09. Jun 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/document-write-onload-clear-expected.txt
+   A /trunk/LayoutTests/fast/parser/document-write-onload-clear.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.cpp
+
+2011-06-09  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Running script from attach can remove elements from the stack of open elements
+        https://bugs.webkit.org/show_bug.cgi?id=62160
+
+        * fast/parser/document-write-onload-clear-expected.txt: Added.
+        * fast/parser/document-write-onload-clear.html: Added.
+2011-06-09  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Running script from attach can remove elements from the stack of open elements
+        https://bugs.webkit.org/show_bug.cgi?id=62160
+
+        When the tree build runs script synchronously, that script can remove
+        arbitrary elements from the stack of open elements.  We need to hold a
+        reference to |parent| in attach instead of rely upon the reference in
+        the stack of open elements.
+
+        Test: fast/parser/document-write-onload-clear.html
+
+        * html/parser/HTMLConstructionSite.cpp:
+        (WebCore::HTMLConstructionSite::attach):
+

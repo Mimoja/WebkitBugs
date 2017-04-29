@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r61011 | mnaganov@chromium.org | 2010-06-11 15:17:25 +0200 (Fr, 11. Jun 2010) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/v8/ScriptProfiler.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8ConsoleCustom.cpp
+   M /trunk/WebCore/inspector/InspectorController.cpp
+
+2010-06-11  Mikhail Naganov  <mnaganov@chromium.org>
+
+        Reviewed by Pavel Feldman.
+
+        [Chromium] Restore 'console.profiles' access.
+
+        https://bugs.webkit.org/show_bug.cgi?id=39840
+
+        * bindings/v8/ScriptProfiler.cpp:
+        (WebCore::ScriptProfiler::stop):
+        * bindings/v8/custom/V8ConsoleCustom.cpp:
+        (WebCore::V8Console::profilesAccessorGetter):
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::stopUserInitiatedProfiling):
+

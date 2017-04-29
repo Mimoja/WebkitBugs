@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r136074 | bashi@chromium.org | 2012-11-29 01:14:52 +0100 (Do, 29. Nov 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/font-size-nan-expected.txt
+   A /trunk/LayoutTests/fast/css/font-size-nan.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/StyleResolver.cpp
+
+StyleResolver should not set NaN to font size
+https://bugs.webkit.org/show_bug.cgi?id=99506
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+fixedScaleFactor could be NaN since settings->defaultFixedFontSize()
+and settings->defaultFontSize() are zero in some case. This turns
+out setting NaN to font size. Add a zero checks so that
+fixedScaleFactor won't be NaN.
+
+Test: fast/css/font-size-nan.html
+
+* css/StyleResolver.cpp:
+(WebCore::StyleResolver::checkForGenericFamilyChange):
+
+LayoutTests:
+
+* fast/css/font-size-nan-expected.txt: Added.
+* fast/css/font-size-nan.svg: Added.
+
+

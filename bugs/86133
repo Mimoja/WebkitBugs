@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r117309 | kenrb@chromium.org | 2012-05-16 20:18:43 +0200 (Mi, 16. Mai 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-table-cell-format-block-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/first-letter-table-cell-format-block-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTableCell.cpp
+
+Crash due to first-letter not getting computed on RenderTableCell
+https://bugs.webkit.org/show_bug.cgi?id=86133
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+RenderTableCell overrides RenderBlock::layout() but doesn't call
+updateFirstLetter() in it. This is normally not a problem because
+updateFirstLetter() gets called during preferred logical width
+computation, but there exist rare occasions when layout of the table
+cell happens without preferred logical widths being dirty, in which
+case the first-letter update can be skipped.
+
+This patch adds a call to updateFirstLetter() to
+RenderTableCell::layout(). This ensures that the first-letter is up
+to date before commencing block layout.
+
+* rendering/RenderTableCell.cpp:
+(WebCore::RenderTableCell::layout)
+
+LayoutTests:
+
+Test to exercise crashing condition in bug 86133.
+
+* fast/css-generated-content/first-letter-table-cell-format-block-crash-expected.txt: Added
+* fast/css-generated-content/first-letter-table-cell-format-block-crash.html: Added
+
+

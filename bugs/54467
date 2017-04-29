@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r79606 | jschuh@chromium.org | 2011-02-24 22:06:10 +0100 (Do, 24. Feb 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/dynamic/paused-event-dispatch.html
+   M /trunk/LayoutTests/fast/events/resize-subframe.html
+   A /trunk/LayoutTests/fast/replaced/frame-removed-during-resize-smaller-expected.txt
+   A /trunk/LayoutTests/fast/replaced/frame-removed-during-resize-smaller.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/EventHandler.cpp
+
+2011-02-24  Tom Sepez  <tsepez@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        Add test for frame removal during resize event handler.  Update
+        other tests to account for async onresize event disptach.
+        https://bugs.webkit.org/show_bug.cgi?id=54467
+
+        * fast/dynamic/paused-event-dispatch.html:
+        * fast/events/resize-subframe.html:
+        * fast/replaced/frame-removed-during-resize-smaller-expected.txt: Added.
+        * fast/replaced/frame-removed-during-resize-smaller.html: Added.
+2011-02-24  Tom Sepez  <tsepez@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        Make frameview resized event dispatch async so that it occurs
+        after layout has completed.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=54467
+        Test: fast/replaced/frame-removed-during-resize-smaller.html
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::sendResizeEvent):
+
+

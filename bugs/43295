@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r64647 | inferno@chromium.org | 2010-08-04 15:25:38 +0200 (Mi, 04. Aug 2010) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/notifications/notifications-document-close-crash-expected.txt
+   A /trunk/LayoutTests/fast/notifications/notifications-document-close-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/v8/custom/V8NotificationCenterCustom.cpp
+   M /trunk/WebCore/notifications/NotificationCenter.cpp
+
+2010-08-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Null the script execution context when disconnecting frame in notifications.
+        Make sure that script execution context is valid in notification requestPermission.
+        https://bugs.webkit.org/show_bug.cgi?id=43295
+
+        Tests: fast/notifications/notifications-document-close-crash.html
+
+        * bindings/v8/custom/V8NotificationCenterCustom.cpp:
+        (WebCore::V8NotificationCenter::requestPermissionCallback):
+        * notifications/NotificationCenter.cpp:
+        (WebCore::NotificationCenter::disconnectFrame):
+2010-08-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Tests that requesting notification permission on a closed document does
+        not result in crash.
+        https://bugs.webkit.org/show_bug.cgi?id=43295
+
+        * fast/notifications/notifications-document-close-crash-expected.txt: Added.
+        * fast/notifications/notifications-document-close-crash.html: Added.
+
+

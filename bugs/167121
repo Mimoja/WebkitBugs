@@ -1,0 +1,74 @@
+------------------------------------------------------------------------
+r212015 | bfulgham@apple.com | 2017-02-10 02:39:13 +0100 (Fr, 10. Feb 2017) | 51 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/regress-167121-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xssAuditor/regress-167121.html
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/bytecode/CodeBlock.cpp
+   M /trunk/Source/JavaScriptCore/bytecode/InternalFunctionAllocationProfile.h
+   M /trunk/Source/JavaScriptCore/bytecode/ObjectAllocationProfile.h
+   M /trunk/Source/JavaScriptCore/runtime/FunctionRareData.cpp
+   M /trunk/Source/JavaScriptCore/runtime/FunctionRareData.h
+   M /trunk/Source/JavaScriptCore/runtime/InternalFunction.cpp
+   M /trunk/Source/JavaScriptCore/runtime/IteratorOperations.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSBoundFunction.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSFunction.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSGlobalObject.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSProxy.cpp
+   M /trunk/Source/JavaScriptCore/runtime/ObjectConstructor.h
+   M /trunk/Source/JavaScriptCore/runtime/PrototypeMap.cpp
+   M /trunk/Source/JavaScriptCore/runtime/PrototypeMap.h
+
+Constructed object's global object should be the global object of the constructor.
+https://bugs.webkit.org/show_bug.cgi?id=167121
+<rdar://problem/30054759>
+
+Patch by Mark Lam <mark.lam@apple.com> on 2017-02-09
+Reviewed by Filip Pizlo and Geoffrey Garen.
+
+Source/JavaScriptCore:
+
+The realm (i.e. globalObject) of any object should be the same as the constructor
+that instantiated the object.  Changed PrototypeMap::createEmptyStructure() to
+be passed the correct globalObject to use instead of assuming it's the same one
+as the prototype object.
+
+* bytecode/CodeBlock.cpp:
+(JSC::CodeBlock::finishCreation):
+* bytecode/InternalFunctionAllocationProfile.h:
+(JSC::InternalFunctionAllocationProfile::createAllocationStructureFromBase):
+* bytecode/ObjectAllocationProfile.h:
+(JSC::ObjectAllocationProfile::initialize):
+* runtime/FunctionRareData.cpp:
+(JSC::FunctionRareData::initializeObjectAllocationProfile):
+* runtime/FunctionRareData.h:
+(JSC::FunctionRareData::createInternalFunctionAllocationStructureFromBase):
+* runtime/InternalFunction.cpp:
+(JSC::InternalFunction::createSubclassStructure):
+* runtime/IteratorOperations.cpp:
+(JSC::createIteratorResultObjectStructure):
+* runtime/JSBoundFunction.cpp:
+(JSC::getBoundFunctionStructure):
+* runtime/JSFunction.cpp:
+(JSC::JSFunction::allocateAndInitializeRareData):
+(JSC::JSFunction::initializeRareData):
+* runtime/JSGlobalObject.cpp:
+(JSC::JSGlobalObject::init):
+* runtime/JSProxy.cpp:
+(JSC::JSProxy::setTarget):
+* runtime/ObjectConstructor.h:
+(JSC::constructEmptyObject):
+* runtime/PrototypeMap.cpp:
+(JSC::PrototypeMap::createEmptyStructure):
+(JSC::PrototypeMap::emptyStructureForPrototypeFromBaseStructure):
+(JSC::PrototypeMap::emptyObjectStructureForPrototype):
+(JSC::PrototypeMap::clearEmptyObjectStructureForPrototype):
+* runtime/PrototypeMap.h:
+
+LayoutTests:
+
+* http/tests/security/xssAuditor/regress-167121-expected.txt: Added.
+* http/tests/security/xssAuditor/regress-167121.html: Added.
+
+

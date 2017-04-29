@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r173843 | hyatt@apple.com | 2014-09-22 20:55:50 +0200 (Mo, 22. Sep 2014) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/multicol-selection-expected.txt
+   A /trunk/LayoutTests/fast/multicol/multicol-selection.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderMultiColumnFlowThread.cpp
+
+ASSERT in RenderMultiColumnSet::requiresBalancing.
+https://bugs.webkit.org/show_bug.cgi?id=136376.
+
+Reviewed by David Kilzer.
+
+Source/WebCore:
+
+Added fast/multicol/multicol-selection.html.
+
+* rendering/RenderMultiColumnFlowThread.cpp:
+(WebCore::isValidColumnSpanner):
+Don't allow an object to become a spanner if it does not have the flow
+thread as its containing block. Otherwise the flow thread won't get notified
+of spanner placeholder insertions, and so the spanner ends up orphaned.
+
+LayoutTests:
+
+* fast/multicol/multicol-selection-expected.txt: Added.
+* fast/multicol/multicol-selection.html: Added.
+
+
+

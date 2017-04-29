@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r71377 | morrita@google.com | 2010-11-05 02:23:54 +0100 (Fr, 05. Nov 2010) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLMeterElement/meter-element-with-child-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLMeterElement/meter-element-with-child-crash.html
+   A /trunk/LayoutTests/fast/dom/HTMLProgressElement/progress-element-with-child-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLProgressElement/progress-element-with-child-crash.html
+   M /trunk/LayoutTests/platform/mac/fast/dom/HTMLMeterElement/meter-element-expected.txt
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderIndicator.h
+
+2010-11-04  MORITA Hajime  <morrita@google.com>
+
+        Reviewed by Kent Tamura.
+
+        Stale reference to RenderObject held as FrameView layoutRoot
+        https://bugs.webkit.org/show_bug.cgi?id=48019
+
+        * fast/dom/HTMLMeterElement/meter-element-with-child-crash-expected.txt: Added.
+        * fast/dom/HTMLMeterElement/meter-element-with-child-crash.html: Added.
+        * fast/dom/HTMLProgressElement/progress-element-with-child-crash-expected.txt: Added.
+        * fast/dom/HTMLProgressElement/progress-element-with-child-crash.html: Added.
+        * platform/mac/fast/dom/HTMLMeterElement/meter-element-expected.txt:
+2010-11-04  MORITA Hajime  <morrita@google.com>
+
+        Reviewed by Kent Tamura.
+
+        Stale reference to RenderObject held as FrameView layoutRoot
+        https://bugs.webkit.org/show_bug.cgi?id=48019
+
+        <progress> and <meter> shouldn't have children of its RenderObject,
+        which caused unexpected result.
+        This change suppresses child creation to prevent it.
+
+        Tests: fast/dom/HTMLMeterElement/meter-element-with-child-crash.html
+               fast/dom/HTMLProgressElement/progress-element-with-child-crash.html
+
+        * rendering/RenderIndicator.h:
+        (WebCore::RenderIndicator::canHaveChildren):
+

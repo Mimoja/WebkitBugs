@@ -1,0 +1,64 @@
+------------------------------------------------------------------------
+r184434 | antti@apple.com | 2015-05-16 15:53:21 +0200 (Sa, 16. Mai 2015) | 46 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/canvas-remote-read-data-url-image-redirect-expected.txt
+   A /trunk/LayoutTests/http/tests/security/canvas-remote-read-data-url-image-redirect.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ScriptElement.cpp
+   M /trunk/Source/WebCore/dom/ScriptExecutionContext.cpp
+   M /trunk/Source/WebCore/html/canvas/CanvasRenderingContext.cpp
+   M /trunk/Source/WebCore/loader/ImageLoader.cpp
+   M /trunk/Source/WebCore/loader/MediaResourceLoader.cpp
+   M /trunk/Source/WebCore/loader/TextTrackLoader.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedImage.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResource.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResource.h
+
+When redirecting to data URL use HTTP response for same origin policy checks
+https://bugs.webkit.org/show_bug.cgi?id=145054
+rdar://problem/20299050
+
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore:
+
+Test: http/tests/security/canvas-remote-read-data-url-image-redirect.html
+
+* dom/ScriptElement.cpp:
+(WebCore::ScriptElement::notifyFinished):
+* dom/ScriptExecutionContext.cpp:
+(WebCore::ScriptExecutionContext::sanitizeScriptError):
+* html/canvas/CanvasRenderingContext.cpp:
+(WebCore::CanvasRenderingContext::wouldTaintOrigin):
+* loader/ImageLoader.cpp:
+(WebCore::ImageLoader::notifyFinished):
+* loader/MediaResourceLoader.cpp:
+(WebCore::MediaResourceLoader::responseReceived):
+* loader/TextTrackLoader.cpp:
+(WebCore::TextTrackLoader::notifyFinished):
+* loader/cache/CachedImage.cpp:
+(WebCore::CachedImage::isOriginClean):
+* loader/cache/CachedResource.cpp:
+(WebCore::CachedResource::passesAccessControlCheck):
+(WebCore::CachedResource::passesSameOriginPolicyCheck):
+
+    Factor repeatedly used same origin policy test into a function.
+
+(WebCore::CachedResource::redirectReceived):
+
+    When redirecting to a data URL save the redirect response.
+
+(WebCore::CachedResource::responseForSameOriginPolicyChecks):
+
+    In case we got redirected to data use that response instead of the final data response for policy checks.
+
+* loader/cache/CachedResource.h:
+
+LayoutTests:
+
+* http/tests/security/canvas-remote-read-data-url-image-redirect-expected.txt: Added.
+* http/tests/security/canvas-remote-read-data-url-image-redirect.html: Added.
+
+
+

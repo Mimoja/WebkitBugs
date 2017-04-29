@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r114209 | weinig@apple.com | 2012-04-15 02:43:38 +0200 (So, 15. Apr 2012) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/ByteArray.cpp
+
+Harden WTF::ByteArray::create()
+https://bugs.webkit.org/show_bug.cgi?id=83318
+
+Reviewed by Maciej Stachowiak.
+
+* wtf/ByteArray.cpp:
+(WTF::ByteArray::create):
+Add overflow check. I don't believe there is anyway to trigger this currently,
+hence no tests, so this should be considered hardening.
+
+

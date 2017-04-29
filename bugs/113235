@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r146805 | eric@webkit.org | 2013-03-25 21:16:30 +0100 (Mo, 25. Mär 2013) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/tag-hash-collision-expected.txt
+   A /trunk/LayoutTests/fast/parser/tag-hash-collision.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLIdentifier.cpp
+
+Incorrect parsing due to hash collision
+https://bugs.webkit.org/show_bug.cgi?id=113235
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/parser/tag-hash-collision.html
+
+* html/parser/HTMLIdentifier.cpp:
+(WebCore::HTMLIdentifier::findIndex):
+
+LayoutTests:
+
+* fast/parser/tag-hash-collision-expected.txt: Added.
+* fast/parser/tag-hash-collision.html: Added.
+
+

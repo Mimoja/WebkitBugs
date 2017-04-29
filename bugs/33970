@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r53707 | enrica@apple.com | 2010-01-22 20:13:10 +0100 (Fr, 22. Jan 2010) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/editing/pasteboard/paste-noscript-svg-expected.txt
+   M /trunk/LayoutTests/editing/resources/svgcontent.xhtml
+
+Fix for the failing test on qt buildbot.
+This tests had been added as part of the patch for https://bugs.webkit.org/show_bug.cgi?id=33970
+
+Reviewed by Adele Peterson.
+
+* editing/pasteboard/paste-noscript-svg-expected.txt:
+* editing/resources/svgcontent.xhtml:
+
+
+

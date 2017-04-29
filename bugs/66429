@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r93264 | oliver@apple.com | 2011-08-18 02:08:26 +0200 (Do, 18. Aug 2011) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSImageDataCustom.cpp
+
+Move towards supporting user controlled prototypes on CanvasPixelArray
+https://bugs.webkit.org/show_bug.cgi?id=66429
+
+Reviewed by Gavin Barraclough.
+
+Start using a per-global object structure for canvas pixel array.
+
+* bindings/js/JSImageDataCustom.cpp:
+(WebCore::toJS):
+

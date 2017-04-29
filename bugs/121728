@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r158198 | bfulgham@apple.com | 2013-10-29 18:40:52 +0100 (Di, 29. Okt 2013) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/mathml/arbitrary-markup-expected.txt
+   A /trunk/LayoutTests/mathml/arbitrary-markup.html
+   M /trunk/LayoutTests/mathml/mfenced-root-layer-expected.txt
+   M /trunk/LayoutTests/mathml/mfenced-root-layer.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.h
+   M /trunk/Source/WebCore/dom/Node.h
+   M /trunk/Source/WebCore/mathml/MathMLElement.cpp
+   M /trunk/Source/WebCore/mathml/MathMLElement.h
+   M /trunk/Source/WebCore/mathml/MathMLTextElement.cpp
+   M /trunk/Source/WebCore/mathml/MathMLTextElement.h
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLScripts.cpp
+
+Source/WebCore: Invalid cast in WebCore::toRenderMathMLBlock
+https://bugs.webkit.org/show_bug.cgi?id=121728
+rdar://problem/15046151
+
+Reviewed by Dean Jackson.
+
+Tested by: mathml/arbitrary-markup.html
+
+* dom/Element.h: Expose childShouldCreateRenderer for
+MathML as well as SVG builds.
+* dom/Node.h: 
+(WebCore::Node::isMathMLElement): Added.
+* mathml/MathMLElement.cpp:
+(WebCore::MathMLElement::create): Create as MathML Element.
+(WebCore::MathMLElement::childShouldCreateRenderer):
+Only allow the child to emit a renderer if it is a
+MathML element.
+* mathml/MathMLElement.h:
+
+LayoutTests: [MathML] invalid cast in WebCore::toRenderMathMLBlock
+https://bugs.webkit.org/show_bug.cgi?id=121728
+
+Reviewed by Dean Jackson.
+
+* mathml/arbitrary-markup-expected.txt: Added.
+* mathml/arbitrary-markup.html: Added.
+* mathml/mfenced-root-layer.html: Modified to avoid invalid
+use of arbitrary markup inside mfenced element.
+* mathml/mfenced-root-layer-expected.txt: Rebaselined.
+
+

@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r112161 | adamk@chromium.org | 2012-03-27 00:49:27 +0200 (Di, 27. Mär 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/resources/subframe-load-js-url-crash-iframe.html
+   A /trunk/LayoutTests/fast/frames/subframe-load-js-url-crash-expected.txt
+   A /trunk/LayoutTests/fast/frames/subframe-load-js-url-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/V8RecursionScope.cpp
+   M /trunk/Source/WebCore/bindings/v8/V8RecursionScope.h
+
+V8RecursionScope should not hold a raw pointer to ScriptExecutionContext
+https://bugs.webkit.org/show_bug.cgi?id=82222
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Instead of holding onto ScriptExecutionContext, cache the boolean value we
+care about (context->isDocument()). This avoids problems if the
+context goes away as a result of the script we just ran.
+
+Test: fast/frames/subframe-load-js-url-crash.html
+
+* bindings/v8/V8RecursionScope.cpp:
+(WebCore::V8RecursionScope::didLeaveScriptContext): Check the cached
+bool instead of calling into the context.
+* bindings/v8/V8RecursionScope.h:
+(WebCore::V8RecursionScope::V8RecursionScope): Call isDocument from
+the constructor and cache the result.
+(WebCore::V8RecursionScope::~V8RecursionScope): No longer need to pass
+anything to didLeaveScriptContext since it's now a member.
+(V8RecursionScope): Make didLeaveScriptContext a member function and
+remove its argument. Add member bool to hold the value of isDocument.
+
+LayoutTests:
+
+* fast/frames/resources/subframe-load-js-url-crash-iframe.html: Added.
+* fast/frames/subframe-load-js-url-crash-expected.txt: Added.
+* fast/frames/subframe-load-js-url-crash.html: Added.
+
+

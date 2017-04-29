@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r118478 | dmazzoni@google.com | 2012-05-25 07:56:43 +0200 (Fr, 25. Mai 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/contenteditable-table-check-causes-crash-expected.txt
+   A /trunk/LayoutTests/accessibility/contenteditable-table-check-causes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+   M /trunk/Source/WebCore/accessibility/AccessibilityTable.cpp
+
+Crash in WebCore::AccessibilityTable::isDataTable
+https://bugs.webkit.org/show_bug.cgi?id=87409
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Use Node::rendererIsEditable everywhere rather than
+Node::isContentEditable because the latter can trigger a layout
+and destroy the renderer. New test covers the change to
+AccessibilityTable.cpp, changes to AccessibilityRenderObject.cpp
+are covered by existing tests.
+
+Test: accessibility/contenteditable-table-check-causes-crash.html
+
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::isReadOnly):
+(WebCore::AccessibilityRenderObject::contentChanged):
+* accessibility/AccessibilityTable.cpp:
+(WebCore::AccessibilityTable::isDataTable):
+
+LayoutTests:
+
+* accessibility/contenteditable-table-check-causes-crash-expected.txt: Added.
+* accessibility/contenteditable-table-check-causes-crash.html: Added.
+
+

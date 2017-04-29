@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r204461 | bfulgham@apple.com | 2016-08-15 18:10:09 +0200 (Mo, 15. Aug 2016) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   A /trunk/Source/WebKit2/Resources/PlugInSandboxProfiles/com.macromedia.Flash Player ESR.plugin.sb
+   M /trunk/Source/WebKit2/WebKit2.xcodeproj/project.pbxproj
+
+Add Sandbox profile for Enterprise support version of Flash Player
+https://bugs.webkit.org/show_bug.cgi?id=160753
+<rdar://problem/17614483>
+
+Reviewed by Andy Estes.
+
+* Resources/PlugInSandboxProfiles/com.macromedia.Flash Player ESR.plugin.sb: Added.
+* WebKit2.xcodeproj/project.pbxproj: Add reference to new sandbox profile.
+
+

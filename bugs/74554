@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r103429 | dslomov@google.com | 2011-12-21 21:27:37 +0100 (Mi, 21. Dez 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/storage/AbstractDatabase.cpp
+   M /trunk/Source/WebCore/storage/chromium/DatabaseTrackerChromium.cpp
+
+Source/WebCore: [Chromium] DatabaseTrackerChromium: iterating DatabaseSet races with Database disposal on worker thread
+https://bugs.webkit.org/show_bug.cgi?id=74554
+
+Reviewed by David Levin.
+
+Covered by existing tests in fast/workers/storage.
+
+* storage/chromium/DatabaseTrackerChromium.cpp:
+(WebCore::NotifyDatabaseObserverOnCloseTask::create):
+(WebCore::NotifyDatabaseObserverOnCloseTask::performTask):
+(WebCore::NotifyDatabaseObserverOnCloseTask::isCleanupTask):
+(WebCore::NotifyDatabaseObserverOnCloseTask::NotifyDatabaseObserverOnCloseTask):
+(WebCore::DatabaseTracker::removeOpenDatabase):
+
+LayoutTests: [Chromium] DatabaseTrackerChromium: iterating DatabaseSet races with Database disposal on worker thread.
+https://bugs.webkit.org/show_bug.cgi?id=74554
+
+Reviewed by David Levin.
+
+* platform/chromium/test_expectations.txt:
+

@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r182284 | ap@apple.com | 2015-04-02 21:50:13 +0200 (Do, 02. Apr 2015) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-call-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-call.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSHistoryCustom.cpp
+
+Clean up access checks in JSHistoryCustom.cpp
+https://bugs.webkit.org/show_bug.cgi?id=143227
+
+Reviewed by Sam Weinig.
+
+Source/WebCore:
+
+* bindings/js/JSHistoryCustom.cpp:
+(WebCore::JSHistory::putDelegate):
+(WebCore::JSHistory::deleteProperty):
+(WebCore::JSHistory::deletePropertyByIndex):
+(WebCore::JSHistory::getOwnPropertyNames):
+(WebCore::JSHistory::pushState):
+(WebCore::JSHistory::replaceState):
+
+LayoutTests:
+
+* http/tests/security/cross-frame-access-call-expected.txt:
+* http/tests/security/cross-frame-access-call.html:
+
+
+

@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r81088 | tkent@chromium.org | 2011-03-15 01:53:53 +0100 (Di, 15. Mär 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/interactive-validation-select-crash-expected.txt
+   A /trunk/LayoutTests/fast/forms/interactive-validation-select-crash.html
+   M /trunk/LayoutTests/platform/gtk/Skipped
+   M /trunk/LayoutTests/platform/mac/Skipped
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Assertion failure by form validation message for <select required> with float:left
+https://bugs.webkit.org/show_bug.cgi?id=55995
+
+Reviewed by James Robinson.
+
+Source/WebCore:
+
+Test: fast/forms/interactive-validation-select-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::canMergeContiguousAnonymousBlocks):
+  isAnonymousBlock() doesn't mean it is a RenderBlock. We need to check isRenderBlock().
+
+LayoutTests:
+
+* fast/forms/interactive-validation-select-crash-expected.txt: Added.
+* fast/forms/interactive-validation-select-crash.html: Added.
+* platform/gtk/Skipped:
+* platform/mac/Skipped:
+* platform/qt/Skipped:
+* platform/win/Skipped:
+

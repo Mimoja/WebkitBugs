@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r167167 | jhoneycutt@apple.com | 2014-04-12 01:09:39 +0200 (Sa, 12. Apr 2014) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/select-change-size-during-focus-expected.txt
+   A /trunk/LayoutTests/fast/forms/select-change-size-during-focus.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLSelectElement.cpp
+
+Assertion failure changing select element size during focus event
+dispatch
+<https://bugs.webkit.org/show_bug.cgi?id=131566>
+<rdar://problem/16400735>
+
+Reviewed by Andy Estes.
+
+Source/WebCore:
+
+Test: fast/forms/select-change-size-during-focus.html
+
+* html/HTMLSelectElement.cpp:
+(WebCore::HTMLSelectElement::listBoxDefaultEventHandler):
+Adopt the fix from Chromium r171216; check that the renderer is still
+of the expected type, and return early if it is not.
+
+LayoutTests:
+
+* fast/forms/select-change-size-during-focus-expected.txt: Added.
+* fast/forms/select-change-size-during-focus.html: Added.
+

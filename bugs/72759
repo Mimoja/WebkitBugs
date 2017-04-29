@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r101584 | commit-queue@webkit.org | 2011-12-01 03:36:57 +0100 (Do, 01. Dez 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/first-letter-inline-flow-split-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/first-letter-inline-flow-split-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash from first letter text fragments having flows split
+https://bugs.webkit.org/show_bug.cgi?id=72759
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-11-30
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+When an inline flow is split that contains a first letter block
+and its remaining text, it can prevent the remaining text fragment
+from getting updated if the first letter block is replaced. This
+patch enables the text fragment to be found and updated properly.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::updateFirstLetterBlock):
+
+LayoutTests:
+
+New test for fix to crash on bug 72759.
+
+* fast/css/first-letter-inline-flow-split-crash-expected.txt: Added
+* fast/css/first-letter-inline-flow-split-crash.html: Added
+

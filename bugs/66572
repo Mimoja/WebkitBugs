@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r93487 | ddkilzer@apple.com | 2011-08-21 07:21:50 +0200 (So, 21. Aug 2011) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/js/const-expected.txt
+   M /trunk/LayoutTests/fast/js/resources/const.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/bytecompiler/NodesCodegen.cpp
+
+JavaScriptCore bytecompiler does not compute scope depth correctly
+in the case of constant declarations
+https://bugs.webkit.org/show_bug.cgi?id=66572
+
+Source/JavaScriptCore:
+
+Patch by Filip Pizlo <fpizlo@apple.com> on 2011-08-20
+Reviewed by Oliver Hunt.
+
+Changed the handling of const to add the dynamic scope depth.
+
+* bytecompiler/NodesCodegen.cpp:
+(JSC::ConstDeclNode::emitCodeSingle):
+
+LayoutTests:
+
+Patch by Filip Pizlo <fpizlo@apple.com> on 2011-08-20
+Reviewed by Oliver Hunt.
+
+Added tests that reproduce the failure.
+
+* fast/js/const-expected.txt:
+* fast/js/resources/const.js:
+(tryCatch1):
+(tryCatch2):
+(with1):
+(with2):
+

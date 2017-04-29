@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r203683 | carlosgc@webkit.org | 2016-07-25 17:02:56 +0200 (Mo, 25. Jul 2016) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/markup.cpp
+
+REGRESSION(r200931): Invalid cast in highestAncestorToWrapMarkup()
+https://bugs.webkit.org/show_bug.cgi?id=160163
+
+Reviewed by Michael Catanzaro.
+
+Since r200931 the result of enclosingNodeOfType() in highestAncestorToWrapMarkup() is downcasted to Element, but
+the result of enclosingNodeOfType() can be a Node that is not an Element, in this case is Text. The cast is not
+needed at all since that node is passed to editingIgnoresContent() and selectionFromContentsOfNode() and both
+receive a Node not an Element.
+
+* editing/markup.cpp:
+(WebCore::highestAncestorToWrapMarkup): Remove invalid cast.
+

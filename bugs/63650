@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r90130 | inferno@chromium.org | 2011-06-30 19:00:48 +0200 (Do, 30. Jun 2011) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Range/range-extract-contents-event-fire-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/Range/range-extract-contents-event-fire-crash.html
+   A /trunk/LayoutTests/fast/dom/Range/range-extract-contents-event-fire-crash2-expected.txt
+   A /trunk/LayoutTests/fast/dom/Range/range-extract-contents-event-fire-crash2.html
+   M /trunk/LayoutTests/fast/dom/Range/range-extractContents.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Range.cpp
+
+2011-06-30  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Ryosuke Niwa.
+
+        Crash when calling DOMSubtreeModified event when extracting range
+        contents.
+        https://bugs.webkit.org/show_bug.cgi?id=63650
+
+        Convert a few nodes to RefPtrs and add commonRoot verification checks
+        for Range::processContents.
+
+        Tests: fast/dom/Range/range-extract-contents-event-fire-crash.html
+               fast/dom/Range/range-extract-contents-event-fire-crash2.html
+
+        * dom/Range.cpp:
+        (WebCore::childOfCommonRootBeforeOffset):
+        (WebCore::Range::processContents):
+        (WebCore::Range::processContentsBetweenOffsets):
+        (WebCore::Range::processAncestorsAndTheirSiblings):
+2011-06-29  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Ryosuke Niwa.
+
+        Crash when calling DOMSubtreeModified event when extracting range
+        contents.
+        https://bugs.webkit.org/show_bug.cgi?id=63650
+
+        * fast/dom/Range/range-extract-contents-event-fire-crash-expected.txt: Added.
+        * fast/dom/Range/range-extract-contents-event-fire-crash.html: Added.
+        * fast/dom/Range/range-extract-contents-event-fire-crash2-expected.txt: Added.
+        * fast/dom/Range/range-extract-contents-event-fire-crash2.html: Added.
+        * fast/dom/Range/range-extractContents.html: remove the appending of fragment
+        in this crasher test since we now refptr the nodes and leftContents will be visible.
+        This crasher test does not need to show the extractContents fragment.
+
+

@@ -1,0 +1,83 @@
+------------------------------------------------------------------------
+r121003 | rniwa@webkit.org | 2012-06-22 07:33:58 +0200 (Fr, 22. Jun 2012) | 63 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/label/labels-owner-node-adopted-expected.txt
+   A /trunk/LayoutTests/fast/forms/label/labels-owner-node-adopted.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSNodeListCustom.cpp
+   M /trunk/Source/WebCore/dom/ChildNodeList.cpp
+   M /trunk/Source/WebCore/dom/ClassNodeList.cpp
+   M /trunk/Source/WebCore/dom/DynamicNodeList.cpp
+   M /trunk/Source/WebCore/dom/DynamicNodeList.h
+   M /trunk/Source/WebCore/dom/NameNodeList.cpp
+   M /trunk/Source/WebCore/dom/NodeRareData.h
+   M /trunk/Source/WebCore/dom/TagNodeList.cpp
+   M /trunk/Source/WebCore/dom/TreeScopeAdopter.cpp
+   M /trunk/Source/WebCore/html/LabelsNodeList.cpp
+   M /trunk/Source/WebCore/html/RadioNodeList.cpp
+
+Source/WebCore: LabelsNodeList isn't updated properly after its owner node is adopted into a new document
+https://bugs.webkit.org/show_bug.cgi?id=89730
+
+Reviewed by Darin Adler.
+
+When a node is adopted, node lists that are invalidated at document level need to be unregistered
+from old document and registered to new document so that DOM mutations in new document will invalidate
+caches in the node lists. Done that in NodeListsNodeData::adoptTreeScope, which was extracted from
+TreeScopeAdopter::moveTreeToNewScope.
+
+Also renamed DynamicNodeList::node() and m_node to rootNode() and m_ownerNode to better express
+their semantics and added ownerNode() to make m_ownerNode private to DynamicNodeList.
+
+Test: fast/forms/label/labels-owner-node-adopted.html
+
+* bindings/js/JSNodeListCustom.cpp:
+(WebCore::JSNodeListOwner::isReachableFromOpaqueRoots):
+* dom/ChildNodeList.cpp:
+(WebCore::ChildNodeList::~ChildNodeList):
+(WebCore::ChildNodeList::length):
+(WebCore::ChildNodeList::item):
+(WebCore::ChildNodeList::nodeMatches):
+* dom/ClassNodeList.cpp:
+(WebCore::ClassNodeList::ClassNodeList):
+(WebCore::ClassNodeList::~ClassNodeList):
+* dom/DynamicNodeList.cpp:
+(WebCore::DynamicSubtreeNodeList::length):
+(WebCore::DynamicSubtreeNodeList::itemForwardsFromCurrent):
+(WebCore::DynamicSubtreeNodeList::itemBackwardsFromCurrent):
+(WebCore::DynamicSubtreeNodeList::item):
+(WebCore::DynamicNodeList::itemWithName):
+* dom/DynamicNodeList.h:
+(WebCore::DynamicNodeList::DynamicNodeList):
+(WebCore::DynamicNodeList::ownerNode):
+(WebCore::DynamicNodeList::rootedAtDocument):
+(WebCore::DynamicNodeList::shouldInvalidateOnAttributeChange):
+(WebCore::DynamicNodeList::rootNode):
+(WebCore::DynamicNodeList::document):
+(DynamicNodeList):
+* dom/NameNodeList.cpp:
+(WebCore::NameNodeList::~NameNodeList):
+* dom/NodeRareData.h:
+(WebCore::NodeListsNodeData::adoptTreeScope):
+(NodeListsNodeData):
+* dom/TagNodeList.cpp:
+(WebCore::TagNodeList::~TagNodeList):
+* dom/TreeScopeAdopter.cpp:
+(WebCore::TreeScopeAdopter::moveTreeToNewScope):
+* html/LabelsNodeList.cpp:
+(WebCore::LabelsNodeList::~LabelsNodeList):
+(WebCore::LabelsNodeList::nodeMatches):
+* html/RadioNodeList.cpp:
+(WebCore::RadioNodeList::~RadioNodeList):
+(WebCore::RadioNodeList::checkElementMatchesRadioNodeListFilter):
+
+LayoutTests: LabelsNostList isn't updated properly after its owner node is adopted into a new document
+https://bugs.webkit.org/show_bug.cgi?id=89730
+
+Reviewed by Darin Adler.
+
+* fast/forms/label/labels-owner-node-adopted-expected.txt: Added.
+* fast/forms/label/labels-owner-node-adopted.html: Added.
+
+

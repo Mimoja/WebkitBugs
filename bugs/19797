@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r41547 | ap@webkit.org | 2009-03-10 08:46:09 +0100 (Di, 10. Mär 2009) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/xmlhttprequest/set-dangerous-headers-expected.txt
+   M /trunk/LayoutTests/http/tests/xmlhttprequest/set-dangerous-headers.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/xml/XMLHttpRequest.cpp
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19797
+        Bring the list of forbidden headers in sync with XMLHttpRequest spec draft
+
+        Added new checks to http/tests/xmlhttprequest/set-dangerous-headers.html.
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequestStaticData::XMLHttpRequestStaticData): Added all headers from
+        XMLHttpRequest 2 draft.
+
+
+

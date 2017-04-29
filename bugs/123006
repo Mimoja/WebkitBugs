@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r165921 | antti@apple.com | 2014-03-19 22:43:52 +0100 (Mi, 19. Mär 2014) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/long-selector-list-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/long-selector-list-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSSelectorList.cpp
+   M /trunk/Source/WebCore/css/StyleRule.cpp
+
+Crash with long selector list
+https://bugs.webkit.org/show_bug.cgi?id=123006
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+Test: fast/css/long-selector-list-crash.html
+
+* css/CSSSelectorList.cpp:
+(WebCore::CSSSelectorList::CSSSelectorList):
+(WebCore::CSSSelectorList::adoptSelectorVector):
+(WebCore::CSSSelectorList::operator=):
+* css/StyleRule.cpp:
+(WebCore::StyleRule::create):
+
+    Add a bunch of asserts.
+
+(WebCore::StyleRule::splitIntoMultipleRulesWithMaximumSelectorComponentCount):
+        
+    This could produce a zero-length selector list.
+
+LayoutTests: 
+
+* fast/css/long-selector-list-crash-expected.txt: Added.
+* fast/css/long-selector-list-crash.html: Added.
+
+
+

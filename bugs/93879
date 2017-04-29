@@ -1,0 +1,70 @@
+------------------------------------------------------------------------
+r126304 | commit-queue@webkit.org | 2012-08-22 17:34:57 +0200 (Mi, 22. Aug 2012) | 48 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/remove-flow-thread-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/remove-flow-thread-crash.html
+   M /trunk/Source/WebCore/CMakeLists.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/GNUmakefile.list.am
+   M /trunk/Source/WebCore/Target.pri
+   M /trunk/Source/WebCore/WebCore.gypi
+   M /trunk/Source/WebCore/WebCore.vcproj/WebCore.vcproj
+   M /trunk/Source/WebCore/WebCore.xcodeproj/project.pbxproj
+   M /trunk/Source/WebCore/rendering/FlowThreadController.cpp
+   M /trunk/Source/WebCore/rendering/FlowThreadController.h
+   A /trunk/Source/WebCore/rendering/RenderFlowThreadContainer.cpp
+   A /trunk/Source/WebCore/rendering/RenderFlowThreadContainer.h
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+   M /trunk/Source/WebCore/rendering/RenderView.cpp
+
+Crash in WebCore::RenderBlock::removeChild
+https://bugs.webkit.org/show_bug.cgi?id=93879
+
+Patch by Raul Hudea <rhudea@adobe.com> on 2012-08-22
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+By adding the lifetime state to the RenderNamedFlowThread (r122556), it become possible for the a RenderRegion object to delete its sibling,
+the RenderNamedFlowThread. This is unexpected in the rendering world and cause problems in RenderBlock::removeChild where we retain previous
+and next sibling pointers.
+So, all the RenderNamedFlowThread are created under a RenderFlowThreadContainer object insted of the RenderView. The new object is created only
+when the first named flow is created.
+
+Test: fast/regions/remove-flow-thread-crash.html
+
+* CMakeLists.txt:
+* GNUmakefile.list.am:
+* Target.pri:
+* WebCore.gypi:
+* WebCore.vcproj/WebCore.vcproj:
+* WebCore.xcodeproj/project.pbxproj:
+* rendering/FlowThreadController.cpp:
+(WebCore::FlowThreadController::FlowThreadController): Added initialization for the new RenderFlowThreadContainer member
+(WebCore::FlowThreadController::ensureRenderFlowThreadWithName): Added the creation of the RenderFlowThreadContainer object and use it as a parent for all RenderNamedFlowThreads
+(WebCore::FlowThreadController::styleDidChange): Inform all the RenderNamedFlowThreads that the style changed in regions (initially this code was in RenderView, but now all RenderNamedFlowThreads are children of RenderFlowThreadContainer)
+(WebCore):
+* rendering/FlowThreadController.h:
+(WebCore):
+(FlowThreadController):
+* rendering/RenderFlowThreadContainer.cpp: Added.
+(WebCore):
+(WebCore::RenderFlowThreadContainer::RenderFlowThreadContainer):
+(WebCore::RenderFlowThreadContainer::layout):
+* rendering/RenderFlowThreadContainer.h: Added.
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::markContainingBlocksForLayout): Skip to RenderView if the current object is an RenderFlowThreadContainer.
+* rendering/RenderObject.h:
+(WebCore::RenderObject::isRenderFlowThreadContainer):
+* rendering/RenderView.cpp:
+(WebCore::RenderView::styleDidChange): Moved the code associated to RenderNamedFlowThreads to FlowThreadController:styleDidChange and call it instead.
+
+LayoutTests:
+
+Test the region-flow_thread sibling case
+
+* fast/regions/remove-flow-thread-crash-expected.txt: Added.
+* fast/regions/remove-flow-thread-crash.html: Added.
+

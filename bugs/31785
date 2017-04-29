@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r51387 | hausmann@webkit.org | 2009-11-25 18:02:34 +0100 (Mi, 25. Nov 2009) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/network/qt/QNetworkReplyHandler.cpp
+
+[Qt] Remove the Referer header when redirecting to a non-secure site
+https://bugs.webkit.org/show_bug.cgi?id=31785
+
+Patch by Jakub Wieczorek <faw217@gmail.com> on 2009-11-22
+Reviewed by Adam Barth.
+
+This makes Qt pass two tests introduced in r50226.
+
+WebCore:
+
+* platform/network/qt/QNetworkReplyHandler.cpp:
+(WebCore::QNetworkReplyHandler::sendResponseIfNeeded):
+
+LayoutTests:
+
+* platform/qt/Skipped:
+

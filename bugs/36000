@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r56420 | dglazkov@chromium.org | 2010-03-23 23:07:53 +0100 (Di, 23. Mär 2010) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/bad-encoding-expected.txt
+   A /trunk/LayoutTests/fast/text/bad-encoding.html
+   A /trunk/LayoutTests/fast/text/resources/bad-encoding.xml
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/XMLTokenizerLibxml2.cpp
+
+WebCore: Fix hard-to-see crash due to incorrect libxml API usage.
+
+Patch by Chris Evans <cevans@chromium.org> on 2010-03-23
+Reviewed by Darin Adler.
+
+https://bugs.webkit.org/show_bug.cgi?id=36000
+
+Test: fast/text/bad-encoding.html
+
+* dom/XMLTokenizerLibxml2.cpp:
+(WebCore::XMLTokenizer::doEnd): Avoid operations on a closed context.
+
+LayoutTests: Add test for crash due to calling into libxml in invalid state. Note
+that it is unlikely that this will actually crash for you in the test
+environment because it is highly intermittent. However, adding test in
+order to exercise the code path and prevent related regression.
+See https://bugs.webkit.org/show_bug.cgi?id=36000
+
+Patch by Chris Evans <cevans@chromium.org> on 2010-03-23
+Reviewed by Darin Adler.
+
+* fast/text/bad-encoding.html: Added.
+* fast/text/bad-encoding-expected.txt: Added.
+* fast/text/resources/bad-encoding.xml: Added.
+

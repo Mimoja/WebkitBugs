@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r115702 | isherman@chromium.org | 2012-05-01 04:38:40 +0200 (Di, 01. Mai 2012) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/ChromeClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebViewImpl.cpp
+
+[Chromium] Fix Autofill popup visibility behavior
+Prevent users from interacting with invisible Autofill popups rendered outside the main frame's contents view.
+This is a recommit of r115400, restricted to just Autofill popups.
+https://bugs.webkit.org/show_bug.cgi?id=84420
+
+Reviewed by Abhishek Arya
+
+* src/ChromeClientImpl.cpp:
+(WebKit::ChromeClientImpl::popupOpened): Hide popups rendered outside the main frame's contents view.
+* src/WebViewImpl.cpp:
+(WebKit::WebViewImpl::applyAutofillSuggestions): Fix up order of operations to support immediately hiding a popup if it would not be visible
+
+

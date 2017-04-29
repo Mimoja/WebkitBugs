@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r129535 | beidson@apple.com | 2012-09-25 20:59:58 +0200 (Di, 25. Sep 2012) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/plugins/get-url-beforeunload-destroys-plugin-expected.txt
+   A /trunk/LayoutTests/http/tests/plugins/get-url-beforeunload-destroys-plugin.html
+   A /trunk/LayoutTests/http/tests/plugins/resources/notify-done.html
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/Plugins/PluginView.cpp
+
+Crash after clicking in plugin at kauaiexplorer.com
+<rdar://problem/11525987/> and https://bugs.webkit.org/show_bug.cgi?id=90925
+
+Patch by Akash Vaswani <avaswani@apple.com> on 2012-09-25
+Reviewed by Sam Weinig.
+
+Source/WebKit2:
+
+Bug: Clicking the plugin to navigate away from the page caused the browser to crash.
+     This is because it is possible for a beforeunload handler to destroy the plugin
+     while it is still needed. In this case the handler set visibility to "none" and
+     then accessed a property on the plugin script object. This forced a layout
+     that destroyed the plugin.
+Fix: Protecting PluginView objects until they are no longer required.
+     This was done by adding a RefPtr at the beginning of performURLRequest()
+
+* WebProcess/Plugins/PluginView.cpp:
+(WebKit::PluginView::performURLRequest):
+
+LayoutTests:
+
+* http/tests/plugins/get-url-beforeunload-destroys-plugin-expected.txt: Added.
+* http/tests/plugins/get-url-beforeunload-destroys-plugin.html: Added.
+* http/tests/plugins/resources/notify-done.html: Added.
+

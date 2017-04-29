@@ -1,0 +1,59 @@
+------------------------------------------------------------------------
+r115343 | commit-queue@webkit.org | 2012-04-26 21:59:05 +0200 (Do, 26. Apr 2012) | 47 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/line-layout/line-break-obj-removal-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/line-layout/line-break-obj-removal-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLineBoxList.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+Crash from removal of line break object after layout
+https://bugs.webkit.org/show_bug.cgi?id=75461
+
+Source/WebCore:
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-04-26
+Reviewed by David Hyatt.
+
+There is a condition where objects can get removed from underneath
+inlines while they represent a line break object in a RootInlineBox
+of an ancestor block. If an intermediary inline has already been
+marked as needing layout, then the line box will not get dirtied
+because dirtyLineFromChangedChild thinks it already has been.
+
+This patch introduces a new set in RenderObject to indicate whether
+an ancestral line box corresponding to the current line has been
+marked dirty or not. dirtyLinesFromChangedChild() can use this set
+rather than m_selfNeedsLayout, so it will not be confused if a
+container was dirtied for some other reason that did not affect the
+line box.
+
+* rendering/RenderLineBoxList.cpp:
+(WebCore::RenderLineBoxList::dirtyLinesFromChangedChild): Use the new
+set rather than m_selfNeedsLayout in the container to determine
+whether to continue propagating upward.
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::s_ancestorLineboxDirtySet): Instantiate the
+static member.
+(WebCore::RenderObject::willBeDestroyed): Clears the object from the
+linebox set when it is being destroyed.
+* rendering/RenderObject.h:
+(WebCore::RenderObject::s_ancestorLineboxDirtySet): Added static
+member set.
+(WebCore::RenderObject::setNeedsLayout): Clears the
+object from the linebox set when layout bits are getting cleared.
+(WebCore::RenderObject::ancestorLineBoxDirty): Added.
+(WebCore::RenderObject::setAncestorLineBoxDirty): Added.
+
+LayoutTests:
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-04-25
+Reviewed by David Hyatt.
+
+Test exercising crashing condition in bug 75461.
+
+* fast/block/line-layout/line-break-obj-removal-crash-expected.txt: Added
+* fast/block/line-layout/line-break-obj-removal-crash.html: Added
+

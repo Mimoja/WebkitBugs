@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r108009 | rniwa@webkit.org | 2012-02-17 02:43:50 +0100 (Fr, 17. Feb 2012) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/applyblockelement-visiblepositionforindex-crash-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/applyblockelement-visiblepositionforindex-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/ApplyBlockElementCommand.cpp
+   M /trunk/Source/WebCore/editing/InsertListCommand.cpp
+   M /trunk/Source/WebCore/editing/htmlediting.cpp
+   M /trunk/Source/WebCore/editing/htmlediting.h
+
+Crash in visiblePositionForIndex
+https://bugs.webkit.org/show_bug.cgi?id=77683
+
+Reviewed by Eric Seidel.
+
+Source/WebCore: 
+
+Fixed the crash.
+
+Test: editing/execCommand/applyblockelement-visiblepositionforindex-crash.html
+
+* editing/ApplyBlockElementCommand.cpp:
+(WebCore::ApplyBlockElementCommand::doApply):
+* editing/InsertListCommand.cpp:
+(WebCore::InsertListCommand::doApply):
+* editing/htmlediting.cpp:
+(WebCore::indexForVisiblePosition):
+* editing/htmlediting.h:
+(WebCore):
+
+LayoutTests: 
+
+Add a regression test. It crashes Webkit with very high frequency.
+
+* editing/execCommand/applyblockelement-visiblepositionforindex-crash-expected.txt: Added.
+* editing/execCommand/applyblockelement-visiblepositionforindex-crash.html: Added.
+
+

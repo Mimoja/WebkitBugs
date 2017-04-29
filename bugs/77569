@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r106488 | rniwa@webkit.org | 2012-02-01 22:34:08 +0100 (Mi, 01. Feb 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/remove-target-with-shadow-in-drag-expected.txt
+   A /trunk/LayoutTests/fast/events/remove-target-with-shadow-in-drag.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/EventHandler.cpp
+
+Crash in EventHandler::updateDragAndDrop
+https://bugs.webkit.org/show_bug.cgi?id=77569
+
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore: 
+
+Test: fast/events/remove-target-with-shadow-in-drag.html
+
+* page/EventHandler.cpp:
+(WebCore::EventHandler::updateDragAndDrop):
+
+LayoutTests: 
+
+* fast/events/remove-target-with-shadow-in-drag-expected.txt: Added.
+* fast/events/remove-target-with-shadow-in-drag.html: Added.
+
+

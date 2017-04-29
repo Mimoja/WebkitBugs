@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r87640 | andreas.kling@nokia.com | 2011-05-29 21:13:46 +0200 (So, 29. Mai 2011) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/qt/ImageBufferQt.cpp
+
+2011-05-27  Andreas Kling  <kling@webkit.org>
+
+        Reviewed by James Robinson.
+
+        [Qt] Add area check to ImageBufferData::getImageData()
+        https://bugs.webkit.org/show_bug.cgi?id=61375
+
+        No change in behavior, just a sanity check.
+
+        * platform/graphics/qt/ImageBufferQt.cpp:
+        (WebCore::getImageData):
+
+

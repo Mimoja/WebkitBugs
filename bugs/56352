@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r81964 | mjs@apple.com | 2011-03-25 17:11:57 +0100 (Fr, 25. Mär 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/mathml/wbr-in-mroot-crash-expected.txt
+   A /trunk/LayoutTests/mathml/wbr-in-mroot-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLRoot.cpp
+
+2011-03-25  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Antti Koivisto.
+
+        Crash when a wbr element is inserted inside mroot
+        https://bugs.webkit.org/show_bug.cgi?id=56352
+
+        * mathml/wbr-in-mroot-crash-expected.txt: Added.
+        * mathml/wbr-in-mroot-crash.html: Added.
+2011-03-25  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Antti Koivisto.
+
+        Crash when a wbr element is inserted inside mroot
+        https://bugs.webkit.org/show_bug.cgi?id=56352
+
+        Test: mathml/wbr-in-mroot-crash.html
+
+        * rendering/mathml/RenderMathMLRoot.cpp:
+        (WebCore::RenderMathMLRoot::layout): Look for the first box model child of the first
+        child, instead of just assuming.
+

@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r70793 | kbr@google.com | 2010-10-28 21:04:34 +0200 (Do, 28. Okt 2010) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/html/canvas/WebGLFramebuffer.cpp
+
+2010-10-28  Benoit Jacob  <bjacob@mozilla.com>
+
+        Reviewed by Kenneth Russell.
+
+        Ensure that WebGL stencil buffers are correctly initialized
+        https://bugs.webkit.org/show_bug.cgi?id=48351
+
+        * html/canvas/WebGLFramebuffer.cpp:
+        (WebCore::WebGLFramebuffer::initializeRenderbuffers):
+
+

@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r122755 | fmalita@chromium.org | 2012-07-16 22:31:54 +0200 (Mo, 16. Jul 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/smil-setcurrenttime-crash-expected.txt
+   A /trunk/LayoutTests/svg/animations/smil-setcurrenttime-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+
+SVGAnimationElement::currentValuesForValuesAnimation crash
+https://bugs.webkit.org/show_bug.cgi?id=91326
+
+Reviewed by Simon Fraser.
+
+SVGSMILElement::progress() assumes that seekToIntervalCorrespondingToTime() always
+lands inside a defined interval, but one can force arbitrary time offsets using
+setCurrentTime(). This patch adds logic for handling non-interval time offsets
+gracefully.
+
+Source/WebCore:
+
+Test: svg/animations/smil-setcurrenttime-crash.svg
+
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::progress):
+
+LayoutTests:
+
+* svg/animations/smil-setcurrenttime-crash-expected.txt: Added.
+* svg/animations/smil-setcurrenttime-crash.svg: Added.
+
+

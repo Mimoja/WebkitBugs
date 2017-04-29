@@ -1,0 +1,69 @@
+------------------------------------------------------------------------
+r208168 | bfulgham@apple.com | 2016-10-31 20:15:52 +0100 (Mo, 31. Okt 2016) | 49 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/AlternativeTextController.cpp
+   M /trunk/Source/WebCore/editing/Editor.cpp
+   M /trunk/Source/WebCore/editing/EditorCommand.cpp
+   M /trunk/Source/WebCore/editing/TypingCommand.cpp
+   M /trunk/Source/WebCore/editing/mac/EditorMac.mm
+   M /trunk/Source/WebCore/page/ContextMenuController.cpp
+   M /trunk/Source/WebCore/page/DOMSelection.cpp
+   M /trunk/Source/WebCore/page/DragController.cpp
+   M /trunk/Source/WebCore/page/Frame.cpp
+   M /trunk/Source/WebCore/page/TextIndicator.cpp
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/InjectedBundle/DOM/InjectedBundleRangeHandle.cpp
+   M /trunk/Source/WebKit2/WebProcess/WebPage/WebPage.cpp
+   M /trunk/Source/WebKit2/WebProcess/WebPage/mac/WebPageMac.mm
+
+Do a better job of protecting Frame objects in the context of JavaScript calls
+https://bugs.webkit.org/show_bug.cgi?id=164163
+<rdar://problem/28955249>
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+* editing/AlternativeTextController.cpp:
+(WebCore::AlternativeTextController::respondToUnappliedSpellCorrection): Protected the Frame.
+* editing/Editor.cpp:
+(WebCore::Editor::setTextAsChildOfElement): Ditto.
+* editing/EditorCommand.cpp:
+(WebCore::executeSwapWithMark): Ditto.
+* editing/TypingCommand.cpp:
+(WebCore::TypingCommand::deleteKeyPressed): Ditto.
+(WebCore::TypingCommand::forwardDeleteKeyPressed): Ditto.
+* editing/mac/EditorMac.mm:
+(WebCore::Editor::replaceNodeFromPasteboard): Ditto.
+* page/ContextMenuController.cpp:
+(WebCore::ContextMenuController::contextMenuItemSelected): Ditto.
+* page/DOMSelection.cpp:
+(WebCore::DOMSelection::collapse): Ditto.
+(WebCore::DOMSelection::collapseToEnd): Ditto.
+(WebCore::DOMSelection::collapseToStart): Ditto.
+(WebCore::DOMSelection::setBaseAndExtent): Ditto.
+(WebCore::DOMSelection::setPosition): Ditto.
+(WebCore::DOMSelection::modify): Ditto.
+(WebCore::DOMSelection::extend): Ditto.
+(WebCore::DOMSelection::addRange): Ditto.
+(WebCore::DOMSelection::deleteFromDocument): Ditto.
+* page/DragController.cpp:
+(WebCore::setSelectionToDragCaret): Ditto.
+(WebCore::DragController::startDrag): Ditto.
+* page/Frame.cpp:
+(WebCore::Frame::checkOverflowScroll): Ditto.
+* page/TextIndicator.cpp:
+(WebCore::TextIndicator::createWithRange): Ditto.
+
+Source/WebKit2:
+
+* WebProcess/InjectedBundle/DOM/InjectedBundleRangeHandle.cpp:
+(WebKit::InjectedBundleRangeHandle::renderedImage): Protected the Frame.
+* WebProcess/WebPage/WebPage.cpp:
+(WebKit::WebPage::insertTextAsync): Ditto.
+(WebKit::WebPage::setComposition): Ditto.
+* WebProcess/WebPage/mac/WebPageMac.mm:
+(WebKit::WebPage::insertDictatedTextAsync): Ditto.
+
+

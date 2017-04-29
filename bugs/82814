@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r112788 | inferno@chromium.org | 2012-03-31 13:59:15 +0200 (Sa, 31. Mär 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/fieldset/fieldset-crash-expected.txt
+   A /trunk/LayoutTests/fast/forms/fieldset/fieldset-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFieldSetElement.cpp
+
+Crash in HTMLFieldSetElement::disabledAttributeChanged.
+https://bugs.webkit.org/show_bug.cgi?id=82814
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+Test: fast/forms/fieldset/fieldset-crash.html
+
+* html/HTMLFieldSetElement.cpp:
+(WebCore::HTMLFieldSetElement::disabledAttributeChanged):
+
+LayoutTests:
+
+* fast/forms/fieldset/fieldset-crash-expected.txt: Added.
+* fast/forms/fieldset/fieldset-crash.html: Added.
+
+

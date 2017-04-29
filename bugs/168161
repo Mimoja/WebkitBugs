@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r212214 | rniwa@webkit.org | 2017-02-13 03:01:26 +0100 (Mo, 13. Feb 2017) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Attr/make-unique-element-data-while-replacing-attr-expected.txt
+   A /trunk/LayoutTests/fast/dom/Attr/make-unique-element-data-while-replacing-attr.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+REGRESSION (r179497): Crash inside setAttributeNode
+https://bugs.webkit.org/show_bug.cgi?id=168161
+<rdar://problem/30451581>
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+The bug was caused by setAttributeNode calling setAttributeInternal with the same element data as the one used
+to call removeAttributeInternal despite of the fact removeAttributeInternal could have invoked arbitrary scripts
+and mutated element's m_elementData.
+
+Fixed the bug by calling with setAttributeInternal with the result of new invocation of ensureUniqueElementData().
+
+Test: fast/dom/Attr/make-unique-element-data-while-replacing-attr.html
+
+* dom/Element.cpp:
+(WebCore::Element::setAttributeNode):
+
+LayoutTests:
+
+Added a regression test.
+
+* fast/dom/Attr/make-unique-element-data-while-replacing-attr-expected.txt: Added.
+* fast/dom/Attr/make-unique-element-data-while-replacing-attr.html: Added.
+
+

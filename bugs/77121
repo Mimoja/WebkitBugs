@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r106036 | inferno@chromium.org | 2012-01-26 22:35:44 +0100 (Do, 26. Jan 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/symbol-viewport-element-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/symbol-viewport-element-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGLengthContext.cpp
+
+Crash in SVGSVGElement::currentViewBoxRect.
+https://bugs.webkit.org/show_bug.cgi?id=77121
+
+Reviewed by Nikolas Zimmermann.
+
+Source/WebCore:
+
+Symbols shouldn't be rendered. Revert the ASSERT
+from r105513 into a hard check.
+
+Test: svg/custom/symbol-viewport-element-crash.svg
+
+* svg/SVGLengthContext.cpp:
+(WebCore::SVGLengthContext::determineViewport):
+
+LayoutTests:
+
+* svg/custom/symbol-viewport-element-crash-expected.txt: Added.
+* svg/custom/symbol-viewport-element-crash.svg: Added.
+

@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r159481 | zalan@apple.com | 2013-11-19 07:01:45 +0100 (Di, 19. Nov 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/modify-node-and-while-in-the-callback-too-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/modify-node-and-while-in-the-callback-too-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/DocumentOrderedMap.cpp
+   M /trunk/Source/WebCore/html/HTMLImageElement.cpp
+   M /trunk/Source/WebCore/loader/ImageLoader.cpp
+
+use after free in WebCore::DocumentOrderedMap::remove / WebCore::TreeScope::removeElementById
+https://bugs.webkit.org/show_bug.cgi?id=121324
+
+Reviewed by Ryosuke Niwa.
+
+Update the document ordered map for an image element before dispatching load or error events
+when it's inserted into a document.
+
+Source/WebCore:
+
+Test: fast/dom/modify-node-and-while-in-the-callback-too-crash.html
+
+* dom/DocumentOrderedMap.cpp: defensive fix to avoid use after free issues.
+(WebCore::DocumentOrderedMap::remove):
+* html/HTMLImageElement.cpp:
+(WebCore::HTMLImageElement::insertedInto):
+* loader/ImageLoader.cpp:
+(WebCore::ImageLoader::updateFromElement): setting m_failedLoadURL makes
+repeated updateFromElement calls return early.
+
+LayoutTests:
+
+* fast/dom/modify-node-and-while-in-the-callback-too-crash-expected.txt: Added.
+* fast/dom/modify-node-and-while-in-the-callback-too-crash.html: Added.
+
+

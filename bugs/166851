@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r211999 | bfulgham@apple.com | 2017-02-10 01:10:14 +0100 (Fr, 10. Feb 2017) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/shadow-dom/resources/start.html
+   A /trunk/LayoutTests/fast/shadow-dom/shadow-at-root-during-disconnect-expected.txt
+   A /trunk/LayoutTests/fast/shadow-dom/shadow-at-root-during-disconnect.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNodeAlgorithms.cpp
+
+Disconnect shadow children of root when detaching a frame
+https://bugs.webkit.org/show_bug.cgi?id=166851
+<rdar://problem/29930443>
+
+Reviewed by Andy Estes.
+
+Source/WebCore:
+
+If the root of the tree we are disconnecting has a shadow element, include it in the set of
+things to disconnect.
+
+Tests: fast/shadow-dom/shadow-at-root-during-disconnect.html
+
+* dom/ContainerNodeAlgorithms.cpp:
+(WebCore::disconnectSubframes):
+
+LayoutTests:
+
+* fast/shadow-dom/resources/start.html: Added.
+* fast/shadow-dom/shadow-at-root-during-disconnect-expected.txt: Added.
+* fast/shadow-dom/shadow-at-root-during-disconnect.html: Added.
+
+

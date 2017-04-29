@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r118592 | inferno@chromium.org | 2012-05-26 02:28:23 +0200 (Sa, 26. Mai 2012) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/tables/table-section-overflow-clip-crash-expected.txt
+   A /trunk/LayoutTests/tables/table-section-overflow-clip-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+
+Crash in RenderTableSection::paintCell.
+https://bugs.webkit.org/show_bug.cgi?id=87445
+
+Reviewed by Eric Seidel and Julien Chaffraix.
+
+Source/WebCore:
+
+Fix the crash by preventing table parts from being set
+as layout root. This prevents us from accessing removed
+table cells which can happen if RenderTableSection::layout
+is called directly without calling RenderTable::layout first
+(in case of cell recalc).
+
+Add ASSERTs to RenderTableSection::layout to prevent
+layout to happen when we are already pending cell recalc
+or our table is pending section recalc. In those cases,
+RenderTable::layout should be called first to relayout
+the entire table.
+
+Test: tables/table-section-overflow-clip-crash.html
+
+* rendering/RenderObject.cpp:
+(WebCore::objectIsRelayoutBoundary):
+* rendering/RenderTableSection.cpp:
+(WebCore::RenderTableSection::layout):
+
+LayoutTests:
+
+* tables/table-section-overflow-clip-crash-expected.txt: Added.
+* tables/table-section-overflow-clip-crash.html: Added.
+
+

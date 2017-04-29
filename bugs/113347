@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r146954 | benjamin@webkit.org | 2013-03-27 01:59:26 +0100 (Mi, 27. Mär 2013) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/WidthCache.h
+
+Regression (r145601): out-of-bounds read in line breaking / new width cache
+https://bugs.webkit.org/show_bug.cgi?id=113347
+
+Patch by Benjamin Poulain <bpoulain@apple.com> on 2013-03-26
+Reviewed by Geoffrey Garen.
+
+The values zero and 0xffff have special values with the default HashTraits. Those values
+are also valid values for UChar.
+
+To avoid any table inconsitency, switch from UChar to uint32_t as the key type for
+the WidthCache's single char map. The traits is also changed to allow zero as a normal
+value.
+
+This makes no space or time change over the previous code because:
+-The struct KeyValuePair was already 64bits due to the ABI alignment restrictions on floats.
+-The two hashes take the same number of instructions.
+
+* platform/graphics/WidthCache.h:
+(WidthCache):
+
+

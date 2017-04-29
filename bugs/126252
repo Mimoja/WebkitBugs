@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r161244 | mmaxfield@apple.com | 2014-01-03 02:32:18 +0100 (Fr, 03. Jan 2014) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink-crash-many-gaps-expected.txt
+   A /trunk/LayoutTests/fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink-crash-many-gaps.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineTextBox.cpp
+
+Crash in WebCore::translateIntersectionPointsToSkipInkBoundaries
+https://bugs.webkit.org/show_bug.cgi?id=126252
+
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore:
+
+lastIntermediate was a iterator pointing into a Vector, which was being re-used
+even while appending to the Vector. If any of the append operators triggered
+a realloc, the iterator would point to the old free'ed memory.
+
+Test: fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink-crash-many-gaps.html
+
+* rendering/InlineTextBox.cpp:
+(WebCore::translateIntersectionPointsToSkipInkBoundaries):
+
+LayoutTests:
+
+This test causes intermediateTuples, a Vector of tuples of floats, to have enough
+entries to cause a realloc. In my tests, the realloc seems to always allocate the
+next area of memory (without unmapping any old pages), so this test only crashes
+if guardMalloc is used.
+
+* fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink-crash-many-gaps-expected.txt: Added.
+* fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink-crash-many-gaps.html: Added.
+

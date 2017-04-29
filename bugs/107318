@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r140575 | tsepez@chromium.org | 2013-01-23 21:51:48 +0100 (Mi, 23. Jan 2013) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/ScriptWrappable.h
+
+[chromium] harden ScriptWrappable::m_wrapper against tampering
+https://bugs.webkit.org/show_bug.cgi?id=107318
+
+Reviewed by Adam Barth.
+
+Patch is correct if existing tests past without crashing.
+
+* bindings/v8/ScriptWrappable.h:
+(WebCore::ScriptWrappable::ScriptWrappable):
+(WebCore::ScriptWrappable::wrapper):
+(WebCore::ScriptWrappable::setWrapper):
+(WebCore::ScriptWrappable::clearWrapper):
+(WebCore::ScriptWrappable::disposeWrapper):
+(WebCore::ScriptWrappable::reportMemoryUsage):
+(ScriptWrappable):
+(WebCore::ScriptWrappable::maskOrUnmaskPointer):
+
+

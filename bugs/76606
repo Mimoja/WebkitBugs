@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r105549 | timothy_horton@apple.com | 2012-01-21 00:23:56 +0100 (Sa, 21. Jan 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/crash-inline-container-client-expected.txt
+   A /trunk/LayoutTests/svg/custom/crash-inline-container-client.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGInline.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGInline.h
+
+Crash in RenderSVGResourceContainer::markAllClientsForInvalidation
+https://bugs.webkit.org/show_bug.cgi?id=76606
+<rdar://problem/10720970>
+
+Reviewed by Dirk Schulze.
+
+Notify SVGResourcesCache and superclass when RenderSVGInline is about
+to be destroyed, preventing a crash.
+
+Test: svg/custom/crash-inline-container-client.html
+
+* rendering/svg/RenderSVGInline.cpp:
+(WebCore::RenderSVGInline::willBeDestroyed):
+* rendering/svg/RenderSVGInline.h:
+
+* svg/custom/crash-inline-container-client-expected.txt: Added.
+* svg/custom/crash-inline-container-client.html: Added.
+
+

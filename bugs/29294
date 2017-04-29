@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r48725 | beidson@apple.com | 2009-09-24 20:18:47 +0200 (Do, 24. Sep 2009) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/FTPDirectoryParser.cpp
+
+Merge changes from Mozilla's FTP directory parser.
+<rdar://problem/7227620> and https://bugs.webkit.org/show_bug.cgi?id=29294
+
+Reviewed by Sam Weinig.
+
+FTP layout tests not possible at this time.
+https://bugs.webkit.org/show_bug.cgi?id=29719 tracks making them possible.
+
+* loader/FTPDirectoryParser.cpp:
+(WebCore::ParsingFailed):
+(WebCore::parseOneFTPLine):
+
+
+

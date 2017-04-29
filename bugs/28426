@@ -1,0 +1,50 @@
+------------------------------------------------------------------------
+r53291 | senorblanco@chromium.org | 2010-01-14 23:35:33 +0100 (Do, 14. Jan 2010) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/gradients/crash-on-tr-expected.txt
+   A /trunk/LayoutTests/fast/gradients/crash-on-tr.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderBox.cpp
+   M /trunk/WebCore/rendering/RenderBox.h
+   M /trunk/WebCore/rendering/RenderBoxModelObject.cpp
+   M /trunk/WebCore/rendering/RenderBoxModelObject.h
+   M /trunk/WebCore/rendering/RenderTableCell.cpp
+
+WebCore: Fix for crash with gradient on table cell.  Pass the correct
+background object down to
+RenderBoxModelObject::paintFillLayerExtended().  This also allowed a
+rework of the fix to bug 18445 by passing the correct RenderObject
+from RenderBox::paintRootBoxDecorations() down to
+RenderBoxModelObject::paintFillLayerExtended().
+https://bugs.webkit.org/show_bug.cgi?id=28426
+
+Reviewed by mitz@webkit.org.
+
+Covered by new layout test:  LayoutTests/fast/gradients/crash-on-tr.html
+
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::paintFillLayers):
+(WebCore::RenderBox::paintFillLayer):
+* rendering/RenderBox.h:
+Plumb through the correct background RenderObject.
+* rendering/RenderBoxModelObject.cpp:
+(WebCore::RenderBoxModelObject::paintFillLayerExtended):
+Use the passed-in background RenderObject (if present) when painting background images.  Remove the previous fix for bug 18445.
+* rendering/RenderBoxModelObject.h:
+Plumb through the correct background RenderObject.
+* rendering/RenderTableCell.cpp:
+Pass in the correct backgroundObject to paintFillLayers().
+
+(WebCore::RenderTableCell::paintBackgroundsBehindCell):
+
+LayoutTests: New layout test added to exercise fix for bug
+http://bugs.webkit.org/show_bug.cgi?id=28426 
+
+Reviewed by mitz@webkit.org.
+
+* fast/gradients/crash-on-tr-expected.txt: Added.
+* fast/gradients/crash-on-tr.html: Added.
+
+
+

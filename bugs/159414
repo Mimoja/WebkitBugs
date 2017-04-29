@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r203274 | pvollan@apple.com | 2016-07-15 14:38:37 +0200 (Fr, 15. Jul 2016) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/win/DIBPixelData.cpp
+   M /trunk/Source/WebCore/platform/graphics/win/DIBPixelData.h
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/PlatformWin.cmake
+   A /trunk/Tools/TestWebKitAPI/Tests/WebCore/win/DIBPixelData.cpp
+
+Uninitialized variable in DIBPixelData can cause a dangerous memory write
+https://bugs.webkit.org/show_bug.cgi?id=159414
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+Initialize local BITMAP variable, in case the ::GetObject function that should initialize it
+fails to do so, because the bitmap handle is invalid.
+
+Tests: Tools/TestWebKitAPI/Tests/WebCore/win/DIBPixelData.cpp
+
+* platform/graphics/win/DIBPixelData.cpp:
+(WebCore::DIBPixelData::initialize): Initialize local variable.
+(WebCore::DIBPixelData::setRGBABitmapAlpha): Return early if we have no bitmap.
+* platform/graphics/win/DIBPixelData.h: Link fix.
+
+Tools:
+
+Add test to check that DIBPixelData::setRGBABitmapAlpha does not cause a crash
+when the HDC parameter is invalid.
+
+* TestWebKitAPI/PlatformWin.cmake:
+* TestWebKitAPI/Tests/WebCore/win/DIBPixelData.cpp: Added.
+(TestWebKitAPI::TEST):
+
+

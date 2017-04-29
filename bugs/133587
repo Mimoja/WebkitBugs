@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r170291 | stavila@adobe.com | 2014-06-23 16:59:48 +0200 (Mo, 23. Jun 2014) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockFlow.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+REGRESSION (r168046): Incorrect handling of object information in WebCore::RenderFlowThread::removeLineRegionInfo
+https://bugs.webkit.org/show_bug.cgi?id=133587
+
+Reviewed by Antti Koivisto.
+
+When an object flowed in multicol is moved from in-flow positioning to out-of-flow positioning,
+its information must be removed from the flowthread prior to the change being made.
+Otherwise, the flow thread will no longer be its containing block and a reference to it
+will not be possible to obtain.
+
+No new tests can be added because the code still hits in an unrelated assertion followed by a null dereference.
+The issue was discussed with Antti Koivisto and we decided its better to fix this problem first and
+handle the following issue in a separate bug.
+
+* rendering/RenderBlockFlow.cpp:
+(WebCore::RenderBlockFlow::styleWillChange):
+* rendering/RenderObject.h:
+(WebCore::RenderObject::flowThreadContainingBlock):
+
+

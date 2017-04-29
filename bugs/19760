@@ -1,0 +1,52 @@
+------------------------------------------------------------------------
+r36022 | abarth@webkit.org | 2008-09-02 06:26:15 +0200 (Di, 02. Sep 2008) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/WebCore.base.exp
+   M /trunk/WebCore/dom/Document.cpp
+   M /trunk/WebCore/loader/FrameLoader.cpp
+   M /trunk/WebCore/loader/FrameLoader.h
+   M /trunk/WebCore/platform/SecurityOrigin.cpp
+   M /trunk/WebCore/platform/SecurityOrigin.h
+   M /trunk/WebKit/mac/ChangeLog
+   M /trunk/WebKit/mac/Misc/WebKitVersionChecks.h
+   M /trunk/WebKit/mac/WebView/WebView.mm
+
+WebCore:
+
+2008-09-01  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19760
+
+        Make granting LoadLocalResources conditional on a policy.
+
+        * WebCore.base.exp:
+        * dom/Document.cpp:
+        (WebCore::Document::initSecurityContext):
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::setLocalLoadPolicy):
+        (WebCore::FrameLoader::restrictAccessToLocal):
+        * loader/FrameLoader.h:
+        (WebCore::FrameLoader::):
+        * platform/SecurityOrigin.cpp:
+        (WebCore::SecurityOrigin::grantLoadLocalResources):
+        * platform/SecurityOrigin.h:
+
+WebKit/mac:
+
+2008-09-01  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19760
+
+        Add a linked-on-or-after check to prevent substitute data from loading
+        local resources on newer users of WebKit.
+
+        * Misc/WebKitVersionChecks.h:
+        * WebView/WebView.mm:
+        (-[WebView _commonInitializationWithFrameName:groupName:]):
+
+

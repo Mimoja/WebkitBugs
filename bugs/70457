@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r98561 | commit-queue@webkit.org | 2011-10-27 15:22:56 +0200 (Do, 27. Okt 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/nested-first-letter-with-float-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/nested-first-letter-with-float-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash due to nested first-letter selectors
+https://bugs.webkit.org/show_bug.cgi?id=70457
+
+Source/WebCore:
+
+Now only the lowest-level first-letter pseudostyle will be applied to
+a given piece of text. Previously the last renderer to have layout
+done would have its pseudostyle applied, no matter where it was in the
+tree.
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-10-27
+Reviewed by David Hyatt.
+
+* renderer/RenderBlock.cpp:
+(WebCore::RenderBlock::updateFirstLetter): Use the pseudostyle from
+the lowest level node to have one
+
+LayoutTests:
+
+Adding layout test for nested first-letter pseudostyles causing a crash.
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-10-27
+Reviewed by David Hyatt.
+
+* fast/css/nested-first-letter-with-float-crash.html: Added
+* fast/css/nested-first-letter-with-float-crash-expected.txt: Added
+

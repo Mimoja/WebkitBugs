@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r66847 | jschuh@chromium.org | 2010-09-06 23:00:51 +0200 (Mo, 06. Sep 2010) | 33 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/mac-snowleopard/svg
+   A /trunk/LayoutTests/platform/mac-snowleopard/svg/custom
+   A /trunk/LayoutTests/platform/mac-snowleopard/svg/custom/use-invalid-pattern-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-invalid-pattern.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderSVGResourceContainer.cpp
+   M /trunk/WebCore/svg/SVGDocumentExtensions.cpp
+   M /trunk/WebCore/svg/SVGDocumentExtensions.h
+   M /trunk/WebCore/svg/SVGElement.cpp
+
+2010-09-06  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Make SVG PendingResources use RefPtr
+        https://bugs.webkit.org/show_bug.cgi?id=43587
+
+        Convert SVGDocumentExtensions::m_pendingResources to use a RefPtr for 
+        pending elements instead of a raw pointer so that pending elements can't
+        be freed prematurely.
+
+        Test: svg/custom/use-invalid-pattern.svg
+
+        * rendering/RenderSVGResourceContainer.cpp:
+        (WebCore::RenderSVGResourceContainer::registerResource):
+        * svg/SVGDocumentExtensions.cpp:
+        (WebCore::SVGDocumentExtensions::addPendingResource):
+        (WebCore::SVGDocumentExtensions::removePendingResource):
+        * svg/SVGDocumentExtensions.h:
+        * svg/SVGElement.cpp:
+        (WebCore::SVGElement::insertedIntoDocument):
+2010-09-06  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Test that an invalid pending resource pattern doesn't crash
+        https://bugs.webkit.org/show_bug.cgi?id=43587
+
+        * platform/mac-snowleopard/svg: Added.
+        * platform/mac-snowleopard/svg/custom: Added.
+        * platform/mac-snowleopard/svg/custom/use-invalid-pattern-expected.txt: Added.
+        * svg/custom/use-invalid-pattern.svg: Added.
+
+

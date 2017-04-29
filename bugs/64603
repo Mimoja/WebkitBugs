@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r91386 | tony@chromium.org | 2011-07-20 21:01:55 +0200 (Mi, 20. Jul 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/flexbox/horizontal-box-float-crash-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/horizontal-box-float-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderBox.h
+
+Stale pointer due to floats not removed (flexible box display)
+https://bugs.webkit.org/show_bug.cgi?id=64603
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Flexbox items should avoid floats.
+
+Test: fast/flexbox/horizontal-box-float-crash.html
+
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::avoidsFloats):
+* rendering/RenderBox.h:
+(WebCore::RenderBox::isDeprecatedFlexItem):
+
+LayoutTests:
+
+* fast/flexbox/horizontal-box-float-crash-expected.txt: Added.
+* fast/flexbox/horizontal-box-float-crash.html: Added.
+
+

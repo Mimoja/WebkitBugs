@@ -1,0 +1,65 @@
+------------------------------------------------------------------------
+r146129 | wangxianzhu@chromium.org | 2013-03-18 23:07:11 +0100 (Mo, 18. Mär 2013) | 44 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/resources/SpaceOnly.otf
+   A /trunk/LayoutTests/svg/css/font-face-variant-crash-expected.txt
+   A /trunk/LayoutTests/svg/css/font-face-variant-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/SimpleFontData.cpp
+   M /trunk/Source/WebCore/platform/graphics/SimpleFontData.h
+   M /trunk/Source/WebCore/platform/graphics/blackberry/SimpleFontDataBlackBerry.cpp
+   M /trunk/Source/WebCore/platform/graphics/chromium/SimpleFontDataChromiumWin.cpp
+   M /trunk/Source/WebCore/platform/graphics/freetype/SimpleFontDataFreeType.cpp
+   M /trunk/Source/WebCore/platform/graphics/mac/SimpleFontDataMac.mm
+   M /trunk/Source/WebCore/platform/graphics/qt/SimpleFontDataQt.cpp
+   M /trunk/Source/WebCore/platform/graphics/skia/SimpleFontDataSkia.cpp
+   M /trunk/Source/WebCore/platform/graphics/win/SimpleFontDataWin.cpp
+   M /trunk/Source/WebCore/platform/graphics/wince/SimpleFontDataWinCE.cpp
+   M /trunk/Source/WebCore/platform/graphics/wx/SimpleFontDataWx.cpp
+
+Variant of non-primary fell-back SVGFont causes crash.
+https://bugs.webkit.org/show_bug.cgi?id=112367
+
+Reviewed by Stephen Chenney.
+
+Source/WebCore:
+
+Don't go to PlatformFontData path for SimpleFontData::createScaledFontData()
+for SVG fonts.
+
+Test: svg/css/font-face-variant-crash.html
+
+* platform/graphics/SimpleFontData.cpp:
+(WebCore::SimpleFontData::~SimpleFontData):
+(WebCore::SimpleFontData::createScaledFontData): Don't go to PlatformFontData path for SVG fonts.
+(WebCore):
+* platform/graphics/SimpleFontData.h:
+(SimpleFontData): Added createScaledFontData and renamed the original createScaledFontData to platformCreateScaledFontData.
+                  BTW, Removed unreferenced commonInit.
+* platform/graphics/blackberry/SimpleFontDataBlackBerry.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Renamed from createScaledFontData.
+* platform/graphics/chromium/SimpleFontDataChromiumWin.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/freetype/SimpleFontDataFreeType.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/mac/SimpleFontDataMac.mm:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/qt/SimpleFontDataQt.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/skia/SimpleFontDataSkia.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/win/SimpleFontDataWin.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/wince/SimpleFontDataWinCE.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+* platform/graphics/wx/SimpleFontDataWx.cpp:
+(WebCore::SimpleFontData::platformCreateScaledFontData): Ditto.
+
+LayoutTests:
+
+* resources/SpaceOnly.otf: Added. A font containing only the space glyph for testing font fallback.
+* svg/css/font-face-variant-crash-expected.txt: Added.
+* svg/css/font-face-variant-crash.html: Added.
+
+

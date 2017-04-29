@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r158719 | rniwa@webkit.org | 2013-11-06 06:21:42 +0100 (Mi, 06. Nov 2013) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/IndentOutdentCommand.cpp
+
+Protect DOM nodes in IndentOutdentCommand::tryIndentingAsListItem()
+https://bugs.webkit.org/show_bug.cgi?id=123861
+
+Reviewed by Benjamin Poulain.
+
+Merge https://chromium.googlesource.com/chromium/blink/+/297442eb539a2b764fdad323de79099a70179186 partially.
+
+* editing/IndentOutdentCommand.cpp:
+(WebCore::IndentOutdentCommand::tryIndentingAsListItem): Make selectedListItem, previousList, and nextList
+RefPtr since they're are used after calling insertNodeBefore.
+
+

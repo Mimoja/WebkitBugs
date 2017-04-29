@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r147504 | leviw@chromium.org | 2013-04-03 01:10:49 +0200 (Mi, 03. Apr 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/international/combine-at-line-break-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/international/combine-at-line-break-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/BidiRun.h
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+
+Source/WebCore: InlineIterator needs to be updated when RenderCombineText shrinks at a line break
+https://bugs.webkit.org/show_bug.cgi?id=113733
+
+Reviewed by Emil A Eklund.
+
+Update stale InlineIterators that point beyond the end of a RenderCombineText that's
+shrunk when RenderCombineText::combineText() is called.
+
+Test: fast/text/international/combine-at-line-break-crash.html
+
+* rendering/BidiRun.h:
+(WebCore::BidiRun::BidiRun): Adding an assertion that runs are created within
+the bounds of their associated RenderText.
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::iteratorIsBeyondEndOfRenderCombineText): Added.
+(WebCore::RenderBlock::LineBreaker::nextSegmentBreak): Update stale iterators.
+
+LayoutTests: InlineIterator needs to be updated when RenderCombineText shrinks at a line break
+https://bugs.webkit.org/show_bug.cgi?id=113732
+
+Reviewed by Emil A Eklund.
+
+* fast/text/international/combine-at-line-break-crash-expected.txt: Added.
+* fast/text/international/combine-at-line-break-crash.html: Added.
+
+

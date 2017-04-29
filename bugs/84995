@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r116653 | inferno@chromium.org | 2012-05-10 18:44:26 +0200 (Do, 10. Mai 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/inserting/insert-paragraph-seperator-crash-expected.txt
+   A /trunk/LayoutTests/editing/inserting/insert-paragraph-seperator-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/DeleteSelectionCommand.cpp
+   M /trunk/Source/WebCore/editing/IndentOutdentCommand.cpp
+   M /trunk/Source/WebCore/editing/InsertParagraphSeparatorCommand.cpp
+   M /trunk/Source/WebCore/editing/htmlediting.cpp
+   M /trunk/Source/WebCore/editing/htmlediting.h
+
+Crash in InsertParagraphSeparatorCommand::doApply.
+https://bugs.webkit.org/show_bug.cgi?id=84995
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Test: editing/inserting/insert-paragraph-seperator-crash.html
+
+* editing/DeleteSelectionCommand.cpp:
+(WebCore::DeleteSelectionCommand::mergeParagraphs): no need of static cast, since
+type of enclosingBlock returned is already Element*.
+* editing/IndentOutdentCommand.cpp:
+(WebCore::IndentOutdentCommand::tryIndentingAsListItem): no need of static cast, since
+type of enclosingBlock returned is already Element*.
+* editing/InsertParagraphSeparatorCommand.cpp:
+(WebCore::InsertParagraphSeparatorCommand::doApply): RefPtr startBlock to guard against
+mutation events.
+* editing/htmlediting.cpp:
+(WebCore::enclosingBlock): make sure type of enclosingNode is an element before doing
+the static cast. This was already failing in a couple of layout tests. Also, isBlock
+check already exists in the function call to enclosingNodeOfType, so don't need it
+again on enclosingNode's renderer.
+* editing/htmlediting.h:
+(WebCore):
+
+LayoutTests:
+
+* editing/inserting/insert-paragraph-seperator-crash-expected.txt: Added.
+* editing/inserting/insert-paragraph-seperator-crash.html: Added.
+

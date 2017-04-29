@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r55783 | dglazkov@chromium.org | 2010-03-10 17:56:35 +0100 (Mi, 10. Mär 2010) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Node/mutation-blur-expected.txt
+   A /trunk/LayoutTests/fast/dom/Node/mutation-blur.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/ContainerNode.cpp
+
+Add one more parent check during node removal.
+https://bugs.webkit.org/show_bug.cgi?id=35818
+
+Reviewed by Sam Weinig.
+
+WebCore:
+
+Test: fast/dom/Node/mutation-blur.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::removeChild): Added check.
+
+LayoutTests:
+
+* fast/dom/Node/mutation-blur-expected.txt: Added.
+* fast/dom/Node/mutation-blur.html: Added.
+

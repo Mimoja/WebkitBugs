@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r98796 | rniwa@webkit.org | 2011-10-29 08:31:16 +0200 (Sa, 29. Okt 2011) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/ReplaceNodeWithSpanCommand.cpp
+
+Potential crash in ReplaceNodeWithSpanCommand
+https://bugs.webkit.org/show_bug.cgi?id=71145
+
+Reviewed by Ojan Vafai.
+
+Fix a potential crash without tests because we don't have a reduction.
+
+* editing/ReplaceNodeWithSpanCommand.cpp:
+(WebCore::swapInNodePreservingAttributesAndChildren):
+
+

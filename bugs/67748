@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r94820 | ap@apple.com | 2011-09-09 01:35:09 +0200 (Fr, 09. Sep 2011) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/ScriptControllerBase.cpp
+
+        REGRESSION (r66874): Missing RefPtr in ScriptController
+        https://bugs.webkit.org/show_bug.cgi?id=67748
+
+        Reviewed by Adam Barth.
+
+        * bindings/ScriptControllerBase.cpp: (WebCore::ScriptController::executeScript):
+
+
+

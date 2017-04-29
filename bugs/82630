@@ -1,0 +1,94 @@
+------------------------------------------------------------------------
+r113581 | inferno@chromium.org | 2012-04-09 18:03:46 +0200 (Mo, 09. Apr 2012) | 62 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/table/cell-in-row-before-misnested-text-crash-css-expected.txt
+   M /trunk/LayoutTests/fast/table/cell-in-row-before-misnested-text-crash-expected.txt
+   M /trunk/LayoutTests/fast/table/row-in-tbody-before-misnested-text-crash-css-expected.txt
+   M /trunk/LayoutTests/fast/table/row-in-tbody-before-misnested-text-crash-expected.txt
+   A /trunk/LayoutTests/fast/table/table-row-split2-expected.png
+   A /trunk/LayoutTests/fast/table/table-row-split2-expected.txt
+   A /trunk/LayoutTests/fast/table/table-row-split2.html
+   A /trunk/LayoutTests/fast/table/table-section-split2-expected.png
+   A /trunk/LayoutTests/fast/table/table-section-split2-expected.txt
+   A /trunk/LayoutTests/fast/table/table-section-split2.html
+   A /trunk/LayoutTests/fast/table/table-split-expected.png
+   A /trunk/LayoutTests/fast/table/table-split-expected.txt
+   A /trunk/LayoutTests/fast/table/table-split.html
+   A /trunk/LayoutTests/fast/table/table-split2-expected.png
+   A /trunk/LayoutTests/fast/table/table-split2-expected.txt
+   A /trunk/LayoutTests/fast/table/table-split2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderBox.h
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyBase.cpp
+   M /trunk/Source/WebCore/rendering/RenderTable.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableRow.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+
+Incorrect placement of new child to table when before child parent is not |this|.
+https://bugs.webkit.org/show_bug.cgi?id=82630
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Tests: fast/table/table-row-split2.html
+       fast/table/table-section-split2.html
+       fast/table/table-split.html
+       fast/table/table-split2.html
+and tested by layouttests in commits r97180, r108127, and a few others.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::addChildToAnonymousColumnBlocks): function rename, block->box.
+(WebCore::RenderBlock::makeChildrenAnonymousColumnBlocks): ditto.
+(WebCore::RenderBlock::addChildIgnoringAnonymousColumnBlocks): ditto.
+* rendering/RenderBlock.h:
+(RenderBlock):
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::moveChildTo): move these functions from RenderBlock, needs to be
+used in RenderBox::splitAnonymousBoxesAroundChild.
+(WebCore):
+(WebCore::RenderBox::moveChildrenTo): ditto.
+(WebCore::markBoxForRelayoutAfterSplit): helper to mark a block or table part for complete relayout
+after anonymous boxes are split around child.
+(WebCore::RenderBox::splitAnonymousBoxesAroundChild): moved from RenderBlock to be able
+to work with table parts.
+* rendering/RenderBox.h:
+(RenderBox):
+(WebCore::RenderBox::moveChildTo):
+(WebCore::RenderBox::moveAllChildrenTo):
+(WebCore::RenderBox::moveChildrenTo):
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::addChild): no longer need the hack added in r95461.
+* rendering/RenderRubyBase.cpp:
+(WebCore::RenderRubyBase::moveChildren): function rename, block->box.
+* rendering/RenderTable.cpp:
+(WebCore::RenderTable::addChild): Use splitAnonymousBoxesAroundChild function when |beforeChild| != |this|.
+* rendering/RenderTableRow.cpp:
+(WebCore::RenderTableRow::addChild): ditto.
+* rendering/RenderTableSection.cpp:
+(WebCore::RenderTableSection::addChild): ditto.
+
+LayoutTests:
+
+* fast/table/cell-in-row-before-misnested-text-crash-css-expected.txt: rebaseline, corrects layout.
+* fast/table/cell-in-row-before-misnested-text-crash-expected.txt: rebaseline, corrects layout.
+* fast/table/row-in-tbody-before-misnested-text-crash-css-expected.txt: rebaseline, corrects layout.
+* fast/table/row-in-tbody-before-misnested-text-crash-expected.txt: rebaseline, corrects layout.
+* fast/table/table-row-split2-expected.png: Added.
+* fast/table/table-row-split2-expected.txt: Added.
+* fast/table/table-row-split2.html: Added.
+* fast/table/table-section-split2-expected.png: Added.
+* fast/table/table-section-split2-expected.txt: Added.
+* fast/table/table-section-split2.html: Added.
+* fast/table/table-split-expected.png: Added.
+* fast/table/table-split-expected.txt: Added.
+* fast/table/table-split.html: Added.
+* fast/table/table-split2-expected.png: Added.
+* fast/table/table-split2-expected.txt: Added.
+* fast/table/table-split2.html: Added.
+

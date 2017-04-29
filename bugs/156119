@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r199027 | jiewen_tan@apple.com | 2016-04-05 00:28:05 +0200 (Di, 05. Apr 2016) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
+
+Tapping on tabs in webpages caused WK crash at WebKit: WebKit::WebFrame::didReceivePolicyDecision
+https://bugs.webkit.org/show_bug.cgi?id=156119
+<rdar://problem/20732167>
+
+Reviewed by Andy Estes.
+
+Protect the m_frame so that it is present for completion handlers.
+
+* WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp:
+(WebKit::WebFrameLoaderClient::dispatchDecidePolicyForResponse):
+(WebKit::WebFrameLoaderClient::dispatchDecidePolicyForNavigationAction):
+

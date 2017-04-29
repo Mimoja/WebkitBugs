@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r170010 | stavila@adobe.com | 2014-06-16 18:33:27 +0200 (Mo, 16. Jun 2014) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/newmulticol/spanner-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/newmulticol/spanner-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderMultiColumnFlowThread.cpp
+
+REGRESSION (r168046): Incorrect layout for multicol spanners when moving from one thread to another
+https://bugs.webkit.org/show_bug.cgi?id=133589
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+When a spanner is moved from a multicol thread to another, its placeholder
+must be properly repositioned.
+
+Test: fast/multicol/newmulticol/spanner-crash.html
+
+* rendering/RenderMultiColumnFlowThread.cpp:
+(WebCore::RenderMultiColumnFlowThread::flowThreadDescendantInserted):
+
+LayoutTests:
+* fast/multicol/newmulticol/spanner-crash-expected.txt: Added.
+* fast/multicol/newmulticol/spanner-crash.html: Added.
+
+

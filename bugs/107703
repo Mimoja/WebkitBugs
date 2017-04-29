@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r140848 | inferno@chromium.org | 2013-01-25 19:45:23 +0100 (Fr, 25. Jan 2013) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/gradients/parse-radial-gradient-crash-expected.txt
+   A /trunk/LayoutTests/fast/gradients/parse-radial-gradient-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+
+Regression(r139836): Crash in WTF::equalIgnoringCase
+https://bugs.webkit.org/show_bug.cgi?id=107703
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Check |a| is a CSS_IDENT before considering it a string and
+calling equalIgnoringCase on it. To avoid future mistakes like
+this, add a function override for equalIgnoringCase that takes
+CSSParserValue as a parameter and ASSERTs if that CSSParserValue
+is not a CSS_STRING/CSS_IDENT.
+
+Test: fast/gradients/parse-radial-gradient-crash.html
+
+* css/CSSParser.cpp:
+(WebCore):
+(WebCore::equalIgnoringCase):
+(WebCore::CSSParser::parseAnimationName):
+(WebCore::CSSParser::parseAnimationProperty):
+(WebCore::CSSParser::parseDashboardRegions):
+(WebCore::parseDeprecatedGradientPoint):
+(WebCore::CSSParser::parseDeprecatedGradient):
+(WebCore::CSSParser::parseLinearGradient):
+(WebCore::CSSParser::parseRadialGradient):
+
+LayoutTests:
+
+* fast/gradients/parse-radial-gradient-crash-expected.txt: Added.
+* fast/gradients/parse-radial-gradient-crash.html: Added.
+
+

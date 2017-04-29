@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r214309 | beidson@apple.com | 2017-03-23 20:06:31 +0100 (Do, 23. Mär 2017) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/storage/websql/private-browsing-open-disabled-expected.txt
+   A /trunk/LayoutTests/storage/websql/private-browsing-open-disabled.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webdatabase/DatabaseManager.cpp
+   M /trunk/Source/WebCore/Modules/webdatabase/DatabaseManager.h
+
+WebSQL databases should not openable in private browsing.
+<rdar://problem/30383335> and https://bugs.webkit.org/show_bug.cgi?id=170013
+
+Reviewed by Alex Christensen.
+
+Source/WebCore:
+
+Test: storage/websql/private-browsing-open-disabled.html
+
+* Modules/webdatabase/DatabaseManager.cpp:
+(WebCore::DatabaseManager::openDatabaseBackend):
+(WebCore::DatabaseManager::tryToOpenDatabaseBackend): Throw an exception if in private browsing.
+* Modules/webdatabase/DatabaseManager.h:
+
+LayoutTests:
+
+* storage/websql/private-browsing-open-disabled-expected.txt: Added.
+* storage/websql/private-browsing-open-disabled.html: Added.
+

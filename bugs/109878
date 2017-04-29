@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r143045 | eae@chromium.org | 2013-02-15 22:35:57 +0100 (Fr, 15. Feb 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/colspan-huge-number-expected.txt
+   A /trunk/LayoutTests/fast/table/colspan-huge-number.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTableCell.cpp
+
+Clamp span value in RenderTableCell::parse[Col|Row]SpanFromDOM
+https://bugs.webkit.org/show_bug.cgi?id=109878
+
+Source/WebCore: 
+
+Reviewed by Abhishek Arya.
+
+Test: fast/table/colspan-huge-number.html
+        
+Clamp colspan and rowspan values to their respective maximum
+supported values.
+
+* rendering/RenderTableCell.cpp:
+(WebCore::RenderTableCell::parseColSpanFromDOM):
+(WebCore::RenderTableCell::parseRowSpanFromDOM):
+
+LayoutTests: 
+
+Reviewed by Abhishek Arya.
+        
+Add test for handling of very large colspan value.
+
+* fast/table/colspan-huge-number-expected.txt: Added.
+* fast/table/colspan-huge-number.html: Added.
+
+

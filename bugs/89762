@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r121031 | inferno@chromium.org | 2012-06-22 18:48:49 +0200 (Fr, 22. Jun 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/pasteboard/drop-text-events-sideeffect-crash-expected.txt
+   A /trunk/LayoutTests/editing/pasteboard/drop-text-events-sideeffect-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DragController.cpp
+
+Crash in DragController::concludeEditDrag.
+https://bugs.webkit.org/show_bug.cgi?id=89762
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+RefPtr the innerFrame since it can get destroyed due to mutation
+event fired in DragController::dispatchTextInputEventFor().
+
+Test: editing/pasteboard/drop-text-events-sideeffect-crash.html
+
+* page/DragController.cpp:
+(WebCore::DragController::concludeEditDrag):
+
+LayoutTests:
+
+* editing/pasteboard/drop-text-events-sideeffect-crash-expected.txt: Added.
+* editing/pasteboard/drop-text-events-sideeffect-crash.html: Added.
+
+

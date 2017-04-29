@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r107519 | inferno@chromium.org | 2012-02-13 02:59:59 +0100 (Mo, 13. Feb 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/node-move-to-new-document-crash-main-expected.txt
+   A /trunk/LayoutTests/fast/dom/node-move-to-new-document-crash-main.html
+   A /trunk/LayoutTests/fast/dom/resources/node-move-to-new-document-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/TreeScopeAdopter.cpp
+
+Regression (r104528): Crash when moving nodes across documents.
+https://bugs.webkit.org/show_bug.cgi?id=78432
+
+Reviewed by Hajime Morita.
+
+Source/WebCore:
+
+Test: fast/dom/node-move-to-new-document-crash-main.html
+
+* dom/TreeScopeAdopter.cpp:
+(WebCore::TreeScopeAdopter::moveTreeToNewScope):
+(WebCore::TreeScopeAdopter::moveTreeToNewDocument):
+(WebCore::TreeScopeAdopter::moveNodeToNewDocument):
+
+LayoutTests:
+
+* fast/dom/node-move-to-new-document-crash-main-expected.txt: Added.
+* fast/dom/node-move-to-new-document-crash-main.html: Added.
+* fast/dom/resources/node-move-to-new-document-crash.svg: Added.
+
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r96868 | inferno@chromium.org | 2011-10-07 00:55:20 +0200 (Fr, 07. Okt 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/selection-plugin-clear-crash-expected.txt
+   A /trunk/LayoutTests/editing/selection/selection-plugin-clear-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/VisiblePosition.cpp
+
+Crash in VisiblePosition::canonicalPosition.
+https://bugs.webkit.org/show_bug.cgi?id=69568
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore: 
+
+Move the position's containerNode calculation after layout is
+complete(in updateLayoutIgnorePendingStylesheets).        
+
+Test: editing/selection/selection-plugin-clear-crash.html
+
+* editing/VisiblePosition.cpp:
+(WebCore::VisiblePosition::canonicalPosition):
+
+LayoutTests: 
+
+* editing/selection/selection-plugin-clear-crash-expected.txt: Added.
+* editing/selection/selection-plugin-clear-crash.html: Added.
+
+

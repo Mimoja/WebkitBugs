@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r102089 | commit-queue@webkit.org | 2011-12-06 05:46:01 +0100 (Di, 06. Dez 2011) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/foreign-content-crash-expected.txt
+   A /trunk/LayoutTests/fast/parser/foreign-content-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+
+Heap-buffer-overflow in WebCore::HTMLTreeBuilder::processEndTag
+https://bugs.webkit.org/show_bug.cgi?id=73765
+
+Patch by Florin Malita <fmalita@google.com> on 2011-12-05
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/parser/foreign-content-crash.html
+
+Use m_tree.currentNode() instead of m_tree.currentElement() as the top node is not always an Element.
+
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::processEndTag):
+
+LayoutTests:
+
+* fast/parser/foreign-content-crash-expected.txt: Added.
+* fast/parser/foreign-content-crash.html: Added.
+

@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r196307 | carlosgc@webkit.org | 2016-02-09 09:23:08 +0100 (Di, 09. Feb 2016) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/Platform/IPC/unix/ConnectionUnix.cpp
+
+possible buffer overrun in Connection::processMessage of Source/WebKit2/Platform/IPC/unix/ConnectionUnix.cpp
+https://bugs.webkit.org/show_bug.cgi?id=153637
+
+Patch by Fujii Hironori <Hironori.Fujii@jp.sony.com> on 2016-02-09
+Reviewed by Carlos Garcia Campos.
+
+* Platform/IPC/unix/ConnectionUnix.cpp:
+(IPC::Connection::processMessage): Fix invalid arguments of memmove.
+

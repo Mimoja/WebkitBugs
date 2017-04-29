@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r170386 | mhahnenberg@apple.com | 2014-06-24 22:29:27 +0200 (Di, 24. Jun 2014) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/GetterSetter.h
+   M /trunk/Source/JavaScriptCore/runtime/JSObject.cpp
+
+REGRESSION (r169703): Invalid cast in JSC::asGetterSetter / JSC::JSObject::defineOwnNonIndexProperty
+https://bugs.webkit.org/show_bug.cgi?id=134046
+
+Reviewed by Filip Pizlo.
+
+* runtime/GetterSetter.h:
+(JSC::asGetterSetter):
+* runtime/JSObject.cpp:
+(JSC::JSObject::defineOwnNonIndexProperty): We need to check for a CustomGetterSetter here as well as
+a normal GetterSetter. If we encounter a CustomGetterSetter, we delete it, create a new normal GetterSetter,
+and insert it like normal. We also need to check for CustomAccessors when checking for unconfigurable properties.
+
+

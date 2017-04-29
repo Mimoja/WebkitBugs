@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r135303 | inferno@chromium.org | 2012-11-20 20:46:29 +0100 (Di, 20. Nov 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/frame-unload-crash2-expected.txt
+   A /trunk/LayoutTests/fast/frames/frame-unload-crash2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+
+Crash in FrameLoader::stopLoading.
+https://bugs.webkit.org/show_bug.cgi?id=99504
+
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Frame can be blown away in unload event handler. Need
+to protect it with a RefPtr.
+
+Test: fast/frames/frame-unload-crash2.html
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::commitProvisionalLoad):
+
+LayoutTests:
+
+* fast/frames/frame-unload-crash2-expected.txt: Added.
+* fast/frames/frame-unload-crash2.html: Added.
+
+

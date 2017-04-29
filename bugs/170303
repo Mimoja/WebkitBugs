@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r214684 | mark.lam@apple.com | 2017-03-31 22:18:05 +0200 (Fr, 31. Mär 2017) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/ArrayPrototype.cpp
+
+Array.prototype.splice() should not be using JSArray::tryCreateForInitializationPrivate().
+https://bugs.webkit.org/show_bug.cgi?id=170303
+<rdar://problem/31358281>
+
+Reviewed by Filip Pizlo.
+
+This is because it needs to call getProperty() later to get the values for
+initializing the array.  getProperty() can execute arbitrary code and potentially
+trigger the GC.  This is not allowed for clients of JSArray::tryCreateForInitializationPrivate().
+
+* runtime/ArrayPrototype.cpp:
+(JSC::arrayProtoFuncSplice):
+(JSC::copySplicedArrayElements): Deleted.
+
+
+

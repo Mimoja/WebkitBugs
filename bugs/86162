@@ -1,0 +1,66 @@
+------------------------------------------------------------------------
+r117007 | commit-queue@webkit.org | 2012-05-15 00:36:03 +0200 (Di, 15. Mai 2012) | 51 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/scrollbars/scrollbar-percent-padding-crash-expected.txt
+   A /trunk/LayoutTests/scrollbars/scrollbar-percent-padding-crash.html
+   A /trunk/LayoutTests/scrollbars/scrollbar-scrollbarparts-repaint-crash-expected.txt
+   A /trunk/LayoutTests/scrollbars/scrollbar-scrollbarparts-repaint-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+   M /trunk/Source/WebCore/rendering/RenderScrollbarPart.cpp
+   M /trunk/Source/WebCore/rendering/RenderScrollbarPart.h
+
+Crash in WebCore::RenderObject::repaint
+https://bugs.webkit.org/show_bug.cgi?id=86162
+
+Patch by Takashi Sakamoto <tasak@google.com> on 2012-05-14
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+As RenderScrollbarPart has no parent renderer, we crash in
+WebCore::RenderBoxModelObject::paddingLeft when paddingLeft has
+percent value, e.g. 5%. However if we set the scrollbar's parent
+renderer to a renderer owning the scrollbar by using setParent method,
+RenderScrollbarPart::styleWillChange will invoke parent renderer's
+repaint. This causes crash in WebCore::RenderObject::repaint if the
+owning renderer is already destroyed.
+To fix the first crash without the second crash, modify
+RenderObject::containingBlock() to check isRenderScrollbarPart or not,
+if parent() is 0.
+If so, use scrollbar's owningRenderer from RenderScrollbarPart.
+
+Test: scrollbars/scrollbar-percent-padding-crash.html
+      scrollbars/scrollbar-scrollbarparts-repaint-crash.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::containingBlock):
+Modifying containingBlock. If parent() is 0 and isRenderScrollbarPart()
+is true, use RenderScrollbarPart's m_scrollbar->owningRenderer()
+instead of parent().
+* rendering/RenderObject.h:
+(WebCore::RenderObject::isRenderScrollbarPart):
+(RenderObject):
+Adding a new method, isRenderScrollbarPart.
+* rendering/RenderScrollbarPart.cpp:
+(WebCore::RenderScrollbarPart::rendererOwningScrollbar):
+(WebCore):
+Adding a new method, scrollbarOwningRenderer to obtain m_scrollar's
+owningRenderer.
+* rendering/RenderScrollbarPart.h:
+(RenderScrollbarPart):
+Removing "friend class RenderScrollbar".
+(WebCore::RenderScrollbarPart::isRenderScrollbarPart):
+(WebCore::toRenderScrollbarPart):
+(WebCore):
+Implementing isRenderScrollbarPart and toRenderScrollbarPart.
+
+LayoutTests:
+
+* scrollbars/scrollbar-scrollbarparts-repaint-crash-expected.txt: Added.
+* scrollbars/scrollbar-scrollbarparts-repaint-crash.html: Added.
+* scrollbars/scrollbar-percent-padding-crash-expected.txt: Added.
+* scrollbars/scrollbar-percent-padding-crash.html: Added.
+

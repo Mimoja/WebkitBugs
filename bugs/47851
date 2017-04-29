@@ -1,0 +1,93 @@
+------------------------------------------------------------------------
+r70198 | simon.fraser@apple.com | 2010-10-21 03:15:07 +0200 (Do, 21. Okt 2010) | 68 Zeilen
+Geänderte Pfade:
+   M /trunk/JavaScriptCore/Android.mk
+   M /trunk/JavaScriptCore/Android.v8.wtf.mk
+   M /trunk/JavaScriptCore/ChangeLog
+   M /trunk/JavaScriptCore/GNUmakefile.am
+   M /trunk/JavaScriptCore/JavaScriptCore.exp
+   M /trunk/JavaScriptCore/JavaScriptCore.gypi
+   M /trunk/JavaScriptCore/JavaScriptCore.vcproj/WTF/WTF.vcproj
+   M /trunk/JavaScriptCore/JavaScriptCore.xcodeproj/project.pbxproj
+   M /trunk/JavaScriptCore/runtime/NumberPrototype.cpp
+   A /trunk/JavaScriptCore/wtf/DecimalNumber.cpp
+   M /trunk/JavaScriptCore/wtf/DecimalNumber.h
+   M /trunk/JavaScriptCore/wtf/dtoa.cpp
+   M /trunk/JavaScriptCore/wtf/dtoa.h
+   M /trunk/JavaScriptCore/wtf/wtf.pri
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/large-value-csstext-expected.txt
+   A /trunk/LayoutTests/fast/css/large-value-csstext.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/css/CSSPrimitiveValue.cpp
+   M /trunk/WebCore/inspector/InspectorValues.cpp
+
+2010-10-19  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        https://bugs.webkit.org/show_bug.cgi?id=47851
+
+        Add methods to DecimalNumber to return the buffer length
+        required for decimal and exponential output.
+
+        Make some of the DecimalNumber code non-inline (no
+        effect on Sunspider), adding DecimalNumber.cpp to various
+        build systems.
+
+        Make some DecimalNumber methods 'const'.
+
+        * Android.mk:
+        * Android.v8.wtf.mk:
+        * GNUmakefile.am:
+        * JavaScriptCore.exp:
+        * JavaScriptCore.gypi:
+        * JavaScriptCore.vcproj/WTF/WTF.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * runtime/NumberPrototype.cpp:
+        (JSC::numberProtoFuncToExponential):
+        (JSC::numberProtoFuncToFixed):
+        (JSC::numberProtoFuncToPrecision):
+        * wtf/DecimalNumber.cpp: Added.
+        (WTF::DecimalNumber::bufferLengthForStringDecimal):
+        (WTF::DecimalNumber::bufferLengthForStringExponential):
+        (WTF::DecimalNumber::toStringDecimal):
+        (WTF::DecimalNumber::toStringExponential):
+        * wtf/DecimalNumber.h:
+        (WTF::DecimalNumber::sign):
+        (WTF::DecimalNumber::exponent):
+        (WTF::DecimalNumber::significand):
+        (WTF::DecimalNumber::precision):
+        * wtf/dtoa.cpp:
+        (WTF::dtoa):
+        * wtf/dtoa.h:
+        * wtf/wtf.pri:
+
+2010-10-19  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        https://bugs.webkit.org/show_bug.cgi?id=47851
+
+        Avoid buffer overflows in CSSPrimitiveValue's use of
+        DecimalNumber, and pass the buffer size in InspectorBasicValue.
+
+        Test: fast/css/large-value-csstext.html
+
+        * css/CSSPrimitiveValue.cpp:
+        (WebCore::formatNumber):
+        * inspector/InspectorValues.cpp:
+        (WebCore::InspectorBasicValue::writeJSON):
+
+2010-10-20  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        https://bugs.webkit.org/show_bug.cgi?id=47851
+
+        Fix buffer overflow in the printing of very large and very small numbers in
+        CSSPrimitiveValues.
+
+        * fast/css/large-value-csstext-expected.txt: Added.
+        * fast/css/large-value-csstext.html: Added.
+

@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r182746 | timothy_horton@apple.com | 2015-04-13 20:38:39 +0200 (Mo, 13. Apr 2015) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/Plugins/PDF/PDFPlugin.mm
+
+javascript: links in inline PDFs shouldn't execute JavaScript in the context of the host website
+https://bugs.webkit.org/show_bug.cgi?id=143642
+<rdar://problem/18259355>
+
+Reviewed by Darin Adler.
+
+* WebProcess/Plugins/PDF/PDFPlugin.mm:
+(WebKit::PDFPlugin::clickedLink):
+Don't follow javascript: URLs.
+
+

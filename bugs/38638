@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r58880 | mnaganov@chromium.org | 2010-05-06 17:31:11 +0200 (Do, 06. Mai 2010) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/v8/custom/V8ConsoleCustom.cpp
+
+2010-05-06  Mikhail Naganov  <mnaganov@chromium.org>
+
+	Reviewed by Pavel Feldman.
+
+	Temporarily disable 'console.profiles' until we can distinguish
+	functions from different frames
+
+	https://bugs.webkit.org/show_bug.cgi?id=38638
+
+	* bindings/v8/custom/V8ConsoleCustom.cpp:
+	(WebCore::V8Console::profilesAccessorGetter):
+

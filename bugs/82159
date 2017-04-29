@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r112051 | inferno@chromium.org | 2012-03-26 08:11:53 +0200 (Mo, 26. Mär 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/plugins/object-onfocus-mutation-crash-expected.txt
+   A /trunk/LayoutTests/plugins/object-onfocus-mutation-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+   M /trunk/Source/WebCore/html/HTMLPlugInImageElement.cpp
+
+Crash in ContainerNode::resumePostAttachCallbacks.
+https://bugs.webkit.org/show_bug.cgi?id=82159
+
+Reviewed by Hajime Morita.
+
+Source/WebCore:
+
+Test: plugins/object-onfocus-mutation-crash.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::resumePostAttachCallbacks): dispatching post attach
+callbacks when our attach depth is 1 can fire mutation events such as onfocus
+which can blow away |this|. Need to protect it with a RefPtr.
+* html/HTMLPlugInImageElement.cpp:
+(WebCore::HTMLPlugInImageElement::attach): add calls to suspend attach callbacks
+until the function completes.
+
+LayoutTests:
+
+* plugins/object-onfocus-mutation-crash-expected.txt: Added.
+* plugins/object-onfocus-mutation-crash.html: Added.
+
+

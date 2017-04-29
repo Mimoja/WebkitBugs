@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r212350 | bfulgham@apple.com | 2017-02-15 08:50:00 +0100 (Mi, 15. Feb 2017) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/plugins/navigation-during-load-embed-expected.txt
+   A /trunk/LayoutTests/http/tests/plugins/navigation-during-load-embed.html
+   A /trunk/LayoutTests/http/tests/plugins/navigation-during-load-expected.txt
+   A /trunk/LayoutTests/http/tests/plugins/navigation-during-load.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLEmbedElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFrameElementBase.cpp
+   M /trunk/Source/WebCore/html/HTMLFrameElementBase.h
+   M /trunk/Source/WebCore/html/HTMLFrameOwnerElement.h
+   M /trunk/Source/WebCore/html/HTMLObjectElement.cpp
+   M /trunk/Source/WebCore/loader/SubframeLoader.cpp
+
+Revalidate URL after events that could trigger navigations
+https://bugs.webkit.org/show_bug.cgi?id=168071
+<rdar://problem/30450379>
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+When arbitary javascript runs during a load, we should revalidate
+the URLs involved to make sure they are still valid.
+
+Tests: http/tests/plugins/navigation-during-load-embed.html
+       http/tests/plugins/navigation-during-load.html
+
+* html/HTMLEmbedElement.cpp:
+(WebCore::HTMLEmbedElement::updateWidget): Confirm we are still allowed to
+load the URL after executing JS callbacks.
+* html/HTMLFrameElementBase.cpp:
+(WebCore::HTMLFrameElementBase::isURLAllowed): Split existing function into
+existing protected method, and a new public method that checks a passed URL
+for validity.
+* html/HTMLFrameElementBase.h:
+* html/HTMLFrameOwnerElement.h:
+(WebCore::HTMLFrameOwnerElement::isURLAllowed):
+* html/HTMLObjectElement.cpp:
+(WebCore::HTMLObjectElement::updateWidget): Confirm we are still allowed to
+load the URL after executing JS callbacks.
+* loader/SubframeLoader.cpp:
+(WebCore::SubframeLoader::requestFrame): Ditto.
+
+LayoutTests:
+
+* http/tests/plugins/navigation-during-load-embed-expected.txt: Added.
+* http/tests/plugins/navigation-during-load-embed.html: Added.
+* http/tests/plugins/navigation-during-load-expected.txt: Added.
+* http/tests/plugins/navigation-during-load.html: Added.
+
+

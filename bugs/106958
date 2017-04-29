@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r140103 | tasak@google.com | 2013-01-18 08:14:27 +0100 (Fr, 18. Jan 2013) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/NodeRareData.h
+   M /trunk/Source/WebCore/dom/TreeScopeAdopter.cpp
+
+Heap-use-after-free in WebCore::LiveNodeListBase::invalidateCache
+https://bugs.webkit.org/show_bug.cgi?id=106958
+
+Reviewed by Ryosuke Niwa.
+
+Need to update node lists that nodes in shadow dom trees have
+when document is changed.
+
+No new tests; it is difficult to reproduce crash by using
+DumpRenderTree. Manually tested by using attached repro.html.
+
+* dom/NodeRareData.h:
+(WebCore::NodeListsNodeData::adoptTreeScope):
+Added to adopt node lists when tree scope is changed.
+(WebCore::NodeListsNodeData::adoptDocument):
+Renamed the original adoptTreeScope to adoptDocument.
+* dom/TreeScopeAdopter.cpp:
+(WebCore::TreeScopeAdopter::moveTreeToNewScope):
+If document scope is not changed, modify to invoke adoptTreeScope.
+(WebCore::TreeScopeAdopter::moveNodeToNewDocument):
+Modify to invoked adoptDocument.
+
+

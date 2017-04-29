@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r205882 | mark.lam@apple.com | 2016-09-14 00:16:25 +0200 (Mi, 14. Sep 2016) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGFixupPhase.cpp
+
+DFG NewArrayBuffer node should watch for "have a bad time" state change.
+https://bugs.webkit.org/show_bug.cgi?id=161927
+<rdar://problem/27995222>
+
+Reviewed by Geoffrey Garen.
+
+* dfg/DFGFixupPhase.cpp:
+(JSC::DFG::FixupPhase::fixupNode):
+
+
+

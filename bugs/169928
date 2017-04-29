@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r214237 | beidson@apple.com | 2017-03-22 01:08:40 +0100 (Mi, 22. Mär 2017) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/storage/websql/test-authorizer-expected.txt
+   M /trunk/LayoutTests/storage/websql/test-authorizer.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webdatabase/DatabaseAuthorizer.cpp
+
+Disable all virtual tables.
+<rdar://problem/31081972> and https://bugs.webkit.org/show_bug.cgi?id=169928
+Source/WebCore:
+
+Reviewed by Jer Noble.
+
+No new tests (Covered by changes to existing test).
+
+* Modules/webdatabase/DatabaseAuthorizer.cpp:
+(WebCore::DatabaseAuthorizer::createVTable):
+(WebCore::DatabaseAuthorizer::dropVTable):
+
+LayoutTests:
+
+Reviewed by Jer Noble.
+
+* storage/websql/test-authorizer-expected.txt:
+* storage/websql/test-authorizer.js:
+(createStatementsCallback):
+

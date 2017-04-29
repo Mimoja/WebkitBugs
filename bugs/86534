@@ -1,0 +1,72 @@
+------------------------------------------------------------------------
+r118725 | tkent@chromium.org | 2012-05-29 07:37:57 +0200 (Di, 29. Mai 2012) | 59 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/forms/datalist/datalist-child-validation-expected.txt
+   M /trunk/LayoutTests/fast/forms/datalist/datalist-child-validation.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFieldSetElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFieldSetElement.h
+   M /trunk/Source/WebCore/html/HTMLFormControlElement.cpp
+   M /trunk/Source/WebCore/html/HTMLFormControlElement.h
+
+Fix a crash in HTMLFormControlElement::disabled().
+https://bugs.webkit.org/show_bug.cgi?id=86534
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Stop to hold pointers of fildset and legend elements. We can avoid it by
+holding ancestor's disabled state.
+
+The ancesotr's disabled state should be invalidated when
+ - fieldset's disabled value is changed.
+ - fieldset's children is updated because a legend position might be changed.
+ - A form control is attached to or detached from a tree.
+
+No new tests. It's almost impossible to make a reliable test.
+
+* html/HTMLFieldSetElement.cpp:
+(WebCore::HTMLFieldSetElement::invalidateDisabledStateUnder):
+Added. Invalidate disabled state of form controls under the specified node.
+(WebCore::HTMLFieldSetElement::disabledAttributeChanged):
+Uses invalidateDisabledStateUnder().
+(WebCore::HTMLFieldSetElement::childrenChanged):
+Added new override function. We need invalidate disabled state of form
+controls under legend elements.
+
+* html/HTMLFieldSetElement.h:
+(HTMLFieldSetElement): Add invalidateDisabledStateUnder() and childrenChanged().
+
+* html/HTMLFormControlElement.cpp:
+(WebCore::HTMLFormControlElement::HTMLFormControlElement):
+Remove initialization of the removed data members.
+Initialize m_ancestorDisabledState.
+(WebCore::HTMLFormControlElement::updateAncestorDisabledState):
+Update m_ancestorDisabledState. It should be
+AncestorDisabledStateDisabled if the control is under a disabled
+fieldset and not under the first legend child of the disabled filedset.
+(WebCore::HTMLFormControlElement::ancestorDisabledStateWasChanged):
+Invalidate m_ancestorDisabledState.
+(WebCore::HTMLFormControlElement::insertedInto): ditto.
+(WebCore::HTMLFormControlElement::removedFrom): ditto.
+(WebCore::HTMLFormControlElement::disabled):
+Calls updateAncestorDisabledState() if needed.
+(WebCore::HTMLFormControlElement::recalcWillValidate):
+Remove unnecessary check for m_legendAncestor.
+
+* html/HTMLFormControlElement.h:
+(HTMLFormControlElement):
+- Rename updateFieldSetAndLegendAncestor() to updateAncestorDisabledState(), and make it private.
+- Remove m_fieldSetAncestor, m_legendAncestor, and m_fieldSetAncestorValid.
+- Add m_ancestorDisabledState.
+
+LayoutTests:
+
+Add a testcase to confirm <lagend> doesn't affect validation.
+
+* fast/forms/datalist/datalist-child-validation-expected.txt:
+* fast/forms/datalist/datalist-child-validation.html:
+
+

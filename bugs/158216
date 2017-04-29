@@ -1,0 +1,84 @@
+------------------------------------------------------------------------
+r209076 | aestes@apple.com | 2016-11-29 19:40:55 +0100 (Di, 29. Nov 2016) | 57 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/events/pageshow-pagehide-on-back-uncached-expected.txt
+   M /trunk/LayoutTests/fast/events/pageshow-pagehide-on-back-uncached.html
+   M /trunk/LayoutTests/fast/events/script-tests/onunload-back-to-page-cache.js
+   A /trunk/LayoutTests/http/tests/security/resources/log-window-name.html
+   A /trunk/LayoutTests/http/tests/security/resources/window-name-test.html
+   A /trunk/LayoutTests/http/tests/security/window-name-after-cross-origin-aux-frame-navigation-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-name-after-cross-origin-aux-frame-navigation.html
+   A /trunk/LayoutTests/http/tests/security/window-name-after-cross-origin-main-frame-navigation-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-name-after-cross-origin-main-frame-navigation.html
+   A /trunk/LayoutTests/http/tests/security/window-name-after-cross-origin-sub-frame-navigation-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-name-after-cross-origin-sub-frame-navigation.html
+   A /trunk/LayoutTests/http/tests/security/window-name-after-same-origin-aux-frame-navigation-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-name-after-same-origin-aux-frame-navigation.html
+   A /trunk/LayoutTests/http/tests/security/window-name-after-same-origin-main-frame-navigation-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-name-after-same-origin-main-frame-navigation.html
+   A /trunk/LayoutTests/http/tests/security/window-name-after-same-origin-sub-frame-navigation-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-name-after-same-origin-sub-frame-navigation.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+   M /trunk/Source/WebCore/page/SecurityOrigin.cpp
+   M /trunk/Source/WebCore/page/SecurityOrigin.h
+
+window.name leaks information across domains
+https://bugs.webkit.org/show_bug.cgi?id=158216
+<rdar://problem/14548481>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+When updating the history after a cross-origin navigation, the HTML Standard says:
+
+"If the browsing context is a top-level browsing context, but not an auxiliary browsing
+context, then set the browsing context's name to the empty string."
+
+https://html.spec.whatwg.org/multipage/browsers.html#resetBCName
+
+Tests: http/tests/security/window-name-after-cross-origin-aux-frame-navigation.html
+       http/tests/security/window-name-after-cross-origin-main-frame-navigation.html
+       http/tests/security/window-name-after-cross-origin-sub-frame-navigation.html
+       http/tests/security/window-name-after-same-origin-aux-frame-navigation.html
+       http/tests/security/window-name-after-same-origin-main-frame-navigation.html
+       http/tests/security/window-name-after-same-origin-sub-frame-navigation.html
+
+* loader/FrameLoader.cpp:
+(WebCore::shouldClearWindowName): Returns true if frame is a main frame with no opener and
+newDocument does not have the same origin as the frame's current document.
+(WebCore::FrameLoader::clear): Changed to set m_frame's name to nullAtom if
+clearWindowProperties and shouldClearWindowName() are true.
+* page/SecurityOrigin.cpp:
+(WebCore::SecurityOrigin::canAccessStorage): Changed to call isSameOriginAs() and check
+m_universalAccess.
+(WebCore::SecurityOrigin::isSameOriginAs): Renamed from isThirdParty(); removed the check
+for m_universalAccess.
+(WebCore::SecurityOrigin::isThirdParty): Renamed to isSameOriginAs().
+* page/SecurityOrigin.h: Renamed isThirdParty() to isSameOriginAs() and made it public.
+
+LayoutTests:
+
+* fast/events/pageshow-pagehide-on-back-uncached-expected.txt: Updated to account for the
+main frame no longer having a name.
+* fast/events/pageshow-pagehide-on-back-uncached.html: Updated to use the History API
+instead of relying on window.name being retained after a cross-origin navigation.
+* fast/events/script-tests/onunload-back-to-page-cache.js:
+(onpageshow): Ditto.
+* http/tests/security/resources/log-window-name.html: Added.
+* http/tests/security/resources/window-name-test.html: Added.
+* http/tests/security/window-name-after-cross-origin-aux-frame-navigation-expected.txt: Added.
+* http/tests/security/window-name-after-cross-origin-aux-frame-navigation.html: Added.
+* http/tests/security/window-name-after-cross-origin-main-frame-navigation-expected.txt: Added.
+* http/tests/security/window-name-after-cross-origin-main-frame-navigation.html: Added.
+* http/tests/security/window-name-after-cross-origin-sub-frame-navigation-expected.txt: Added.
+* http/tests/security/window-name-after-cross-origin-sub-frame-navigation.html: Added.
+* http/tests/security/window-name-after-same-origin-aux-frame-navigation-expected.txt: Added.
+* http/tests/security/window-name-after-same-origin-aux-frame-navigation.html: Added.
+* http/tests/security/window-name-after-same-origin-main-frame-navigation-expected.txt: Added.
+* http/tests/security/window-name-after-same-origin-main-frame-navigation.html: Added.
+* http/tests/security/window-name-after-same-origin-sub-frame-navigation-expected.txt: Added.
+* http/tests/security/window-name-after-same-origin-sub-frame-navigation.html: Added.
+

@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r92132 | inferno@chromium.org | 2011-08-01 20:03:03 +0200 (Mo, 01. Aug 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/update-midpoints-for-trailing-boxes-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/update-midpoints-for-trailing-boxes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+
+Regression(82144): Crash in TrailingObjects::updateMidpointsForTrailingBoxes
+https://bugs.webkit.org/show_bug.cgi?id=65137
+
+Source/WebCore: 
+
+Fix the looping condition to prevent trailingSpaceMidpoint from becoming negative.
+
+Reviewed by Dave Hyatt.
+
+Test: fast/block/update-midpoints-for-trailing-boxes-crash.html
+
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::TrailingObjects::updateMidpointsForTrailingBoxes):
+
+LayoutTests: 
+
+ASSERTION FAILED: trailingSpaceMidpoint >= 0
+
+Reviewed by Dave Hyatt.
+
+* fast/block/update-midpoints-for-trailing-boxes-crash-expected.txt: Added.
+* fast/block/update-midpoints-for-trailing-boxes-crash.html: Added.
+
+

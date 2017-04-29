@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r141127 | vcarbune@chromium.org | 2013-01-29 18:52:17 +0100 (Di, 29. Jan 2013) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/track/track-cue-rendering-tree-is-removed-properly-expected.txt
+   A /trunk/LayoutTests/media/track/track-cue-rendering-tree-is-removed-properly.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/Source/WebCore/html/track/TextTrackCue.cpp
+
+Heap-use-after-free in WebCore::RenderTextTrackCue::layout
+https://bugs.webkit.org/show_bug.cgi?id=108197
+
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Test: media/track/track-cue-rendering-tree-is-removed-properly.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::textTrackRemoveCue): Ensure the display tree
+is removed when the cue is removed from the list of cues.
+* html/track/TextTrackCue.cpp:
+(WebCore::TextTrackCue::~TextTrackCue): Enfore display tree removal.
+
+LayoutTests:
+
+Added test that triggers the crash. Verified proper removal of the tree.
+
+* media/track/track-cue-rendering-tree-is-removed-properly-expected.txt: Added.
+* media/track/track-cue-rendering-tree-is-removed-properly.html: Added.
+
+

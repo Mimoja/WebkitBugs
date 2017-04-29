@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r95880 | commit-queue@webkit.org | 2011-09-24 01:12:16 +0200 (Sa, 24. Sep 2011) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-document-baseURI-javascript-with-spaces-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-document-baseURI-javascript-with-spaces.html
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-window-open-javascript-url-with-spaces-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-window-open-javascript-url-with-spaces.html
+
+Add a few more possiblities to the test cases for xss denial.
+https://bugs.webkit.org/show_bug.cgi?id=47120
+
+Patch by Tom Sepez <tsepez@chromium.org> on 2011-09-23
+Reviewed by Adam Barth.
+
+* http/tests/security/xss-DENIED-document-baseURI-javascript-with-spaces-expected.txt: Added.
+* http/tests/security/xss-DENIED-document-baseURI-javascript-with-spaces.html: Added.
+* http/tests/security/xss-DENIED-window-open-javascript-url-with-spaces-expected.txt: Added.
+* http/tests/security/xss-DENIED-window-open-javascript-url-with-spaces.html: Added.
+

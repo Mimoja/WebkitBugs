@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r175158 | zalan@apple.com | 2014-10-24 05:35:27 +0200 (Fr, 24. Okt 2014) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/SearchInputType.cpp
+
+WebContent crash at WebCore::RenderTextControl::textFormControlElement const.
+https://bugs.webkit.org/show_bug.cgi?id=138035
+
+Reviewed by Antti Koivisto.
+
+NULL-check element().renderer() before using it.
+
+* html/SearchInputType.cpp:
+(WebCore::SearchInputType::didSetValueByUserEdit):
+

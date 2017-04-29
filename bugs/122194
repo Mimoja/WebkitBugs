@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r206048 | bfulgham@apple.com | 2016-09-16 23:20:23 +0200 (Fr, 16. Sep 2016) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/CaptionUserPreferences.cpp
+   M /trunk/Source/WebCore/page/CaptionUserPreferences.h
+
+CaptionUserPreferences's use of the PageGroup's page map is incorrect
+https://bugs.webkit.org/show_bug.cgi?id=122194
+<rdar://problem/27332004>
+
+Reviewed by Zalan Bujtas.
+
+Avoid the possibility of dereferencing an unsafe iterator by checking
+for an empty HashSet before using the result of 'begin()'.
+
+No new tests because there is no change in behavior.
+
+* page/CaptionUserPreferences.cpp:
+(WebCore::CaptionUserPreferences::CaptionUserPreferences): Use new safer
+accessor to retrieve the current page.
+(WebCore::CaptionUserPreferences::setCaptionDisplayMode): Ditto.
+(WebCore::CaptionUserPreferences::currentPage): Added.
+(WebCore::CaptionUserPreferences::userPrefersCaptions): Use new safer
+accessor to retrieve the current page.
+(WebCore::CaptionUserPreferences::setUserPrefersCaptions): Ditto.
+(WebCore::CaptionUserPreferences::userPrefersSubtitles): Ditto.
+(WebCore::CaptionUserPreferences::setUserPrefersSubtitles): Ditto.
+(WebCore::CaptionUserPreferences::userPrefersTextDescriptions): Ditto.
+(WebCore::CaptionUserPreferences::setUserPrefersTextDescriptions): Ditto.
+* page/CaptionUserPreferences.h:
+
+

@@ -1,0 +1,78 @@
+------------------------------------------------------------------------
+r108127 | inferno@chromium.org | 2012-02-17 23:36:24 +0100 (Fr, 17. Feb 2012) | 55 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/table-cell-split-expected.png
+   A /trunk/LayoutTests/fast/table/table-cell-split-expected.txt
+   A /trunk/LayoutTests/fast/table/table-cell-split.html
+   A /trunk/LayoutTests/fast/table/table-row-split-expected.png
+   A /trunk/LayoutTests/fast/table/table-row-split-expected.txt
+   A /trunk/LayoutTests/fast/table/table-row-split.html
+   A /trunk/LayoutTests/fast/table/table-section-split-expected.png
+   A /trunk/LayoutTests/fast/table/table-section-split-expected.txt
+   A /trunk/LayoutTests/fast/table/table-section-split-with-after-content-expected.png
+   A /trunk/LayoutTests/fast/table/table-section-split-with-after-content-expected.txt
+   A /trunk/LayoutTests/fast/table/table-section-split-with-after-content.html
+   A /trunk/LayoutTests/fast/table/table-section-split.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+Incorrect placement of a new child when beforeChild and its
+previous sibling are in the same table.
+https://bugs.webkit.org/show_bug.cgi?id=78269
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Tests: fast/table/table-cell-split.html
+       fast/table/table-row-split.html
+       fast/table/table-section-split-with-after-content.html
+       fast/table/table-section-split.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::splitAnonymousBlocksAroundChild): add
+call to splitTablePartsAroundChild to take care of splitting the
+table first if the child is part of table.
+(WebCore::markTableForSectionAndCellRecalculation): add helper to
+mark table for complete relayout by invalidating sections and cells.
+(WebCore):
+(WebCore::moveAllTableChildrenTo): moves children to another table.
+(WebCore::RenderBlock::splitTablePartsAroundChild): split table child
+and its next siblings into a new table. This allows adding a new
+non-table child between the tables.
+(WebCore::RenderBlock::addChildIgnoringAnonymousColumnBlocks): calls
+splitTablePartsAroundChild to see if we need to split the table
+for adding this new child.
+* rendering/RenderBlock.h:
+(RenderBlock):
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::createAnonymousTable): add helper for
+creating anonymous table.
+(WebCore):
+(WebCore::RenderObject::addChild): use the new helper for creating
+anonymous table.
+* rendering/RenderObject.h:
+(WebCore):
+(RenderObject):
+(WebCore::RenderObject::isTablePart): add helper to tell if the object
+is a table part.
+
+LayoutTests:
+
+Test passes if the div child splits the table parts and is not
+part of table itself.
+
+* fast/table/table-cell-split-expected.txt: Added.
+* fast/table/table-cell-split.html: Added.
+* fast/table/table-row-split-expected.txt: Added.
+* fast/table/table-row-split.html: Added.
+* fast/table/table-section-split-expected.txt: Added.
+* fast/table/table-section-split-with-after-content-expected.txt: Added.
+* fast/table/table-section-split-with-after-content.html: Added.
+* fast/table/table-section-split.html: Added.
+
+

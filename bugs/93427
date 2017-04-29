@@ -1,0 +1,50 @@
+------------------------------------------------------------------------
+r125162 | morrita@google.com | 2012-08-09 10:16:54 +0200 (Do, 09. Aug 2012) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/suppress-mutation-events-in-shadow-characterdata-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/suppress-mutation-events-in-shadow-characterdata.html
+   M /trunk/LayoutTests/fast/events/dom-character-data-modified-textarea-crash.html
+   A /trunk/LayoutTests/fast/forms/textarea-and-mutation-events-appending-text-expected.txt
+   A /trunk/LayoutTests/fast/forms/textarea-and-mutation-events-appending-text.html
+   M /trunk/LayoutTests/svg/custom/tref-nested-events-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/CharacterData.cpp
+
+DOMCharacterDataModified should not be fired inside shadows
+https://bugs.webkit.org/show_bug.cgi?id=93427
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+CharacterData::dispatchModifiedEvent() fires DOMCharacterDataModified event even if
+the node is in shadow. But it shouldn't. Check dispatchChildInsertionEvents() and
+dispatchChildRemovalEvents() to see how other MutationEvents are suppressed behind shadows.
+This change follows the same path to suppress DOMCharacterDataModified.
+
+Tests: fast/dom/shadow/suppress-mutation-events-in-shadow-characterdata.html
+       fast/forms/textarea-and-mutation-events-appending-text.html
+
+* dom/CharacterData.cpp:
+(WebCore::CharacterData::dispatchModifiedEvent):
+
+LayoutTests:
+
+Added two tests. This also fixes existing test, which cover the wrong behavior.
+
+* fast/dom/shadow/suppress-mutation-events-in-shadow-characterdata-expected.txt: Added.
+* fast/dom/shadow/suppress-mutation-events-in-shadow-characterdata.html: Added.
+* fast/events/dom-character-data-modified-textarea-crash.html:
+- DOMCharacterDataModified shouldn't be fired in this case.
+  Fixed to allow test to terminate without the event.
+  Note that The event was fired by <textarea>, which is fixed by this change.
+* fast/forms/textarea-and-mutation-events-appending-text-expected.txt: Added.
+* fast/forms/textarea-and-mutation-events-appending-text.html: Added.
+* svg/custom/tref-nested-events-crash.svg:
+- DOMCharacterDataModified shouldn't be fired in this case.
+  Fixed to allow test to terminate without the event.
+  Note that The event was fired by SVGShadowText, which is just an implentation detail and
+  should not be exposed.
+
+

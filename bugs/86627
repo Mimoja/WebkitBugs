@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r117304 | inferno@chromium.org | 2012-05-16 19:22:38 +0200 (Mi, 16. Mai 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/java/inline-applet-crash-expected.txt
+   A /trunk/LayoutTests/java/inline-applet-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLAppletElement.cpp
+
+Missing RenderApplet cast check in HTMLAppletElement::renderWidgetForJSBindings.
+https://bugs.webkit.org/show_bug.cgi?id=86627
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+Test: java/inline-applet-crash.html
+
+* html/HTMLAppletElement.cpp:
+(WebCore::HTMLAppletElement::renderWidgetForJSBindings):
+
+LayoutTests:
+
+* java/inline-applet-crash-expected.txt: Added.
+* java/inline-applet-crash.html: Added.
+
+

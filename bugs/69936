@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r97303 | cfleizach@apple.com | 2011-10-12 23:25:34 +0200 (Mi, 12. Okt 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityScrollView.cpp
+   M /trunk/Source/WebCore/accessibility/AccessibilityScrollbar.cpp
+   M /trunk/Source/WebCore/accessibility/AccessibilityScrollbar.h
+
+AX: CrashTracer: [USER] 296 crashes in WebProcess at com.apple.WebCore: WebCore::AccessibilityScrollbar::document const + 29
+https://bugs.webkit.org/show_bug.cgi?id=69936
+
+AX Scrollbars have a weak pointer to their parent. They need to become AccessibilityMockObjects, so that they can
+participate in the detachFromParent() methods that happens when those parents go away.
+Could not reproduce the crash, but the backtrace is unequivocal.
+
+Reviewed by Darin Adler.
+
+* accessibility/AccessibilityScrollView.cpp:
+(WebCore::AccessibilityScrollView::removeChildScrollbar):
+* accessibility/AccessibilityScrollbar.cpp:
+(WebCore::AccessibilityScrollbar::AccessibilityScrollbar):
+* accessibility/AccessibilityScrollbar.h:
+(WebCore::AccessibilityScrollbar::scrollbar):
+(WebCore::AccessibilityScrollbar::isAccessibilityScrollbar):
+
+
+

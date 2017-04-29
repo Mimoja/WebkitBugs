@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r111235 | ap@apple.com | 2012-03-19 21:41:59 +0100 (Mo, 19. Mär 2012) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
+
+        Make WebFrameLoaderClient::createFrame more like WebKit1 version.
+        https://bugs.webkit.org/show_bug.cgi?id=81550
+
+        Covered by existing tests.
+
+        Reviewed by Jessie Berlin.
+
+        * WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp: (WebKit::WebFrameLoaderClient::createFrame):
+
+
+

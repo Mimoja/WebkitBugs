@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r63865 | jschuh@chromium.org | 2010-07-22 02:36:38 +0200 (Do, 22. Jul 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/use-invalid-html-expected.txt
+   A /trunk/LayoutTests/svg/custom/use-invalid-html.xhtml
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/ContainerNode.cpp
+
+2010-07-21  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Oliver Hunt.
+
+        Prevent DeleteButtonController enable state from changing when not editing
+        https://bugs.webkit.org/show_bug.cgi?id=42659
+
+        Test: svg/custom/use-invalid-html.xhtml
+
+        * dom/ContainerNode.cpp:
+        (WebCore::ContainerNode::cloneChildNodes):
+2010-07-21  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Oliver Hunt.
+
+        Prevent DeleteButtonController enable state from changing when not editing
+        https://bugs.webkit.org/show_bug.cgi?id=42659
+
+        * svg/custom/use-invalid-html-expected.txt: Added.
+        * svg/custom/use-invalid-html.xhtml: Added.
+
+

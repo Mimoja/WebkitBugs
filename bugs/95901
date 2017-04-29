@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r139470 | inferno@chromium.org | 2013-01-11 20:35:31 +0100 (Fr, 11. Jan 2013) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+Heap-use-after-free in WebCore::RenderText::computePreferredLogicalWidths
+https://bugs.webkit.org/show_bug.cgi?id=95901
+
+Reviewed by Simon Fraser.
+
+Prevent re-entrancy of view layout. Loading of SVG document during font load
+causes it to re-enter layout and blowing the style away from underneath.
+
+Test: Go to http://www.speckproducts.com and make sure crash does not happen.
+
+* dom/Document.cpp:
+(WebCore::Document::updateLayout):
+
+

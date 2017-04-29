@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r39186 | alice.liu@apple.com | 2008-12-11 01:00:16 +0100 (Do, 11. Dez 2008) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/conf/apache2-debian-httpd.conf
+   M /trunk/LayoutTests/http/conf/apache2-httpd.conf
+   M /trunk/LayoutTests/http/conf/cygwin-httpd.conf
+   M /trunk/LayoutTests/http/conf/httpd.conf
+   A /trunk/LayoutTests/http/tests/misc/resources/generatedimage.bat
+   M /trunk/WebCore/ChangeLog
+   A /trunk/WebCore/manual-tests/drag-image-to-desktop.html
+
+WebCore:
+
+2008-12-10  Alice Liu  <alice.liu@apple.com>
+
+        Manual test for https://bugs.webkit.org/show_bug.cgi?id=20685
+
+        Reviewed by Darin Adler.
+
+        * manual-tests/drag-image-to-desktop.html: Added.
+
+LayoutTests:
+
+2008-12-10  Alice Liu  <alice.liu@apple.com>
+
+        Adding tweak to .conf files needed for 
+        WebCore/manual-tests/drag-image-to-desktop.html
+
+        Reviewed by Darin Adler.
+
+        * http/conf/apache2-debian-httpd.conf:
+        * http/conf/apache2-httpd.conf:
+        * http/conf/cygwin-httpd.conf:
+        * http/conf/httpd.conf:
+        * http/tests/misc/resources/generatedimage.bat: Added.
+
+
+

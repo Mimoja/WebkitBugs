@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r180128 | said@apple.com | 2015-02-16 01:13:16 +0100 (Mo, 16. Feb 2015) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/svg/dom/SVGLengthList-basics-expected.txt
+   M /trunk/LayoutTests/svg/dom/SVGLengthList-basics.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/properties/SVGListPropertyTearOff.h
+
+Crash when accessing an item in SVGLengthList and then replacing it with a previous item in the list.
+https://bugs.webkit.org/show_bug.cgi?id=141552.
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Tests: LayoutTests/svg/dom/SVGLengthList-basics.xhtml: This test is modified to
+include a new test case.
+
+* svg/properties/SVGListPropertyTearOff.h: Commit the removal of the replacing item
+before trying to detach the wrapper of the item which going to be replaced.
+
+LayoutTests:
+
+* svg/dom/SVGLengthList-basics-expected.txt:
+* svg/dom/SVGLengthList-basics.xhtml: Add a new test case to this test. Have a
+reference to an SVGLength in an SVGLengthList and then replace this SVGLength
+with another one which comes before it in the SVGLengthList.
+
+

@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r89067 | inferno@chromium.org | 2011-06-16 23:27:30 +0200 (Do, 16. Jun 2011) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+2011-06-16  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        RefPtr frame since it can get removed in
+        FrameLoader::finishedParsing.
+        https://bugs.webkit.org/show_bug.cgi?id=62812
+
+        Tests: already tested by fast/parser/document-write-into-initial-document.html.
+
+        * dom/Document.cpp:
+        (WebCore::Document::finishedParsing):
+
+

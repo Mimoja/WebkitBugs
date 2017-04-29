@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r83345 | hyatt@apple.com | 2011-04-08 23:57:54 +0200 (Fr, 08. Apr 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/history/visited-generated-content-test-expected.txt
+   A /trunk/LayoutTests/fast/history/visited-generated-content-test.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSStyleSelector.cpp
+
+https://bugs.webkit.org/show_bug.cgi?id=57971
+        
+Reviewed by Simon Fraser.
+
+Rework visited/unvisited links for before/after content. Propagate the bits earlier so that we don't lose
+them when we throw away the visited style. Don't throw away the visited link style for pseudo elements
+either, so that the styles are consistent.
+
+Source/WebCore: 
+
+Added fast/history/visited-generated-content-test.html
+
+* css/CSSStyleSelector.cpp:
+(WebCore::CSSStyleSelector::styleForElement):
+(WebCore::CSSStyleSelector::pseudoStyleForElement):
+
+LayoutTests: 
+
+* fast/history/visited-generated-content-test-expected.txt: Added.
+* fast/history/visited-generated-content-test.html: Added.
+
+
+

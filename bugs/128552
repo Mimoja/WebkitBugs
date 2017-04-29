@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r164368 | dbates@webkit.org | 2014-02-19 18:58:49 +0100 (Mi, 19. Feb 2014) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/text/textpath-display-block-expected.txt
+   A /trunk/LayoutTests/svg/text/textpath-display-block.html
+   A /trunk/LayoutTests/svg/text/textpath-display-none-expected.html
+   A /trunk/LayoutTests/svg/text/textpath-display-none.html
+   A /trunk/LayoutTests/svg/text/tspan-display-block-expected.txt
+   A /trunk/LayoutTests/svg/text/tspan-display-block.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/StyleResolver.cpp
+
+REGRESSION (r163560): Always treat SVG <tspan> and <textPath> as display inline
+https://bugs.webkit.org/show_bug.cgi?id=128552
+<rdar://problem/16029658>
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+Following <http://trac.webkit.org/changeset/163560>, SVG <tspan> and <textPath> may be treated as block-
+level elements depending on their CSS styles (e.g. display: block). But such elements should always be
+treated as inline-level elements.
+
+Tests: svg/text/textpath-display-block.html
+       svg/text/textpath-display-none.html
+       svg/text/tspan-display-block.html
+
+* css/StyleResolver.cpp:
+(WebCore::StyleResolver::adjustRenderStyle):
+
+LayoutTests:
+
+Added tests to ensure that SVG <tspan> and <textPath> are always treated as inline-level
+elements when explicitly or implicitly specified as a non-none, non-inline display type.
+
+Additionally, added a test to ensure that we don't render a <textPath> when it has CSS
+display none. Note, the test LayoutTests/svg/batik/text/textProperties2.svg ensures a
+similar behavior for <tspan>.
+
+* svg/text/textpath-display-block-expected.txt: Added.
+* svg/text/textpath-display-block.html: Added.
+* svg/text/textpath-display-none-expected.html: Added.
+* svg/text/textpath-display-none.html: Added.
+* svg/text/tspan-display-block-expected.txt: Added.
+* svg/text/tspan-display-block.html: Added.
+

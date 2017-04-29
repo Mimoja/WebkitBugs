@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r203241 | beidson@apple.com | 2016-07-14 23:15:28 +0200 (Do, 14. Jul 2016) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/server/UniqueIDBDatabase.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/server/UniqueIDBDatabase.h
+   M /trunk/Source/WebCore/Modules/indexeddb/server/UniqueIDBDatabaseConnection.cpp
+
+"User delete" tests are flakey timeouts (and/or DatabaseProcess crashes).
+https://bugs.webkit.org/show_bug.cgi?id=158741
+
+Reviewed by Alex Christensen.
+
+No new tests (Covered by existing tests in some configurations)
+
+- Check if a database hard delete is complete in more places.
+- Asynchronously clear out the hard close protector instead of synchronously.
+
+* Modules/indexeddb/server/UniqueIDBDatabase.cpp:
+(WebCore::IDBServer::UniqueIDBDatabase::~UniqueIDBDatabase):
+(WebCore::IDBServer::UniqueIDBDatabase::didPerformUnconditionalDeleteBackingStore):
+(WebCore::IDBServer::UniqueIDBDatabase::didFinishHandlingVersionChange):
+(WebCore::IDBServer::UniqueIDBDatabase::connectionClosedFromClient):
+(WebCore::IDBServer::UniqueIDBDatabase::transactionCompleted):
+(WebCore::IDBServer::UniqueIDBDatabase::executeNextDatabaseTaskReply):
+(WebCore::IDBServer::UniqueIDBDatabase::maybeFinishHardClose):
+(WebCore::IDBServer::UniqueIDBDatabase::isDoneWithHardClose):
+(WebCore::IDBServer::UniqueIDBDatabase::doneWithHardClose): Deleted.
+
+* Modules/indexeddb/server/UniqueIDBDatabase.h:
+(WebCore::IDBServer::UniqueIDBDatabase::hardClosedForUserDelete):
+
+* Modules/indexeddb/server/UniqueIDBDatabaseConnection.cpp:
+(WebCore::IDBServer::UniqueIDBDatabaseConnection::didAbortTransaction):
+

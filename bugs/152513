@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r194485 | bfulgham@apple.com | 2016-01-02 03:41:01 +0100 (Sa, 02. Jan 2016) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/mac/GraphicsContext3DMac.mm
+
+[WebGL] Blacklisted OpenGL contexts are not safe to use
+https://bugs.webkit.org/show_bug.cgi?id=152513
+<rdar://problem/23127838>
+
+Reviewed by Zalan Bujtas.
+
+When the GPU has blacklisted an OpenGL context, it is not safe to use -- even to
+attempt to release GL resources. Instead, our only correct behavior is to terminate
+the WebProcess.
+
+* platform/graphics/mac/GraphicsContext3DMac.mm:
+(WebCore::GraphicsContext3D::checkGPUStatusIfNecessary): If the context was lost
+because the GPU blacklisted it, terminate the process.
+
+

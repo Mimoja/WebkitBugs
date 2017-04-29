@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r189954 | dino@apple.com | 2015-09-18 03:09:57 +0200 (Fr, 18. Sep 2015) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/pattern-3-step-cycle-expected.txt
+   A /trunk/LayoutTests/svg/custom/pattern-3-step-cycle.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/Logging.h
+   M /trunk/Source/WebCore/rendering/svg/SVGResourcesCycleSolver.cpp
+
+Multi-hop reference cycles not detected.
+https://bugs.webkit.org/show_bug.cgi?id=149181
+
+Reviewed by John Honeycutt.
+
+Source/WebCore:
+
+SVG's cycle detection was not picking up a
+case where an element was drawing a pattern, that
+referenced another pattern, that referenced another
+pattern, that referenced the original pattern.
+
+The issue was that we were forgetting to check the
+children of the renderer itself, rather than just
+the children of the referenced renderers.
+
+Found by running a test from Blink.
+
+I also took the opportunity to clean up the debugging
+code that logs cycle detection.
+
+Test: svg/custom/pattern-3-step-cycle.html
+
+* platform/Logging.h: Add a new SVG channel. I can't believe we
+didn't already have one!
+* rendering/svg/SVGResourcesCycleSolver.cpp:
+(WebCore::SVGResourcesCycleSolver::resourceContainsCycles): Check the referenced
+resources for cycles.
+(WebCore::SVGResourcesCycleSolver::resolveCycles): Logging update.
+
+LayoutTests:
+
+Test comes from:
+https://chromium.googlesource.com/chromium/blink/+/master/LayoutTests/svg/custom/pattern-3-step-cycle.html
+
+* svg/custom/pattern-3-step-cycle-expected.txt: Added.
+* svg/custom/pattern-3-step-cycle.html: Added.
+

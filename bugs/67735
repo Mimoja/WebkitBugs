@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r94857 | inferno@chromium.org | 2011-09-09 18:23:53 +0200 (Fr, 09. Sep 2011) | 33 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/lists/list-marker-before-content-table-expected.png
+   A /trunk/LayoutTests/fast/lists/list-marker-before-content-table-expected.txt
+   A /trunk/LayoutTests/fast/lists/list-marker-before-content-table.html
+   A /trunk/LayoutTests/fast/runin/runin-generated-before-content-expected.png
+   A /trunk/LayoutTests/fast/runin/runin-generated-before-content-expected.txt
+   A /trunk/LayoutTests/fast/runin/runin-generated-before-content.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObjectChildList.cpp
+
+:before content rendering issues with list markers and run-ins.
+https://bugs.webkit.org/show_bug.cgi?id=67735
+
+Source/WebCore: 
+
+1) Remove the isAnonymous checks for run-in detection since the
+run-in can belong to a node.
+2) When the parent has block children, then the list marker will
+be enclosed in an anonymous block. In that case, for going to the
+next list marker, we need to traverse one level up. We don't need
+this check when searching for generated run-in (loop 2), since we
+know parent will have inline children, so the list marker wont be
+enclosed in an anonymous block.
+
+Reviewed by Dave Hyatt.
+
+Tests: fast/lists/list-marker-before-content-table.html
+       fast/runin/runin-generated-before-content.html
+
+* rendering/RenderObjectChildList.cpp:
+(WebCore::RenderObjectChildList::beforePseudoElementRenderer):
+
+LayoutTests: 
+
+Reviewed by Dave Hyatt.
+
+* fast/lists/list-marker-before-content-table-expected.png: Added.
+* fast/lists/list-marker-before-content-table-expected.txt: Added.
+* fast/lists/list-marker-before-content-table.html: Added.
+* fast/runin/runin-generated-before-content-expected.png: Added.
+* fast/runin/runin-generated-before-content-expected.txt: Added.
+* fast/runin/runin-generated-before-content.html: Added.
+
+

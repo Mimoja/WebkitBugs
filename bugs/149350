@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r189979 | cdumez@apple.com | 2015-09-18 22:37:41 +0200 (Fr, 18. Sep 2015) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/MemoryPressureHandler.cpp
+
+WebContent crash in WebCore::MemoryPressureHandler::releaseCriticalMemory() with GuardMalloc when preparing to suspend
+https://bugs.webkit.org/show_bug.cgi?id=149350
+
+Reviewed by Antti Koivisto.
+
+in MemoryPressureHandler::releaseCriticalMemory(), iterate over a copy of
+Document::allDocuments() instead of iterating over allDocuments() directly.
+Also make sure the Documents are ref'd inside the copy.
+
+This is needed because clearing the StyleResolver of a Document may cause
+Documents to be unref'd and removed from the allDocument() HashSet.
+
+No new tests, already covered by existing tests.
+
+* platform/MemoryPressureHandler.cpp:
+(WebCore::MemoryPressureHandler::releaseCriticalMemory):
+

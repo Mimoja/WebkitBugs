@@ -1,0 +1,93 @@
+------------------------------------------------------------------------
+r130777 | pdr@google.com | 2012-10-09 19:49:59 +0200 (Di, 09. Okt 2012) | 70 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/TestExpectations
+   M /trunk/LayoutTests/platform/efl/TestExpectations
+   M /trunk/LayoutTests/platform/gtk/TestExpectations
+   M /trunk/LayoutTests/platform/mac/TestExpectations
+   M /trunk/LayoutTests/platform/qt/TestExpectations
+   M /trunk/LayoutTests/platform/win/TestExpectations
+   A /trunk/LayoutTests/svg/animations/animate-css-xml-attributeType-expected.txt
+   A /trunk/LayoutTests/svg/animations/animate-css-xml-attributeType.html
+   A /trunk/LayoutTests/svg/animations/invalid-css-attribute-crash-expected.svg
+   A /trunk/LayoutTests/svg/animations/invalid-css-attribute-crash.svg
+   A /trunk/LayoutTests/svg/animations/script-tests/animate-css-xml-attributeType.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGAnimateElement.cpp
+   M /trunk/Source/WebCore/svg/SVGAnimationElement.cpp
+   M /trunk/Source/WebCore/svg/SVGAnimationElement.h
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.h
+
+Prevent animation when CSS attributeType is invalid.
+https://bugs.webkit.org/show_bug.cgi?id=94569
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+This patch changes hasValidAttributeType() to return false when
+we have attributeType=CSS with a non-CSS attribute name.
+
+Previously we would animate non-CSS attributes when attributeType was
+CSS which resulted in crashes. To track this case, this patch catches
+changes to targetElement, attributeName, and attributeType and checks
+if an invalid combination is present. If invalid, hasInvalidCSSAttributeType()
+will return true causing hasValidAttributeType() to return false and prevent
+the animation from running.
+
+Tests: svg/animations/animate-css-xml-attributeType.html
+       svg/animations/invalid-css-attribute-crash-expected.svg
+       svg/animations/invalid-css-attribute-crash.svg
+
+* svg/SVGAnimateElement.cpp:
+(WebCore::SVGAnimateElement::hasValidAttributeType):
+(WebCore::SVGAnimateElement::targetElementWillChange):
+* svg/SVGAnimationElement.cpp:
+(WebCore::SVGAnimationElement::SVGAnimationElement):
+(WebCore::SVGAnimationElement::isSupportedAttribute):
+
+    This now supports the attributeType attribute which is stored in m_attributeType.
+
+(WebCore::SVGAnimationElement::parseAttribute):
+(WebCore::SVGAnimationElement::setAttributeType):
+
+    Changes to attributeType, attributeName, and targetElement need to be tracked
+    to determine when an invalid combination happens.
+
+(WebCore::SVGAnimationElement::targetElementWillChange):
+(WebCore):
+(WebCore::SVGAnimationElement::setAttributeName):
+(WebCore::SVGAnimationElement::checkInvalidCSSAttributeType):
+* svg/SVGAnimationElement.h:
+(WebCore::SVGAnimationElement::attributeType):
+(SVGAnimationElement):
+(WebCore::SVGAnimationElement::hasInvalidCSSAttributeType):
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::targetElement):
+* svg/animation/SVGSMILElement.h:
+(SVGSMILElement):
+
+LayoutTests:
+
+Adding a test to prove this patch works (invalid-css-attribute-crash.svg)
+and an additional test to show that switching between XML and CSS
+attributeTypes works as expected (animate-css-xml-attributeType.html).
+
+* platform/chromium/TestExpectations:
+* platform/efl/TestExpectations:
+* platform/gtk/TestExpectations:
+* platform/mac/TestExpectations:
+* platform/qt/TestExpectations:
+* platform/win/TestExpectations:
+* svg/animations/animate-css-xml-attributeType-expected.txt: Added.
+* svg/animations/animate-css-xml-attributeType.html: Added.
+* svg/animations/invalid-css-attribute-crash-expected.svg: Added.
+* svg/animations/invalid-css-attribute-crash.svg: Added.
+* svg/animations/script-tests/animate-css-xml-attributeType.js: Added.
+(sample1):
+(sample6):
+(executeTest):
+
+

@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r159173 | andersca@apple.com | 2013-11-13 03:24:35 +0100 (Mi, 13. Nov 2013) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/NetworkProcess/NetworkConnectionToWebProcess.messages.in
+   M /trunk/Source/WebKit2/NetworkProcess/SynchronousNetworkLoaderClient.cpp
+   M /trunk/Source/WebKit2/NetworkProcess/SynchronousNetworkLoaderClient.h
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebPlatformStrategies.cpp
+
+fast/canvas/webgl/draw-arrays-out-of-bounds.html is flaky on Mavericks WK2 testers, fails about 20% of the time
+https://bugs.webkit.org/show_bug.cgi?id=124223
+<rdar://problem/15333977>
+
+Reviewed by Tim Horton.
+
+It's wrong to use DataReferences in sync IPC replies; the underlying MessageDecoder will be freed after the call to
+sendSync returns and the DataReference will point to freed memory. Use a Vector<char> instead.
+
+* NetworkProcess/NetworkConnectionToWebProcess.messages.in:
+* NetworkProcess/SynchronousNetworkLoaderClient.cpp:
+(WebKit::SynchronousNetworkLoaderClient::didReceiveBuffer):
+(WebKit::SynchronousNetworkLoaderClient::sendDelayedReply):
+* NetworkProcess/SynchronousNetworkLoaderClient.h:
+* WebProcess/WebCoreSupport/WebPlatformStrategies.cpp:
+(WebKit::WebPlatformStrategies::loadResourceSynchronously):
+

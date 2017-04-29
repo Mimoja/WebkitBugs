@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r168448 | stavila@adobe.com | 2014-05-08 00:48:31 +0200 (Do, 08. Mai 2014) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/newmulticol/first-letter-create-expected.html
+   A /trunk/LayoutTests/fast/multicol/newmulticol/first-letter-create.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderBoxModelObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderTextFragment.h
+
+Use after free in WebCore::RenderObject::nextSibling / WebCore::RenderBoxModelObject::moveChildrenTo
+https://bugs.webkit.org/show_bug.cgi?id=132625
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+Fixed problem with dynamically inserting first letter elements.
+
+Test: fast/multicol/newmulticol/first-letter-create.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::getFirstLetter):
+(WebCore::RenderBlock::updateFirstLetter):
+* rendering/RenderBlock.h:
+* rendering/RenderBoxModelObject.cpp:
+(WebCore::RenderBoxModelObject::moveChildrenTo):
+
+LayoutTests:
+Added test for special case which might cause use after free.
+
+* fast/multicol/newmulticol/first-letter-create-expected.html: Added.
+* fast/multicol/newmulticol/first-letter-create.html: Added.
+
+

@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r86710 | dcheng@chromium.org | 2011-05-18 00:07:53 +0200 (Mi, 18. Mai 2011) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/EditorClientImpl.cpp
+
+2011-05-17  Daniel Cheng  <dcheng@chromium.org>
+
+        Reviewed by Ryosuke Niwa.
+
+        [chromium] Clipboard policy callbacks from EditorClientImpl are reversed
+        https://bugs.webkit.org/show_bug.cgi?id=60994
+
+        * src/EditorClientImpl.cpp:
+        (WebKit::EditorClientImpl::canCopyCut):
+        (WebKit::EditorClientImpl::canPaste):
+

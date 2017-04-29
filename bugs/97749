@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r129962 | hclam@chromium.org | 2012-09-29 01:58:22 +0200 (Sa, 29. Sep 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/ChangeLog
+   A /trunk/ManualTests/drag-image-no-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/chromium/ClipboardChromium.cpp
+   M /trunk/Source/WebCore/platform/gtk/ClipboardGtk.cpp
+   M /trunk/Source/WebCore/platform/mac/ClipboardMac.mm
+   M /trunk/Source/WebCore/platform/win/ClipboardWin.cpp
+
+REGRESSION(r122215) - CachedImage::likelyToBeUsedSoon crashes on accessing a deleted CachedImageClient
+https://bugs.webkit.org/show_bug.cgi?id=97749
+
+Reviewed by James Robinson.
+
+.:
+
+Added a manual test to demonstrate drag image and crashing.
+
+* ManualTests/drag-image-no-crash.html: Added.
+
+Source/WebCore:
+
+All implementations of Clipboard set themselves as clients to CachedImage
+through the JS API setDrageImage() but they do not detach during destruction.
+This causes memory corruption when CachedImage tries to access a deleted client
+when MemoryCache prunes and calls CachedImage::likelyToUsedSoon().
+
+Manual test added: ManualTests/drag-image-no-crash.html
+
+* platform/chromium/ClipboardChromium.cpp:
+(WebCore::ClipboardChromium::~ClipboardChromium):
+* platform/gtk/ClipboardGtk.cpp:
+(WebCore::ClipboardGtk::~ClipboardGtk):
+* platform/mac/ClipboardMac.mm:
+(WebCore::ClipboardMac::~ClipboardMac):
+* platform/win/ClipboardWin.cpp:
+(WebCore::ClipboardWin::~ClipboardWin):
+

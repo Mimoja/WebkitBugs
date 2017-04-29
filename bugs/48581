@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r71431 | rniwa@webkit.org | 2010-11-05 18:43:38 +0100 (Fr, 05. Nov 2010) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/editing/ApplyStyleCommand.cpp
+   M /trunk/WebCore/editing/ApplyStyleCommand.h
+
+2010-11-05  Ryosuke Niwa  <rniwa@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Crash in ApplyStyleCommand::surroundNodeRangeWithElement
+        https://bugs.webkit.org/show_bug.cgi?id=48581
+
+        The crash was caused by a false assertion that we can always recover selection in
+        ApplyStyleCommand::removeInlineStyle.  Fixed the crash by removing the assertion
+        and adding an early exit to the call site.  Also converted raw pointers to RefPtr
+        in surroundNodeRangeWithElement and addInlineStyleIfNeeded.
+
+        Test (non-Mac platforms): editing/style/iframe-onload-crash.html
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::ApplyStyleCommand::applyInlineStyle):
+        (WebCore::ApplyStyleCommand::removeInlineStyle):
+        (WebCore::ApplyStyleCommand::surroundNodeRangeWithElement):
+        (WebCore::ApplyStyleCommand::addInlineStyleIfNeeded):
+        * editing/ApplyStyleCommand.h:
+2010-11-04  Ryosuke Niwa  <rniwa@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Re-enabled editing/style/iframe-onload-crash.html on Chromium, Qt, and Windows platforms.
+
+        * platform/chromium/test_expectations.txt:
+        * platform/qt/Skipped:
+        * platform/win/Skipped:
+
+

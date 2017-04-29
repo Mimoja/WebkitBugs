@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r211337 | zalan@apple.com | 2017-01-28 17:26:48 +0100 (Sa, 28. Jan 2017) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/assert-on-continuation-with-spanner-expected.txt
+   A /trunk/LayoutTests/fast/multicol/assert-on-continuation-with-spanner.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockFlow.cpp
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+   M /trunk/Source/WebCore/rendering/RenderMultiColumnFlowThread.cpp
+
+Resolve beforeChild's render tree position before calling addChildIgnoringContinuation.
+https://bugs.webkit.org/show_bug.cgi?id=167540
+<rdar://problem/30126535>
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+Use the actual render tree position for the beforeChild when inside a flow thread.
+
+Test: fast/multicol/assert-on-continuation-with-spanner.html
+
+* rendering/RenderBlockFlow.cpp:
+(WebCore::RenderBlockFlow::addChild):
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::addChild):
+* rendering/RenderMultiColumnFlowThread.cpp:
+(WebCore::RenderMultiColumnFlowThread::resolveMovedChild):
+
+LayoutTests:
+
+* fast/multicol/assert-on-continuation-with-spanner-expected.txt: Added.
+* fast/multicol/assert-on-continuation-with-spanner.html: Added.
+

@@ -1,0 +1,58 @@
+------------------------------------------------------------------------
+r41414 | andersca@apple.com | 2009-03-04 02:10:12 +0100 (Mi, 04. Mär 2009) | 46 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/plugins/destroy-stream-twice-expected.txt
+   M /trunk/LayoutTests/plugins/destroy-stream-twice.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/plugins/PluginView.cpp
+   M /trunk/WebKitTools/ChangeLog
+   M /trunk/WebKitTools/DumpRenderTree/TestNetscapePlugIn.subproj/PluginObject.cpp
+
+WebCore:
+
+2009-03-03  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by John Sullivan.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22884
+        <rdar://problem/6449783>
+        modified layout test crashes Safari
+
+        Null check NPStream before dereferencing it.
+        
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::destroyStream):
+
+WebKitTools:
+
+2009-03-03  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by John Sullivan.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22884
+        <rdar://problem/6449783>
+        modified layout test crashes Safari
+
+        Add destroyNullStream test function to the test plug-in.
+        
+        * DumpRenderTree/TestNetscapePlugIn.subproj/PluginObject.cpp:
+        (destroyNullStream):
+        (pluginInvoke):
+
+LayoutTests:
+
+2009-03-03  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by John Sullivan.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22884
+        <rdar://problem/6449783>
+        modified layout test crashes Safari
+        
+        Update tests.
+        * plugins/destroy-stream-twice-expected.txt:
+        * plugins/destroy-stream-twice.html:
+
+
+

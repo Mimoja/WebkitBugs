@@ -1,0 +1,66 @@
+------------------------------------------------------------------------
+r123343 | scheib@chromium.org | 2012-07-23 17:50:29 +0200 (Mo, 23. Jul 2012) | 41 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/fullscreen
+   A /trunk/LayoutTests/http/tests/fullscreen/fullscreenelement-different-origin-expected.txt
+   A /trunk/LayoutTests/http/tests/fullscreen/fullscreenelement-different-origin.html
+   A /trunk/LayoutTests/http/tests/fullscreen/fullscreenelement-same-origin-expected.txt
+   A /trunk/LayoutTests/http/tests/fullscreen/fullscreenelement-same-origin.html
+   A /trunk/LayoutTests/http/tests/pointer-lock
+   A /trunk/LayoutTests/http/tests/pointer-lock/pointerlockelement-different-origin-expected.txt
+   A /trunk/LayoutTests/http/tests/pointer-lock/pointerlockelement-different-origin.html
+   A /trunk/LayoutTests/http/tests/pointer-lock/pointerlockelement-same-origin-expected.txt
+   A /trunk/LayoutTests/http/tests/pointer-lock/pointerlockelement-same-origin.html
+   A /trunk/LayoutTests/http/tests/resources/pointer-lock/iframe-common.js
+   A /trunk/LayoutTests/http/tests/resources/pointer-lock/inner-iframe.html
+   M /trunk/LayoutTests/http/tests/resources/pointer-lock/pointer-lock-test-harness.js
+   M /trunk/LayoutTests/pointer-lock/locked-element-iframe-removed-from-dom-expected.txt
+   M /trunk/LayoutTests/pointer-lock/locked-element-iframe-removed-from-dom.html
+   M /trunk/LayoutTests/pointer-lock/locked-element-removed-from-dom-expected.txt
+   M /trunk/LayoutTests/pointer-lock/locked-element-removed-from-dom.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+webkitFullscreenElement, webkitCurrentFullScreenElement, webkitPointerLockElement block cross origin access.
+https://bugs.webkit.org/show_bug.cgi?id=91892
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+PointerLockElement only returned when requested from the document that owns it.
+
+Tests: http/tests/fullscreen/fullscreenelement-different-origin.html
+       http/tests/fullscreen/fullscreenelement-same-origin.html
+       http/tests/pointer-lock/pointerlockelement-different-origin.html
+       http/tests/pointer-lock/pointerlockelement-same-origin.html
+
+* dom/Document.cpp:
+(WebCore::Document::webkitPointerLockElement):
+
+LayoutTests:
+
+Tests verifying the behavior of accessing
+webkitFullscreenElement, webkitCurrentFullScreenElement, webkitPointerLockElement
+from different origins.
+
+* http/tests/fullscreen/fullscreenelement-different-origin-expected.txt: Added.
+* http/tests/fullscreen/fullscreenelement-different-origin.html: Added.
+* http/tests/fullscreen/fullscreenelement-same-origin-expected.txt: Added.
+* http/tests/fullscreen/fullscreenelement-same-origin.html: Added.
+* http/tests/pointer-lock/pointerlockelement-different-origin-expected.txt: Added.
+* http/tests/pointer-lock/pointerlockelement-different-origin.html: Added.
+* http/tests/pointer-lock/pointerlockelement-same-origin-expected.txt: Added.
+* http/tests/pointer-lock/pointerlockelement-same-origin.html: Added.
+* http/tests/resources/pointer-lock/iframe-common.js: Added.
+(thisFileName):
+(window.onmessage):
+* http/tests/resources/pointer-lock/inner-iframe.html: Added.
+* http/tests/resources/pointer-lock/pointer-lock-test-harness.js:
+(runOnKeyPress.keypressHandler):
+* pointer-lock/locked-element-iframe-removed-from-dom-expected.txt:
+* pointer-lock/locked-element-iframe-removed-from-dom.html:
+* pointer-lock/locked-element-removed-from-dom-expected.txt:
+* pointer-lock/locked-element-removed-from-dom.html:
+

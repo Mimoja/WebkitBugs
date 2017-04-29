@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r87098 | simonjam@chromium.org | 2011-05-23 23:29:18 +0200 (Mo, 23. Mai 2011) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/XMLDocumentParserLibxml2.cpp
+   M /trunk/Source/WebCore/dom/XMLDocumentParserQt.cpp
+
+2011-05-23  James Simonsen  <simonjam@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Convert raw pointer to RefPtr.
+        https://bugs.webkit.org/show_bug.cgi?id=61196
+
+        * dom/XMLDocumentParserLibxml2.cpp:
+        (WebCore::XMLDocumentParser::endElementNs):
+        * dom/XMLDocumentParserQt.cpp:
+        (WebCore::XMLDocumentParser::parseEndElement):
+

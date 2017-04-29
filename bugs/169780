@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r214071 | mark.lam@apple.com | 2017-03-16 22:53:33 +0100 (Do, 16. Mär 2017) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGOperations.cpp
+   M /trunk/Source/JavaScriptCore/dfg/DFGSpeculativeJIT.cpp
+   M /trunk/Source/JavaScriptCore/ftl/FTLLowerDFGToB3.cpp
+   M /trunk/Source/JavaScriptCore/ftl/FTLOperations.cpp
+   M /trunk/Source/JavaScriptCore/llint/LLIntSlowPaths.cpp
+   M /trunk/Source/JavaScriptCore/runtime/CommonSlowPaths.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSGlobalObject.cpp
+
+The new array with spread operation needs to check for length overflows.
+https://bugs.webkit.org/show_bug.cgi?id=169780
+<rdar://problem/31072182>
+
+Reviewed by Filip Pizlo.
+
+* dfg/DFGOperations.cpp:
+* dfg/DFGSpeculativeJIT.cpp:
+(JSC::DFG::SpeculativeJIT::compileNewArrayWithSpread):
+* ftl/FTLLowerDFGToB3.cpp:
+(JSC::FTL::DFG::LowerDFGToB3::compileNewArrayWithSpread):
+* ftl/FTLOperations.cpp:
+(JSC::FTL::operationMaterializeObjectInOSR):
+* llint/LLIntSlowPaths.cpp:
+* runtime/CommonSlowPaths.cpp:
+(JSC::SLOW_PATH_DECL):
+* runtime/JSGlobalObject.cpp:
+
+
+

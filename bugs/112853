@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r146470 | jchaffraix@webkit.org | 2013-03-21 16:09:49 +0100 (Do, 21. Mär 2013) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-grid-layout/grid-item-negative-indexes-expected.txt
+   A /trunk/LayoutTests/fast/css-grid-layout/grid-item-negative-indexes.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderGrid.cpp
+
+[CSS Grid Layout] OOB access in RenderGrid with a grid item with negative position index
+https://bugs.webkit.org/show_bug.cgi?id=112853
+
+Reviewed by Tony Chang.
+
+Source/WebCore:
+
+This issue was caused by us casting a negative int to a size_t by mistake. This
+would make us not size the grid properly thus yielding to OOB access during the
+rest of the layout.
+
+Test: fast/css-grid-layout/grid-item-negative-indexes.html
+
+* rendering/RenderGrid.cpp:
+(WebCore::estimatedGridSizeForPosition):
+Added this helper function to do the proper estimation and checks that our
+position can be represented by a size_t.
+
+(WebCore::RenderGrid::maximumIndexInDirection):
+Updated to use estimatedGridSizeForPosition.
+
+LayoutTests:
+
+* fast/css-grid-layout/grid-item-negative-indexes-expected.txt: Added.
+* fast/css-grid-layout/grid-item-negative-indexes.html: Added.
+
+

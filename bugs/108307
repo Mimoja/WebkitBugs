@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r143312 | mihnea@adobe.com | 2013-02-19 10:56:15 +0100 (Di, 19. Feb 2013) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/positioned-object-inline-cb-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/positioned-object-inline-cb-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderBoxModelObject.h
+
+CSSRegions: crash positioned object with inline containing block in flow thread
+https://bugs.webkit.org/show_bug.cgi?id=108307
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+The fix for https://bugs.webkit.org/show_bug.cgi?id=69896 allowed positioned blocks work
+with variable width regions. However, the information needed for that is available only
+when the container used for positioning is a block.
+
+This patch ensures we are using this solution only when the container used for positioning
+is a block. This needs to be revisited when we will extend support for other types of boxes
+as mentioned in RenderBox::renderBoxRegionInfo.
+
+Test: fast/regions/positioned-object-inline-cb-crash.html
+
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::renderBoxRegionInfo):
+(WebCore::RenderBox::containingBlockLogicalWidthForPositioned):
+(WebCore::RenderBox::computePositionedLogicalWidth): Make sure we are using containerBlocks
+that are blocks. Add an assert that the type of containerBlock we are using can have
+computed RenderBoxRegionInfo.
+(WebCore::RenderBox::computePositionedLogicalHeight):
+* rendering/RenderBoxModelObject.h:
+(WebCore::RenderBoxModelObject::canHaveBoxInfoInRegion): This helper method
+will return the boxes that may have computed RenderBoxRegionInfo. Currently,
+returns true for blocks only.
+
+LayoutTests:
+
+* fast/regions/positioned-object-inline-cb-crash-expected.txt: Added.
+* fast/regions/positioned-object-inline-cb-crash.html: Added.
+
+

@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r158802 | rniwa@webkit.org | 2013-11-07 01:20:03 +0100 (Do, 07. Nov 2013) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/RangeInputType.cpp
+   M /trunk/Source/WebCore/html/shadow/SliderThumbElement.cpp
+
+Crash in SliderThumbElement::dragFrom
+https://bugs.webkit.org/show_bug.cgi?id=123873
+
+Reviewed by Sam Weinig.
+
+Moved Ref.
+
+* html/RangeInputType.cpp:
+(WebCore::RangeInputType::handleMouseDownEvent):
+* html/shadow/SliderThumbElement.cpp:
+(WebCore::SliderThumbElement::dragFrom):
+
+

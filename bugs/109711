@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r143347 | jsbell@chromium.org | 2013-02-19 18:42:55 +0100 (Di, 19. Feb 2013) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBLevelDBCoding.cpp
+   M /trunk/Source/WebCore/Modules/indexeddb/IDBLevelDBCoding.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/tests/IDBLevelDBCodingTest.cpp
+
+IndexedDB: additional checks on LevelDB decoding
+https://bugs.webkit.org/show_bug.cgi?id=109711
+
+Reviewed by Tony Chang.
+
+Source/WebCore:
+
+Watch out for decoding errors caused by corrupted data, and exit various
+decode/compare operations earlier.
+
+Covered by existing LayoutTests and Chromium's webkit_unit_tests
+
+* Modules/indexeddb/IDBLevelDBCoding.cpp:
+(WebCore::IDBLevelDBCoding::decodeStringWithLength): Bail if length is negative.
+(WebCore::IDBLevelDBCoding::compareEncodedStringsWithLength): Distinguish error case.
+(WebCore::IDBLevelDBCoding::extractEncodedIDBKey): Bail if length is negative.
+(WebCore::IDBLevelDBCoding::compareEncodedIDBKeys): Distinguish error case.
+(WebCore::IDBLevelDBCoding::compare): Plumb through "ok".
+(WebCore::IDBLevelDBCoding::ObjectStoreDataKey::compare): Ditto.
+(WebCore::IDBLevelDBCoding::ExistsEntryKey::compare): Ditto.
+(WebCore::IDBLevelDBCoding::IndexDataKey::compare): Ditto.
+* Modules/indexeddb/IDBLevelDBCoding.h: Updated method signatures.
+
+Source/WebKit/chromium:
+
+* tests/IDBLevelDBCodingTest.cpp: Update test with new method signatures.
+
+

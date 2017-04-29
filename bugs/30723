@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r50072 | ap@apple.com | 2009-10-26 18:26:26 +0100 (Mo, 26. Okt 2009) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/escape-form-data-field-names-expected.txt
+   A /trunk/LayoutTests/http/tests/security/escape-form-data-field-names.html
+   A /trunk/LayoutTests/http/tests/security/resources/escape-form-data-field-names.cgi
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/network/FormDataBuilder.cpp
+
+        Reviewed by Adam Barth and Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=30723
+        <rdar://problem/6189415> Input names added to multipart/form-data headers need to be escaped.
+
+        Test: http/tests/security/escape-form-data-field-names.html
+
+        * platform/network/FormDataBuilder.cpp:
+        (WebCore::appendQuotedString):
+        (WebCore::FormDataBuilder::beginMultiPartHeader):
+        (WebCore::FormDataBuilder::addFilenameToMultiPartHeader):
+        Percent-escape line breaks and quotation marks.
+
+
+

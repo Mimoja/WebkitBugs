@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r144241 | kbr@google.com | 2013-02-27 23:44:29 +0100 (Mi, 27. Feb 2013) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/webgl/resources/webgl_test_files/conformance/extensions/webgl-depth-texture.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/canvas/WebGLRenderingContext.cpp
+
+Insufficient validation when uploading depth textures to WebGL
+https://bugs.webkit.org/show_bug.cgi?id=110931
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Updated webgl/conformance/extensions/webgl-depth-texture.html
+layout test with additional test cases.
+
+* html/canvas/WebGLRenderingContext.cpp:
+(WebCore):
+(WebCore::WebGLRenderingContext::texImage2D):
+(WebCore::WebGLRenderingContext::texSubImage2DImpl):
+(WebCore::WebGLRenderingContext::texSubImage2D):
+    Check for valid format/type combinations, depth, and
+    depth+stencil formats when uploading HTML elements and
+    ImageData as textures.
+
+LayoutTests:
+
+Updated webgl/conformance/extensions/webgl-depth-texture.html
+layout test with additional test cases. These changes will be
+added to the Khronos repository.
+
+* webgl/resources/webgl_test_files/conformance/extensions/webgl-depth-texture.html:
+    Added more test cases.
+

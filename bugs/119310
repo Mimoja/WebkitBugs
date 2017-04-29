@@ -1,0 +1,63 @@
+------------------------------------------------------------------------
+r214255 | antti@apple.com | 2017-03-22 18:19:28 +0100 (Mi, 22. Mär 2017) | 46 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/DocumentRuleSets.cpp
+   M /trunk/Source/WebCore/css/DocumentRuleSets.h
+   M /trunk/Source/WebCore/css/ElementRuleCollector.cpp
+   M /trunk/Source/WebCore/css/RuleFeature.cpp
+   M /trunk/Source/WebCore/css/RuleFeature.h
+   M /trunk/Source/WebCore/css/RuleSet.cpp
+   M /trunk/Source/WebCore/css/RuleSet.h
+   M /trunk/Source/WebCore/css/StyleResolver.h
+   M /trunk/Source/WebCore/style/AttributeChangeInvalidation.cpp
+   M /trunk/Source/WebCore/style/IdChangeInvalidation.cpp
+   M /trunk/Source/WebCore/style/StyleSharingResolver.cpp
+
+Use AtomicString in RuleSet and RuleFeature
+https://bugs.webkit.org/show_bug.cgi?id=119310
+<rdar://problem/28214658>
+
+Reviewed by Andreas Kling.
+
+..instead of the plain AtomicStringImpl*. This introduces some ref churn but not too much.
+
+* css/DocumentRuleSets.cpp:
+(WebCore::DocumentRuleSets::ancestorClassRules):
+(WebCore::DocumentRuleSets::ancestorAttributeRulesForHTML):
+* css/DocumentRuleSets.h:
+* css/ElementRuleCollector.cpp:
+(WebCore::ElementRuleCollector::collectMatchingRules):
+(WebCore::ElementRuleCollector::collectMatchingShadowPseudoElementRules):
+* css/RuleFeature.cpp:
+(WebCore::RuleFeatureSet::recursivelyCollectFeaturesFromSelector):
+(WebCore::makeAttributeSelectorKey):
+(WebCore::RuleFeatureSet::collectFeatures):
+* css/RuleFeature.h:
+* css/RuleSet.cpp:
+(WebCore::RuleSet::addToRuleSet):
+(WebCore::rulesCountForName):
+(WebCore::RuleSet::addRule):
+* css/RuleSet.h:
+(WebCore::RuleSet::idRules):
+(WebCore::RuleSet::classRules):
+(WebCore::RuleSet::shadowPseudoElementRules):
+(WebCore::RuleSet::tagRules):
+* css/StyleResolver.h:
+(WebCore::StyleResolver::hasSelectorForAttribute):
+(WebCore::StyleResolver::hasSelectorForClass):
+(WebCore::StyleResolver::hasSelectorForId):
+* style/AttributeChangeInvalidation.cpp:
+(WebCore::Style::mayBeAffectedByAttributeChange):
+(WebCore::Style::AttributeChangeInvalidation::invalidateStyle):
+* style/IdChangeInvalidation.cpp:
+(WebCore::Style::mayBeAffectedByHostRules):
+(WebCore::Style::mayBeAffectedBySlottedRules):
+(WebCore::Style::IdChangeInvalidation::invalidateStyle):
+* style/StyleSharingResolver.cpp:
+(WebCore::Style::SharingResolver::resolve):
+(WebCore::Style::SharingResolver::canShareStyleWithElement):
+(WebCore::Style::SharingResolver::classNamesAffectedByRules):
+
+
+

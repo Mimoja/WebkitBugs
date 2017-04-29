@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r144790 | tony@chromium.org | 2013-03-05 20:41:55 +0100 (Di, 05. Mär 2013) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/range/slider-inline-crash-expected.txt
+   A /trunk/LayoutTests/fast/forms/range/slider-inline-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/shadow/SliderThumbElement.cpp
+
+Fix some crashes in render sliders
+https://bugs.webkit.org/show_bug.cgi?id=111458
+
+Reviewed by Ojan Vafai.
+
+Source/WebCore:
+
+Fix some cases where we assumed the renderer is a renderBox.
+
+Test: fast/forms/range/slider-inline-crash.html
+
+* html/shadow/SliderThumbElement.cpp:
+(WebCore::RenderSliderContainer::layout): Use renderBox() which will return 0 if the renderer is not a RenderBox.
+(WebCore::SliderThumbElement::setPositionFromPoint): Bail out early if renderBox() is 0.
+
+LayoutTests:
+
+* fast/forms/range/slider-inline-crash-expected.txt: Added.
+* fast/forms/range/slider-inline-crash.html: Added.
+
+

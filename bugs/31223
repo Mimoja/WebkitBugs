@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r72166 | antti@apple.com | 2010-11-17 04:24:52 +0100 (Mi, 17. Nov 2010) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/dom/script-tests/setPrimitiveValue-exceptions.js
+   M /trunk/LayoutTests/fast/dom/setPrimitiveValue-exceptions-expected.txt
+   M /trunk/LayoutTests/fast/dom/setPrimitiveValue.html
+   M /trunk/LayoutTests/platform/mac/fast/dom/setPrimitiveValue-expected.txt
+
+https://bugs.webkit.org/show_bug.cgi?id=31223
+Make primitive values immutable.
+        
+Patch by Antti Koivisto <koivisto@iki.fi> on 2010-11-16
+Reviewed by Adam Barth.
+
+Update test cases for behavior change and test computed style too. Note that there are some
+failures in the results demonstrating unrelated bugs in CSSPrimitiveValues.
+
+* fast/dom/script-tests/setPrimitiveValue-exceptions.js:
+(checkThrows):
+* fast/dom/setPrimitiveValue.html:
+* fast/dom/setPrimitiveValue-exceptions-expected.txt
+* fast/dom/setPrimitiveValue-expected.txt
+
+
+

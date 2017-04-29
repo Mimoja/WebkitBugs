@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r151986 | rniwa@webkit.org | 2013-06-26 12:49:02 +0200 (Mi, 26. Jun 2013) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/RadioInputType.cpp
+
+Use-after-free in RadioInputType::handleKeydownEvent
+https://bugs.webkit.org/show_bug.cgi?id=118035
+
+Reviewed by Kent Tamura.
+
+Use RefPtr for inputElement since setFocusedNode could blow it away.
+
+* html/RadioInputType.cpp:
+(WebCore::RadioInputType::handleKeydownEvent):
+
+

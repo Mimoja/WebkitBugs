@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r80144 | jschuh@chromium.org | 2011-03-02 19:42:22 +0100 (Mi, 02. Mär 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/css-keyframe-parent-expected.txt
+   A /trunk/LayoutTests/fast/css/css-keyframe-parent.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/WebKitCSSKeyframesRule.cpp
+
+2011-03-02  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        A WebKitCSSKeyframesRule object should set itself as the parent for inserted rules
+        https://bugs.webkit.org/show_bug.cgi?id=55488
+
+        Test: fast/css/css-keyframe-parent.html
+
+        * css/WebKitCSSKeyframesRule.cpp:
+        (WebCore::WebKitCSSKeyframesRule::append):
+2011-03-02  Sergey Glazunov  <serg.glazunov@gmail.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        A WebKitCSSKeyframesRule object should set itself as the parent for inserted rules
+        https://bugs.webkit.org/show_bug.cgi?id=55488
+
+        * fast/css/css-keyframe-parent-expected.txt: Added.
+        * fast/css/css-keyframe-parent.html: Added.
+
+

@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r34427 | abarth@webkit.org | 2008-06-07 21:02:00 +0200 (Sa, 07. Jun 2008) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/resources/iframe-for-synchronous-form.html
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-synchronous-form-expected.txt
+   A /trunk/LayoutTests/http/tests/security/xss-DENIED-synchronous-form.html
+
+2008-06-07  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam.
+
+        Tests for https://bugs.webkit.org/show_bug.cgi?id=17911
+
+        * http/tests/security/resources/iframe-for-synchronous-form.html: Added.
+        * http/tests/security/xss-DENIED-synchronous-form-expected.txt: Added.
+        * http/tests/security/xss-DENIED-synchronous-form.html: Added.
+
+
+

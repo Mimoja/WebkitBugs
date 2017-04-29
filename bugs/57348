@@ -1,0 +1,50 @@
+------------------------------------------------------------------------
+r82503 | inferno@chromium.org | 2011-03-31 00:00:06 +0200 (Do, 31. Mär 2011) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/remove-format-non-html-element-crash-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/remove-format-non-html-element-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSStyleSelector.cpp
+   M /trunk/Source/WebCore/editing/ApplyStyleCommand.cpp
+   M /trunk/Source/WebCore/editing/DeleteButtonController.cpp
+   M /trunk/Source/WebCore/editing/EditingStyle.cpp
+   M /trunk/Source/WebCore/editing/Editor.cpp
+   M /trunk/Source/WebCore/editing/FormatBlockCommand.cpp
+
+2011-03-30  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        Tests that we do not crash when removing inline style
+        from a node that is not a html element.
+        https://bugs.webkit.org/show_bug.cgi?id=57348
+
+        * editing/execCommand/remove-format-non-html-element-crash-expected.txt: Added.
+        * editing/execCommand/remove-format-non-html-element-crash.html: Added.
+2011-03-30  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        Fix wrong type assumptions in editing code. Move code
+        from ASSERTs to hard checks.
+        https://bugs.webkit.org/show_bug.cgi?id=57348
+
+        Test: editing/execCommand/remove-format-non-html-element-crash.html
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::applyProperty):
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::getRGBAFontColor):
+        (WebCore::ApplyStyleCommand::pushDownInlineStyleAroundNode):
+        * editing/DeleteButtonController.cpp:
+        (WebCore::enclosingDeletableElement):
+        * editing/EditingStyle.cpp:
+        (WebCore::EditingStyle::textDirection):
+        (WebCore::EditingStyle::prepareToApplyAt):
+        * editing/Editor.cpp:
+        (WebCore::Editor::textDirectionForSelection):
+        * editing/FormatBlockCommand.cpp:
+        (WebCore::FormatBlockCommand::elementForFormatBlockCommand):
+
+

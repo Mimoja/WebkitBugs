@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r111030 | dmazzoni@google.com | 2012-03-16 19:23:25 +0100 (Fr, 16. Mär 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/accessibility/input-file-causes-crash-expected.txt
+   A /trunk/LayoutTests/accessibility/input-file-causes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+
+File input control accessibility can cause a crash
+https://bugs.webkit.org/show_bug.cgi?id=80896
+
+Reviewed by Chris Fleizach.
+
+Source/WebCore:
+
+Test: accessibility/input-file-causes-crash.html
+
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::textUnderElement):
+
+LayoutTests:
+
+* accessibility/input-file-causes-crash-expected.txt: Added.
+* accessibility/input-file-causes-crash.html: Added.
+
+

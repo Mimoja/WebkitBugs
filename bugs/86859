@@ -1,0 +1,200 @@
+------------------------------------------------------------------------
+r119192 | commit-queue@webkit.org | 2012-06-01 06:00:31 +0200 (Fr, 01. Jun 2012) | 160 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/mac/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.exp.in
+   M /trunk/Source/WebCore/editing/SpellChecker.cpp
+   M /trunk/Source/WebCore/editing/SpellChecker.h
+   M /trunk/Source/WebCore/loader/EmptyClients.h
+   M /trunk/Source/WebCore/platform/text/TextCheckerClient.h
+   M /trunk/Source/WebCore/platform/text/TextChecking.h
+   M /trunk/Source/WebKit/blackberry/ChangeLog
+   M /trunk/Source/WebKit/blackberry/WebCoreSupport/EditorClientBlackBerry.cpp
+   M /trunk/Source/WebKit/blackberry/WebCoreSupport/EditorClientBlackBerry.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/EditorClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/EditorClientImpl.h
+   M /trunk/Source/WebKit/chromium/src/WebTextCheckingCompletionImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebTextCheckingCompletionImpl.h
+   M /trunk/Source/WebKit/efl/ChangeLog
+   M /trunk/Source/WebKit/efl/WebCoreSupport/EditorClientEfl.h
+   M /trunk/Source/WebKit/gtk/ChangeLog
+   M /trunk/Source/WebKit/gtk/WebCoreSupport/TextCheckerClientGtk.h
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebEditorClient.h
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebEditorClient.mm
+   M /trunk/Source/WebKit/qt/ChangeLog
+   M /trunk/Source/WebKit/qt/WebCoreSupport/TextCheckerClientQt.h
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebCoreSupport/WebEditorClient.h
+   M /trunk/Source/WebKit/wince/ChangeLog
+   M /trunk/Source/WebKit/wince/WebCoreSupport/EditorClientWinCE.h
+   M /trunk/Source/WebKit/wx/ChangeLog
+   M /trunk/Source/WebKit/wx/WebKitSupport/EditorClientWx.h
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebEditorClient.cpp
+   M /trunk/Source/WebKit2/WebProcess/WebCoreSupport/WebEditorClient.h
+
+REGRESSION(r117572): editing/spelling/spellcheck-async-remove-frame.html crashes on Mac
+https://bugs.webkit.org/show_bug.cgi?id=86859
+
+Source/WebCore:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+The test tries to reach an invalid SpellChecker object. Such an access should be guarded
+beforehand.
+
+Asynchronous spellchecking can return results after originated
+frame is gone, which triggered an invalid access to the dead spellchecker
+object. This chagne prevents it by marking request objects from
+the spellchecker as invalid:
+
+- Originally TextCheckerClient API was passed a SpellCheker object.
+  This change abstracted it behind TextCheckingRequest interface,
+  didSucceed() and didCancel() method specifically.
+- TextCheckingRequest was turned from a plain old object into
+  a refcounted abstract class, which is now subclassed by SpellCheckRequest.
+- SpellChecker now marks pending SpellCheckRequest objects as invalid
+  on its destructor.
+
+Test: editing/spelling/spellcheck-async-remove-frame.html
+
+* WebCore.exp.in:
+* editing/SpellChecker.cpp:
+(WebCore::SpellCheckRequest::SpellCheckRequest):
+(WebCore::SpellCheckRequest::create):
+(WebCore::SpellCheckRequest::didSucceed):
+(WebCore):
+(WebCore::SpellCheckRequest::didCancel):
+(WebCore::SpellCheckRequest::wasRequestedBy):
+(WebCore::SpellCheckRequest::requesterDestroyed):
+(WebCore::SpellChecker::~SpellChecker):
+(WebCore::SpellChecker::requestCheckingFor):
+(WebCore::SpellChecker::invokeRequest):
+(WebCore::SpellChecker::didCheckSucceed):
+(WebCore::SpellChecker::didCheckCancel):
+* editing/SpellChecker.h:
+(WebCore):
+(SpellCheckRequest):
+(WebCore::SpellCheckRequest::isStarted):
+(SpellChecker):
+* loader/EmptyClients.h:
+(WebCore::EmptyTextCheckerClient::requestCheckingOfString):
+* platform/text/TextCheckerClient.h:
+(TextCheckerClient):
+* platform/text/TextChecking.h:
+(GrammarDetail):
+(TextCheckingResult):
+(TextCheckingRequest):
+(WebCore::TextCheckingRequest::~TextCheckingRequest):
+
+Source/WebKit/blackberry:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientBlackBerry.cpp:
+(WebCore::EditorClientBlackBerry::requestCheckingOfString):
+* WebCoreSupport/EditorClientBlackBerry.h:
+(EditorClientBlackBerry):
+
+Source/WebKit/chromium:
+
+Removed a port specific fix which was introduced at r117572.
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* src/EditorClientImpl.cpp:
+(WebKit::EditorClientImpl::frameWillDetachPage):
+(WebKit::EditorClientImpl::requestCheckingOfString):
+* src/EditorClientImpl.h:
+(WebCore):
+(EditorClientImpl):
+* src/WebTextCheckingCompletionImpl.cpp:
+(WebKit::WebTextCheckingCompletionImpl::didFinishCheckingText):
+(WebKit::WebTextCheckingCompletionImpl::didCancelCheckingText):
+* src/WebTextCheckingCompletionImpl.h:
+(WebKit::WebTextCheckingCompletionImpl::WebTextCheckingCompletionImpl):
+(WebTextCheckingCompletionImpl):
+
+Source/WebKit/efl:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientEfl.h:
+(WebCore::EditorClientEfl::requestCheckingOfString):
+
+Source/WebKit/gtk:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/TextCheckerClientGtk.h:
+(WebKit::TextCheckerClientGtk::requestCheckingOfString):
+
+Source/WebKit/mac:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/WebEditorClient.h:
+* WebCoreSupport/WebEditorClient.mm:
+(-[WebEditorSpellCheckResponder initWithClient:sequence:results:]):
+(-[WebEditorSpellCheckResponder perform]):
+(WebEditorClient::didCheckSucceeded):
+(WebEditorClient::requestCheckingOfString):
+
+Source/WebKit/qt:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/TextCheckerClientQt.h:
+(WebCore::TextCheckerClientQt::requestCheckingOfString):
+
+Source/WebKit/win:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/WebEditorClient.h:
+(WebEditorClient::requestCheckingOfString):
+
+Source/WebKit/wince:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientWinCE.h:
+(WebKit::EditorClientWinCE::requestCheckingOfString):
+
+Source/WebKit/wx:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebKitSupport/EditorClientWx.h:
+(WebCore::EditorClientWx::requestCheckingOfString):
+
+Source/WebKit2:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* WebProcess/WebCoreSupport/WebEditorClient.cpp:
+(WebKit::WebEditorClient::requestCheckingOfString):
+* WebProcess/WebCoreSupport/WebEditorClient.h:
+
+LayoutTests:
+
+Patch by Hajime Morrita <morrita@chromium.org> on 2012-05-31
+Reviewed by Ryosuke Niwa.
+
+* platform/mac/Skipped: Unskipped the test.
+

@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r33380 | ap@webkit.org | 2008-05-13 20:36:58 +0200 (Di, 13. Mai 2008) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/encoding/bom-in-content-expected.txt
+   A /trunk/LayoutTests/fast/encoding/bom-in-content-utf16-expected.txt
+   A /trunk/LayoutTests/fast/encoding/bom-in-content-utf16.html
+   A /trunk/LayoutTests/fast/encoding/bom-in-content.html
+   A /trunk/LayoutTests/http/tests/incremental/resources
+   A /trunk/LayoutTests/http/tests/incremental/resources/slow-utf8-css.pl (von /trunk/LayoutTests/http/tests/incremental/slow-utf8-css.pl:33378)
+   A /trunk/LayoutTests/http/tests/incremental/slow-utf8-css-expected.txt
+   A /trunk/LayoutTests/http/tests/incremental/slow-utf8-css.html
+   D /trunk/LayoutTests/http/tests/incremental/slow-utf8-css.pl
+   D /trunk/LayoutTests/platform/mac/http/tests/incremental
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/text/TextCodec.cpp
+   M /trunk/WebCore/platform/text/TextCodec.h
+   M /trunk/WebCore/platform/text/TextCodecICU.cpp
+   M /trunk/WebCore/platform/text/TextCodecUTF16.cpp
+   M /trunk/WebCore/platform/text/TextDecoder.cpp
+   M /trunk/WebCore/platform/text/mac/TextCodecMac.cpp
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=18681
+        <rdar://problem/5888130> WebKit should not remove BOM characters from content.
+
+        We were only trying to match Firefox, and it doesn't do this any more.
+
+        Tests: fast/encoding/bom-in-content.html
+               fast/encoding/bom-in-content-utf16.html
+
+        * platform/text/TextDecoder.cpp: (WebCore::TextDecoder::checkForBOM): Skip the BOM if it's
+        at the start of input stream.
+
+        * platform/text/TextCodec.cpp:
+        * platform/text/TextCodec.h:
+        * platform/text/TextCodecICU.cpp:
+        (WebCore::TextCodecICU::decode):
+        * platform/text/TextCodecUTF16.cpp:
+        (WebCore::TextCodecUTF16::decode):
+        * platform/text/mac/TextCodecMac.cpp:
+        (WebCore::TextCodecMac::decode):
+        Don't remove the BOM.
+
+
+

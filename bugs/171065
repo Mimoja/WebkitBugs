@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r215666 | zalan@apple.com | 2017-04-22 16:34:35 +0200 (Sa, 22. Apr 2017) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/SimpleLineLayout.cpp
+   M /trunk/Source/WebCore/rendering/SimpleLineLayoutTextFragmentIterator.h
+
+Do not measure large chunk of text repeatedly during mid-word breaking.
+https://bugs.webkit.org/show_bug.cgi?id=171065
+<rdar://problem/31630245>
+
+Reviewed by Antti Koivisto.
+
+This patch reduces redundant text measuring for mid-word breaking by
+1. Adjusting the range for the binary search when the text fragment is longer than the available width
+2. Preserving the width value for the left side of the split fragment (computed during the binary search) so
+that when the fragment is being split we don't need to re-measure it
+3. Checking if the right side fits the next line and only adjust the width (by re-measuring the text) for
+kerning/ligature if it does (if it does not fit, we'll end up re-measuring some part of it
+during the next split)
+
+Performance test has already been added.
+
+* rendering/SimpleLineLayout.cpp:
+(WebCore::SimpleLineLayout::hyphenPositionForFragment):
+(WebCore::SimpleLineLayout::split): binary search with adjusting the range and preserving the width for the left side.
+(WebCore::SimpleLineLayout::splitFragmentToFitLine):
+(WebCore::SimpleLineLayout::FragmentForwardIterator::FragmentForwardIterator): Deleted.
+(WebCore::SimpleLineLayout::FragmentForwardIterator::operator++): Deleted.
+(WebCore::SimpleLineLayout::FragmentForwardIterator::operator!=): Deleted.
+(WebCore::SimpleLineLayout::FragmentForwardIterator::operator==): Deleted.
+(WebCore::SimpleLineLayout::FragmentForwardIterator::operator*): Deleted.
+(WebCore::SimpleLineLayout::begin): Deleted.
+(WebCore::SimpleLineLayout::end): Deleted.
+* rendering/SimpleLineLayoutTextFragmentIterator.h:
+(WebCore::SimpleLineLayout::TextFragmentIterator::TextFragment::split):
+(WebCore::SimpleLineLayout::TextFragmentIterator::TextFragment::splitWithHyphen):
+

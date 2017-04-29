@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r142358 | tkent@chromium.org | 2013-02-09 16:25:19 +0100 (Sa, 09. Feb 2013) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLAnchorElement/anchor-ismap-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLAnchorElement/anchor-ismap-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLAnchorElement.cpp
+
+Fix crash by img[ismap] with content property
+https://bugs.webkit.org/show_bug.cgi?id=108702
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/dom/HTMLAnchorElement/anchor-ismap-crash.html
+
+* html/HTMLAnchorElement.cpp:
+(WebCore::appendServerMapMousePosition):
+Check if the renderer of an img element is RenderImage.
+
+LayoutTests:
+
+* fast/dom/HTMLAnchorElement/anchor-ismap-crash-expected.txt: Added.
+* fast/dom/HTMLAnchorElement/anchor-ismap-crash.html: Added.
+

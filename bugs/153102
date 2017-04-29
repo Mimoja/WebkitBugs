@@ -1,0 +1,73 @@
+------------------------------------------------------------------------
+r195075 | dbates@webkit.org | 2016-01-14 22:42:35 +0100 (Do, 14. Jan 2016) | 48 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Geolocation/dataURL-getCurrentPosition-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/dataURL-getCurrentPosition.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/dataURL-watchPosition-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/dataURL-watchPosition.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/srcdoc-getCurrentPosition-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/srcdoc-getCurrentPosition.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/srcdoc-watchPosition-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/srcdoc-watchPosition.html
+   A /trunk/LayoutTests/http/tests/security/resources/checkThatPositionErrorCallbackIsCalledWithPositionUnavailableForGeolocationMethod.js
+   A /trunk/LayoutTests/http/tests/security/resources/sandboxed-iframe-geolocation-getCurrentPosition.html
+   A /trunk/LayoutTests/http/tests/security/resources/sandboxed-iframe-geolocation-watchPosition.html
+   A /trunk/LayoutTests/http/tests/security/sandboxed-iframe-geolocation-getCurrentPosition-expected.txt
+   A /trunk/LayoutTests/http/tests/security/sandboxed-iframe-geolocation-getCurrentPosition.html
+   A /trunk/LayoutTests/http/tests/security/sandboxed-iframe-geolocation-watchPosition-expected.txt
+   A /trunk/LayoutTests/http/tests/security/sandboxed-iframe-geolocation-watchPosition.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/geolocation/Geolocation.cpp
+   M /trunk/Source/WebCore/Modules/geolocation/Geolocation.h
+   M /trunk/Source/WebCore/page/SecurityOrigin.h
+
+Disallow use of Geolocation service from unique origins
+https://bugs.webkit.org/show_bug.cgi?id=153102
+<rdar://problem/23055645>
+
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore:
+
+Tests: fast/dom/Geolocation/dataURL-getCurrentPosition.html
+       fast/dom/Geolocation/dataURL-watchPosition.html
+       fast/dom/Geolocation/srcdoc-getCurrentPosition.html
+       fast/dom/Geolocation/srcdoc-watchPosition.html
+       http/tests/security/sandboxed-iframe-geolocation-getCurrentPosition.html
+       http/tests/security/sandboxed-iframe-geolocation-watchPosition.html
+
+* Modules/geolocation/Geolocation.cpp:
+(WebCore::Geolocation::securityOrigin): Convenience function to get the SecurityOrigin object
+associated with this script execution context.
+(WebCore::Geolocation::startRequest): Notify requester POSITION_UNAVAILABLE when requested
+from a document with a unique origin.
+* Modules/geolocation/Geolocation.h:
+* page/SecurityOrigin.h:
+(WebCore::SecurityOrigin::canRequestGeolocation): Added.
+
+LayoutTests:
+
+* fast/dom/Geolocation/dataURL-getCurrentPosition-expected.txt: Added.
+* fast/dom/Geolocation/dataURL-getCurrentPosition.html: Added.
+* fast/dom/Geolocation/dataURL-watchPosition-expected.txt: Added.
+* fast/dom/Geolocation/dataURL-watchPosition.html: Added.
+* fast/dom/Geolocation/srcdoc-getCurrentPosition-expected.txt: Added.
+* fast/dom/Geolocation/srcdoc-getCurrentPosition.html: Added.
+* fast/dom/Geolocation/srcdoc-watchPosition-expected.txt: Added.
+* fast/dom/Geolocation/srcdoc-watchPosition.html: Added.
+* http/tests/security/resources/checkThatPositionErrorCallbackIsCalledWithPositionUnavailableForGeolocationMethod.js: Added.
+(done):
+(logMessage):
+(didReceivePosition):
+(didReceiveError):
+(checkThatPositionErrorCallbackIsCalledWithPositionUnavailableForGeolocationMethod):
+(markupToCheckThatPositionErrorCallbackIsCalledWithPositionUnavailableForGeolocationMethod):
+(dataURLToCheckThatPositionErrorCallbackIsCalledWithPositionUnavailableForGeolocationMethod):
+* http/tests/security/resources/sandboxed-iframe-geolocation-getCurrentPosition.html: Added.
+* http/tests/security/resources/sandboxed-iframe-geolocation-watchPosition.html: Added.
+* http/tests/security/sandboxed-iframe-geolocation-getCurrentPosition-expected.txt: Added.
+* http/tests/security/sandboxed-iframe-geolocation-getCurrentPosition.html: Added.
+* http/tests/security/sandboxed-iframe-geolocation-watchPosition-expected.txt: Added.
+* http/tests/security/sandboxed-iframe-geolocation-watchPosition.html: Added.
+

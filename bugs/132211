@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r167832 | oliver@apple.com | 2014-04-26 01:14:16 +0200 (Sa, 26. Apr 2014) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/regress/polymorphic-array-call-expected.txt
+   A /trunk/LayoutTests/js/regress/polymorphic-array-call.html
+   A /trunk/LayoutTests/js/regress/script-tests/polymorphic-array-call.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/jit/JITCall32_64.cpp
+
+Need earlier cell test
+https://bugs.webkit.org/show_bug.cgi?id=132211
+
+Reviewed by Mark Lam.
+
+Source/JavaScriptCore:
+Move cell test to before the function call repatch
+location, as the repatch logic for 32bit assumes that the
+caller will already have performed a cell check.
+
+* jit/JITCall32_64.cpp:
+(JSC::JIT::compileOpCall):
+
+LayoutTests:
+Tests
+
+* js/regress/polymorphic-array-call-expected.txt: Added.
+* js/regress/polymorphic-array-call.html: Added.
+* js/regress/script-tests/polymorphic-array-call.js: Added.
+(func.C.this.m):
+(func.C):
+(func):
+

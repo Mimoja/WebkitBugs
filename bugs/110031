@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r194898 | antti@apple.com | 2016-01-12 18:31:02 +0100 (Di, 12. Jan 2016) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/loader/cache-encoding-expected.txt
+   A /trunk/LayoutTests/fast/loader/cache-encoding.html
+   A /trunk/LayoutTests/fast/loader/resources/success.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedResourceLoader.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResourceLoader.h
+
+Don't reuse memory cache entries with different charset
+https://bugs.webkit.org/show_bug.cgi?id=110031
+Source/WebCore:
+
+rdar://problem/13666418
+
+Reviewed by Andreas Kling.
+
+Test: fast/loader/cache-encoding.html
+
+* loader/cache/CachedResourceLoader.cpp:
+(WebCore::CachedResourceLoader::requestResource):
+(WebCore::logResourceRevalidationDecision):
+(WebCore::CachedResourceLoader::determineRevalidationPolicy):
+
+    Pass full CachedResourceRequest to the function.
+    If charset differs don't reuse the cache entry.
+
+* loader/cache/CachedResourceLoader.h:
+
+LayoutTests:
+
+
+Reviewed by Andreas Kling.
+
+* fast/loader/cache-encoding-expected.txt: Added.
+* fast/loader/cache-encoding.html: Added.
+* fast/loader/resources/success.js: Added.
+
+
+

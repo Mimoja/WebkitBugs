@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r112323 | adamk@chromium.org | 2012-03-28 00:13:06 +0200 (Mi, 28. Mär 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/insertBefore-refChild-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/insertBefore-refChild-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+Hold a reference to refChild in insertBefore before calling collectChildrenAndRemoveFromOldParent
+https://bugs.webkit.org/show_bug.cgi?id=82377
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+This fixes a regression from r111925.
+
+Test: fast/dom/insertBefore-refChild-crash.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::insertBefore): Move the 'next' RefPtr above the call to
+collectChildrenAndRemoveFromOldParent and rename refChildPreviousSibling
+to 'prev' (matching appendChild and replaceChild).
+
+LayoutTests:
+
+* fast/dom/insertBefore-refChild-crash-expected.txt: Added.
+* fast/dom/insertBefore-refChild-crash.html: Added.
+
+

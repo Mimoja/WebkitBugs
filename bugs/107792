@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r140892 | haraken@chromium.org | 2013-01-26 02:38:05 +0100 (Sa, 26. Jan 2013) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/intents/Intent.h
+   M /trunk/Source/WebCore/Modules/intents/IntentRequest.cpp
+   M /trunk/Source/WebCore/Modules/intents/IntentRequest.h
+   M /trunk/Source/WebCore/Modules/intents/IntentResultCallback.h
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorV8.pm
+   M /trunk/Source/WebCore/bindings/scripts/test/V8/V8TestSerializedScriptValueInterface.cpp
+   M /trunk/Source/WebCore/dom/MessagePortChannel.h
+
+Keep a RefPtr<SerializedScriptValue*> when we call serialize()/deserialize() in code generators
+https://bugs.webkit.org/show_bug.cgi?id=107902
+
+Reviewed by Abhishek Arya.
+
+If you use a raw SerializedScriptValue* for serialize()/deserialize(),
+it can potentially cause a use-after-free. This is because serialize()/
+deserialize() can destruct a RefPtr of the SerializedScriptValue*,
+depending on data that is serialized/deserialized. So we should keep a
+RefPtr<SerializedScriptValue*> when we call serialize()/deserialize().
+(See https://bugs.webkit.org/show_bug.cgi?id=107792 for more details.)
+
+No tests. This is just a just-in-case fix.
+
+* Modules/intents/Intent.h:
+(WebCore::Intent::data):
+* Modules/intents/IntentRequest.cpp:
+(WebCore::IntentRequest::postResult):
+(WebCore::IntentRequest::postFailure):
+* Modules/intents/IntentRequest.h:
+(IntentRequest):
+* Modules/intents/IntentResultCallback.h:
+(IntentResultCallback):
+* bindings/scripts/CodeGeneratorJS.pm:
+(GetNativeTypeForCallbacks):
+* bindings/scripts/CodeGeneratorV8.pm:
+(GenerateNormalAttrGetter):
+(GetNativeTypeForCallbacks):
+* bindings/scripts/test/V8/V8TestSerializedScriptValueInterface.cpp:
+(WebCore::TestSerializedScriptValueInterfaceV8Internal::cachedValueAttrGetter):
+(WebCore::TestSerializedScriptValueInterfaceV8Internal::cachedReadonlyValueAttrGetter):
+* dom/MessagePortChannel.h:
+(WebCore::MessagePortChannel::EventData::message):
+
+

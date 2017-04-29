@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r57224 | abarth@webkit.org | 2010-04-07 21:49:20 +0200 (Mi, 07. Apr 2010) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/constructors
+   A /trunk/LayoutTests/fast/constructors/constructor-as-function-crash-expected.txt
+   A /trunk/LayoutTests/fast/constructors/constructor-as-function-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/v8/custom/V8WebKitPointConstructor.cpp
+
+2010-04-07  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Make sure that calling bindings constructors as function does not result in crash.
+
+        * fast/constructors: Added.
+        * fast/constructors/constructor-as-function-crash-expected.txt: Added.
+        * fast/constructors/constructor-as-function-crash.html: Added.
+2010-04-07  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        [V8] Add a missing check for constructor call in WebKitPointConstructor.
+        https://bugs.webkit.org/show_bug.cgi?id=37210
+
+        Test: fast/constructors/constructor-as-function-crash.html
+
+        * bindings/v8/custom/V8WebKitPointConstructor.cpp:
+        (WebCore::V8WebKitPoint::constructorCallback): Added a check for constructor call.
+

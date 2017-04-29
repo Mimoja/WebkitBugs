@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r77144 | inferno@chromium.org | 2011-01-31 20:00:34 +0100 (Mo, 31. Jan 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/textarea-node-removed-from-document-crash-expected.txt
+   A /trunk/LayoutTests/fast/forms/textarea-node-removed-from-document-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTextControlMultiLine.cpp
+
+2011-01-31  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Check the textarea node still exists in document before casting
+        it to HTMLTextAreaElement.
+        https://bugs.webkit.org/show_bug.cgi?id=53429
+
+        Test: fast/forms/textarea-node-removed-from-document-crash.html
+
+        * rendering/RenderTextControlMultiLine.cpp:
+        (WebCore::RenderTextControlMultiLine::~RenderTextControlMultiLine):
+2011-01-31  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Tests that we do not crash when destructing textarea renderer when its
+        node is already removed from document.
+        https://bugs.webkit.org/show_bug.cgi?id=53429
+
+        * fast/forms/textarea-node-removed-from-document-crash-expected.txt: Added.
+        * fast/forms/textarea-node-removed-from-document-crash.html: Added.
+
+

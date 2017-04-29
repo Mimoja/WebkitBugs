@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r214014 | dbates@webkit.org | 2017-03-15 23:44:59 +0100 (Mi, 15. Mär 2017) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/history/CachedFrame.cpp
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+   M /trunk/Source/WebCore/loader/FrameLoader.h
+   M /trunk/Source/WebCore/page/FrameTree.cpp
+   M /trunk/Source/WebCore/page/FrameTree.h
+
+Iteratively dispatch DOM events after restoring a cached page
+https://bugs.webkit.org/show_bug.cgi?id=169703
+<rdar://problem/31075903>
+
+Reviewed by Brady Eidson.
+
+Make dispatching of DOM events when restoring a page from the page cache symmetric with
+dispatching of events when saving a page to the page cache.
+
+* history/CachedFrame.cpp:
+(WebCore::CachedFrameBase::restore): Move code to dispatch events from here to FrameLoader::didRestoreFromCachedPage().
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::commitProvisionalLoad): Ensure that no DOM events are dispatched during
+restoration of a cached page. Call didRestoreFromCachedPage() after restoring the page to
+dispatch DOM events on the restored frames.
+(WebCore::FrameLoader::willRestoreFromCachedPage): Renamed; formerly named prepareForCachedPageRestore().
+(WebCore::FrameLoader::didRestoreFromCachedPage): Added.
+(WebCore::FrameLoader::prepareForCachedPageRestore): Renamed to willRestoreFromCachedPage().
+* loader/FrameLoader.h:
+* page/FrameTree.cpp:
+(WebCore::FrameTree::traverseNextInPostOrderWithWrap): Returns the next Frame* in a post-order
+traversal of the frame tree optionally wrapping around to the deepest first child in the tree.
+(WebCore::FrameTree::deepFirstChild): Added.
+* page/FrameTree.h:
+

@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r198549 | jer.noble@apple.com | 2016-03-22 21:56:38 +0100 (Di, 22. Mär 2016) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/MediaResourceLoader.cpp
+   M /trunk/Source/WebCore/loader/MediaResourceLoader.h
+
+CRASH in WebCore::MediaResourceLoader::requestResource + 698
+https://bugs.webkit.org/show_bug.cgi?id=155651
+<rdar://problem/25130582>
+
+Reviewed by Eric Carlson.
+
+No new tests, fixes existing tests running under GuardMalloc.
+
+Protect against the Document passed into MediaResourceLoader being destroyed during the MediaResourceLoader's lifetime.
+
+* loader/MediaResourceLoader.cpp:
+(WebCore::MediaResourceLoader::MediaResourceLoader):
+(WebCore::MediaResourceLoader::contextDestroyed):
+(WebCore::MediaResourceLoader::requestResource):
+(WebCore::MediaResource::responseReceived):
+* loader/MediaResourceLoader.h:
+

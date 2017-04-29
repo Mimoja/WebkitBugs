@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r154289 | rniwa@webkit.org | 2013-08-19 21:34:25 +0200 (Mo, 19. Aug 2013) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/EventRetargeter.h
+
+ASSERTION FAILED: !node || node->isShadowRoot() in WebCore::EventRetargeter::eventTargetRespectingTargetRules
+https://bugs.webkit.org/show_bug.cgi?id=119720
+
+Reviewed by Andy Estes.
+
+Merge https://chromium.googlesource.com/chromium/blink/+/4ce9bfbf54410179cd0f18b3d1a912045fc0ec3d
+
+* dom/EventRetargeter.h:
+(WebCore::EventRetargeter::eventTargetRespectingTargetRules):
+
+

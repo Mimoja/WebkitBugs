@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r167480 | darin@apple.com | 2014-04-18 04:41:00 +0200 (Fr, 18. Apr 2014) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/DOMURL/parsing-expected.txt
+   A /trunk/LayoutTests/fast/dom/DOMURL/parsing.html
+   A /trunk/LayoutTests/fast/dom/HTMLAnchorElement/anchor-element-href-parsing-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLAnchorElement/anchor-element-href-parsing.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/URL.cpp
+
+Source/WebCore: origin spoofing possible (HTTP Origin, postMessage event.origin) due to inappropriate URL escape sequence decoding
+https://bugs.webkit.org/show_bug.cgi?id=131837
+rdar://problem/15211936
+
+Reviewed by Anders Carlsson and Dave Hyatt.
+
+Tests: fast/dom/DOMURL/parsing.html
+       fast/dom/HTMLAnchorElement/anchor-element-href-parsing.html
+
+* platform/URL.cpp:
+(WebCore::URL::host): Removed unnecessary call to decodeURLEscapeSequences, which caused
+problems and was not needed.
+
+LayoutTests: hostname extraction from a URL should not decode percent-escape sequences
+https://bugs.webkit.org/show_bug.cgi?id=131837
+rdar://problem/15211936
+
+Reviewed by Anders Carlsson and Dave Hyatt.
+
+* fast/dom/DOMURL/parsing-expected.txt: Added.
+* fast/dom/DOMURL/parsing.html: Added.
+* fast/dom/HTMLAnchorElement/anchor-element-href-parsing-expected.txt: Added.
+* fast/dom/HTMLAnchorElement/anchor-element-href-parsing.html: Added.
+

@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r112939 | simon.fraser@apple.com | 2012-04-02 23:10:28 +0200 (Mo, 02. Apr 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/mac-wk2/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/GraphicsLayer.cpp
+
+Fix issue with reflections and composited layers
+https://bugs.webkit.org/show_bug.cgi?id=82636
+
+Source/WebCore:
+
+Reviewed by Alexey Proskuryakov
+
+When tearing down GraphicsLayers which referene eachother via m_replicatedLayer/m_replicaLayer,
+we need to clean up the replica layer pointers.
+
+No new tests; tested by existing compositing and repaint tests.
+
+* platform/graphics/GraphicsLayer.cpp:
+(WebCore::GraphicsLayer::~GraphicsLayer):
+(WebCore::GraphicsLayer::setReplicatedByLayer):
+
+LayoutTests:
+
+Reviewed by Alexey Proskuryakov
+
+Unskip some compositing tests that should pass now.
+
+* platform/mac-wk2/Skipped:
+

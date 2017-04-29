@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r149690 | cfleizach@apple.com | 2013-05-07 23:09:48 +0200 (Di, 07. Mai 2013) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AccessibilityRenderObject.cpp
+
+Bug 115694 - Fix bad cast to RenderHTMLCanvas
+https://bugs.webkit.org/show_bug.cgi?id=115694
+
+Reviewed by Ryosuke Niwa.
+
+Don't cast to RenderHTML until we check what kind of object it is.
+
+* accessibility/AccessibilityRenderObject.cpp:
+(WebCore::AccessibilityRenderObject::computeAccessibilityIsIgnored):
+
+
+

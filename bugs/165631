@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r210563 | mark.lam@apple.com | 2017-01-11 00:17:42 +0100 (Mi, 11. Jan 2017) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/property-setters-should-not-be-called-for-bound-arguments-list-entries.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/builtins/FunctionPrototype.js
+   M /trunk/Source/JavaScriptCore/runtime/IntlDateTimeFormatPrototype.cpp
+   M /trunk/Source/JavaScriptCore/runtime/IntlNumberFormatPrototype.cpp
+
+Property setters should not be called for bound arguments list entries.
+https://bugs.webkit.org/show_bug.cgi?id=165631
+
+Reviewed by Filip Pizlo.
+
+JSTests:
+
+* stress/property-setters-should-not-be-called-for-bound-arguments-list-entries.js: Added.
+
+Source/JavaScriptCore:
+
+* builtins/FunctionPrototype.js:
+(bind):
+- use @putByValDirect to set the bound arguments so that we don't consult the
+  prototype chain for setters.
+
+* runtime/IntlDateTimeFormatPrototype.cpp:
+(JSC::IntlDateTimeFormatPrototypeGetterFormat):
+* runtime/IntlNumberFormatPrototype.cpp:
+(JSC::IntlNumberFormatPrototypeGetterFormat):
+- no need to create a bound arguments array because these bound functions binds
+  no arguments according to the spec.
+
+
+

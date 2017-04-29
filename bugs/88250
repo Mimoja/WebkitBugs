@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r119439 | jpfau@apple.com | 2012-06-05 01:38:33 +0200 (Di, 05. Jun 2012) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+Document cleanup can get confused if parser still exists
+https://bugs.webkit.org/show_bug.cgi?id=88250
+
+Reviewed by Geoffrey Garen.
+
+No new tests; no behavior changes.
+
+* dom/Document.cpp:
+(WebCore::Document::removedLastRef): Detach parser earlier
+

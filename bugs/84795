@@ -1,0 +1,79 @@
+------------------------------------------------------------------------
+r115668 | inferno@chromium.org | 2012-04-30 23:30:56 +0200 (Mo, 30. Apr 2012) | 58 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/positioned-float-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/float/positioned-float-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+   M /trunk/Source/WebCore/css/CSSPrimitiveValueMappings.h
+   M /trunk/Source/WebCore/css/CSSValueKeywords.in
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderDeprecatedFlexibleBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderDeprecatedFlexibleBox.h
+   M /trunk/Source/WebCore/rendering/RenderFlexibleBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderFlexibleBox.h
+   M /trunk/Source/WebCore/rendering/RenderLayer.cpp
+   M /trunk/Source/WebCore/rendering/style/RenderStyleConstants.h
+
+Source/WebCore: Remove positioned float code.
+https://bugs.webkit.org/show_bug.cgi?id=84795
+
+Reviewed by Dan Bernstein.
+
+Backout r92004 and some pieces from r91702.
+
+Test: fast/block/float/positioned-float-crash.html
+
+* css/CSSParser.cpp:
+(WebCore::isValidKeywordPropertyAndValue):
+* css/CSSPrimitiveValueMappings.h:
+(WebCore::CSSPrimitiveValue::CSSPrimitiveValue):
+(WebCore::CSSPrimitiveValue::operator EFloat):
+* css/CSSValueKeywords.in:
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::RenderBlock):
+(WebCore::RenderBlock::layoutBlock):
+(WebCore::RenderBlock::addOverflowFromFloats):
+(WebCore::RenderBlock::layoutBlockChild):
+(WebCore::RenderBlock::simplifiedLayout):
+(WebCore::RenderBlock::layoutPositionedObjects):
+(WebCore::RenderBlock::insertFloatingObject):
+(WebCore::RenderBlock::positionNewFloats):
+(WebCore::RenderBlock::clearFloats):
+(WebCore::RenderBlock::FloatingObjects::clear):
+(WebCore::RenderBlock::FloatingObjects::increaseObjectsCount):
+(WebCore::RenderBlock::FloatingObjects::decreaseObjectsCount):
+* rendering/RenderBlock.h:
+(RenderBlock):
+(WebCore::RenderBlock::forceLayoutInlineChildren):
+(FloatingObject):
+(WebCore::RenderBlock::FloatingObject::FloatingObject):
+(WebCore::RenderBlock::hasOverhangingFloats):
+(WebCore::RenderBlock::FloatingObjects::FloatingObjects):
+(FloatingObjects):
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::updateBoxModelInfoFromStyle):
+* rendering/RenderDeprecatedFlexibleBox.cpp:
+(WebCore::RenderDeprecatedFlexibleBox::layoutBlock):
+* rendering/RenderDeprecatedFlexibleBox.h:
+(RenderDeprecatedFlexibleBox):
+* rendering/RenderFlexibleBox.cpp:
+(WebCore::RenderFlexibleBox::layoutBlock):
+* rendering/RenderFlexibleBox.h:
+(RenderFlexibleBox):
+* rendering/RenderLayer.cpp:
+(WebCore::RenderLayer::updateScrollbarsAfterLayout):
+* rendering/style/RenderStyleConstants.h:
+
+LayoutTests: Remove positioned float code.
+https://bugs.webkit.org/show_bug.cgi?id=84795
+
+Reviewed by Dan Bernstein.
+
+* fast/block/float/positioned-float-crash-expected.txt: Added.
+* fast/block/float/positioned-float-crash.html: Added.
+
+

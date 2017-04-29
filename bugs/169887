@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r214227 | jer.noble@apple.com | 2017-03-21 20:45:38 +0100 (Di, 21. Mär 2017) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/avfoundation/AudioSourceProviderAVFObjC.h
+   M /trunk/Source/WebCore/platform/graphics/avfoundation/AudioSourceProviderAVFObjC.mm
+
+Crash in WebCore: WebCore::CARingBuffer::getCurrentFrameBounds + 28
+https://bugs.webkit.org/show_bug.cgi?id=169887
+<rdar://problem/23648082>
+
+Reviewed by Eric Carlson.
+
+Because AudioSourceProviderAVFObjC::prepareCallback() can concievably be called after the AudioSourceProviderAVFObjC
+it refers to has been destroyed, add an extra layer of indirection between the tap and the provider, and invalidate
+that level of indirection before the AudioSourceProviderAVFObjC is destroyed.
+
+* platform/graphics/avfoundation/AudioSourceProviderAVFObjC.h:
+* platform/graphics/avfoundation/AudioSourceProviderAVFObjC.mm:
+(WebCore::AudioSourceProviderAVFObjC::initCallback):
+(WebCore::AudioSourceProviderAVFObjC::finalizeCallback):
+(WebCore::AudioSourceProviderAVFObjC::prepareCallback):
+(WebCore::AudioSourceProviderAVFObjC::unprepareCallback):
+(WebCore::AudioSourceProviderAVFObjC::processCallback):
+

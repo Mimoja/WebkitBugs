@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r77141 | inferno@chromium.org | 2011-01-31 19:23:47 +0100 (Mo, 31. Jan 2011) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/before-child-non-table-section-add-table-crash-expected.txt
+   A /trunk/LayoutTests/fast/table/before-child-non-table-section-add-table-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTable.cpp
+
+2011-01-27  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not crash when adding a child in a table
+        where the before child is not a table section.
+        https://bugs.webkit.org/show_bug.cgi?id=53276
+
+        * fast/table/before-child-non-table-section-add-table-crash-expected.txt: Added.
+        * fast/table/before-child-non-table-section-add-table-crash.html: Added.
+2011-01-27  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        If beforeChild is wrapped in an anonymous table section, we need to
+        go the parent to find it and use it before adding childs to table.
+        https://bugs.webkit.org/show_bug.cgi?id=53276
+
+        We need to make sure that beforeChild's parent is "this" before calling
+        RenderBox::addChild. The previous condition in while is too restrictive
+        and fails to calculate the right beforeChild value when its display
+        style is table caption.
+        Test: fast/table/before-child-non-table-section-add-table-crash.html
+
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::addChild):
+
+

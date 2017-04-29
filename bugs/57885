@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r84422 | cdn@chromium.org | 2011-04-20 23:57:07 +0200 (Mi, 20. Apr 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/filters/svg-transform-blur-crash-expected.txt
+   A /trunk/LayoutTests/svg/filters/svg-transform-blur-crash.svg
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/filters/FilterEffect.cpp
+
+2011-04-20  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Tests for crash when copying a filter effect after applying tranforms.
+        https://bugs.webkit.org/show_bug.cgi?id=57885
+
+        * svg/filters/svg-transform-blur-crash-expected.txt: Added.
+        * svg/filters/svg-transform-blur-crash.xhtml: Added.
+2011-04-20  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Return early when the paint rect and the source rect do not overlap as no bytes need to be copied.
+        https://bugs.webkit.org/show_bug.cgi?id=57885
+
+        Test: svg/filters/svg-transform-blur-crash.xhtml
+
+        * platform/graphics/filters/FilterEffect.cpp:
+        (WebCore::FilterEffect::copyImageBytes):
+
+

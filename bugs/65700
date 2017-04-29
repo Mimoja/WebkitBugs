@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r92388 | senorblanco@chromium.org | 2011-08-04 20:00:41 +0200 (Do, 04. Aug 2011) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/skia/ImageBufferSkia.cpp
+
+Set graphics context current before canvas.toDataURL().
+https://bugs.webkit.org/show_bug.cgi?id=65700
+
+Reviewed by James Robinson.
+
+No new tests, unfortunately.  The test infrastucture doesn't seem
+to be conducive to writing multiple-context tests.
+
+* platform/graphics/skia/ImageBufferSkia.cpp:
+(WebCore::ImageBuffer::toDataURL):
+
+

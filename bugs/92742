@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r124339 | rniwa@webkit.org | 2012-08-01 18:40:15 +0200 (Mi, 01. Aug 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/NodeList/nodelist-moved-to-fragment-2-expected.txt
+   A /trunk/LayoutTests/fast/dom/NodeList/nodelist-moved-to-fragment-2.html
+   A /trunk/LayoutTests/fast/dom/NodeList/nodelist-moved-to-fragment-expected.txt
+   A /trunk/LayoutTests/fast/dom/NodeList/nodelist-moved-to-fragment.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/NodeRareData.h
+
+REGRESSION(r122498): Assertion failure: m_nodeListCounts is sometimes not zero in the Document destructor
+https://bugs.webkit.org/show_bug.cgi?id=92742
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+The bug was caused by adoptTreeScope's not always calling unregisterNodeListCache and registerNodeListCache
+on node lists that use m_atomicNameCaches and m_nameCaches.
+
+Tests: fast/dom/NodeList/nodelist-moved-to-fragment-2.html
+       fast/dom/NodeList/nodelist-moved-to-fragment.html
+
+* dom/NodeRareData.h:
+(WebCore::NodeListsNodeData::adoptTreeScope):
+
+LayoutTests: 
+
+Add regression tests for two types of node lists: one that uses addCacheWithName and the other that uses
+addCacheWithAtomicName.
+
+* fast/dom/NodeList/nodelist-moved-to-fragment-2-expected.txt: Added.
+* fast/dom/NodeList/nodelist-moved-to-fragment-2.html: Added.
+* fast/dom/NodeList/nodelist-moved-to-fragment-expected.txt: Added.
+* fast/dom/NodeList/nodelist-moved-to-fragment.html: Added.
+
+

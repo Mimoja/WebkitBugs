@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r122188 | tkent@chromium.org | 2012-07-10 05:18:15 +0200 (Di, 10. Jul 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/hidden
+   A /trunk/LayoutTests/fast/forms/hidden/change-type-to-hidden-after-updating-value-expected.txt
+   A /trunk/LayoutTests/fast/forms/hidden/change-type-to-hidden-after-updating-value.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+REGRESSION(r114862-r114886): Fix a crash by switching the input type to hidden.
+https://bugs.webkit.org/show_bug.cgi?id=90774
+
+Reviewed by Andreas Kling.
+
+Source/WebCore:
+
+Test: fast/forms/hidden/change-type-to-hidden-after-updating-value.html
+
+* dom/Element.cpp:
+(WebCore::Element::setAttributeInternal):
+Pass a copy of the existing Attribute object.
+
+LayoutTests:
+
+* fast/forms/hidden/change-type-to-hidden-after-updating-value.html: Added.
+* fast/forms/hidden/change-type-to-hidden-after-updating-value-expected.txt: Added.
+

@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r144825 | schenney@chromium.org | 2013-03-05 23:53:57 +0100 (Di, 05. Mär 2013) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/image-with-attr-change-after-delete-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/image-with-attr-change-after-delete-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/ImageLoader.cpp
+   M /trunk/Source/WebCore/loader/ImageLoader.h
+
+Crash when ImageLoader deletes Element inside SVGImageElement
+https://bugs.webkit.org/show_bug.cgi?id=111085
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Elements with ImageLoader objects associated with them may have their
+final reference held by the ImageLoader (to allow events to be sent
+and handled). Any call on Element that causes the ImageLoader to
+dispatch events might then result in the final deref of the Element
+itself, thus leaving all the Element's "this" pointers up the stack
+pointing to invalid memory.
+
+This change puts the deref of the Element on a timer so that, if the
+deref is called via a method on Element, the call stack will unwind
+before the deref occurs.
+
+Test: svg/custom/image-with-attr-change-after-delete-crash.html
+
+* loader/ImageLoader.cpp:
+(WebCore::ImageLoader::ImageLoader): Initialize a timer
+(WebCore::ImageLoader::updatedHasPendingEvent): Put deref of the
+  element on a oneShotTimer, with appropriate assertions and checks to
+  ensure we only ref/deref once.
+(WebCore::ImageLoader::timerFired): Deref the element when the timer fires.
+* loader/ImageLoader.h:
+(ImageLoader): Define a timer for controlling deref of the element.
+
+LayoutTests:
+
+* svg/custom/image-with-attr-change-after-delete-crash-expected.txt: Added.
+* svg/custom/image-with-attr-change-after-delete-crash.html: Added.
+
+

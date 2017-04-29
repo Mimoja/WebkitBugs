@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r149306 | schenney@chromium.org | 2013-04-29 21:56:40 +0200 (Mo, 29. Apr 2013) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/svg-element-destructor-iteration-crash-expected.txt
+   A /trunk/LayoutTests/svg/custom/svg-element-destructor-iteration-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGElement.cpp
+
+SVGElement destructor can use invalid iterator
+https://bugs.webkit.org/show_bug.cgi?id=115361
+
+Reviewed by Philip Rogers.
+
+Source/WebCore:
+
+When an SVGElement object has rare data, its destructor gets a
+hash map iterator for the rare data, uses it to clear resources,
+then uses the iterator to delete the rare data. However, the resource
+cleanup can delete other SVG elements, thus modifying the hash map
+from which the iterator came and hence invalidating the iterator
+itself.
+
+The fix is to re-get the iterator before deleting the rare data.
+
+Test: svg/custom/svg-element-destructor-iteration-crash.html
+
+* svg/SVGElement.cpp:
+(WebCore::SVGElement::~SVGElement): Get a new iterator after clearing rare data.
+
+LayoutTests:
+
+Test asserts in Debug and should also crash in memory checking builds.
+
+* svg/custom/svg-element-destructor-iteration-crash-expected.txt: Added.
+* svg/custom/svg-element-destructor-iteration-crash.html: Added.
+
+

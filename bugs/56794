@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r81689 | jschuh@chromium.org | 2011-03-22 20:21:39 +0100 (Di, 22. Mär 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/filters/feDisplacementMap-crash-test-expected.txt
+   A /trunk/LayoutTests/svg/filters/feDisplacementMap-crash-test.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGFEDisplacementMapElement.cpp
+
+2011-03-22  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        SVG displacement map should validate channel selections
+        https://bugs.webkit.org/show_bug.cgi?id=56794
+
+        * svg/filters/feDisplacementMap-crash-test-expected.txt: Added.
+        * svg/filters/feDisplacementMap-crash-test.xhtml: Added.
+2011-03-22  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        SVG displacement map should validate channel selections
+        https://bugs.webkit.org/show_bug.cgi?id=56794
+
+        Test: svg/filters/feDisplacementMap-crash-test.xhtml
+
+        * svg/SVGFEDisplacementMapElement.cpp:
+        (WebCore::SVGFEDisplacementMapElement::svgAttributeChanged):
+
+

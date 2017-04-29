@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r165862 | jpfau@apple.com | 2014-03-19 02:48:54 +0100 (Mi, 19. Mär 2014) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/Source/WebCore/html/HTMLMediaElement.h
+
+Unify <media> element callback registration and unregistration
+https://bugs.webkit.org/show_bug.cgi?id=130417
+
+Reviewed by Eric Carlson.
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::HTMLMediaElement):
+(WebCore::HTMLMediaElement::~HTMLMediaElement):
+(WebCore::HTMLMediaElement::registerWithDocument):
+(WebCore::HTMLMediaElement::unregisterWithDocument):
+(WebCore::HTMLMediaElement::didMoveToNewDocument):
+* html/HTMLMediaElement.h:
+

@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r77019 | antti@apple.com | 2011-01-29 01:23:39 +0100 (Sa, 29. Jan 2011) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/NamedNodeMap.cpp
+
+CSS styles are shared based on uninitialized property values
+https://bugs.webkit.org/show_bug.cgi?id=53285
+        
+Reviewed by Simon Fraser.
+
+Null test.
+
+* dom/NamedNodeMap.cpp:
+(WebCore::NamedNodeMap::mappedMapsEquivalent):
+
+
+

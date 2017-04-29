@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r204733 | bfulgham@apple.com | 2016-08-22 21:48:50 +0200 (Mo, 22. Aug 2016) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/ResourceLoadObserver.cpp
+
+Invalid resource load statistics iterator when redirecting
+https://bugs.webkit.org/show_bug.cgi?id=161021
+<rdar://problem/27856875>
+
+Reviewed by Dean Jackson.
+
+If a load is the result of a redirect, an additional entry is added to the HashSet
+containing the visited domains. This invalidates any existing iterators, so we
+need to get a new iterator for further updates.
+
+No change in functionality.
+
+* loader/ResourceLoadObserver.cpp:
+(WebCore::ResourceLoadObserver::logSubresourceLoading):
+
+

@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r58638 | ddkilzer@apple.com | 2010-05-02 03:25:53 +0200 (So, 02. Mai 2010) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/stylesheet-href-redirect-expected.txt
+   A /trunk/LayoutTests/http/tests/security/stylesheet-href-redirect.html
+
+        Land test case that was supposed to be in r53607.
+
+    2010-01-20  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Stylesheet href property shows redirected URL unlike other browsers
+        https://bugs.webkit.org/show_bug.cgi?id=33683
+
+        Test whether the href property of style sheets contains the original or
+        final URL of the redirect chain that lead to the style sheet.
+
+        I couldn't figure out how to test the XSLStyleSheet parts of this
+        change.  There didn't seem to be DOM bindings for the href property
+        here.  If I missed it, please let me know.
+
+        * http/tests/security/stylesheet-href-redirect-expected.txt: Added.
+        * http/tests/security/stylesheet-href-redirect.html: Added.
+

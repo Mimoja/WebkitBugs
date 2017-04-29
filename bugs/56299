@@ -1,0 +1,78 @@
+------------------------------------------------------------------------
+r85876 | inferno@chromium.org | 2011-05-05 23:07:52 +0200 (Do, 05. Mai 2011) | 55 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling-crash.html
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling-expected.png
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling.html
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling2-expected.png
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling2-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling2.html
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling3-expected.png
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling3-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling3.html
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling4-expected.png
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling4-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-from-next-sibling4.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+
+2011-05-05  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        When style changes for a RenderBlock and we lose our ability to intrude into
+        floats in the next siblings block (e.g a position change), make sure to mark
+        our childs with floats for layout and iterate through our next sibling block
+        chain to see which ones contain the float that also exists in our floating
+        objects list and clear those using markAllDescendantsWithFloatsForLayout.
+        https://bugs.webkit.org/show_bug.cgi?id=56299
+
+        Tests: fast/block/float/float-not-removed-from-next-sibling-crash.html
+               fast/block/float/float-not-removed-from-next-sibling.html
+               fast/block/float/float-not-removed-from-next-sibling2.html
+               fast/block/float/float-not-removed-from-next-sibling3.html
+               fast/block/float/float-not-removed-from-next-sibling4.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::styleWillChange):
+        (WebCore::RenderBlock::styleDidChange):
+        (WebCore::RenderBlock::markSiblingsWithFloatsForLayout):
+        * rendering/RenderBlock.h:
+2011-05-04  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not crash when trying to add overflow from a float not in the
+        descendant list and whose renderer is already removed.
+        https://bugs.webkit.org/show_bug.cgi?id=56299
+
+        * fast/block/float/float-not-removed-from-next-sibling-crash-expected.txt: Added.
+        * fast/block/float/float-not-removed-from-next-sibling-crash.html: Added.
+        * fast/block/float/float-not-removed-from-next-sibling.html: Added. Black
+        text boxes should be inside the silver float. Failing test will have float
+        added to the text div block which will push the text downward.
+        * fast/block/float/float-not-removed-from-next-sibling-expected.png: Added.
+        * fast/block/float/float-not-removed-from-next-sibling-expected.txt: Added.
+        * fast/block/float/float-not-removed-from-next-sibling2.html: Added. Black
+        text boxes should be inside the silver float. Failing test will have float
+        added to the text div block which will push the text downward.
+        * fast/block/float/float-not-removed-from-next-sibling2-expected.png: Added.
+        * fast/block/float/float-not-removed-from-next-sibling2-expected.txt: Added.
+        * fast/block/float/float-not-removed-from-next-sibling3.html: Added. Distance
+        between the silver float and black text boxes should be less than height of
+        silver float. Failing test will have float overflow added to the text div
+        block which will cause large space between silver float and and black text boxes.
+        * fast/block/float/float-not-removed-from-next-sibling3-expected.png: Added.
+        * fast/block/float/float-not-removed-from-next-sibling3-expected.txt: Added.
+        * fast/block/float/float-not-removed-from-next-sibling4.html: Added. Distance
+        between the silver float and black text boxes should be less than height of
+        silver float. Failing test will have float overflow added to the text div
+        block which will cause large space between silver float and and black text boxes.
+        * fast/block/float/float-not-removed-from-next-sibling4-expected.png: Added.
+        * fast/block/float/float-not-removed-from-next-sibling4-expected.txt: Added.
+
+

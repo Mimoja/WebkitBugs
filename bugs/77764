@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r109333 | zimmermann@webkit.org | 2012-03-01 13:21:26 +0100 (Do, 01. Mär 2012) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGUseElement.cpp
+
+SVG <use> element allows invalid contents
+https://bugs.webkit.org/show_bug.cgi?id=77764
+
+Reviewed by Zoltan Herczeg.
+
+Unbreak the world after r109299 - dozens of SVGUseElement tests fail in trunk because:
+- text nodes weren't allowed in SVG shadow subtrees
+- tagName matching ignores any prefixes, thus svg:circle fails to identify as SVGCircleElement
+
+* svg/SVGUseElement.cpp:
+(WebCore::isDisallowedElement):
+

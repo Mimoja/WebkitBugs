@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r93514 | inferno@chromium.org | 2011-08-22 19:33:59 +0200 (Mo, 22. Aug 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/focus-controller-crash-change-event-expected.txt
+   A /trunk/LayoutTests/fast/frames/focus-controller-crash-change-event.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/FocusController.cpp
+
+Crash in FocusController::advanceFocusInDocumentOrder
+https://bugs.webkit.org/show_bug.cgi?id=66678
+
+Source/WebCore: 
+
+RefPtr the focusable node to prevent getting deleted by mutation
+event.
+
+Reviewed by Dave Hyatt.
+
+Test: fast/frames/focus-controller-crash-change-event.html
+
+* page/FocusController.cpp:
+(WebCore::FocusController::advanceFocusInDocumentOrder):
+
+LayoutTests: 
+
+Reviewed by Dave Hyatt.
+
+* fast/frames/focus-controller-crash-change-event-expected.txt: Added.
+* fast/frames/focus-controller-crash-change-event.html: Added.
+
+

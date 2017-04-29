@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r164492 | jhoneycutt@apple.com | 2014-02-21 21:37:01 +0100 (Fr, 21. Feb 2014) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/mac-wk2/tiled-drawing/crash-reloading-with-position-fixed-content-expected.txt
+   A /trunk/LayoutTests/platform/mac-wk2/tiled-drawing/crash-reloading-with-position-fixed-content.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/scrolling/ScrollingTree.cpp
+
+Crash reloading page with position: fixed content
+https://bugs.webkit.org/show_bug.cgi?id=129119
+<rdar://problem/16127090>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+Test: platform/mac-wk2/tiled-drawing/crash-reloading-with-position-fixed-content.html
+
+* page/scrolling/ScrollingTree.cpp:
+(WebCore::ScrollingTree::removeDestroyedNodes):
+Check the node's ID against the latched node's ID before the node is
+removed from the tree.
+
+LayoutTests:
+
+* platform/mac-wk2/tiled-drawing/crash-reloading-with-position-fixed-content-expected.txt: Added.
+* platform/mac-wk2/tiled-drawing/crash-reloading-with-position-fixed-content.html: Added.
+

@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r109261 | tommyw@google.com | 2012-02-29 23:13:54 +0100 (Mi, 29. Feb 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/mediastream/peerconnection-mediastreamlist-expected.txt
+   A /trunk/LayoutTests/fast/mediastream/peerconnection-mediastreamlist.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/mediastream/MediaStreamList.cpp
+   M /trunk/Source/WebCore/Modules/mediastream/MediaStreamTrackList.cpp
+
+MediaStream API: MediaStreamTrackList out-of-bounds access fix
+https://bugs.webkit.org/show_bug.cgi?id=79889
+
+Reviewed by Adam Barth.
+
+Out-of-bounds access to MediaStreamTrackList ASSERTS instead of returning 0,
+this is not according to ecmascript standard. Also fixed a similar issue in MediaStreamList.
+
+Source/WebCore:
+
+Test: fast/mediastream/peerconnection-mediastreamlist.html
+
+* Modules/mediastream/MediaStreamList.cpp:
+(WebCore::MediaStreamList::item):
+* Modules/mediastream/MediaStreamTrackList.cpp:
+(WebCore::MediaStreamTrackList::item):
+
+LayoutTests:
+
+* fast/mediastream/peerconnection-mediastreamlist-expected.txt: Added.
+* fast/mediastream/peerconnection-mediastreamlist.html: Added.
+
+

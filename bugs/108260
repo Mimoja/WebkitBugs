@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r141198 | rafaelw@chromium.org | 2013-01-30 03:17:15 +0100 (Mi, 30. Jan 2013) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/parser/xml-error-adopted-expected.txt
+   A /trunk/LayoutTests/fast/parser/xml-error-adopted.xml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.cpp
+
+parserAppendChild and parserInsertBefore should ensure that child nodes are in the same document
+https://bugs.webkit.org/show_bug.cgi?id=108260
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Test: fast/parser/xml-error-adopted.xml
+
+The check and adoption if the documents don't match is now moved into ContainerNode::parser* from HTMLConstructionSite.
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::parserInsertBefore):
+(WebCore::ContainerNode::parserAppendChild):
+* html/parser/HTMLConstructionSite.cpp:
+(WebCore::HTMLConstructionSite::insertTextNode):
+(WebCore::HTMLConstructionSite::findFosterSite):
+(WebCore::HTMLConstructionSite::fosterParent):
+
+LayoutTests:
+
+* fast/parser/xml-error-adopted-expected.txt: Added.
+* fast/parser/xml-error-adopted.xml: Added.
+
+

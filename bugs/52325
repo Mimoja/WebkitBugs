@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r75811 | satish@chromium.org | 2011-01-14 21:39:09 +0100 (Fr, 14. Jan 2011) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/speech/speech-input-scripting-expected.txt
+   A /trunk/LayoutTests/fast/speech/speech-input-scripting.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLInputElement.cpp
+   M /trunk/Source/WebCore/platform/mock/SpeechInputClientMock.cpp
+   M /trunk/Source/WebCore/rendering/RenderTextControlSingleLine.cpp
+   M /trunk/Source/WebCore/rendering/RenderTextControlSingleLine.h
+   M /trunk/Source/WebCore/rendering/TextControlInnerElements.cpp
+
+2011-01-12  Satish Sampath  <satish@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Fix a crash when accessing speech input from script.
+        https://bugs.webkit.org/show_bug.cgi?id=52325
+
+        Added a layout test to check enabling/disabling speech input from script.
+
+        * fast/speech/speech-input-scripting-expected.txt: Added.
+        * fast/speech/speech-input-scripting.html: Added.
+2011-01-12  Satish Sampath  <satish@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Fix a crash when accessing speech input from script.
+        https://bugs.webkit.org/show_bug.cgi?id=52325
+
+        Test: fast/speech/speech-input-scripting.html
+
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::parseMappedAttribute): Recreate renderer when speech input is enabled/disabled.
+        * rendering/RenderTextControlSingleLine.cpp: Remove unused code.
+        * rendering/RenderTextControlSingleLine.h:
+        * rendering/TextControlInnerElements.cpp: Take self references before firing events and check for renderer validity after.
+        (WebCore::InputFieldSpeechButtonElement::defaultEventHandler):
+        (WebCore::InputFieldSpeechButtonElement::setRecognitionResult):
+        (WebCore::InputFieldSpeechButtonElement::detach):
+

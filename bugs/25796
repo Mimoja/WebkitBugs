@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r43719 | ap@webkit.org | 2009-05-14 21:09:40 +0200 (Do, 14. Mai 2009) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/credentials-in-referer-expected.txt
+   A /trunk/LayoutTests/http/tests/security/credentials-in-referer.html
+   A /trunk/LayoutTests/http/tests/security/resources/credentials-in-referer-frame.php
+   A /trunk/LayoutTests/http/tests/security/resources/credentials-in-referer.php
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/loader.cpp
+
+        Reviewed by Darin Adler.
+
+        Patch originally by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=25796
+        <rdar://problem/6886654> Shouldn't set referer and origin in Loader::Host::servePendingRequests().
+
+        Test: http/tests/security/credentials-in-referer.html
+
+        * loader/loader.cpp: (WebCore::Loader::Host::servePendingRequests): This will be done in
+        SubresourceLoader::create() anyway.
+
+
+

@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r150926 | darin@apple.com | 2013-05-29 21:48:29 +0200 (Mi, 29. Mai 2013) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSClipboardCustom.cpp
+   M /trunk/Source/WebCore/dom/Clipboard.cpp
+   M /trunk/Source/WebCore/dom/Clipboard.h
+   M /trunk/Source/WebCore/dom/Clipboard.idl
+   M /trunk/Source/WebCore/page/EventHandler.cpp
+
+Remove custom binding for Clipboard setDragImage function
+https://bugs.webkit.org/show_bug.cgi?id=116422
+
+Reviewed by Sam Weinig.
+
+* bindings/js/JSClipboardCustom.cpp: Removed setDragImage binding.
+
+* dom/Clipboard.cpp:
+(WebCore::Clipboard::canSetDragImage): Added a condition that this is a drag
+and drop clipboard. That used to be checked in the setDragImage binding.
+(WebCore::Clipboard::setDragImage): Added a version that takes an Element
+and calls through to the existing functions (in the legacy code path), or handles
+both the Element and HTMLImageElement not-in-document cases (in the new code path).
+
+* dom/Clipboard.h: Updated for changes above.
+
+* dom/Clipboard.idl: Removed [Custom] from setDragImage.
+
+* page/EventHandler.cpp:
+(WebCore::EventHandler::handleDrag): Call the new setDragImage instead of the
+old setDragImageElement.
+
+

@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r110332 | commit-queue@webkit.org | 2012-03-09 23:36:10 +0100 (Fr, 09. Mär 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/inserting/insert-character-in-first-letter-crash-expected.txt
+   A /trunk/LayoutTests/editing/inserting/insert-character-in-first-letter-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTextFragment.cpp
+   M /trunk/Source/WebCore/rendering/RenderTextFragment.h
+
+Crash due to inserting letter into div with first-letter
+https://bugs.webkit.org/show_bug.cgi?id=78534
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-03-09
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+This fixes an issue in RenderTextFragment with setTextInternal
+getting called with different intents. While most calls to it
+are intended to change the underlying DOM node string, it can
+also be called as a result of styleDidChange just for transforms
+on the substring text fragment. This adds a mechanism for internal
+callers to specify if the internal text is being updated without
+a DOM node text change.
+
+* rendering/RenderTextFragment.cpp:
+(WebCore::RenderTextFragment::styleDidChange)
+(WebCore::RenderTextFragment::setTextInternal)
+* rendering/RenderTextFragment.h:
+(WebCore::RenderTextFragment)
+
+LayoutTests:
+
+Test case to exercise the crashing condition in bug 78534. It inserts
+a character in a first-letter div to induce an invalid RenderTextFragment
+state.
+
+* editing/inserting/insert-character-in-first-letter-crash-expected.txt: Added
+* editing/inserting/insert-character-in-first-letter-crash.html: Added
+

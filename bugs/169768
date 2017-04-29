@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r214059 | zalan@apple.com | 2017-03-16 19:43:26 +0100 (Do, 16. Mär 2017) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/inline/continuation-crash-with-anon-ancestors-expected.txt
+   A /trunk/LayoutTests/fast/inline/continuation-crash-with-anon-ancestors.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+
+Stay inside the continuation while searching for a candidate ancestor for insertion.
+https://bugs.webkit.org/show_bug.cgi?id=169768
+<rdar://problem/30959936>
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test: fast/inline/continuation-crash-with-anon-ancestors.html
+
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::addChildToContinuation):
+
+LayoutTests:
+
+* fast/inline/continuation-crash-with-anon-ancestors-expected.txt: Added.
+* fast/inline/continuation-crash-with-anon-ancestors.html: Added.
+

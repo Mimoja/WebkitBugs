@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r180020 | cdumez@apple.com | 2015-02-13 00:23:55 +0100 (Fr, 13. Feb 2015) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/misc/css-accept-any-type-expected.txt
+   M /trunk/LayoutTests/http/tests/misc/css-accept-any-type.html
+   M /trunk/LayoutTests/http/tests/security/cross-origin-css-expected.txt
+   M /trunk/LayoutTests/http/tests/security/cross-origin-css.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/StyleSheetContents.cpp
+   M /trunk/Source/WebCore/dom/ProcessingInstruction.cpp
+   M /trunk/Source/WebCore/inspector/InspectorPageAgent.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedCSSStyleSheet.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedCSSStyleSheet.h
+
+Drop the quirks-mode exception for CSS MIME types
+https://bugs.webkit.org/show_bug.cgi?id=141501
+
+Reviewed by Alexey Proskuryakov.
+
+Source/WebCore:
+
+Drop the quirks-mode exception for CSS MIME types.
+This matches Firefox's behavior.
+
+This patch is based on the following Blink revision:
+http://src.chromium.org/viewvc/blink?view=revision&revision=189669
+
+Tests:
+- http/tests/misc/css-accept-any-type.html
+- http/tests/security/cross-origin-css.html
+
+* css/StyleSheetContents.cpp:
+(WebCore::StyleSheetContents::parseAuthorStyleSheet):
+* dom/ProcessingInstruction.cpp:
+(WebCore::ProcessingInstruction::setCSSStyleSheet):
+* inspector/InspectorPageAgent.cpp:
+(WebCore::InspectorPageAgent::cachedResourceContent):
+* loader/cache/CachedCSSStyleSheet.cpp:
+(WebCore::CachedCSSStyleSheet::sheetText):
+(WebCore::CachedCSSStyleSheet::canUseSheet):
+* loader/cache/CachedCSSStyleSheet.h:
+
+LayoutTests:
+
+Update a couple of layout tests now that we dropped the quirks-mode
+exception for CSS MIME types.
+
+* http/tests/misc/css-accept-any-type-expected.txt:
+* http/tests/misc/css-accept-any-type.html:
+* http/tests/security/cross-origin-css-expected.txt:
+* http/tests/security/cross-origin-css.html:
+

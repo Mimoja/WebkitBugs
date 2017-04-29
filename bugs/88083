@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r120662 | mikelawther@chromium.org | 2012-06-19 05:20:53 +0200 (Di, 19. Jun 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/title-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/StyleResolver.cpp
+
+Crash when setting title dynamically
+https://bugs.webkit.org/show_bug.cgi?id=88083
+
+Reviewed by Dan Bernstein.
+
+Source/WebCore:
+
+Test: fast/text/title-crash.html
+
+The crashing code takes a rare branch in StyleResolver::styleForElement() where
+m_parentStyle is set to point to m_style. Consequently, while applying properties
+to m_style we end up mutating m_parentStyle.
+
+In this situation, we clone style() and point m_parentStyle at the clone. The
+clone is destroyed at the end of StyleResolver::styleForElement().
+
+* css/StyleResolver.cpp:
+(WebCore::StyleResolver::collectMatchingRulesForList):
+
+LayoutTests:
+
+* fast/text/title-crash.html: Added.
+
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r98935 | commit-queue@webkit.org | 2011-11-01 05:24:08 +0100 (Di, 01. Nov 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fullscreen/anonymous-block-merge-crash-expected.txt
+   A /trunk/LayoutTests/fullscreen/anonymous-block-merge-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderFullScreen.cpp
+
+Source/WebCore: Fix a crash relating to anonymous block merging in
+RenderFullScreen::unwrapRenderer.
+https://bugs.webkit.org/show_bug.cgi?id=70705
+
+Patch by Jeremy Apthorp <jeremya@google.com> on 2011-10-31
+Reviewed by Simon Fraser.
+
+Test: fullscreen/anonymous-block-merge-crash.html
+
+* rendering/RenderFullScreen.cpp:
+(RenderFullScreen::unwrapRenderer):
+
+LayoutTests: Test case for a crash relating to merging of anonymous blocks in
+RenderFullScreen::unwrapRenderer.
+https://bugs.webkit.org/show_bug.cgi?id=70705
+
+Patch by Jeremy Apthorp <jeremya@google.com> on 2011-10-31
+Reviewed by Simon Fraser.
+
+* fullscreen/anonymous-block-merge-crash.html: Added.
+

@@ -1,0 +1,102 @@
+------------------------------------------------------------------------
+r61667 | zimmermann@webkit.org | 2010-06-23 09:11:19 +0200 (Mi, 23. Jun 2010) | 69 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/disallowed-svg-nodes-as-direct-children-expected.checksum
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/disallowed-svg-nodes-as-direct-children-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/disallowed-svg-nodes-as-direct-children-expected.txt
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/no-crash-with-svg-content-in-html-document-expected.checksum
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/no-crash-with-svg-content-in-html-document-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/no-crash-with-svg-content-in-html-document-expected.txt
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/svg-document-as-direct-child-expected.checksum
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/svg-document-as-direct-child-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/svg-document-as-direct-child-expected.txt
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/svg-document-in-html-document-expected.checksum
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/svg-document-in-html-document-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/svg-document-in-html-document-expected.txt
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/text-tref-02-b-expected.checksum
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/text-tref-02-b-expected.png
+   A /trunk/LayoutTests/platform/mac/svg/foreignObject/text-tref-02-b-expected.txt
+   A /trunk/LayoutTests/svg/foreignObject
+   A /trunk/LayoutTests/svg/foreignObject/disallowed-svg-nodes-as-direct-children.svg
+   A /trunk/LayoutTests/svg/foreignObject/no-crash-with-svg-content-in-html-document.svg
+   A /trunk/LayoutTests/svg/foreignObject/svg-document-as-direct-child.svg
+   A /trunk/LayoutTests/svg/foreignObject/svg-document-in-html-document.svg
+   A /trunk/LayoutTests/svg/foreignObject/text-tref-02-b.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/Element.cpp
+   M /trunk/WebCore/dom/Element.h
+   M /trunk/WebCore/svg/SVGForeignObjectElement.cpp
+   M /trunk/WebCore/svg/SVGSVGElement.cpp
+
+2010-06-23  Nikolas Zimmermann  <nzimmermann@rim.com>
+
+        Reviewed by Eric Seidel.
+
+        Reproducible crash in com.apple.WebCore 0x01ed3784 WebCore::RenderLineBoxList::appendLineBox(WebCore::InlineFlowBox*) + 36
+        https://bugs.webkit.org/show_bug.cgi?id=40953
+
+        REGRESSION (r58209-58231): Memory corruption with invalid SVG
+        https://bugs.webkit.org/show_bug.cgi?id=40173
+
+        Fix several crashes, all related to <foreignObject> and/or invalid SVG documents.
+        - Only allow <svg> nodes, as direct children of a <foreignObject>, not any other "partial" SVG content.
+        - Assure to create RenderSVGRoot objects for <svg> nodes in <foreignObject>, treat them as "outermost SVG elements".
+        - Never allow any partial SVG content to appear in any document. Only <svg> elements are allowed.
+
+        Tests: svg/custom/bug45331.svg
+               svg/foreignObject/disallowed-svg-nodes-as-direct-children.svg
+               svg/foreignObject/no-crash-with-svg-content-in-html-document.svg
+               svg/foreignObject/svg-document-as-direct-child.svg
+               svg/foreignObject/svg-document-in-html-document.svg
+               svg/foreignObject/text-tref-02-b.svg
+
+        * dom/Element.cpp: Added childShouldCreateRenderer, with ENABLE(SVG) guards.
+        (WebCore::Element::childShouldCreateRenderer): Only create a renderer for a SVG child, if we're a SVG element, or if the child is a <svg> element.
+        * dom/Element.h: Added childShouldCreateRenderer, with ENABLE(SVG) guards.
+        * svg/SVGForeignObjectElement.cpp:
+        (WebCore::SVGForeignObjectElement::childShouldCreateRenderer): Disallow arbitary SVG content, only <svg> elements are allowed as direct children of a <foreignObject>
+        * svg/SVGSVGElement.cpp:
+        (WebCore::SVGSVGElement::isOutermostSVG): Be sure to create RenderSVGRoot objects for <svg> elements inside <foreignObject>
+
+2010-06-23  Nikolas Zimmermann  <nzimmermann@rim.com>
+
+        Reviewed by Eric Seidel.
+
+        Reproducible crash in com.apple.WebCore 0x01ed3784 WebCore::RenderLineBoxList::appendLineBox(WebCore::InlineFlowBox*) + 36
+        https://bugs.webkit.org/show_bug.cgi?id=40953
+
+        REGRESSION (r58209-58231): Memory corruption with invalid SVG
+        https://bugs.webkit.org/show_bug.cgi?id=40173
+
+        Added several new layout tests covering the crashes with <foreignObject> and/or invalid SVG documents.
+
+        * platform/mac/svg/custom/bug45331-expected.checksum: Added.
+        * platform/mac/svg/custom/bug45331-expected.png: Added.
+        * platform/mac/svg/custom/bug45331-expected.txt: Added.
+        * platform/mac/svg/foreignObject: Added.
+        * platform/mac/svg/foreignObject/disallowed-svg-nodes-as-direct-children-expected.checksum: Added.
+        * platform/mac/svg/foreignObject/disallowed-svg-nodes-as-direct-children-expected.png: Added.
+        * platform/mac/svg/foreignObject/disallowed-svg-nodes-as-direct-children-expected.txt: Added.
+        * platform/mac/svg/foreignObject/no-crash-with-svg-content-in-html-document-expected.checksum: Added.
+        * platform/mac/svg/foreignObject/no-crash-with-svg-content-in-html-document-expected.png: Added.
+        * platform/mac/svg/foreignObject/no-crash-with-svg-content-in-html-document-expected.txt: Added.
+        * platform/mac/svg/foreignObject/svg-document-as-direct-child-expected.checksum: Added.
+        * platform/mac/svg/foreignObject/svg-document-as-direct-child-expected.png: Added.
+        * platform/mac/svg/foreignObject/svg-document-as-direct-child-expected.txt: Added.
+        * platform/mac/svg/foreignObject/svg-document-in-html-document-expected.checksum: Added.
+        * platform/mac/svg/foreignObject/svg-document-in-html-document-expected.png: Added.
+        * platform/mac/svg/foreignObject/svg-document-in-html-document-expected.txt: Added.
+        * platform/mac/svg/foreignObject/text-tref-02-b-expected.checksum: Added.
+        * platform/mac/svg/foreignObject/text-tref-02-b-expected.png: Added.
+        * platform/mac/svg/foreignObject/text-tref-02-b-expected.txt: Added.
+        * svg/custom/bug45331.svg: Added.
+        * svg/foreignObject: Added.
+        * svg/foreignObject/disallowed-svg-nodes-as-direct-children.svg: Added.
+        * svg/foreignObject/no-crash-with-svg-content-in-html-document.svg: Added.
+        * svg/foreignObject/svg-document-as-direct-child.svg: Added.
+        * svg/foreignObject/svg-document-in-html-document.svg: Added.
+        * svg/foreignObject/text-tref-02-b.svg: Added.
+
+

@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r126063 | kenrb@chromium.org | 2012-08-20 23:02:32 +0200 (Mo, 20. Aug 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/line-layout/double-line-break-obj-removal-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/line-layout/double-line-break-obj-removal-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLineBoxList.cpp
+
+Line boxes not being dirtied correctly during inline removal
+https://bugs.webkit.org/show_bug.cgi?id=93156
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+When two inline objects were being removed from different lineboxes
+in an ancestral RenderBlock, the way the RenderBlock was being marked
+prevented the second linebox from being marked dirty. This causes
+it to not get layout in the subsequent layout pass.
+
+This patch causes only the descendants corresponding to actual changed
+lineboxes to have their ancestorLineBoxDirty bit set, rather than
+the RenderBlock that contains the lineboxes themselves.
+
+* rendering/RenderLineBoxList.cpp:
+(WebCore::RenderLineBoxList::dirtyLinesFromChangedChild):
+
+LayoutTests:
+
+Test exercising crashing condition for bug 93156.
+
+* fast/block/line-layout/double-line-break-obj-removal-crash.html: Added
+* fast/block/line-layout/double-line-break-obj-removal-crash-expected.txt: Added
+
+

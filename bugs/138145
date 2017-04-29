@@ -1,0 +1,13 @@
+------------------------------------------------------------------------
+r175271 | ap@apple.com | 2014-10-28 21:12:00 +0100 (Di, 28. Okt 2014) | 6 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+
+fast/multicol/multicol-crazy-nesting.html sometimes crashes
+https://bugs.webkit.org/show_bug.cgi?id=138145
+
+* TestExpectations: Skipping for now.
+
+
+

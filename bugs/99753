@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r132159 | msaboff@apple.com | 2012-10-23 01:37:04 +0200 (Di, 23. Okt 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/js/find-ignoring-case-regress-99753-expected.txt
+   A /trunk/LayoutTests/fast/js/find-ignoring-case-regress-99753.html
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/text/StringImpl.cpp
+
+Regression(r131655): Crash in StringImpl::findIgnoringCase
+https://bugs.webkit.org/show_bug.cgi?id=99753
+
+Reviewed by Geoffrey Garen.
+
+Source/WTF: 
+
+Fixed to use the searchLength to take into account the start index.
+
+Added LayoutTests/fast/js/find-ignoring-case-regress-99753.html
+
+* wtf/text/StringImpl.cpp:
+(WTF::StringImpl::findIgnoringCase):
+
+LayoutTests: 
+
+New regression test.
+
+* fast/js/find-ignoring-case-regress-99753-expected.txt: Added.
+* fast/js/find-ignoring-case-regress-99753.html: Added.
+
+

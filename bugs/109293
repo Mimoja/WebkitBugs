@@ -1,0 +1,92 @@
+------------------------------------------------------------------------
+r142759 | fmalita@chromium.org | 2013-02-13 18:49:47 +0100 (Mi, 13. Feb 2013) | 70 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/svg/dom/SVGLengthList-basics-expected.txt
+   M /trunk/LayoutTests/svg/dom/SVGLengthList-basics.xhtml
+   M /trunk/LayoutTests/svg/dom/SVGNumberList-basics-expected.txt
+   M /trunk/LayoutTests/svg/dom/SVGNumberList-basics.xhtml
+   M /trunk/LayoutTests/svg/dom/SVGPointList-basics-expected.txt
+   M /trunk/LayoutTests/svg/dom/SVGPointList-basics.xhtml
+   M /trunk/LayoutTests/svg/dom/SVGTransformList-basics-expected.txt
+   M /trunk/LayoutTests/svg/dom/SVGTransformList-basics.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/properties/SVGAnimatedListPropertyTearOff.h
+   M /trunk/Source/WebCore/svg/properties/SVGAnimatedPathSegListPropertyTearOff.h
+   M /trunk/Source/WebCore/svg/properties/SVGListProperty.h
+   M /trunk/Source/WebCore/svg/properties/SVGListPropertyTearOff.h
+   M /trunk/Source/WebCore/svg/properties/SVGPathSegListPropertyTearOff.cpp
+   M /trunk/Source/WebCore/svg/properties/SVGPathSegListPropertyTearOff.h
+   M /trunk/Source/WebCore/svg/properties/SVGStaticListPropertyTearOff.h
+
+[SVG] OOB access in SVGListProperty::replaceItemValues()
+https://bugs.webkit.org/show_bug.cgi?id=109293
+
+Source/WebCore:
+
+Replacing a list property item with itself should be a no-op. This patch updates the related
+APIs and logic to detect the self-replace case and prevent removal of the item from the list.
+
+To avoid scanning the list multiple times, removeItemFromList() is updated to operate on
+indices and a findItem() method is added to resolve an item to an index.
+
+Reviewed by Dirk Schulze.
+
+No new tests: updated existing tests cover the change.
+
+* svg/properties/SVGAnimatedListPropertyTearOff.h:
+(WebCore::SVGAnimatedListPropertyTearOff::findItem):
+(SVGAnimatedListPropertyTearOff):
+(WebCore::SVGAnimatedListPropertyTearOff::removeItemFromList):
+* svg/properties/SVGAnimatedPathSegListPropertyTearOff.h:
+(WebCore::SVGAnimatedPathSegListPropertyTearOff::findItem):
+(SVGAnimatedPathSegListPropertyTearOff):
+(WebCore::SVGAnimatedPathSegListPropertyTearOff::removeItemFromList):
+Add a findItem() delegating method, and update removeItemFromList() to use the new
+index-based API.
+
+* svg/properties/SVGListProperty.h:
+(WebCore::SVGListProperty::insertItemBeforeValues):
+(WebCore::SVGListProperty::insertItemBeforeValuesAndWrappers):
+(WebCore::SVGListProperty::replaceItemValues):
+(WebCore::SVGListProperty::replaceItemValuesAndWrappers):
+(SVGListProperty):
+Updated to handle the no-op case for insertItemBefore() & replaceItem().
+
+* svg/properties/SVGListPropertyTearOff.h:
+(WebCore::SVGListPropertyTearOff::findItem):
+(WebCore::SVGListPropertyTearOff::removeItemFromList):
+Index-based API updates.
+
+(WebCore::SVGListPropertyTearOff::processIncomingListItemValue):
+(WebCore::SVGListPropertyTearOff::processIncomingListItemWrapper):
+* svg/properties/SVGPathSegListPropertyTearOff.cpp:
+(WebCore::SVGPathSegListPropertyTearOff::processIncomingListItemValue):
+Detect the self-replace case and return without removing the item from the list.
+
+* svg/properties/SVGPathSegListPropertyTearOff.h:
+(WebCore::SVGPathSegListPropertyTearOff::findItem):
+(WebCore::SVGPathSegListPropertyTearOff::removeItemFromList):
+(SVGPathSegListPropertyTearOff):
+(WebCore::SVGPathSegListPropertyTearOff::processIncomingListItemWrapper):
+* svg/properties/SVGStaticListPropertyTearOff.h:
+(WebCore::SVGStaticListPropertyTearOff::processIncomingListItemValue):
+(WebCore::SVGStaticListPropertyTearOff::processIncomingListItemWrapper):
+Index-based API updates.
+
+LayoutTests:
+
+Updated tests to cover the crash and new behavior.
+
+Reviewed by Dirk Schulze.
+
+* svg/dom/SVGLengthList-basics-expected.txt:
+* svg/dom/SVGLengthList-basics.xhtml:
+* svg/dom/SVGNumberList-basics-expected.txt:
+* svg/dom/SVGNumberList-basics.xhtml:
+* svg/dom/SVGPointList-basics-expected.txt:
+* svg/dom/SVGPointList-basics.xhtml:
+* svg/dom/SVGTransformList-basics-expected.txt:
+* svg/dom/SVGTransformList-basics.xhtml:
+
+

@@ -1,0 +1,138 @@
+------------------------------------------------------------------------
+r147892 | oliver@apple.com | 2013-04-08 06:14:50 +0200 (Mo, 08. Apr 2013) | 101 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/assembler/ARMv7Assembler.h
+   M /trunk/Source/JavaScriptCore/assembler/AssemblerBuffer.h
+   M /trunk/Source/JavaScriptCore/assembler/LinkBuffer.cpp
+   M /trunk/Source/JavaScriptCore/assembler/MacroAssemblerARMv7.h
+   M /trunk/Source/JavaScriptCore/bytecode/CodeBlock.cpp
+   M /trunk/Source/JavaScriptCore/bytecode/CodeBlock.h
+   M /trunk/Source/JavaScriptCore/bytecode/UnlinkedCodeBlock.h
+   M /trunk/Source/JavaScriptCore/bytecompiler/BytecodeGenerator.cpp
+   M /trunk/Source/JavaScriptCore/bytecompiler/BytecodeGenerator.h
+   M /trunk/Source/JavaScriptCore/bytecompiler/StaticPropertyAnalysis.h
+   M /trunk/Source/JavaScriptCore/bytecompiler/StaticPropertyAnalyzer.h
+   M /trunk/Source/JavaScriptCore/dfg/DFGJITCompiler.cpp
+   M /trunk/Source/JavaScriptCore/heap/Heap.cpp
+   M /trunk/Source/JavaScriptCore/heap/Heap.h
+   M /trunk/Source/JavaScriptCore/parser/ASTBuilder.h
+   M /trunk/Source/JavaScriptCore/runtime/ArrayPrototype.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSArray.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSONObject.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSObject.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSString.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSStringBuilder.h
+   M /trunk/Source/JavaScriptCore/runtime/LiteralParser.cpp
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/CheckedArithmetic.h
+   M /trunk/Source/WTF/wtf/Forward.h
+   M /trunk/Source/WTF/wtf/MemoryInstrumentation.h
+   M /trunk/Source/WTF/wtf/Vector.h
+   M /trunk/Source/WTF/wtf/text/StringImpl.h
+   M /trunk/Source/WTF/wtf/text/WTFString.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.exp.in
+
+Add bounds checking for WTF::Vector::operator[]
+https://bugs.webkit.org/show_bug.cgi?id=89600
+
+Reviewed by Filip Pizlo.
+
+Source/JavaScriptCore:
+
+Make a few JSC classes opt-out of release mode bounds checking.
+
+* assembler/AssemblerBuffer.h:
+(AssemblerBuffer):
+* assembler/AssemblerBufferWithConstantPool.h:
+(AssemblerBufferWithConstantPool):
+* bytecode/CodeBlock.cpp:
+(JSC::CodeBlock::CodeBlock):
+(JSC::CodeBlock::bytecodeOffset):
+(JSC):
+(JSC::replaceExistingEntries):
+* bytecode/CodeBlock.h:
+(JSC::CodeBlock::bytecodeOffsetForCallAtIndex):
+(JSC::CodeBlock::callReturnIndexVector):
+(JSC::CodeBlock::codeOrigins):
+(RareData):
+* bytecode/UnlinkedCodeBlock.h:
+(JSC::UnlinkedEvalCodeBlock::adoptVariables):
+(UnlinkedEvalCodeBlock):
+* bytecompiler/BytecodeGenerator.cpp:
+(JSC::BytecodeGenerator::BytecodeGenerator):
+(JSC::BytecodeGenerator::emitNewArray):
+(JSC::BytecodeGenerator::emitCall):
+(JSC::BytecodeGenerator::emitConstruct):
+* bytecompiler/BytecodeGenerator.h:
+(CallArguments):
+(JSC::BytecodeGenerator::instructions):
+(BytecodeGenerator):
+* bytecompiler/StaticPropertyAnalysis.h:
+(JSC::StaticPropertyAnalysis::create):
+(JSC::StaticPropertyAnalysis::StaticPropertyAnalysis):
+(StaticPropertyAnalysis):
+* bytecompiler/StaticPropertyAnalyzer.h:
+(StaticPropertyAnalyzer):
+(JSC::StaticPropertyAnalyzer::StaticPropertyAnalyzer):
+* dfg/DFGJITCompiler.cpp:
+(JSC::DFG::JITCompiler::link):
+* parser/ASTBuilder.h:
+(ASTBuilder):
+* runtime/ArgList.h:
+(MarkedArgumentBuffer):
+* runtime/ArrayPrototype.cpp:
+(JSC::arrayProtoFuncSort):
+
+Source/WebCore:
+
+Fix exports
+
+* WebCore.exp.in:
+
+Source/WTF:
+
+Add a template parameter to Vector<> that controls whether
+bounds checking is performed in release builds or not.
+Defaults to crashing on overflow.
+
+* wtf/Forward.h:
+(WTF):
+* wtf/Vector.h:
+(WTF):
+(Vector):
+(WTF::Vector::at):
+(WTF::Vector::removeLast):
+(WTF::::Vector):
+(WTF::=):
+(WTF::::contains):
+(WTF::::find):
+(WTF::::reverseFind):
+(WTF::::fill):
+(WTF::::appendRange):
+(WTF::::expandCapacity):
+(WTF::::tryExpandCapacity):
+(WTF::::resize):
+(WTF::::shrink):
+(WTF::::grow):
+(WTF::::reserveCapacity):
+(WTF::::tryReserveCapacity):
+(WTF::::reserveInitialCapacity):
+(WTF::::shrinkCapacity):
+(WTF::::append):
+(WTF::::tryAppend):
+(WTF::::appendSlowCase):
+(WTF::::uncheckedAppend):
+(WTF::::appendVector):
+(WTF::::insert):
+(WTF::::prepend):
+(WTF::::remove):
+(WTF::::reverse):
+(WTF::::releaseBuffer):
+(WTF::::checkConsistency):
+(WTF::deleteAllValues):
+(WTF::swap):
+(WTF::operator==):
+(WTF::operator!=):
+

@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r179776 | zalan@apple.com | 2015-02-07 05:35:58 +0100 (Sa, 07. Feb 2015) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/compositing/repaint-container-assertion-when-toggling-compositing-expected.txt
+   A /trunk/LayoutTests/compositing/repaint-container-assertion-when-toggling-compositing.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+
+ASSERT repaintContainer->hasLayer() in WebCore::RenderObject::repaintUsingContainer
+https://bugs.webkit.org/show_bug.cgi?id=140750
+
+Reviewed by Simon Fraser.
+
+There's a short period of time when RenderObject::layer() still returns a valid pointer
+even though we already cleared the hasLayer() flag.
+Do not use the layer as repaint container in such cases.
+
+Source/WebCore:
+
+Test: compositing/repaint-container-assertion-when-toggling-compositing.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::enclosingLayer):
+
+LayoutTests:
+
+* compositing/repaint-container-assertion-when-toggling-compositing-expected.txt: Added.
+* compositing/repaint-container-assertion-when-toggling-compositing.html: Added.
+

@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r107999 | cdn@chromium.org | 2012-02-17 01:48:11 +0100 (Fr, 17. Feb 2012) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSParser.cpp
+
+Very large strings could cause the new quoted string to wrap.
+https://bugs.webkit.org/show_bug.cgi?id=78387
+
+Reviewed by Eric Seidel.
+
+* css/CSSParser.cpp:
+(WebCore::quoteCSSString):
+
+

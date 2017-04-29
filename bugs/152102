@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r194001 | jiewen_tan@apple.com | 2015-12-12 03:26:45 +0100 (Sa, 12. Dez 2015) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/contentdispositionattachmentsandbox/resources/echo-http-referer.php
+   A /trunk/LayoutTests/http/tests/contentdispositionattachmentsandbox/resources/subresource-request-not-include-referer-header-frame.php
+   A /trunk/LayoutTests/http/tests/contentdispositionattachmentsandbox/subresource-request-not-include-referer-header-expected.txt
+   A /trunk/LayoutTests/http/tests/contentdispositionattachmentsandbox/subresource-request-not-include-referer-header.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+Strip out Referer header when requesting subresources or following links for documents with "Content-Disposition: attachment"
+https://bugs.webkit.org/show_bug.cgi?id=152102
+<rdar://problem/22124230>
+
+Reviewed by Andy Estes.
+
+Source/WebCore:
+
+Keep the ReferrerPolicy for a document as ReferrerPolicyNever if the document is loaded with
+"Content-Disposition: attachment".
+
+Test: http/tests/contentdispositionattachmentsandbox/subresource-request-not-include-referer-header.html
+
+* dom/Document.cpp:
+(WebCore::Document::processReferrerPolicy):
+(WebCore::Document::applyContentDispositionAttachmentSandbox):
+
+LayoutTests:
+
+* http/tests/contentdispositionattachmentsandbox/resources/echo-http-referer.php: Added.
+* http/tests/contentdispositionattachmentsandbox/resources/subresource-request-not-include-referer-header-frame.php: Added.
+* http/tests/contentdispositionattachmentsandbox/subresource-request-not-include-referer-header-expected.txt: Added.
+* http/tests/contentdispositionattachmentsandbox/subresource-request-not-include-referer-header.html: Added.
+

@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r69257 | jamesr@google.com | 2010-10-07 01:56:59 +0200 (Do, 07. Okt 2010) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/ScrollView.cpp
+
+2010-10-06  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by James Robinson
+
+        ScrollViews without scrollbars should not eat scroll events
+        https://bugs.webkit.org/show_bug.cgi?id=47036
+
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::wheelEvent):
+

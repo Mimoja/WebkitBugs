@@ -1,0 +1,81 @@
+------------------------------------------------------------------------
+r181814 | utatane.tea@gmail.com | 2015-03-20 22:35:17 +0100 (Fr, 20. Mär 2015) | 59 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGOperations.cpp
+   M /trunk/Source/JavaScriptCore/jit/JITOperations.cpp
+   M /trunk/Source/JavaScriptCore/llint/LLIntSlowPaths.cpp
+   M /trunk/Source/JavaScriptCore/runtime/CommonSlowPaths.cpp
+   M /trunk/Source/JavaScriptCore/runtime/CommonSlowPaths.h
+   M /trunk/Source/JavaScriptCore/runtime/JSCJSValue.h
+   M /trunk/Source/JavaScriptCore/runtime/JSCJSValueInlines.h
+   M /trunk/Source/JavaScriptCore/runtime/ObjectConstructor.cpp
+   M /trunk/Source/JavaScriptCore/runtime/ObjectPrototype.cpp
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSDOMWindowCustom.cpp
+   M /trunk/Source/WebCore/bindings/js/ReadableStreamJSSource.cpp
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestCustomNamedGetter.cpp
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestEventTarget.cpp
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestInterface.cpp
+
+REGRESSION (r179429): Potential Use after free in JavaScriptCore`WTF::StringImpl::ref + 83
+https://bugs.webkit.org/show_bug.cgi?id=142410
+
+Reviewed by Geoffrey Garen.
+
+Source/JavaScriptCore:
+
+Before this patch, added function JSValue::toPropertyKey returns PropertyName.
+Since PropertyName doesn't have AtomicStringImpl ownership,
+if Identifier is implicitly converted to PropertyName and Identifier is destructed,
+PropertyName may refer freed AtomicStringImpl*.
+
+This patch changes the result type of JSValue::toPropertyName from PropertyName to Identifier,
+to keep AtomicStringImpl* ownership after the toPropertyName call is done.
+And receive the result value as Identifier type to keep ownership in the caller side.
+
+To catch the result of toPropertyKey as is, we catch the result of toPropertyName as auto.
+
+However, now we don't need to have both Identifier and PropertyName.
+So we'll merge PropertyName to Identifier in the subsequent patch.
+
+* dfg/DFGOperations.cpp:
+(JSC::DFG::operationPutByValInternal):
+* jit/JITOperations.cpp:
+(JSC::getByVal):
+* llint/LLIntSlowPaths.cpp:
+(JSC::LLInt::getByVal):
+(JSC::LLInt::LLINT_SLOW_PATH_DECL):
+* runtime/CommonSlowPaths.cpp:
+(JSC::SLOW_PATH_DECL):
+* runtime/CommonSlowPaths.h:
+(JSC::CommonSlowPaths::opIn):
+* runtime/JSCJSValue.h:
+* runtime/JSCJSValueInlines.h:
+(JSC::JSValue::toPropertyKey):
+* runtime/ObjectConstructor.cpp:
+(JSC::objectConstructorGetOwnPropertyDescriptor):
+(JSC::objectConstructorDefineProperty):
+* runtime/ObjectPrototype.cpp:
+(JSC::objectProtoFuncPropertyIsEnumerable):
+
+Source/WebCore:
+
+The same issues are found in the existing code; PropertyName does not have ownership.
+This patch rewrite the point that should have ownership to Identifier.
+
+* bindings/js/JSDOMWindowCustom.cpp:
+(WebCore::JSDOMWindow::getOwnPropertySlotByIndex):
+(WebCore::JSDOMWindow::putByIndex):
+* bindings/js/ReadableStreamJSSource.cpp:
+(WebCore::getInternalSlotFromObject):
+* bindings/scripts/CodeGeneratorJS.pm:
+(GenerateImplementation):
+* bindings/scripts/test/JS/JSTestCustomNamedGetter.cpp:
+(WebCore::JSTestCustomNamedGetter::getOwnPropertySlotByIndex):
+* bindings/scripts/test/JS/JSTestEventTarget.cpp:
+(WebCore::JSTestEventTarget::getOwnPropertySlotByIndex):
+* bindings/scripts/test/JS/JSTestInterface.cpp:
+(WebCore::JSTestInterface::putByIndex):
+

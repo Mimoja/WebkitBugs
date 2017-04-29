@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r203282 | bfulgham@apple.com | 2016-07-15 19:35:07 +0200 (Fr, 15. Jul 2016) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/mutation-details-focus-expected.txt
+   A /trunk/LayoutTests/fast/dom/mutation-details-focus.html
+
+Merge Blink test case
+https://bugs.webkit.org/show_bug.cgi?id=123870
+
+Patch is from the Blink change (patch by <morritaw@chromium.org>):
+<https://chromium.googlesource.com/chromium/blink/+/2abd63ccea97b1fcf25b337c76f12e6ad1bfc025>
+
+* fast/dom/mutation-details-focus-expected.txt: Added.
+* fast/dom/mutation-details-focus.html: Added.
+
+
+

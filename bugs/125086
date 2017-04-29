@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r166495 | abucur@adobe.com | 2014-03-31 13:22:42 +0200 (Mo, 31. Mär 2014) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/layers/region-removed-during-animation-expected.html
+   A /trunk/LayoutTests/fast/regions/layers/region-removed-during-animation.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderFlowThread.cpp
+
+Wrong layout while animating content in regions
+https://bugs.webkit.org/show_bug.cgi?id=125086
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+The region to layer and regions to layer mappings should be cleared when the region chain changes.
+
+Test: fast/regions/layers/region-removed-during-animation.html
+
+* rendering/RenderFlowThread.cpp:
+(WebCore::RenderFlowThread::invalidateRegions): Clear the two maps and flag them for recomputation.
+(WebCore::RenderFlowThread::cachedRegionForCompositedLayer): Assert that the returned region exists.
+
+LayoutTests:
+
+Add a test verifying the layout and painting of animated content inside regions
+is correct.
+
+* fast/regions/layers/region-removed-during-animation-expected.html: Added.
+* fast/regions/layers/region-removed-during-animation.html: Added.
+
+

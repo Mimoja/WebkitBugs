@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r215748 | mark.lam@apple.com | 2017-04-25 21:04:47 +0200 (Di, 25. Apr 2017) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/regress-170990.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGCSEPhase.cpp
+   M /trunk/Source/JavaScriptCore/dfg/DFGClobberize.h
+   M /trunk/Source/JavaScriptCore/dfg/DFGHeapLocation.cpp
+   M /trunk/Source/JavaScriptCore/dfg/DFGHeapLocation.h
+
+Local CSE wrongly CSEs array accesses with different result types.
+https://bugs.webkit.org/show_bug.cgi?id=170990
+<rdar://problem/31705945>
+
+Reviewed by Saam Barati.
+
+JSTests:
+
+* stress/regress-170990.js: Added.
+
+Source/JavaScriptCore:
+
+The fix is to use different LocationKind enums for the different type of array
+result types.  This makes the HeapLocation values different based on the result
+types, and allows CSE to discern between them.
+
+* dfg/DFGCSEPhase.cpp:
+* dfg/DFGClobberize.h:
+(JSC::DFG::clobberize):
+* dfg/DFGHeapLocation.cpp:
+(WTF::printInternal):
+* dfg/DFGHeapLocation.h:
+(JSC::DFG::indexedPropertyLocForResultType):
+
+
+

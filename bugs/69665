@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r96999 | jschuh@chromium.org | 2011-10-08 04:22:21 +0200 (Sa, 08. Okt 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/workers/worker-multi-startup-expected.txt
+   A /trunk/LayoutTests/fast/workers/worker-multi-startup.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/DOMImplementation.cpp
+   M /trunk/Source/WebCore/dom/DOMImplementation.h
+   M /trunk/Source/WebCore/platform/ThreadGlobalData.cpp
+   M /trunk/Source/WebCore/platform/ThreadGlobalData.h
+
+Make isXMLMIMEType regex use TLS
+https://bugs.webkit.org/show_bug.cgi?id=69665
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/workers/worker-multi-startup.html
+
+* dom/DOMImplementation.cpp:
+(WebCore::XMLMIMETypeRegExp::XMLMIMETypeRegExp):
+(WebCore::XMLMIMETypeRegExp::~XMLMIMETypeRegExp):
+(WebCore::XMLMIMETypeRegExp::isXMLMIMEType):
+(WebCore::DOMImplementation::isXMLMIMEType):
+* dom/DOMImplementation.h:
+* platform/ThreadGlobalData.cpp:
+(WebCore::ThreadGlobalData::ThreadGlobalData):
+(WebCore::ThreadGlobalData::destroy):
+* platform/ThreadGlobalData.h:
+(WebCore::ThreadGlobalData::xmlTypeRegExp):
+
+LayoutTests:
+
+* fast/workers/worker-multi-startup-expected.txt: Added.
+* fast/workers/worker-multi-startup.html: Added.
+
+

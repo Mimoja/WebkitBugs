@@ -1,0 +1,13 @@
+------------------------------------------------------------------------
+r203292 | ryanhaddad@apple.com | 2016-07-15 21:38:24 +0200 (Fr, 15. Jul 2016) | 6 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/ios-simulator/TestExpectations
+
+Skipping test from r203288 on ios-simulator due to reliance upon mouse events.
+https://bugs.webkit.org/show_bug.cgi?id=159818
+
+Unreviewed test gardening.
+
+* platform/ios-simulator/TestExpectations:
+

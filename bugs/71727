@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r99565 | gavinp@chromium.org | 2011-11-08 15:42:25 +0100 (Di, 08. Nov 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLLinkElement/cachedresource-types-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLLinkElement/cachedresource-types.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedResource.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResource.h
+
+Fix width of m_type in CachedResource
+https://bugs.webkit.org/show_bug.cgi?id=71727
+
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Test: fast/dom/HTMLLinkElement/cachedresource-types.html
+
+* loader/cache/CachedResource.cpp:
+(WebCore::CachedResource::CachedResource):
+* loader/cache/CachedResource.h:
+
+LayoutTests:
+
+* fast/dom/HTMLLinkElement/cachedresource-types-expected.txt: Added.
+* fast/dom/HTMLLinkElement/cachedresource-types.html: Added.
+
+

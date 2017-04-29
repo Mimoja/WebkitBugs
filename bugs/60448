@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r86060 | inferno@chromium.org | 2011-05-09 18:29:36 +0200 (Mo, 09. Mai 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/inline/inline-destroy-dirty-lines-crash-expected.txt
+   A /trunk/LayoutTests/fast/inline/inline-destroy-dirty-lines-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+
+2011-05-09  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Regression(r85869): Restore dirty line logic in RenderInline::destroy.
+        https://bugs.webkit.org/show_bug.cgi?id=60448
+
+        Test: fast/inline/inline-destroy-dirty-lines-crash.html
+
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::destroy):
+2011-05-09  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not when failing to dirty lines while removing
+        a inline.
+        https://bugs.webkit.org/show_bug.cgi?id=60448
+
+        * fast/inline/inline-destroy-dirty-lines-crash-expected.txt: Added.
+        * fast/inline/inline-destroy-dirty-lines-crash.html: Added.
+
+

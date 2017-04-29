@@ -1,0 +1,83 @@
+------------------------------------------------------------------------
+r108858 | msaboff@apple.com | 2012-02-25 00:55:01 +0100 (Sa, 25. Feb 2012) | 67 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/regex/overflow-expected.txt
+   M /trunk/LayoutTests/fast/regex/script-tests/overflow.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/RegExp.cpp
+   M /trunk/Source/JavaScriptCore/yarr/Yarr.h
+   M /trunk/Source/JavaScriptCore/yarr/YarrInterpreter.cpp
+   M /trunk/Source/JavaScriptCore/yarr/YarrInterpreter.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/ContentSearchUtils.cpp
+   M /trunk/Source/WebCore/platform/text/RegularExpression.cpp
+
+ASSERT(position < 0) in JSC::Yarr::Interpreter::InputStream::readChecked
+https://bugs.webkit.org/show_bug.cgi?id=73728
+
+Reviewed by Gavin Barraclough.
+
+Source/JavaScriptCore: 
+
+Fixed the mixing of signed and unsigned character indeces in YARR
+interpreter.
+
+* runtime/RegExp.cpp:
+(JSC::RegExp::match): Added code to check for match longer than 2^31 and
+return no match after resetting the offsets.
+* yarr/YarrInterpreter.cpp: Changed to use unsigned for all character index
+handling except when matching back references.
+(JSC::Yarr::Interpreter::InputStream::readChecked):
+(JSC::Yarr::Interpreter::InputStream::checkInput):
+(JSC::Yarr::Interpreter::InputStream::uncheckInput):
+(JSC::Yarr::Interpreter::InputStream::atStart):
+(JSC::Yarr::Interpreter::InputStream::atEnd):
+(JSC::Yarr::Interpreter::InputStream::isAvailableInput):
+(JSC::Yarr::Interpreter::checkCharacter):
+(JSC::Yarr::Interpreter::checkCasedCharacter):
+(JSC::Yarr::Interpreter::checkCharacterClass):
+(JSC::Yarr::Interpreter::tryConsumeBackReference):
+(JSC::Yarr::Interpreter::matchAssertionBOL):
+(JSC::Yarr::Interpreter::matchAssertionWordBoundary):
+(JSC::Yarr::Interpreter::backtrackPatternCharacter):
+(JSC::Yarr::Interpreter::backtrackPatternCasedCharacter):
+(JSC::Yarr::Interpreter::matchCharacterClass):
+(JSC::Yarr::Interpreter::backtrackCharacterClass):
+(JSC::Yarr::Interpreter::matchParenthesesOnceBegin):
+(JSC::Yarr::Interpreter::matchDisjunction):
+(JSC::Yarr::Interpreter::interpret):
+(JSC::Yarr::ByteCompiler::assertionBOL):
+(JSC::Yarr::ByteCompiler::assertionEOL):
+(JSC::Yarr::ByteCompiler::assertionWordBoundary):
+(JSC::Yarr::ByteCompiler::atomPatternCharacter):
+(JSC::Yarr::ByteCompiler::atomCharacterClass):
+(JSC::Yarr::ByteCompiler::atomBackReference):
+(JSC::Yarr::ByteCompiler::atomParenthesesOnceBegin):
+(JSC::Yarr::ByteCompiler::atomParenthesesTerminalBegin):
+(JSC::Yarr::ByteCompiler::atomParenthesesSubpatternBegin):
+(JSC::Yarr::ByteCompiler::atomParentheticalAssertionEnd):
+(JSC::Yarr::ByteCompiler::emitDisjunction):
+* yarr/YarrInterpreter.h:
+
+Source/WebCore: 
+
+No new tests, refactored usage of JSC::Yarr interpreter.
+Should be covered by existing tests.
+
+Changed WebCore callers of JSC::Yarr:Interpreter::interpret() to match the
+new signature with unsigned offsets.
+
+* inspector/ContentSearchUtils.cpp:
+(WebCore::ContentSearchUtils::findMagicComment):
+* platform/text/RegularExpression.cpp:
+(WebCore::RegularExpression::match):
+
+LayoutTests: 
+
+Updated test for change.  Test is from defect.
+
+* fast/regex/overflow-expected.txt:
+* fast/regex/script-tests/overflow.js:
+
+

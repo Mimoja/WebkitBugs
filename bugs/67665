@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r94608 | crogers@google.com | 2011-09-07 00:51:33 +0200 (Mi, 07. Sep 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/webaudio/mediaelementaudiosourcenode-gc-expected.txt
+   A /trunk/LayoutTests/webaudio/mediaelementaudiosourcenode-gc.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/Source/WebCore/webaudio/AudioContext.cpp
+   M /trunk/Source/WebCore/webaudio/AudioContext.h
+
+MediaElementAudioSourceNode destruction triggers ASSERTS
+https://bugs.webkit.org/show_bug.cgi?id=67665
+
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Test: webaudio/mediaelementaudiosourcenode-gc.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::setAudioSourceNode):
+* webaudio/AudioContext.cpp:
+(WebCore::AudioContext::uninitializeDispatch):
+(WebCore::AudioContext::stop):
+* webaudio/AudioContext.h:
+
+LayoutTests:
+
+* webaudio/mediaelementaudiosourcenode-gc-expected.txt: Added.
+* webaudio/mediaelementaudiosourcenode-gc.html: Added.
+

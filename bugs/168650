@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r213522 | zalan@apple.com | 2017-03-07 18:33:45 +0100 (Di, 07. Mär 2017) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/ShadowBlur.cpp
+   M /trunk/Source/WebCore/platform/graphics/ShadowBlur.h
+
+ShadowBlur::calculateLayerBoundingRect doesn't need to return the enclosingIntRect of layerRect
+https://bugs.webkit.org/show_bug.cgi?id=168650
+
+Patch by Fujii Hironori <Hironori.Fujii@sony.com> on 2017-03-07
+Reviewed by Simon Fraser.
+
+No new tests, no behavior change.
+
+* platform/graphics/ShadowBlur.h: Change the type of return value
+from IntRect to IntSize.
+* platform/graphics/ShadowBlur.cpp:
+(WebCore::ShadowBlur::calculateLayerBoundingRect): Ditto.
+(WebCore::ShadowBlur::drawRectShadow): Rename a variable layerRect layerSize.
+(WebCore::ShadowBlur::drawInsetShadow): Ditto.
+(WebCore::ShadowBlur::drawRectShadowWithoutTiling): Ditto.
+(WebCore::ShadowBlur::drawInsetShadowWithoutTiling): Ditto.
+(WebCore::ShadowBlur::beginShadowLayer): Ditto.
+

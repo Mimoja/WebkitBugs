@@ -1,0 +1,175 @@
+------------------------------------------------------------------------
+r81018 | jknotten@chromium.org | 2011-03-14 13:26:09 +0100 (Mo, 14. Mär 2011) | 135 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Geolocation/page-reload-cancel-permission-requests-expected.txt
+   A /trunk/LayoutTests/fast/dom/Geolocation/page-reload-cancel-permission-requests.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/resources/page-reload-cancel-permission-requests-inner.html
+   A /trunk/LayoutTests/fast/dom/Geolocation/script-tests/page-reload-cancel-permission-requests.js
+   M /trunk/LayoutTests/platform/gtk/Skipped
+   M /trunk/LayoutTests/platform/mac/Skipped
+   M /trunk/LayoutTests/platform/qt-wk2/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMWindow.cpp
+   M /trunk/Source/WebCore/page/DOMWindow.h
+   M /trunk/Source/WebCore/page/Frame.cpp
+   M /trunk/Source/WebCore/page/Geolocation.cpp
+   M /trunk/Source/WebCore/page/Geolocation.h
+   M /trunk/Source/WebCore/page/GeolocationController.cpp
+   M /trunk/Source/WebCore/page/Navigator.cpp
+   M /trunk/Source/WebCore/page/Navigator.h
+   M /trunk/Source/WebCore/platform/mock/GeolocationClientMock.cpp
+   M /trunk/Source/WebCore/platform/mock/GeolocationClientMock.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/public/WebGeolocationClientMock.h
+   M /trunk/Source/WebKit/chromium/src/WebGeolocationClientMock.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/LayoutTestController.cpp
+   M /trunk/Tools/DumpRenderTree/LayoutTestController.h
+   M /trunk/Tools/DumpRenderTree/chromium/LayoutTestController.cpp
+   M /trunk/Tools/DumpRenderTree/chromium/LayoutTestController.h
+   M /trunk/Tools/DumpRenderTree/gtk/LayoutTestControllerGtk.cpp
+   M /trunk/Tools/DumpRenderTree/mac/LayoutTestControllerMac.mm
+   M /trunk/Tools/DumpRenderTree/mac/UIDelegate.h
+   M /trunk/Tools/DumpRenderTree/mac/UIDelegate.mm
+   M /trunk/Tools/DumpRenderTree/qt/LayoutTestControllerQt.cpp
+   M /trunk/Tools/DumpRenderTree/qt/LayoutTestControllerQt.h
+   M /trunk/Tools/DumpRenderTree/win/LayoutTestControllerWin.cpp
+   M /trunk/Tools/DumpRenderTree/wx/LayoutTestControllerWx.cpp
+
+2011-03-14  John Knottenbelt  <jknotten@chromium.org>
+
+        Reviewed by Steve Block.
+
+        Detach Geolocation from Frame when Page destroyed.
+        https://bugs.webkit.org/show_bug.cgi?id=52877
+
+        Ensure that all geolocation permission requests are cancelled
+        when the page is detached from its frame.
+
+        Fix fast/dom/Geolocation/window-close-popup.html to ignore position error
+        generated on watch when window is closed.
+
+        * fast/dom/Geolocation/page-reload-cancel-permission-requests-expected.txt: Added.
+        * fast/dom/Geolocation/page-reload-cancel-permission-requests.html: Added.
+        * fast/dom/Geolocation/resources/page-reload-cancel-permission-requests-inner.html: Added.
+        * fast/dom/Geolocation/script-tests/page-reload-cancel-permission-requests.js: Added.
+        * platform/gtk/Skipped:
+        * platform/mac/Skipped:
+        * platform/qt-wk2/Skipped:
+2011-03-14  John Knottenbelt  <jknotten@chromium.org>
+
+        Reviewed by Steve Block.
+
+        Detach Geolocation from Frame when Page destroyed.
+        https://bugs.webkit.org/show_bug.cgi?id=52877
+
+        On Page destruction, any outstanding Geolocation permission
+        requests should be cancelled, because the Geolocation can only
+        access the client indirectly via m_frame->page().
+
+        Page destruction is signalled by a call to the
+        Frame::pageDestroyed() method. This explictly calls
+        DOMWindow::resetGeolocation which ultimately calls Geolocation::reset.
+
+        Geolocation::reset() detaches from the GeolocationController,
+        cancels requests, watches and single shots, and sets the
+        permission state back to Unknown.
+
+        Frame::pageDestroyed() is also called by FrameLoader even though
+        the page is not destroyed. We should still cancel permission
+        requests, because the GeolocationClient will become inaccessible
+        to the Geolocation object after this call.
+
+        Frame::transferChildFrameToNewDocument also indirectly calls
+        Geolocation::reset when the frame is reparented between
+        pages. Ideally we would like the Geolocation's activities to
+        continue after reparenting, see bug
+        https://bugs.webkit.org/show_bug.cgi?id=55577
+
+        Since GeolocationController is owned by Page, and all Geolocation
+        objects will now unsubscribe from the GeolocationController on
+        pageDetached(), we no longer need to call stopUpdating() from the
+        GeolocationController's destructor. Instead we can simply assert
+        that there should be no no observers. See related bug
+        https://bugs.webkit.org/show_bug.cgi?id=52216 .
+
+        Introduced new method 'numberOfPendingPermissionRequests' on
+        GeolocationClientMock to count the number of outstanding pending
+        permission requests. This provides a reusable implementation for
+        client-based implementations of the LayoutTestController's
+        numberOfPendingGeolocationPermissionRequests method.
+
+        Test: fast/dom/Geolocation/page-reload-cancel-permission-requests.html
+
+        * page/DOMWindow.cpp:
+        (WebCore::DOMWindow::resetGeolocation):
+        * page/DOMWindow.h:
+        * page/Frame.cpp:
+        (WebCore::Frame::pageDestroyed):
+        (WebCore::Frame::transferChildFrameToNewDocument):
+        * page/Geolocation.cpp:
+        (WebCore::Geolocation::~Geolocation):
+        (WebCore::Geolocation::page):
+        (WebCore::Geolocation::reset):
+        (WebCore::Geolocation::disconnectFrame):
+        (WebCore::Geolocation::lastPosition):
+        (WebCore::Geolocation::requestPermission):
+        (WebCore::Geolocation::startUpdating):
+        (WebCore::Geolocation::stopUpdating):
+        * page/Geolocation.h:
+        * page/GeolocationController.cpp:
+        (WebCore::GeolocationController::~GeolocationController):
+        * page/Navigator.cpp:
+        (WebCore::Navigator::resetGeolocation):
+        * page/Navigator.h:
+        * platform/mock/GeolocationClientMock.cpp:
+        (WebCore::GeolocationClientMock::numberOfPendingPermissionRequests):
+        * platform/mock/GeolocationClientMock.h:
+2011-03-14  John Knottenbelt  <jknotten@chromium.org>
+
+        Reviewed by Steve Block.
+
+        Detach Geolocation from Frame when Page destroyed.
+        https://bugs.webkit.org/show_bug.cgi?id=52877
+
+        Add accessors to the WebGeolocationClientMock to allow the number of
+        pending geolocation permission requests to be queried.
+
+        * public/WebGeolocationClientMock.h:
+        * src/WebGeolocationClientMock.cpp:
+        (WebKit::WebGeolocationClientMock::numberOfPendingPermissionRequests):
+2011-03-14  John Knottenbelt  <jknotten@chromium.org>
+
+        Reviewed by Steve Block.
+
+        Detach Geolocation from Frame when Page destroyed.
+        https://bugs.webkit.org/show_bug.cgi?id=52877
+
+        Extend the layout test controller to expose the number of pending
+        geolocation requests, so that we can test that the requests have
+        been cancelled on page close.
+
+        * DumpRenderTree/LayoutTestController.cpp:
+        (numberOfPendingGeolocationPermissionRequestsCallback):
+        (LayoutTestController::staticFunctions):
+        * DumpRenderTree/LayoutTestController.h:
+        * DumpRenderTree/chromium/LayoutTestController.cpp:
+        (LayoutTestController::LayoutTestController):
+        (LayoutTestController::numberOfPendingGeolocationPermissionRequests):
+        * DumpRenderTree/chromium/LayoutTestController.h:
+        * DumpRenderTree/gtk/LayoutTestControllerGtk.cpp:
+        (LayoutTestController::numberOfPendingGeolocationPermissionRequests):
+        * DumpRenderTree/mac/LayoutTestControllerMac.mm:
+        (LayoutTestController::numberOfPendingGeolocationPermissionRequests):
+        * DumpRenderTree/mac/UIDelegate.h:
+        * DumpRenderTree/mac/UIDelegate.mm:
+        (-[UIDelegate numberOfPendingGeolocationPermissionRequests]):
+        * DumpRenderTree/qt/LayoutTestControllerQt.cpp:
+        (LayoutTestController::numberOfPendingGeolocationPermissionRequests):
+        * DumpRenderTree/qt/LayoutTestControllerQt.h:
+        * DumpRenderTree/win/LayoutTestControllerWin.cpp:
+        (LayoutTestController::numberOfPendingGeolocationPermissionRequests):
+        * DumpRenderTree/wx/LayoutTestControllerWx.cpp:
+        (LayoutTestController::numberOfPendingGeolocationPermissionRequests):
+

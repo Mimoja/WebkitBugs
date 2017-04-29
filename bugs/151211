@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r192389 | zalan@apple.com | 2015-11-12 23:12:40 +0100 (Do, 12. Nov 2015) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/pseudo-visited-background-color-on-input-expected.html
+   A /trunk/LayoutTests/fast/css/pseudo-visited-background-color-on-input.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTheme.cpp
+   M /trunk/Source/WebCore/rendering/style/RenderStyle.h
+
+Ignore visited background color when deciding if the input renderer needs to be painted natively.
+https://bugs.webkit.org/show_bug.cgi?id=151211
+rdar://problem/21449823
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+Test: fast/css/pseudo-visited-background-color-on-input.html
+
+* rendering/RenderTheme.cpp:
+(WebCore::RenderTheme::isControlStyled):
+* rendering/style/RenderStyle.h:
+
+LayoutTests:
+
+* fast/css/pseudo-visited-background-color-on-input-expected.html: Added.
+* fast/css/pseudo-visited-background-color-on-input.html: Added.
+

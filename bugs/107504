@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r140393 | dmazzoni@google.com | 2013-01-22 09:33:45 +0100 (Di, 22. Jan 2013) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/accessibility/AXObjectCache.cpp
+
+AX: Should assert if we try to create two AXObjects that point to the same renderer or node
+https://bugs.webkit.org/show_bug.cgi?id=107504
+
+Reviewed by Chris Fleizach.
+
+If two accessibility objects get created that point to the
+same widget, renderer, or node, that can lead to crashes or
+memory corruption later; make it assert instead of crashing.
+
+* accessibility/AXObjectCache.cpp:
+(WebCore::AXObjectCache::getOrCreate):
+
+

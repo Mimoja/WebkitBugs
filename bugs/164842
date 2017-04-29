@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r208825 | bfulgham@apple.com | 2016-11-17 01:35:32 +0100 (Do, 17. Nov 2016) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/track/audio-track-add-remove-expected.txt
+   A /trunk/LayoutTests/media/track/audio-track-add-remove.html
+   A /trunk/LayoutTests/media/track/video-track-add-remove-expected.txt
+   A /trunk/LayoutTests/media/track/video-track-add-remove.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+Clear track client when removing a track
+https://bugs.webkit.org/show_bug.cgi?id=164842
+<rdar://problem/29213621>
+
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+Call 'clearClient' when removing a track from an HTMLMediaElement.
+
+Test: media/track/audio-track-add-remove.html
+      media/track/video-track-add-remove.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::removeAudioTrack): Call 'clearClient'
+(WebCore::HTMLMediaElement::removeVideoTrack): Ditto.
+
+LayoutTests:
+
+* media/track/audio-track-add-remove-expected.txt: Added.
+* media/track/audio-track-add-remove.html: Added.
+* media/track/video-track-add-remove-expected.txt: Added.
+* media/track/video-track-add-remove.html: Added.
+
+

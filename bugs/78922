@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r108372 | inferno@chromium.org | 2012-02-21 20:10:05 +0100 (Di, 21. Feb 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/table-section-node-at-point-crash-expected.txt
+   A /trunk/LayoutTests/fast/table/table-section-node-at-point-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+
+Crash in RenderTableSection::nodeAtPoint.
+https://bugs.webkit.org/show_bug.cgi?id=78922
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Test: fast/table/table-section-node-at-point-crash.html
+
+* rendering/RenderTableSection.cpp:
+(WebCore::RenderTableSection::nodeAtPoint): recalc cells if the
+m_needsCellRecalc is set. Otherwise, we will end up accessing
+removed table cells.
+
+LayoutTests:
+
+* fast/table/table-section-node-at-point-crash-expected.txt: Added.
+* fast/table/table-section-node-at-point-crash.html: Added.
+
+

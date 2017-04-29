@@ -1,0 +1,85 @@
+------------------------------------------------------------------------
+r124556 | tkent@chromium.org | 2012-08-03 05:31:22 +0200 (Fr, 03. Aug 2012) | 59 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/runin/input-text-runin-expected.txt
+   A /trunk/LayoutTests/fast/runin/input-text-runin.html
+   A /trunk/LayoutTests/fast/runin/textarea-runin-expected.txt
+   A /trunk/LayoutTests/fast/runin/textarea-runin.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderFileUploadControl.cpp
+   M /trunk/Source/WebCore/rendering/RenderFileUploadControl.h
+   M /trunk/Source/WebCore/rendering/RenderListBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderListBox.h
+   M /trunk/Source/WebCore/rendering/RenderMenuList.cpp
+   M /trunk/Source/WebCore/rendering/RenderMenuList.h
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+   M /trunk/Source/WebCore/rendering/RenderProgress.cpp
+   M /trunk/Source/WebCore/rendering/RenderProgress.h
+   M /trunk/Source/WebCore/rendering/RenderSlider.cpp
+   M /trunk/Source/WebCore/rendering/RenderSlider.h
+   M /trunk/Source/WebCore/rendering/RenderTextControl.cpp
+   M /trunk/Source/WebCore/rendering/RenderTextControl.h
+
+Fix crashes for <input> and <textarea> with display:run-in.
+https://bugs.webkit.org/show_bug.cgi?id=87300
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Introduce RenderObject::canBeReplacedWithInlineRunIn, and renderers which
+should not be run-in override it so that it returns false.
+
+Test: fast/runin/input-text-runin.html
+      fast/runin/textarea-runin.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::moveRunInUnderSiblingBlockIfNeeded):
+Checks canBeReplacedWithInlineRunIn instead of checking tag names.
+* rendering/RenderFileUploadControl.cpp:
+(WebCore::RenderFileUploadControl::canBeReplacedWithInlineRunIn):
+Added. Disallow run-in.
+* rendering/RenderFileUploadControl.h:
+(RenderFileUploadControl): Declare canBeReplacedWithInlineRunIn.
+* rendering/RenderListBox.cpp:
+(WebCore::RenderListBox::canBeReplacedWithInlineRunIn):
+Added. Disallow run-in. This is not a behavior change.
+* rendering/RenderListBox.h:
+(RenderListBox): Declare canBeReplacedWithInlineRunIn.
+* rendering/RenderMenuList.cpp:
+(WebCore::RenderMenuList::canBeReplacedWithInlineRunIn):
+Added. Disallow run-in. This is not a behavior change.
+* rendering/RenderMenuList.h:
+(RenderMenuList): Declare canBeReplacedWithInlineRunIn.
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::canBeReplacedWithInlineRunIn):
+Added. Allow run-in by default.
+* rendering/RenderObject.h:
+(RenderObject): Declare canBeReplacedWithInlineRunIn.
+* rendering/RenderProgress.cpp:
+(WebCore::RenderProgress::canBeReplacedWithInlineRunIn):
+Added. Disallow run-in. This is not a behavior change.
+* rendering/RenderProgress.h:
+(RenderProgress): Declare canBeReplacedWithInlineRunIn.
+* rendering/RenderSlider.cpp:
+(WebCore::RenderSlider::canBeReplacedWithInlineRunIn):
+Added. Disallow run-in.
+* rendering/RenderSlider.h:
+(RenderSlider): Declare canBeReplacedWithInlineRunIn.
+* rendering/RenderTextControl.cpp:
+(WebCore::RenderTextControl::canBeReplacedWithInlineRunIn):
+Added. Disallow run-in.
+* rendering/RenderTextControl.h:
+(RenderTextControl): Declare canBeReplacedWithInlineRunIn.
+
+LayoutTests:
+
+* fast/runin/input-text-runin-expected.txt: Added.
+* fast/runin/input-text-runin.html: Added.
+* fast/runin/textarea-runin-expected.txt: Added.
+* fast/runin/textarea-text-runin.html: Added.
+
+

@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r125292 | commit-queue@webkit.org | 2012-08-10 18:35:14 +0200 (Fr, 10. Aug 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedCSSStyleSheet.cpp
+
+REGRESSION (r123848): Heap-use-after-free in WebCore::CachedResource::didAddClient.
+https://bugs.webkit.org/show_bug.cgi?id=93632
+-and corresponding-
+<http://crbug.com/140656>
+
+Patch by Huang Dongsung <luxtella@company100.net> on 2012-08-10
+Reviewed by Antti Koivisto.
+
+CachedCSSStyleSheet::didAddClient() calls CachedStyleSheetClient::setCSSStyleSheet
+and HTMLLnkElement can be CachedStyleSheetClient.
+HTMLLinkElement::setCSSStyleSheet may cause scripts to be executed, which could
+destroy the HTMLLinkElement instance. After calliing
+CachedStyleSheetClient::setCSSStyleSheet, using the CachedStyleSheetClient
+instance can cause Heap-use-after-free.
+
+r115625 prevents HTMLLinkElement from being destroyed during
+HTMLLinkElement::setCSSStyleSheet, but r115625 doesn't prevent HTMLLinkElement
+from being destroyed after HTMLLinkElement::setCSSStyleSheet.
+
+So this patch calls CachedResource::didAddClient() before calling
+setCSSStyleSheet() to make sure its client is not destroyed.
+
+No new tests. it's covered by fast/css/cached-sheet-restore-crash.html.
+
+* loader/cache/CachedCSSStyleSheet.cpp:
+(WebCore::CachedCSSStyleSheet::didAddClient):
+

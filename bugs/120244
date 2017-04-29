@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r164920 | ap@apple.com | 2014-03-01 19:48:16 +0100 (Sa, 01. Mär 2014) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+   M /trunk/LayoutTests/dom/xhtml/level3/core/nodecomparedocumentposition38-expected.txt
+   M /trunk/LayoutTests/fast/dom/compare-document-position-disconnected-nodes-expected.txt
+   M /trunk/LayoutTests/fast/dom/compare-document-position-disconnected-nodes.html
+   M /trunk/LayoutTests/fast/dom/shadow/compare-document-position-expected.txt
+   M /trunk/LayoutTests/fast/dom/shadow/compare-document-position.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Node.cpp
+
+Node::compareDocumentPosition leaks memory structure
+https://bugs.webkit.org/show_bug.cgi?id=120244
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore: 
+
+* dom/Node.cpp: (WebCore::Node::compareDocumentPosition): Don't do it.
+
+LayoutTests: 
+
+* TestExpectations:
+* dom/xhtml/level3/core/nodecomparedocumentposition38-expected.txt:
+* fast/dom/compare-document-position-disconnected-nodes-expected.txt:
+* fast/dom/compare-document-position-disconnected-nodes.html:
+* fast/dom/shadow/compare-document-position-expected.txt:
+* fast/dom/shadow/compare-document-position.html:
+
+
+

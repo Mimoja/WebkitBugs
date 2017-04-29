@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r74788 | jschuh@chromium.org | 2010-12-30 09:12:40 +0100 (Do, 30. Dez 2010) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/svg/dom/length-list-parser-expected.txt
+   M /trunk/LayoutTests/svg/dom/length-list-parser.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/svg/SVGLength.cpp
+
+2010-12-30  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Prevent stringToLengthType() from skipping past end-of-string on invalid length unit. 
+        https://bugs.webkit.org/show_bug.cgi?id=51692
+
+        * svg/SVGLength.cpp:
+        (WebCore::stringToLengthType):
+        (WebCore::SVGLength::setValueAsString):
+2010-12-30  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Dirk Schulze.
+
+        Adding long float string to improve test coverage.
+        https://bugs.webkit.org/show_bug.cgi?id=51692
+
+        * svg/dom/length-list-parser.html:
+        * svg/dom/length-list-parser-expected.txt:
+
+

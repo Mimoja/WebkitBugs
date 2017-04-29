@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r95708 | ossy@webkit.org | 2011-09-22 13:50:07 +0200 (Do, 22. Sep 2011) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/UIProcess/API/mac/WKView.mm
+   M /trunk/Source/WebKit2/UIProcess/WebContext.cpp
+   M /trunk/Source/WebKit2/UIProcess/WebPageProxy.cpp
+   M /trunk/Source/WebKit2/UIProcess/WebPageProxy.h
+   M /trunk/Source/WebKit2/UIProcess/WebProcessProxy.cpp
+   M /trunk/Source/WebKit2/UIProcess/WebProcessProxy.h
+   M /trunk/Source/WebKit2/UIProcess/cf/WebPageProxyCF.cpp
+
+REGRESSION(r95679): It broke everything.
+https://bugs.webkit.org/show_bug.cgi?id=68611
+
+Unreviewed rolling out r95679 and r95690, because it broke everything.
+
+* UIProcess/API/mac/WKView.mm:
+(maybeCreateSandboxExtensionFromPasteboard):
+(-[WKView performDragOperation:]):
+* UIProcess/WebContext.cpp:
+(WebKit::WebContext::didPerformClientRedirect):
+(WebKit::WebContext::didPerformServerRedirect):
+(WebKit::WebContext::didUpdateHistoryTitle):
+(WebKit::WebContext::getPluginPath):
+* UIProcess/WebPageProxy.cpp:
+(WebKit::WebPageProxy::reattachToWebProcessWithItem):
+(WebKit::WebPageProxy::initializeSandboxExtensionHandle):
+(WebKit::WebPageProxy::loadURL):
+(WebKit::WebPageProxy::loadURLRequest):
+(WebKit::WebPageProxy::loadHTMLString):
+(WebKit::WebPageProxy::loadAlternateHTMLString):
+(WebKit::WebPageProxy::goForward):
+(WebKit::WebPageProxy::goBack):
+(WebKit::WebPageProxy::goToBackForwardItem):
+(WebKit::WebPageProxy::didStartProvisionalLoadForFrame):
+(WebKit::WebPageProxy::didReceiveServerRedirectForProvisionalLoadForFrame):
+(WebKit::WebPageProxy::didSameDocumentNavigationForFrame):
+(WebKit::WebPageProxy::decidePolicyForNavigationAction):
+(WebKit::WebPageProxy::decidePolicyForNewWindowAction):
+(WebKit::WebPageProxy::decidePolicyForResponse):
+(WebKit::WebPageProxy::didInitiateLoadForResource):
+(WebKit::WebPageProxy::didSendRequestForResource):
+(WebKit::WebPageProxy::didReceiveResponseForResource):
+(WebKit::WebPageProxy::missingPluginButtonClicked):
+* UIProcess/WebPageProxy.h:
+* UIProcess/WebProcessProxy.cpp:
+(WebKit::WebProcessProxy::WebProcessProxy):
+(WebKit::WebProcessProxy::addBackForwardItem):
+* UIProcess/WebProcessProxy.h:
+* UIProcess/cf/WebPageProxyCF.cpp:
+(WebKit::WebPageProxy::restoreFromSessionStateData):
+

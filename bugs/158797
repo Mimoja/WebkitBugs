@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r203315 | mark.lam@apple.com | 2016-07-16 03:14:57 +0200 (Sa, 16. Jul 2016) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/bytecompiler/BytecodeGenerator.cpp
+   A /trunk/Source/JavaScriptCore/tests/stress/catch-clause-should-be-under-tdz1.js
+   A /trunk/Source/JavaScriptCore/tests/stress/catch-clause-should-be-under-tdz2.js
+   A /trunk/Source/JavaScriptCore/tests/stress/catch-clause-should-be-under-tdz3.js
+   A /trunk/Source/JavaScriptCore/tests/stress/catch-clause-should-be-under-tdz4.js
+   A /trunk/Source/JavaScriptCore/tests/stress/catch-clause-should-be-under-tdz5.js
+
+Assertion failures and crashes with missing TDZ checks for catch-node bindings.
+https://bugs.webkit.org/show_bug.cgi?id=158797
+
+Reviewed by Saam Barati.
+
+* bytecompiler/BytecodeGenerator.cpp:
+(JSC::BytecodeGenerator::emitPushCatchScope):
+(JSC::BytecodeGenerator::emitPopCatchScope):
+* tests/stress/catch-clause-should-be-under-tdz1.js: Added.
+* tests/stress/catch-clause-should-be-under-tdz2.js: Added.
+* tests/stress/catch-clause-should-be-under-tdz3.js: Added.
+* tests/stress/catch-clause-should-be-under-tdz4.js: Added.
+* tests/stress/catch-clause-should-be-under-tdz5.js: Added.
+
+
+

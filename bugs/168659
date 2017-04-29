@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r212726 | ryanhaddad@apple.com | 2017-02-21 19:36:00 +0100 (Di, 21. Feb 2017) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/UIProcess/Storage/LocalStorageDatabaseTracker.cpp
+
+Check what LocalStorage data exists in deleteDatabasesModifiedSince() before attempting deletion.
+https://bugs.webkit.org/show_bug.cgi?id=168659
+rdar://problem/22781730
+
+Patch by Maureen Daum <mdaum@apple.com> on 2017-02-21
+Reviewed by Brady Eidson.
+
+Check what LocalStorage data exists in deleteDatabasesModifiedSince() before attempting deletion.
+It is possible that another process has caused information to be added to LocalStorage
+after we created this LocalStorageDatabaseTracker instance, so we should update our
+internal state by checking the contents of StorageTracker.db and the other local
+storage files so we know what databases actually exist. By calling importOriginIdentifiers()
+at the start of deleteDatabasesModifiedSince(), m_origins will now have the up-to-date
+list of origins LocalStorage contains data for.
+
+* UIProcess/Storage/LocalStorageDatabaseTracker.cpp:
+(WebKit::LocalStorageDatabaseTracker::deleteDatabasesModifiedSince):
+

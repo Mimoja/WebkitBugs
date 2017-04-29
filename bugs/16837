@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r213265 | graouts@webkit.org | 2017-03-02 06:31:57 +0100 (Do, 02. Mär 2017) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/media/modern-media-controls/media-controller/media-controller-resize-expected.txt
+   M /trunk/LayoutTests/media/modern-media-controls/media-controller/media-controller-resize.html
+   M /trunk/LayoutTests/platform/mac-wk1/TestExpectations
+
+LayoutTest media/modern-media-controls/media-controller/media-controller-resize.html is a flaky failure
+https://bugs.webkit.org/show_bug.cgi?id=168378
+<rdar://problem/30799326>
+
+Reviewed by Simon Fraser.
+
+Use asynchronous assertions to improve robustness. Since this test should no longer be flaky, remove it
+from the list of flaky tests.
+
+* media/modern-media-controls/media-controller/media-controller-resize-expected.txt:
+* media/modern-media-controls/media-controller/media-controller-resize.html:
+* platform/mac-wk1/TestExpectations:
+

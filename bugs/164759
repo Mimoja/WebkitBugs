@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r208745 | bfulgham@apple.com | 2016-11-15 21:14:02 +0100 (Di, 15. Nov 2016) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/search-cancel-button-change-input-expected.txt
+   A /trunk/LayoutTests/fast/forms/search-cancel-button-change-input.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.order
+   M /trunk/Source/WebCore/html/HTMLInputElement.cpp
+   M /trunk/Source/WebCore/html/InputType.h
+   M /trunk/Source/WebCore/html/SearchInputType.h
+
+Correct handling of changing input type
+https://bugs.webkit.org/show_bug.cgi?id=164759
+<rdar://problem/29211174>
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Test: fast/forms/search-cancel-button-change-input.html
+
+It is possible for JavaScript to change the type property of an input field. WebKit
+needs to gracefully handle this case.
+
+Add a type traits specialization so we can properly downcast InputType elements.
+Use this to only call search functions on actual search input types.
+
+* html/HTMLInputElement.cpp:
+(WebCore::HTMLInputElement::onSearch): Only perform search functions if the
+input type is actually a search field.
+* html/InputType.h: Add type traits specialization for 'downcast' template.
+* html/SearchInputType.h: Ditto.
+
+LayoutTests:
+
+* fast/forms/search-cancel-button-change-input-expected.txt: Added.
+* fast/forms/search-cancel-button-change-input.html: Added.
+
+

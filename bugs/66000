@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r92791 | inferno@chromium.org | 2011-08-10 22:12:26 +0200 (Mi, 10. Aug 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/text/glyphref-renderer-create-crash-expected.txt
+   A /trunk/LayoutTests/svg/text/glyphref-renderer-create-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGGlyphRefElement.h
+
+Source/WebCore: Don't create html renderer for SVG <glyphRef>
+https://bugs.webkit.org/show_bug.cgi?id=66000
+
+Reviewed by David Hyatt.
+
+Test: svg/text/glyphref-renderer-create-crash.html
+
+* svg/SVGGlyphRefElement.h:
+
+LayoutTests: ASSERTION FAILED: curr->isRenderInline()
+https://bugs.webkit.org/show_bug.cgi?id=66000
+
+Reviewed by David Hyatt.
+
+* svg/text/glyphref-renderer-create-crash-expected.txt: Added.
+* svg/text/glyphref-renderer-create-crash.html: Added.
+
+

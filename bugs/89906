@@ -1,0 +1,46 @@
+------------------------------------------------------------------------
+r121297 | tsepez@chromium.org | 2012-06-27 01:18:31 +0200 (Mi, 27. Jun 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-audio-video-in-main-frame-expected.txt
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-audio-video-in-main-frame.html
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-xhr-in-main-frame-expected.txt
+   A /trunk/LayoutTests/http/tests/security/mixedContent/insecure-xhr-in-main-frame.html
+   A /trunk/LayoutTests/http/tests/security/mixedContent/resources/frame-with-insecure-audio-video.html
+   M /trunk/LayoutTests/platform/efl/TestExpectations
+   M /trunk/LayoutTests/platform/gtk/TestExpectations
+   M /trunk/LayoutTests/platform/mac/TestExpectations
+   M /trunk/LayoutTests/platform/qt/TestExpectations
+   M /trunk/LayoutTests/platform/win/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedResourceLoader.cpp
+
+[chromium] HTML5 audio/video tags - loading http content from https page doesn't trigger warning.
+https://bugs.webkit.org/show_bug.cgi?id=89906
+
+Reviewed by Nate Chapin.
+
+This patch treats mixed CachedRawResources as affecting the display of insecure content.
+
+Source/WebCore:
+
+Tests: http/tests/security/mixedContent/insecure-audio-video-in-main-frame.html
+       http/tests/security/mixedContent/insecure-xhr-in-main-frame.html
+
+* loader/cache/CachedResourceLoader.cpp:
+(WebCore::CachedResourceLoader::checkInsecureContent):
+
+LayoutTests:
+
+* http/tests/security/mixedContent/insecure-audio-video-in-main-frame-expected.txt: Added.
+* http/tests/security/mixedContent/insecure-audio-video-in-main-frame.html: Added.
+* http/tests/security/mixedContent/insecure-xhr-in-main-frame-expected.txt: Added.
+* http/tests/security/mixedContent/insecure-xhr-in-main-frame.html: Added.
+* http/tests/security/mixedContent/resources/frame-with-insecure-audio-video.html: Added.
+* platform/efl/TestExpectations:
+* platform/gtk/TestExpectations:
+* platform/mac/TestExpectations:
+* platform/qt/TestExpectations:
+* platform/win/TestExpectations:
+
+

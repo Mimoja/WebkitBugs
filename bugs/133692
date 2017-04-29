@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r181864 | andersca@apple.com | 2015-03-23 21:34:52 +0100 (Mo, 23. Mär 2015) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/mac-wk2/TestExpectations
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/Shared/Plugins/NPObjectMessageReceiver.cpp
+
+Source/WebKit2:
+Make platform/mac-wk2/plugins/destroy-during-async-npp-new.html work again.
+https://bugs.webkit.org/show_bug.cgi?id=133692
+rdar://problem/17255947
+
+Reviewed by Alexey Proskuryakov.
+
+Add plug-in destruction protectors around message receiver code that can call out to NPObjects or JavaScript
+where we need the plug-in to stay around after the call.
+
+* Shared/Plugins/NPObjectMessageReceiver.cpp:
+(WebKit::NPObjectMessageReceiver::invoke):
+(WebKit::NPObjectMessageReceiver::invokeDefault):
+(WebKit::NPObjectMessageReceiver::getProperty):
+(WebKit::NPObjectMessageReceiver::setProperty):
+(WebKit::NPObjectMessageReceiver::construct):
+
+LayoutTests:
+Make platform/mac-wk2/plugins/destroy-during-async-npp-new.html work again
+https://bugs.webkit.org/show_bug.cgi?id=133692
+rdar://problem/17255947
+
+Reviewed by Alexey Proskuryakov.
+
+* platform/mac-wk2/TestExpectations:
+Unskip test.
+

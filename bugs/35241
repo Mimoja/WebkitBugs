@@ -1,0 +1,162 @@
+------------------------------------------------------------------------
+r55376 | kbr@google.com | 2010-03-01 22:20:31 +0100 (Mo, 01. Mär 2010) | 112 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/canvas/webgl/array-unit-tests-expected.txt
+   M /trunk/LayoutTests/fast/canvas/webgl/array-unit-tests.html
+   A /trunk/LayoutTests/fast/canvas/webgl/webgl-array-invalid-ranges-expected.txt
+   A /trunk/LayoutTests/fast/canvas/webgl/webgl-array-invalid-ranges.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/JSWebGLArrayBufferConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLArrayBufferConstructor.h
+   M /trunk/WebCore/bindings/js/JSWebGLArrayHelper.h
+   M /trunk/WebCore/bindings/js/JSWebGLByteArrayConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLFloatArrayConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLIntArrayConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLShortArrayConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLUnsignedByteArrayConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLUnsignedIntArrayConstructor.cpp
+   M /trunk/WebCore/bindings/js/JSWebGLUnsignedShortArrayConstructor.cpp
+   M /trunk/WebCore/bindings/v8/V8Binding.cpp
+   M /trunk/WebCore/bindings/v8/V8Binding.h
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLArrayBufferCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLArrayCustom.h
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLByteArrayCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLFloatArrayCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLIntArrayCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLShortArrayCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLUnsignedByteArrayCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLUnsignedIntArrayCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8WebGLUnsignedShortArrayCustom.cpp
+   M /trunk/WebCore/html/canvas/WebGLArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLArray.h
+   M /trunk/WebCore/html/canvas/WebGLArrayBuffer.cpp
+   M /trunk/WebCore/html/canvas/WebGLArrayBuffer.h
+   M /trunk/WebCore/html/canvas/WebGLByteArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLByteArray.h
+   M /trunk/WebCore/html/canvas/WebGLFloatArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLFloatArray.h
+   M /trunk/WebCore/html/canvas/WebGLIntArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLIntArray.h
+   M /trunk/WebCore/html/canvas/WebGLShortArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLShortArray.h
+   M /trunk/WebCore/html/canvas/WebGLUnsignedByteArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLUnsignedByteArray.h
+   M /trunk/WebCore/html/canvas/WebGLUnsignedIntArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLUnsignedIntArray.h
+   M /trunk/WebCore/html/canvas/WebGLUnsignedShortArray.cpp
+   M /trunk/WebCore/html/canvas/WebGLUnsignedShortArray.h
+
+2010-03-01  Kenneth Russell  <kbr@google.com>
+
+        Reviewed by Oliver Hunt.
+
+        Integer overflow in WebGL arrays
+        https://bugs.webkit.org/show_bug.cgi?id=35241
+
+        Test: fast/canvas/webgl/webgl-array-invalid-ranges.html
+
+        * bindings/js/JSWebGLArrayBufferConstructor.cpp:
+        (WebCore::constructCanvasArrayBuffer):
+        * bindings/js/JSWebGLArrayBufferConstructor.h:
+        (WebCore::construct):
+        * bindings/js/JSWebGLArrayHelper.h:
+        (WebCore::setWebGLArrayFromArray):
+        * bindings/js/JSWebGLByteArrayConstructor.cpp:
+        (WebCore::constructCanvasByteArray):
+        * bindings/js/JSWebGLFloatArrayConstructor.cpp:
+        (WebCore::constructCanvasFloatArray):
+        * bindings/js/JSWebGLIntArrayConstructor.cpp:
+        (WebCore::constructCanvasIntArray):
+        * bindings/js/JSWebGLShortArrayConstructor.cpp:
+        (WebCore::constructCanvasShortArray):
+        * bindings/js/JSWebGLUnsignedByteArrayConstructor.cpp:
+        (WebCore::constructCanvasUnsignedByteArray):
+        * bindings/js/JSWebGLUnsignedIntArrayConstructor.cpp:
+        (WebCore::constructCanvasUnsignedIntArray):
+        * bindings/js/JSWebGLUnsignedShortArrayConstructor.cpp:
+        (WebCore::constructCanvasUnsignedShortArray):
+        * bindings/v8/V8Binding.cpp:
+        (WebCore::toUInt32):
+        * bindings/v8/V8Binding.h:
+        (WebCore::toUInt32):
+        * bindings/v8/custom/V8WebGLArrayBufferCustom.cpp:
+        (WebCore::V8WebGLArrayBuffer::constructorCallback):
+        * bindings/v8/custom/V8WebGLArrayCustom.h:
+        (WebCore::constructWebGLArray):
+        (WebCore::getWebGLArrayElement):
+        (WebCore::setWebGLArrayFromArray):
+        (WebCore::setWebGLArray):
+        * bindings/v8/custom/V8WebGLByteArrayCustom.cpp:
+        (WebCore::V8WebGLByteArray::constructorCallback):
+        * bindings/v8/custom/V8WebGLFloatArrayCustom.cpp:
+        (WebCore::V8WebGLFloatArray::constructorCallback):
+        * bindings/v8/custom/V8WebGLIntArrayCustom.cpp:
+        (WebCore::V8WebGLIntArray::constructorCallback):
+        * bindings/v8/custom/V8WebGLShortArrayCustom.cpp:
+        (WebCore::V8WebGLShortArray::constructorCallback):
+        * bindings/v8/custom/V8WebGLUnsignedByteArrayCustom.cpp:
+        (WebCore::V8WebGLUnsignedByteArray::constructorCallback):
+        * bindings/v8/custom/V8WebGLUnsignedIntArrayCustom.cpp:
+        (WebCore::V8WebGLUnsignedIntArray::constructorCallback):
+        * bindings/v8/custom/V8WebGLUnsignedShortArrayCustom.cpp:
+        (WebCore::V8WebGLUnsignedShortArray::constructorCallback):
+        * html/canvas/WebGLArray.cpp:
+        (WebCore::WebGLArray::setImpl):
+        * html/canvas/WebGLArray.h:
+        (WebCore::WebGLArray::verifySubRange):
+        (WebCore::WebGLArray::clampOffsetAndNumElements):
+        * html/canvas/WebGLArrayBuffer.cpp:
+        (WebCore::WebGLArrayBuffer::create):
+        (WebCore::WebGLArrayBuffer::WebGLArrayBuffer):
+        (WebCore::WebGLArrayBuffer::tryAllocate):
+        * html/canvas/WebGLArrayBuffer.h:
+        * html/canvas/WebGLByteArray.cpp:
+        (WebCore::WebGLByteArray::create):
+        (WebCore::WebGLByteArray::WebGLByteArray):
+        (WebCore::WebGLByteArray::slice):
+        * html/canvas/WebGLByteArray.h:
+        * html/canvas/WebGLFloatArray.cpp:
+        (WebCore::WebGLFloatArray::create):
+        (WebCore::WebGLFloatArray::WebGLFloatArray):
+        (WebCore::WebGLFloatArray::slice):
+        * html/canvas/WebGLFloatArray.h:
+        * html/canvas/WebGLIntArray.cpp:
+        (WebCore::WebGLIntArray::create):
+        (WebCore::WebGLIntArray::WebGLIntArray):
+        (WebCore::WebGLIntArray::slice):
+        * html/canvas/WebGLIntArray.h:
+        * html/canvas/WebGLShortArray.cpp:
+        (WebCore::WebGLShortArray::create):
+        (WebCore::WebGLShortArray::WebGLShortArray):
+        (WebCore::WebGLShortArray::slice):
+        * html/canvas/WebGLShortArray.h:
+        * html/canvas/WebGLUnsignedByteArray.cpp:
+        (WebCore::WebGLUnsignedByteArray::create):
+        (WebCore::WebGLUnsignedByteArray::WebGLUnsignedByteArray):
+        (WebCore::WebGLUnsignedByteArray::slice):
+        * html/canvas/WebGLUnsignedByteArray.h:
+        * html/canvas/WebGLUnsignedIntArray.cpp:
+        (WebCore::WebGLUnsignedIntArray::create):
+        (WebCore::WebGLUnsignedIntArray::WebGLUnsignedIntArray):
+        (WebCore::WebGLUnsignedIntArray::slice):
+        * html/canvas/WebGLUnsignedIntArray.h:
+        * html/canvas/WebGLUnsignedShortArray.cpp:
+        (WebCore::WebGLUnsignedShortArray::create):
+        (WebCore::WebGLUnsignedShortArray::WebGLUnsignedShortArray):
+        (WebCore::WebGLUnsignedShortArray::slice):
+        * html/canvas/WebGLUnsignedShortArray.h:
+
+2010-03-01  Kenneth Russell  <kbr@google.com>
+
+        Reviewed by Oliver Hunt.
+
+        Integer overflow in WebGL arrays
+        https://bugs.webkit.org/show_bug.cgi?id=35241
+
+        * fast/canvas/webgl/array-unit-tests-expected.txt:
+        * fast/canvas/webgl/array-unit-tests.html:
+        * fast/canvas/webgl/webgl-array-invalid-ranges-expected.txt: Added.
+        * fast/canvas/webgl/webgl-array-invalid-ranges.html: Added.
+
+

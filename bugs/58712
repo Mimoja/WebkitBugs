@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r84099 | abarth@webkit.org | 2011-04-17 04:25:40 +0200 (So, 17. Apr 2011) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   A /trunk/Source/WebCore/manual-tests/about-blank-xhr.html
+   M /trunk/Source/WebCore/page/SecurityOrigin.cpp
+   M /trunk/Source/WebCore/page/SecurityOrigin.h
+
+2011-04-16  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        about:blank documents in new tabs can XHR anywhere
+        https://bugs.webkit.org/show_bug.cgi?id=58712
+
+        Empty security origins have supposed to be low-privilege, we should
+        mark them as having a unique origin.
+
+        * manual-tests/about-blank-xhr.html: Added.
+        * page/SecurityOrigin.cpp:
+        (WebCore::SecurityOrigin::SecurityOrigin):
+        * page/SecurityOrigin.h:
+
+

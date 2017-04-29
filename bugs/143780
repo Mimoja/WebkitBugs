@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r182918 | ap@apple.com | 2015-04-17 01:04:00 +0200 (Fr, 17. Apr 2015) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+Media element can manipulate DOM during Document destruction.
+rdar://problem/20553898 and https://bugs.webkit.org/show_bug.cgi?id=143780
+
+Patch by Brady Eidson <beidson@apple.com> on 2015-04-16
+Reviewed by Jer Noble.
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::configureMediaControls): Bail if the element has no active document.
+
+
+

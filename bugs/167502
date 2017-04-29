@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r212028 | bfulgham@apple.com | 2017-02-10 03:19:04 +0100 (Fr, 10. Feb 2017) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/html/details-summary-slot-expected.html
+   A /trunk/LayoutTests/fast/html/details-summary-slot.html
+   A /trunk/LayoutTests/fast/shadow-dom/shadow-slot-attribute-change-crash-expected.txt
+   A /trunk/LayoutTests/fast/shadow-dom/shadow-slot-attribute-change-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/ShadowRoot.h
+   M /trunk/Source/WebCore/dom/SlotAssignment.h
+   M /trunk/Source/WebCore/html/HTMLSummaryElement.cpp
+
+Crash in render tree after dynamically mutating the slot value
+https://bugs.webkit.org/show_bug.cgi?id=167502
+
+Patch by Ryosuke Niwa <rniwa@webkit.org> on 2017-02-09
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+The crash was caused by attributeChanged not destructing the render tree after an assigned element had been
+removed from its slot. Since the style resolver can no longer find this element in the flat tree, we need to
+delete its render object as if the element had been removed from the DOM tree.
+
+Tests: fast/html/details-summary-slot.html
+       fast/shadow-dom/shadow-slot-attribute-change-crash.html
+
+* dom/Element.cpp:
+(WebCore::Element::attributeChanged):
+* html/HTMLSummaryElement.cpp:
+(WebCore::SummarySlotElement): Added. Always use the default slot regardless of the slot attribute's value.
+(WebCore::HTMLSummaryElement::create): Use SummarySlotElement
+
+LayoutTests:
+
+Added regression tests for the crash, and one for assigning non-empty slot value to a child
+of a summary element. The slot attribute should always be ignored since the fact summary
+element has its own shadow tree is an implementation detail that should never be exposed.
+
+* fast/html/details-summary-slot-expected.html: Added.
+* fast/html/details-summary-slot.html: Added.
+* fast/shadow-dom/shadow-slot-attribute-change-crash-expected.txt: Added.
+* fast/shadow-dom/shadow-slot-attribute-change-crash.html: Added.
+
+

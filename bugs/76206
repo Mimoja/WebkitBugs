@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r104906 | tkent@chromium.org | 2012-01-13 10:14:44 +0100 (Fr, 13. Jan 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/radio/radio-group-document-destruction-expected.txt
+   A /trunk/LayoutTests/fast/forms/radio/radio-group-document-destruction.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLInputElement.cpp
+
+REGRESSION (r104668): Crash in HTMLFormElement destructor if the
+document contains radio groups with the identical name.
+https://bugs.webkit.org/show_bug.cgi?id=76206
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Test: fast/forms/radio/radio-group-document-destruction.html
+
+* html/HTMLInputElement.cpp:
+(WebCore::HTMLInputElement::~HTMLInputElement):
+setForm(0) may register this to a document-level radio button group.
+We need to unregister this from the group because
+Document::checkedRadioButtons() is still accessible from other objects.
+
+LayoutTests:
+
+* fast/forms/radio/radio-group-document-destruction-expected.txt: Added.
+* fast/forms/radio/radio-group-document-destruction.html: Added.
+

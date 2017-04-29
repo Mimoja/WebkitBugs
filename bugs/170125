@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r214510 | bfulgham@apple.com | 2017-03-29 03:00:09 +0200 (Mi, 29. Mär 2017) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/dom/Attr/make-unique-element-data-while-replacing-attr-expected.txt
+   M /trunk/LayoutTests/fast/dom/Attr/make-unique-element-data-while-replacing-attr.html
+   A /trunk/LayoutTests/fast/dom/Attr/only-attach-attr-once-expected.txt
+   A /trunk/LayoutTests/fast/dom/Attr/only-attach-attr-once.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+   M /trunk/Source/WebCore/dom/Element.h
+
+Only attach Attributes to a given element one time
+https://bugs.webkit.org/show_bug.cgi?id=170125
+<rdar://problem/31279676>
+
+Reviewed by Chris Dumez.
+
+Source/WebCore:
+
+Attach the attribute node to the Element before calling 'setAttributeInternal', since that method may cause
+arbitrary JavaScript events to fire. 
+
+Test: fast/dom/Attr/only-attach-attr-once.html
+
+* dom/Element.cpp:
+(WebCore::Element::attachAttributeNodeIfNeeded): Added.
+(WebCore::Element::setAttributeNode): Use new method. Revise to attach attribute before calling 'setAttributeInternal'. 
+(WebCore::Element::setAttributeNodeNS): Ditto.
+* dom/Element.h:
+
+LayoutTests:
+
+* fast/dom/Attr/make-unique-element-data-while-replacing-attr-expected.txt: Rebaselined.
+* fast/dom/Attr/make-unique-element-data-while-replacing-attr.html: Add check before setting new value.
+* fast/dom/Attr/only-attach-attr-once-expected.txt: Added.
+* fast/dom/Attr/only-attach-attr-once.html: Added.
+
+

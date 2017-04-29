@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r112973 | inferno@chromium.org | 2012-04-03 03:41:49 +0200 (Di, 03. Apr 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/runin/select-runin-expected.txt
+   A /trunk/LayoutTests/fast/runin/select-runin.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+<select> shouldn't intrude as a run-in.
+https://bugs.webkit.org/show_bug.cgi?id=82829
+
+Reviewed by Tony Chang.
+
+Source/WebCore:
+
+Matches Opera's behavior which also does not allow <select>
+to intrude as a run-in into the neighbouring block.
+IE and Firefox doesn't support run-ins, so can't compare behavior
+with them.
+
+Test: fast/runin/select-runin.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::handleRunInChild):
+
+LayoutTests:
+
+* fast/runin/select-runin-expected.txt: Added.
+* fast/runin/select-runin.html: Added.
+
+

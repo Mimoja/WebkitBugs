@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r125343 | commit-queue@webkit.org | 2012-08-11 03:49:14 +0200 (Sa, 11. Aug 2012) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/quote-crash-93750-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/quote-crash-93750.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderQuote.cpp
+
+RenderQuote corrupts doubly linked list on insertion before head of list
+https://bugs.webkit.org/show_bug.cgi?id=93750
+
+Patch by Elliott Sprehn <esprehn@gmail.com> on 2012-08-10
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Fix bug where moving a RenderQuote instance before the first one in
+the document would not update the m_previous pointer of the original
+first RenderQuote to point back at the new one.
+
+Test: fast/css-generated-content/quote-crash-93750.html
+
+* rendering/RenderQuote.cpp:
+(WebCore::RenderQuote::attachQuote):
+
+LayoutTests:
+
+Test for moving around RenderQuote nodes before each other in an
+existing document to catch corruption in the linked list of RenderQuote.
+
+* fast/css-generated-content/quote-crash-93750-expected.txt: Added.
+* fast/css-generated-content/quote-crash-93750.html: Added.
+

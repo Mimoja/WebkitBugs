@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r71723 | inferno@chromium.org | 2010-11-10 09:20:05 +0100 (Mi, 10. Nov 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/viewport-container-crash-expected.txt
+   A /trunk/LayoutTests/svg/dom/viewport-container-crash.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderObject.h
+   M /trunk/WebCore/rendering/RenderSVGViewportContainer.h
+   M /trunk/WebCore/rendering/SVGImageBufferTools.cpp
+
+2010-11-10  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Added check to ensure that svg viewport containers are not treated in the same way as generic svg containers.
+        https://bugs.webkit.org/show_bug.cgi?id=49188
+
+        Test: svg/dom/viewport-container-crash.svg
+
+        * rendering/SVGImageBufferTools.cpp:
+        (WebCore::SVGImageBufferTools::renderSubtreeToImageBuffer):
+2010-11-10  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Test for crash when svg viewport containers are treated as generic svg containers.
+        https://bugs.webkit.org/show_bug.cgi?id=49188
+
+        * svg/dom/viewport-container-crash-expected.txt: Added.
+        * svg/dom/viewport-container-crash.svg: Added.
+
+

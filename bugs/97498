@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r129585 | abarth@webkit.org | 2012-09-26 04:25:50 +0200 (Mi, 26. Sep 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/resources/set-cookie.php
+   A /trunk/LayoutTests/http/tests/security/svg-image-leak-expected.txt
+   A /trunk/LayoutTests/http/tests/security/svg-image-leak.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/chromium/ResourceHandle.cpp
+
+[Chromium] Network requests without a networking context can be started
+https://bugs.webkit.org/show_bug.cgi?id=97498
+
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+We shouldn't try to start network requests without a networking
+context. Other ports have a similar null check.
+
+* platform/network/chromium/ResourceHandle.cpp:
+(WebCore::ResourceHandle::start):
+
+LayoutTests:
+
+* http/tests/security/svg-img-leak.html: Added.
+* http/tests/security/svg-img-leak-expected.txt: Added.
+* http/tests/security/resources/set-cookie.php: Added.
+
+

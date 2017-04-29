@@ -1,0 +1,45 @@
+------------------------------------------------------------------------
+r80773 | tkent@chromium.org | 2011-03-11 00:32:54 +0100 (Fr, 11. Mär 2011) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/forms/interactive-validation-assertion-by-validate-twice-expected.txt
+   A /trunk/LayoutTests/fast/forms/interactive-validation-assertion-by-validate-twice.html
+   M /trunk/LayoutTests/fast/forms/interactive-validation-attach-assertion.html
+   M /trunk/LayoutTests/platform/gtk/Skipped
+   M /trunk/LayoutTests/platform/mac/Skipped
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFormElement.cpp
+
+2011-03-10  Kent Tamura  <tkent@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Assertion fails by validating a form twice very quickly
+        https://bugs.webkit.org/show_bug.cgi?id=56069
+
+        * fast/forms/interactive-validation-assertion-by-validate-twice-expected.txt: Added.
+        * fast/forms/interactive-validation-assertion-by-validate-twice.html: Added.
+        * fast/forms/interactive-validation-attach-assertion.html: Remove unnecessary offsetLeft trick.
+        * platform/gtk/Skipped:
+        * platform/mac/Skipped:
+        * platform/qt/Skipped:
+        * platform/win/Skipped:
+2011-03-10  Kent Tamura  <tkent@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Assertion fails by validating a form twice very quickly
+        https://bugs.webkit.org/show_bug.cgi?id=56069
+
+        If the interactive validation is invoked when a form control is in
+        needsLayout() state, an assertion in isFocusable() fails. To avoid it,
+        Add a call to updateLayoutIgnorePendingStylesheets() before isFocusable().
+
+        Test: fast/forms/interactive-validation-assertion-by-validate-twice.html
+
+        * html/HTMLFormElement.cpp:
+        (WebCore::HTMLFormElement::validateInteractively):
+          Calls updateLayoutIgnorePendingStylesheets().
+

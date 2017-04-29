@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r55570 | ukai@chromium.org | 2010-03-05 06:50:38 +0100 (Fr, 05. Mär 2010) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/websocket/tests/reload-crash-expected.txt
+   A /trunk/LayoutTests/websocket/tests/reload-crash.html
+   A /trunk/LayoutTests/websocket/tests/resources/reload-crash-iframe.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/websockets/WebSocketChannel.cpp
+   M /trunk/WebCore/websockets/WebSocketHandshake.cpp
+   M /trunk/WebCore/websockets/WebSocketHandshake.h
+
+WebSocket crash bug when reloading the page while the WebSocket is busy
+https://bugs.webkit.org/show_bug.cgi?id=35732
+
+Reviewed by Alexey Proskuryakov.
+
+WebCore:
+
+* websockets/WebSocketChannel.cpp:
+(WebCore::WebSocketChannel::disconnect): clear m_context from WebSocketChannel and WebSocketHandshake.
+(WebCore::WebSocketChannel::didOpen): check m_context
+(WebCore::WebSocketChannel::didClose): clear m_context
+(WebCore::WebSocketChannel::didReceiveData): check m_context, and check m_client early before appending to buffer
+* websockets/WebSocketHandshake.cpp:
+(WebCore::WebSocketHandshake::clearScriptExecutionContext): Added.
+* websockets/WebSocketHandshake.h:
+
+LayoutTests:
+
+* websocket/tests/reload-crash-expected.txt: Added.
+* websocket/tests/reload-crash.html: Added.
+* websocket/tests/resoures/reload-crash-iframe.html: Added.
+

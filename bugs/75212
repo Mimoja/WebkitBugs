@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r106852 | cdn@chromium.org | 2012-02-06 23:30:09 +0100 (Mo, 06. Feb 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/counters/reparent-table-children-with-counters-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/counters/reparent-table-children-with-counters-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderCounter.cpp
+
+Source/WebCore: Add RefPtrs for parent and sibling counter nodes
+https://bugs.webkit.org/show_bug.cgi?id=75212
+
+Reviewed by Adam Barth.
+
+Test: fast/css/counters/reparent-table-children-with-counters-crash.html
+
+* rendering/RenderCounter.cpp:
+(WebCore::findPlaceForCounter):
+(WebCore::makeCounterNode):
+(WebCore::updateCounters):
+
+LayoutTests: Test for crash when counter nodes are reparented outside of tables
+https://bugs.webkit.org/show_bug.cgi?id=75212
+
+Reviewed by Adam Barth.
+
+* fast/css/counters/reparent-table-children-with-counters-crash-expected.txt: Added.
+* fast/css/counters/reparent-table-children-with-counters-crash.html: Added.
+
+

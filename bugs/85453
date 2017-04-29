@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r115990 | keishi@webkit.org | 2012-05-03 19:54:40 +0200 (Do, 03. Mai 2012) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/fast/forms/datalist/datalist-child-validation-expected.txt
+   M /trunk/LayoutTests/fast/forms/datalist/datalist-child-validation.html
+   M /trunk/LayoutTests/fast/forms/form-control-element-crash-expected.txt
+   M /trunk/LayoutTests/fast/forms/form-control-element-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLFormControlElement.cpp
+
+Crash in HTMLFormControlElement::m_fieldSetAncestor
+https://bugs.webkit.org/show_bug.cgi?id=85453
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+Modified tests: fast/forms/datalist/datalist-child-validation.html
+                fast/forms/form-control-element-crash.html
+
+* html/HTMLFormControlElement.cpp:
+(WebCore::HTMLFormControlElement::removedFrom): Only set the invalid ancestor flag.
+The element will be detached from the document so there is no need to update the style.
+And the validation message will be hidden by the blur event.
+(WebCore::HTMLFormControlElement::willValidate): Because of the change to removedFrom,
+m_ancestorsValid may be false.
+
+LayoutTests:
+
+* fast/forms/datalist/datalist-child-validation-expected.txt:
+* fast/forms/datalist/datalist-child-validation.html: Added tests that check the validation status of removed node.
+* fast/forms/form-control-element-crash-expected.txt:
+* fast/forms/form-control-element-crash.html: Replaced with a better, easier to understand test case from the cluster-fuzz.
+
+

@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r33023 | weinig@apple.com | 2008-05-10 06:44:05 +0200 (Sa, 10. Mai 2008) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/NamedNodeMap-setNamedItem-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/NamedNodeMap-setNamedItem-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/NamedAttrMap.cpp
+
+WebCore:
+
+2008-05-09  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=18958
+        NULL pointer dereference in NamedAttrMap::setNamedItem
+
+        Test: fast/dom/NamedNodeMap-setNamedItem-crash.html
+
+        * dom/NamedAttrMap.cpp:
+        (WebCore::NamedAttrMap::setNamedItem): Null check the argument.
+
+LayoutTests:
+
+2008-05-09  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        Test for https://bugs.webkit.org/show_bug.cgi?id=18958
+        NULL pointer dereference in NamedAttrMap::setNamedItem
+
+        * fast/dom/NamedNodeMap-setNamedItem-crash-expected.txt: Added.
+        * fast/dom/NamedNodeMap-setNamedItem-crash.html: Added.
+
+
+

@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r176803 | ddkilzer@apple.com | 2014-12-04 19:31:47 +0100 (Do, 04. Dez 2014) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/runtime/MapData.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/SerializedScriptValue.cpp
+
+Serialization of MapData object provides unsafe access to internal types
+https://bugs.webkit.org/show_bug.cgi?id=138653
+
+Patch by Oliver Hunt <oliver@apple.com> on 2014-12-04
+Reviewed by Geoffrey Garen.
+
+Source/JavaScriptCore:
+
+Converting these ASSERTs into RELEASE_ASSERTs, as it is now obvious
+that despite trying hard to be safe in all cases it's simply to easy
+to use an iterator in an unsafe state.
+
+* runtime/MapData.h:
+(JSC::MapData::const_iterator::key):
+(JSC::MapData::const_iterator::value):
+
+Source/WebCore:
+
+We now keep the value portion of the key/value pair in MapData as a
+separate stack. This allows us to maintain the spec semantic of
+"atomic" serialisation of the key/value pair without retaining the
+use of a potentially invalid iterator.
+
+* bindings/js/SerializedScriptValue.cpp:
+(WebCore::CloneSerializer::serialize):
+

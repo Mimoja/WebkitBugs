@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r116827 | commit-queue@webkit.org | 2012-05-12 02:28:32 +0200 (Sa, 12. Mai 2012) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/mathml/presentation/mfenced-add-child1-expected.html
+   A /trunk/LayoutTests/mathml/presentation/mfenced-add-child1.html
+   A /trunk/LayoutTests/mathml/presentation/mfenced-add-child2-expected.html
+   A /trunk/LayoutTests/mathml/presentation/mfenced-add-child2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLFenced.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLFenced.h
+
+use after free in WebCore::RenderObject::document
+https://bugs.webkit.org/show_bug.cgi?id=84891
+
+Patch by David Barton <dbarton@mathscribe.com> on 2012-05-11
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Change RenderMathMLFenced::addChild() to use the beforeChild parameter. When beforeChild
+is 0, insert child renderers before the closing fence, which might not be the same as
+this->lastChild(), e.g. possibly due to anonymous blocks or generated content.
+
+Tests: mathml/presentation/mfenced-add-child1-expected.html
+       mathml/presentation/mfenced-add-child1.html
+       mathml/presentation/mfenced-add-child2-expected.html
+       mathml/presentation/mfenced-add-child2.html
+
+* rendering/mathml/RenderMathMLFenced.cpp:
+(WebCore::RenderMathMLFenced::RenderMathMLFenced):
+(WebCore::RenderMathMLFenced::makeFences):
+(WebCore::RenderMathMLFenced::addChild):
+* rendering/mathml/RenderMathMLFenced.h:
+(RenderMathMLFenced):
+
+LayoutTests:
+
+* mathml/presentation/mfenced-add-child1-expected.html: Added.
+* mathml/presentation/mfenced-add-child1.html: Added.
+* mathml/presentation/mfenced-add-child2-expected.html: Added.
+* mathml/presentation/mfenced-add-child2.html: Added.
+

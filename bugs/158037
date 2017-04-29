@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r201345 | achristensen@apple.com | 2016-05-24 22:01:50 +0200 (Di, 24. Mai 2016) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestObj.cpp
+
+Fix use-after-free after r201318
+https://bugs.webkit.org/show_bug.cgi?id=158037
+rdar://problem/26446729
+
+Reviewed by Brady Eidson.
+
+This fixes a crash when running fast/dom/navigation-with-sideeffects.html with GuardMalloc.
+
+* bindings/scripts/CodeGeneratorJS.pm:
+(GenerateImplementation):
+* bindings/scripts/test/JS/JSTestObj.cpp:
+(WebCore::setJSTestObjPutForwardsNullableAttribute):
+Changing RefPtr<${type}> to auto caused the type to sometimes be a raw pointer, which does not keep the object alive.
+In the case of JSDocument.cpp, forwardedImpl was what Document::location returned, which is a Location* and not a RefPtr<Location>.
+
+
+

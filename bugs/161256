@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r205163 | bfulgham@apple.com | 2016-08-30 02:44:21 +0200 (Di, 30. Aug 2016) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/mathml/MathOperator.cpp
+   M /trunk/Source/WebCore/rendering/mathml/MathOperator.h
+
+Avoid holding GlyphData in MathOperator
+https://bugs.webkit.org/show_bug.cgi?id=161256
+<rdar://problem/28033400>
+
+Reviewed by Myles C. Maxfield.
+
+Do not cache GlyphData in MathOperator elements, because the fonts referenced in the
+GlyphData may be purged during low-memory conditions. Instead, we should store either
+the relevant CodePoint, or the fallback Glyph (for the current system font).
+
+Added an initialization function for GlyphAssemblyData, since unions containing structs
+do not properly call constructors, resulting in garbage font/glyph content.
+
+No new tests. Changes are covered by existing MathML test suite.
+
+* rendering/mathml/MathOperator.cpp:
+(WebCore::MathOperator::GlyphAssemblyData::initialize): Added.
+(WebCore::MathOperator::MathOperator): Initialize m_assembly/m_variant.
+(WebCore::MathOperator::setSizeVariant): Only store the glyph, not the font.
+(WebCore::glyphDataForCodePointOrFallbackGlyph): Added helper function.
+(WebCore::MathOperator::setGlyphAssembly): Do not rely on stored GlyphData.
+(WebCore::MathOperator::calculateGlyphAssemblyFallback): Remove unneeded argument. Check
+if a fallback glyph is being used and remember for later.
+(WebCore::MathOperator::calculateStretchyData): Do not rely on stored GlyphData.
+(WebCore::MathOperator::fillWithVerticalExtensionGlyph): Ditto.
+(WebCore::MathOperator::fillWithHorizontalExtensionGlyph): Ditto.
+(WebCore::MathOperator::paintVerticalGlyphAssembly): Ditto.
+(WebCore::MathOperator::paintHorizontalGlyphAssembly): Ditto.
+(WebCore::MathOperator::paint): Ditto.
+* rendering/mathml/MathOperator.h:
+(WebCore::MathOperator::GlyphAssemblyData::hasExtension): Added.
+(WebCore::MathOperator::GlyphAssemblyData::hasMiddle): Added.
+(WebCore::MathOperator::MathOperator): Deleted.
+
+

@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r49561 | senorblanco@chromium.org | 2009-10-14 17:02:42 +0200 (Mi, 14. Okt 2009) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/canvas/canvas-toDataURL-crash-expected.txt
+   A /trunk/LayoutTests/fast/canvas/canvas-toDataURL-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/html/HTMLCanvasElement.cpp
+
+WebCore: Fix for NULL ptr deref in canvas's toDataURL().
+https://bugs.webkit.org/show_bug.cgi?id=30254
+
+Reviewed by Eric Seidel.
+
+Test: fast/canvas/canvas-toDataURL-crash.html
+
+* html/HTMLCanvasElement.cpp:
+(WebCore::HTMLCanvasElement::toDataURL):
+
+LayoutTests: New test for NULL ptr deref in canvas's toDataURL().
+https://bugs.webkit.org/show_bug.cgi?id=30254
+
+Reviewed by Eric Seidel.
+
+* fast/canvas/canvas-toDataURL-crash-expected.txt: Added.
+* fast/canvas/canvas-toDataURL-crash.html: Added.
+
+
+

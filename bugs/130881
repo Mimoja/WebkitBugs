@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r166706 | antti@apple.com | 2014-04-03 10:51:22 +0200 (Do, 03. Apr 2014) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/pseudo-after-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/pseudo-after-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/style/StyleResolveTree.cpp
+
+Crash after mutating after pseudo style
+https://bugs.webkit.org/show_bug.cgi?id=130881
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+Test: fast/css/pseudo-after-crash.html
+
+* style/StyleResolveTree.cpp:
+(WebCore::Style::updateBeforeOrAfterPseudoElement):
+        
+    Invalidate the cached renderer for pseudo elements too.
+    
+(WebCore::Style::needsPseudeElement): Deleted.
+        
+    Fix spelling.
+
+LayoutTests: 
+
+* fast/css/pseudo-after-crash-expected.txt: Added.
+* fast/css/pseudo-after-crash.html: Added.
+
+
+

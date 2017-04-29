@@ -1,0 +1,144 @@
+------------------------------------------------------------------------
+r42218 | weinig@apple.com | 2009-04-04 01:49:00 +0200 (Sa, 04. Apr 2009) | 92 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Window/Location
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-on-proto-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-on-proto-using-defineGetter-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-on-proto-using-defineGetter.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-on-proto-using-with-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-on-proto-using-with.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-on-proto.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-using-defineGetter-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-using-defineGetter.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-using-with-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString-using-with.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-toString.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-on-proto-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-on-proto-using-defineGetter-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-on-proto-using-defineGetter.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-on-proto-using-with-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-on-proto-using-with.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-on-proto.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-using-defineGetter-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-using-defineGetter.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-using-with-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf-using-with.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/location-override-valueOf.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/resources
+   A /trunk/LayoutTests/fast/dom/Window/Location/resources/location-tests-functions.js
+   A /trunk/LayoutTests/fast/dom/Window/Location/resources/pass.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/resources/window-shadow-location-using-js-object-with-toString-iframe.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/resources/window-shadow-location-using-string-iframe.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-override-location-using-defineGetter-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-override-location-using-defineGetter.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-override-window-using-defineGetter-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-override-window-using-defineGetter.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-shadow-location-using-js-object-with-toString-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-shadow-location-using-js-object-with-toString.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-shadow-location-using-string-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-shadow-location-using-string.html
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-shadow-window-using-js-object-with-location-field-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/Location/window-shadow-window-using-js-object-with-location-field.html
+   M /trunk/LayoutTests/http/tests/security/cross-frame-access-location-put-expected.txt
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/JSDOMWindowCustom.cpp
+   M /trunk/WebCore/bindings/js/JSLocationCustom.cpp
+   M /trunk/WebCore/bindings/scripts/CodeGeneratorJS.pm
+   M /trunk/WebCore/page/Location.idl
+
+WebCore:
+
+2009-04-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22081
+        <rdar://problem/6346030>
+        Don't allow overriding the return value of window.location.
+
+        Tests: fast/dom/Window/Location/location-override-toString-on-proto-using-defineGetter.html
+               fast/dom/Window/Location/location-override-toString-on-proto-using-with.html
+               fast/dom/Window/Location/location-override-toString-on-proto.html
+               fast/dom/Window/Location/location-override-toString-using-defineGetter.html
+               fast/dom/Window/Location/location-override-toString-using-with.html
+               fast/dom/Window/Location/location-override-toString.html
+               fast/dom/Window/Location/location-override-valueOf-on-proto-using-defineGetter.html
+               fast/dom/Window/Location/location-override-valueOf-on-proto-using-with.html
+               fast/dom/Window/Location/location-override-valueOf-on-proto.html
+               fast/dom/Window/Location/location-override-valueOf-using-defineGetter.html
+               fast/dom/Window/Location/location-override-valueOf-using-with.html
+               fast/dom/Window/Location/location-override-valueOf.html
+               fast/dom/Window/Location/window-override-location-using-defineGetter.html
+               fast/dom/Window/Location/window-override-window-using-defineGetter.html
+               fast/dom/Window/Location/window-shadow-location-using-js-object-with-toString.html
+               fast/dom/Window/Location/window-shadow-location-using-string.html
+               fast/dom/Window/Location/window-shadow-window-using-js-object-with-location-field.html
+
+        * bindings/js/JSDOMWindowCustom.cpp:
+        (WebCore::JSDOMWindow::defineGetter):
+        * bindings/js/JSLocationCustom.cpp:
+        (WebCore::JSLocation::customPut):
+        (WebCore::JSLocation::defineGetter):
+        (WebCore::JSLocationPrototype::customPut):
+        (WebCore::JSLocationPrototype::defineGetter):
+        * bindings/scripts/CodeGeneratorJS.pm:
+        * page/Location.idl:
+
+LayoutTests:
+
+2009-04-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Tests for https://bugs.webkit.org/show_bug.cgi?id=22081
+        <rdar://problem/6346030>
+        Don't allow overriding the return value of window.location.
+
+        * fast/dom/Window/Location: Added.
+        * fast/dom/Window/Location/location-override-toString-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-toString-on-proto-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-toString-on-proto-using-defineGetter-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-toString-on-proto-using-defineGetter.html: Added.
+        * fast/dom/Window/Location/location-override-toString-on-proto-using-with-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-toString-on-proto-using-with.html: Added.
+        * fast/dom/Window/Location/location-override-toString-on-proto.html: Added.
+        * fast/dom/Window/Location/location-override-toString-using-defineGetter-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-toString-using-defineGetter.html: Added.
+        * fast/dom/Window/Location/location-override-toString-using-with-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-toString-using-with.html: Added.
+        * fast/dom/Window/Location/location-override-toString.html: Added.
+        * fast/dom/Window/Location/location-override-valueOf-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-valueOf-on-proto-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-valueOf-on-proto-using-defineGetter-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-valueOf-on-proto-using-defineGetter.html: Added.
+        * fast/dom/Window/Location/location-override-valueOf-on-proto-using-with-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-valueOf-on-proto-using-with.html: Added.
+        * fast/dom/Window/Location/location-override-valueOf-on-proto.html: Added.
+        * fast/dom/Window/Location/location-override-valueOf-using-defineGetter-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-valueOf-using-defineGetter.html: Added.
+        * fast/dom/Window/Location/location-override-valueOf-using-with-expected.txt: Added.
+        * fast/dom/Window/Location/location-override-valueOf-using-with.html: Added.
+        * fast/dom/Window/Location/location-override-valueOf.html: Added.
+        * fast/dom/Window/Location/resources: Added.
+        * fast/dom/Window/Location/resources/location-tests-functions.js: Added.
+        (normalizeURL):
+        * fast/dom/Window/Location/resources/pass.html: Added.
+        * fast/dom/Window/Location/resources/window-shadow-location-using-js-object-with-toString-iframe.html: Added.
+        * fast/dom/Window/Location/resources/window-shadow-location-using-string-iframe.html: Added.
+        * fast/dom/Window/Location/window-override-location-using-defineGetter-expected.txt: Added.
+        * fast/dom/Window/Location/window-override-location-using-defineGetter.html: Added.
+        * fast/dom/Window/Location/window-override-window-using-defineGetter-expected.txt: Added.
+        * fast/dom/Window/Location/window-override-window-using-defineGetter.html: Added.
+        * fast/dom/Window/Location/window-shadow-location-using-js-object-with-toString-expected.txt: Added.
+        * fast/dom/Window/Location/window-shadow-location-using-js-object-with-toString.html: Added.
+        * fast/dom/Window/Location/window-shadow-location-using-string-expected.txt: Added.
+        * fast/dom/Window/Location/window-shadow-location-using-string.html: Added.
+        * fast/dom/Window/Location/window-shadow-window-using-js-object-with-location-field-expected.txt: Added.
+        * fast/dom/Window/Location/window-shadow-window-using-js-object-with-location-field.html: Added.
+        * http/tests/security/cross-frame-access-location-put-expected.txt:
+
+
+

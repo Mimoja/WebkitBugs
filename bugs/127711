@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r165820 | jpfau@apple.com | 2014-03-18 19:05:14 +0100 (Di, 18. Mär 2014) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+<media> elements are not properly moved to new documents' visibility callback lists
+https://bugs.webkit.org/show_bug.cgi?id=127711
+
+Reviewed by David Kilzer.
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::didMoveToNewDocument):
+

@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r145013 | inferno@chromium.org | 2013-03-07 02:24:42 +0100 (Do, 07. Mär 2013) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGViewSpec.cpp
+
+Crash in SVGViewSpec::viewTarget
+https://bugs.webkit.org/show_bug.cgi?id=111648
+
+Reviewed by Philip Rogers.
+
+* svg/SVGViewSpec.cpp:
+(WebCore::SVGViewSpec::viewTarget):
+

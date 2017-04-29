@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r190820 | simon.fraser@apple.com | 2015-10-09 23:50:03 +0200 (Fr, 09. Okt 2015) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/compositing/contents-opaque/table-parts-expected.txt
+   A /trunk/LayoutTests/compositing/contents-opaque/table-parts.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLayer.cpp
+
+Garbage texture data with composited table row
+https://bugs.webkit.org/show_bug.cgi?id=148984
+
+Reviewed by Zalan Bujtas.
+Source/WebCore:
+
+Don't pretend to know if the layer for a table header, section or cell is
+opaque, since table painting is special.
+
+Test: compositing/contents-opaque/table-parts.html
+
+* rendering/RenderLayer.cpp:
+(WebCore::RenderLayer::backgroundIsKnownToBeOpaqueInRect):
+
+LayoutTests:
+
+* compositing/contents-opaque/table-parts-expected.txt: Added.
+* compositing/contents-opaque/table-parts.html: Added.
+

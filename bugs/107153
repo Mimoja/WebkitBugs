@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r140558 | roger_fong@apple.com | 2013-01-23 20:15:58 +0100 (Mi, 23. Jan 2013) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/win/FontCustomPlatformData.cpp
+
+[Win] Remove dependence on Microsoft Embedded OpenType Font Engine (T2EMBED.DLL)  from FontCustomPlatformData.cpp.
+https://bugs.webkit.org/show_bug.cgi?id=107153
+
+Reviewed by Dan Bernstein.
+
+* platform/graphics/win/FontCustomPlatformData.cpp:
+(WebCore):
+(WebCore::FontCustomPlatformData::~FontCustomPlatformData):
+(WebCore::FontCustomPlatformData::fontPlatformData):
+(WebCore::createFontCustomPlatformData):
+
+

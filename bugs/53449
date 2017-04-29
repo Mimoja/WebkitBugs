@@ -1,0 +1,70 @@
+------------------------------------------------------------------------
+r89705 | inferno@chromium.org | 2011-06-24 23:45:16 +0200 (Fr, 24. Jun 2011) | 53 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/text/svg-zoom-large-value-expected.txt
+   A /trunk/LayoutTests/svg/text/svg-zoom-large-value.xhtml
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/wtf/MathExtras.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSPrimitiveValue.cpp
+   M /trunk/Source/WebCore/css/CSSPrimitiveValue.h
+   M /trunk/Source/WebCore/css/CSSStyleSelector.cpp
+   M /trunk/Source/WebCore/css/CSSStyleSelector.h
+   M /trunk/Source/WebCore/platform/graphics/FontDescription.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGInlineText.cpp
+
+2011-06-24  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Match other clampTo* functions in style with clampToInteger(float)
+        function.
+        https://bugs.webkit.org/show_bug.cgi?id=53449
+
+        * wtf/MathExtras.h:
+        (clampToInteger):
+        (clampToFloat):
+        (clampToPositiveInteger):
+2011-06-24  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Add clamping for CSSPrimitiveValues and SVGInlineText font size.
+        https://bugs.webkit.org/show_bug.cgi?id=53449        
+
+        Test: svg/text/svg-zoom-large-value.xhtml
+
+        * css/CSSPrimitiveValue.cpp:
+        (WebCore::CSSPrimitiveValue::CSSPrimitiveValue): add asserts to detect if the
+        number created is valid.
+        * css/CSSPrimitiveValue.h: add clamping checks to prevent overflows.
+        (WebCore::CSSPrimitiveValue::getFloatValue):
+        (WebCore::CSSPrimitiveValue::getIntValue):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::getComputedSizeFromSpecifiedSize): split into two
+        static functions, one specific to CSSStyleSelector and other generic to help
+        in clamping font size for other callers like svg text, etc.
+        * css/CSSStyleSelector.h:
+        * platform/graphics/FontDescription.h: add asserts to detect if the new font
+        size is valid.
+        (WebCore::FontDescription::setComputedSize):
+        (WebCore::FontDescription::setSpecifiedSize):
+        * rendering/svg/RenderSVGInlineText.cpp:
+        (WebCore::RenderSVGInlineText::computeNewScaledFontForStyle): use the new helper
+        from CSSStyleSelector to help in clamping new scaled font size. do not use
+        "smart minimum" since svg allows really small unreadable fonts (tested by existing
+        layout tests). Document's minimum font size clamp (0 in my case) and harmless epsilon
+        check in CSSStyleSelector function should still hold for svg.
+2011-06-24  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Tests that font size for svg text zoom is clamped and we do not
+        crash on ASSERT(isfinite(s)) in FontDescription.h
+        https://bugs.webkit.org/show_bug.cgi?id=53449
+
+        * svg/text/svg-zoom-large-value-expected.txt: Added.
+        * svg/text/svg-zoom-large-value.xhtml: Added.
+
+

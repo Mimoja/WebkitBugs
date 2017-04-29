@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r116357 | commit-queue@webkit.org | 2012-05-08 00:07:43 +0200 (Di, 08. Mai 2012) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/positioning/positioned-object-under-split-block-parent-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/positioning/positioned-object-under-split-block-parent-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+Crash due to positioned object list not being cleared during block flow split
+https://bugs.webkit.org/show_bug.cgi?id=85074
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-05-07
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+When an element is being split due to a column span element being
+inserted, any of its ancestors that are underneath the column
+containing block also get split. If an ancestor has an object in
+its positioned object list from a previous layout, then the list
+will have to be cleared because the positioned object could have moved
+to be under the continuation. This patch causes the list to be
+cleared.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::splitBlocks):
+
+LayoutTests:
+
+Test exercises crashing condition in bug 85074. It creates a column
+span that requires multiple layers of splitting blocks from the
+element that contains the columns, puts a positioned element underneath
+one of the split blocks, and then causes a reattach of the column span
+element.
+
+* fast/block/positioning/positioned-object-under-split-block-parent-crash-expected.txt: Added
+* fast/block/positioning/positioned-object-under-split-block-parent-crash.html: Added
+

@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r58616 | ddkilzer@apple.com | 2010-05-01 00:54:03 +0200 (Sa, 01. Mai 2010) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/pasteboard/drag-drop-iframe-refresh-crash-expected.txt
+   A /trunk/LayoutTests/editing/pasteboard/drag-drop-iframe-refresh-crash.html
+   A /trunk/LayoutTests/editing/resources/drag-drop.html
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/page/DragController.cpp
+   M /trunk/WebCore/page/DragController.h
+
+WebCore: Convert m_documentUnderMouse, m_dragInitiator to RefPtr.
+Eliminated unused m_dragInitiator accessor to prevent dereferencing.
+https://bugs.webkit.org/show_bug.cgi?id=37618
+
+Patch by Abhishek Arya <inferno@chromium.org> on 2010-04-30
+Reviewed by David Kilzer.
+
+Test: editing/pasteboard/drag-drop-iframe-refresh-crash.html
+
+* page/DragController.cpp:
+(WebCore::DragController::tryDocumentDrag):
+(WebCore::DragController::concludeEditDrag):
+* page/DragController.h:
+(WebCore::DragController::draggingImageURL):
+(WebCore::DragController::documentUnderMouse):
+
+LayoutTests: Tests for a crash when an image drag-drop operation happens inside a continuously refreshing iframe.
+https://bugs.webkit.org/show_bug.cgi?id=37618
+
+Patch by Abhishek Arya <inferno@chromium.org> on 2010-04-30
+Reviewed by David Kilzer.
+
+* editing/pasteboard/drag-drop-iframe-refresh-crash-expected.txt: Added.
+* editing/pasteboard/drag-drop-iframe-refresh-crash.html: Added.
+* editing/resources/drag-drop.html: Added.
+* platform/qt/Skipped:
+

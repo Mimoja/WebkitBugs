@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r125237 | morrita@google.com | 2012-08-10 04:15:42 +0200 (Fr, 10. Aug 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/mutation-during-replace-child-2-expected.txt
+   A /trunk/LayoutTests/fast/events/mutation-during-replace-child-2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+https://bugs.webkit.org/show_bug.cgi?id=93587
+Node::replaceChild() can create bad DOM topology with MutationEvent, Part 2
+
+Reviewed by Kent Tamura.
+
+Source/WebCore:
+
+This is a followup of r124156. replaceChild() has yet another hidden
+MutationEvent trigger. This change added a guard for it.
+
+Test: fast/events/mutation-during-replace-child-2.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::replaceChild):
+
+LayoutTests:
+
+* fast/events/mutation-during-replace-child-2-expected.txt: Added.
+* fast/events/mutation-during-replace-child-2.html: Added.
+

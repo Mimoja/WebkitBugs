@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r95689 | commit-queue@webkit.org | 2011-09-22 02:17:45 +0200 (Do, 22. Sep 2011) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/message-port-deleted-by-accessor-expected.txt
+   A /trunk/LayoutTests/fast/dom/message-port-deleted-by-accessor.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/custom/V8MessageEventCustom.cpp
+
+[Chromium] Protect message ports from being deleted in V8MessageEvent::portsAccessorGetter
+https://bugs.webkit.org/show_bug.cgi?id=68584
+
+Patch by Sergey Glazunov <serg.glazunov@gmail.com> on 2011-09-21
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: fast/dom/message-port-deleted-by-accessor.html
+
+* bindings/v8/custom/V8MessageEventCustom.cpp:
+(WebCore::V8MessageEvent::portsAccessorGetter):
+
+LayoutTests:
+
+* fast/dom/message-port-deleted-by-accessor-expected.txt: Added.
+* fast/dom/message-port-deleted-by-accessor.html: Added.
+

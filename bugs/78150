@@ -1,0 +1,24 @@
+------------------------------------------------------------------------
+r107174 | commit-queue@webkit.org | 2012-02-09 05:49:08 +0100 (Do, 09. Feb 2012) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/DatabaseObserver.cpp
+   M /trunk/Source/WebKit/chromium/src/IDBFactoryBackendProxy.cpp
+   M /trunk/Source/WebKit/chromium/src/WebWorkerClientImpl.cpp
+
+[V8][Chromium] Race between worker accessing WebDatabase and frame closing down.
+https://bugs.webkit.org/show_bug.cgi?id=78150
+Handle case when the frame is shut down under us gracefully.
+
+Patch by Dmitry Lomov <dslomov@chromium.org> on 2012-02-08
+Reviewed by David Levin.
+
+* src/DatabaseObserver.cpp:
+(WebCore::DatabaseObserver::canEstablishDatabase): Handle WebWorkerBase::view returning 0.
+* src/IDBFactoryBackendProxy.cpp:
+(WebKit::IDBFactoryBackendProxy::openFromWorker): Handle WebWorkerBase::view returning 0.
+* src/WebWorkerClientImpl.cpp:
+(WebKit::WebWorkerClientImpl::allowFileSystem):
+(WebKit::WebWorkerClientImpl::allowDatabase):
+(WebKit::WebWorkerClientImpl::view):
+

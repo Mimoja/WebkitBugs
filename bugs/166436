@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r210120 | zalan@apple.com | 2016-12-23 00:48:53 +0100 (Fr, 23. Dez 2016) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/flow-fragment-as-anonymous-block-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/flow-fragment-as-anonymous-block-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+Do not destroy the RenderNamedFlowFragment as leftover anonymous block.
+https://bugs.webkit.org/show_bug.cgi?id=166436
+rdar://problem/29772233
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+When as the result of certain style change, the generated anonymous block is not needed anymore, we
+move its descendants up to the parent and destroy the generated box. While RenderNamedFlowFragment is a generated
+block, the cleanup code should just ignore it the same way we ignore boxes like multicolumn, mathml etc.
+
+Test: fast/regions/flow-fragment-as-anonymous-block-crash.html
+
+* rendering/RenderObject.h:
+(WebCore::RenderObject::isAnonymousBlock):
+
+LayoutTests:
+
+* fast/regions/flow-fragment-as-anonymous-block-crash-expected.txt: Added.
+* fast/regions/flow-fragment-as-anonymous-block-crash.html: Added.
+

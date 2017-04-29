@@ -1,0 +1,52 @@
+------------------------------------------------------------------------
+r86507 | loislo@chromium.org | 2011-05-15 18:57:55 +0200 (So, 15. Mai 2011) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/inspector/console/console-long-eval-crash-expected.txt
+   A /trunk/LayoutTests/inspector/console/console-long-eval-crash.html
+   M /trunk/LayoutTests/platform/gtk/Skipped
+   M /trunk/LayoutTests/platform/mac/Skipped
+   M /trunk/LayoutTests/platform/mac-wk2/Skipped
+   M /trunk/LayoutTests/platform/qt-wk2/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/inspector/CodeGeneratorInspector.pm
+   M /trunk/Source/WebCore/inspector/InspectorController.cpp
+   M /trunk/Source/WebCore/inspector/InspectorController.h
+
+2011-05-15  Ilya Tikhonovsky  <loislo@chromium.org>
+
+        Reviewed by Yury Semikhatsky.
+
+        Web Inspector: chromium renderer crash at eval in console.
+
+        https://bugs.webkit.org/show_bug.cgi?id=60616
+        Renderer of inspected page is crashing when modal dialog
+        has been opened via console eval and page is reloaded.
+
+        Test: inspector/console/console-long-eval-crash.html
+
+        * inspector/CodeGeneratorInspector.pm:
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::connectFrontend):
+        (WebCore::InspectorController::dispatchMessageFromFrontend):
+        * inspector/InspectorController.h:
+
+2011-05-15  Ilya Tikhonovsky  <loislo@chromium.org>
+
+        Reviewed by Yury Semikhatsky.
+
+        Web Inspector: chromium renderer crash at eval in console.
+
+        https://bugs.webkit.org/show_bug.cgi?id=60616
+        Renderer of inspected page is crashing when modal dialog
+        has been opened via console eval and page is reloaded.
+
+        * inspector/console/console-long-eval-crash-expected.txt: Added.
+        * inspector/console/console-long-eval-crash.html: Added.
+        * platform/gtk/Skipped:
+        * platform/mac-wk2/Skipped:
+        * platform/qt-wk2/Skipped:
+        * platform/win/Skipped:
+
+

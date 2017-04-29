@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r95580 | jochen@chromium.org | 2011-09-21 01:31:17 +0200 (Mi, 21. Sep 2011) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/cross-origin-xsl-redirect-BLOCKED-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-origin-xsl-redirect-BLOCKED.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-origin-xsl-redirect.xml
+   M /trunk/LayoutTests/platform/chromium/http/tests/permissionclient/image-permissions-expected.txt
+   M /trunk/LayoutTests/platform/chromium/http/tests/permissionclient/image-permissions.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/CachedResourceLoader.h
+   M /trunk/Source/WebCore/loader/cache/CachedResourceRequest.cpp
+
+Invoke CachedResourceLoader::canRequest for all URLs in a redirect chain
+https://bugs.webkit.org/show_bug.cgi?id=68279
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+* loader/cache/CachedResourceLoader.h:
+* loader/cache/CachedResourceRequest.cpp:
+(WebCore::CachedResourceRequest::willSendRequest):
+
+LayoutTests:
+
+* http/tests/security/resources/cross-origin-xsl-redirect.xml:
+* http/tests/security/cross-origin-xsl-redirect-BLOCKED-expected.txt:
+* http/tests/security/cross-origin-xsl-redirect-BLOCKED.html:
+* platform/chromium/http/tests/permissionclient/image-permissions-expected.txt:
+* platform/chromium/http/tests/permissionclient/image-permissions.html:
+
+

@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r99462 | commit-queue@webkit.org | 2011-11-07 21:48:35 +0100 (Mo, 07. Nov 2011) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/international/bidi-neutral-in-mixed-direction-run-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/international/bidi-neutral-in-mixed-direction-run-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineIterator.h
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+
+Crash due to mixed direction text runs
+https://bugs.webkit.org/show_bug.cgi?id=66015
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-11-07
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Test for bug fix.
+
+* fast/text/international/bidi-neutral-in-mixed-direction-run-crash.html: Added
+* fast/text/international/bidi-neutral-in-mixed-direction-run-cras-expected.txt: Added
+
+LayoutTests:
+
+In some cases extra bidi runs were being added because appendRun() was being called
+after the last run of the line was already appended.
+
+This converts a previous fix for this bug to an ASSERT, because the check is
+unnecessary, though it is a symptom that text runs have somehow gotten messed up.
+
+* rendering/InlineIterator.h:
+(WebCore::InlineBidiResolver::appendRun): Abort append if we've already appended the last
+run of the line
+* rendering/RenderBox.cpp:
+(WebCore::RenderBox::positionLineBox): Revert the previous patch, change to an assert
+

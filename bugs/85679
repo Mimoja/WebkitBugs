@@ -1,0 +1,88 @@
+------------------------------------------------------------------------
+r121610 | commit-queue@webkit.org | 2012-06-30 04:02:09 +0200 (Sa, 30. Jun 2012) | 66 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/plugins/npruntime/leak-window-scriptable-object-expected.txt
+   A /trunk/LayoutTests/plugins/npruntime/leak-window-scriptable-object.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.gypi
+   D /trunk/Source/WebCore/bindings/v8/NPObjectWrapper.cpp
+   D /trunk/Source/WebCore/bindings/v8/NPObjectWrapper.h
+   M /trunk/Source/WebCore/bindings/v8/NPV8Object.cpp
+   M /trunk/Source/WebCore/bindings/v8/NPV8Object.h
+   M /trunk/Source/WebCore/bindings/v8/ScriptController.cpp
+   M /trunk/Source/WebCore/bindings/v8/ScriptController.h
+   M /trunk/Source/WebKit/chromium/src/WebBindings.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/DumpRenderTree.gypi
+   M /trunk/Tools/DumpRenderTree/TestNetscapePlugIn/PluginTest.cpp
+   M /trunk/Tools/DumpRenderTree/TestNetscapePlugIn/PluginTest.h
+   A /trunk/Tools/DumpRenderTree/TestNetscapePlugIn/Tests/LeakWindowScriptableObject.cpp
+
+NPObjectWrapper may not address all window script object lifetime issues
+https://bugs.webkit.org/show_bug.cgi?id=85679
+
+Source/WebCore:
+
+The ScriptController implementations force-deallocate the window script object to ensure that DOM objects are not leaked if an NPAPI plugin fails to release a reference to it before being destroyed. The NPObjectWrapper was added to ensure that NPAPI scripting could not touch the real window script object after it had been deallocated, by providing the plugin with a small wrapper which will leak if the plugin fails to dereference it.
+
+This patch removes NPObjectWrapper and instead drops the window script NPObject's reference to the underlying V8Object in ScriptController::clearScriptObjects(). If a plugin fails to dereference the object then the NPV8Object wrapper will be leaked but the DOM objects it references will not.
+
+Patch by James Weatherall <wez@chromium.org> on 2012-06-29
+Reviewed by Nate Chapin.
+
+Test: plugins/npruntime/leak-window-scriptable-object.html
+
+* WebCore.gypi:
+* bindings/v8/NPObjectWrapper.cpp: Removed.
+* bindings/v8/NPObjectWrapper.h: Removed.
+* bindings/v8/NPV8Object.cpp:
+(WebCore::disposeUnderlyingV8Object):
+(WebCore):
+(WebCore::freeV8NPObject):
+(_NPN_Invoke):
+(_NPN_InvokeDefault):
+(_NPN_EvaluateHelper):
+(_NPN_GetProperty):
+(_NPN_SetProperty):
+(_NPN_RemoveProperty):
+(_NPN_HasProperty):
+(_NPN_HasMethod):
+(_NPN_Enumerate):
+(_NPN_Construct):
+* bindings/v8/NPV8Object.h:
+(WebCore):
+* bindings/v8/ScriptController.cpp:
+(WebCore::ScriptController::ScriptController):
+(WebCore::ScriptController::clearScriptObjects):
+(WebCore::ScriptController::windowScriptNPObject):
+* bindings/v8/ScriptController.h:
+(ScriptController):
+
+Tools:
+
+TestNetscapePlugin now has a leak-window-scriptable-object test which takes a reference to the window script object, and a second reference to it via the "self" property, and does not release those references. This is used to simulate a leaky plugin in layout tests of the NPAPI scripting interface glue code.
+
+Patch by James Weatherall <wez@chromium.org> on 2012-06-29
+Reviewed by Nate Chapin.
+
+* DumpRenderTree/DumpRenderTree.gypi:
+* DumpRenderTree/TestNetscapePlugIn/PluginTest.cpp:
+(PluginTest::NPN_GetProperty):
+* DumpRenderTree/TestNetscapePlugIn/PluginTest.h:
+(PluginTest):
+* DumpRenderTree/TestNetscapePlugIn/Tests/LeakWindowScriptableObject.cpp: Added.
+(LeakWindowScriptableObject):
+(LeakWindowScriptableObject::LeakWindowScriptableObject):
+(LeakWindowScriptableObject::NPP_New):
+
+LayoutTests:
+
+Test that NPAPI plugins that leak references to the window script object don't cause the containing document to be leaked.
+
+Patch by James Weatherall <wez@chromium.org> on 2012-06-29
+Reviewed by Nate Chapin.
+
+* plugins/npruntime/leak-window-scriptable-object-expected.txt: Added.
+* plugins/npruntime/leak-window-scriptable-object.html: Added.
+

@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r189046 | basile_clement@apple.com | 2015-08-27 21:40:09 +0200 (Do, 27. Aug 2015) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/js/regress-148411-expected.txt
+   A /trunk/LayoutTests/js/regress-148411.html
+   A /trunk/LayoutTests/js/script-tests/regress-148411.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGClobberize.h
+
+REGRESSION(r184779): Possible read-after-free in JavaScriptCore/dfg/DFGClobberize.h
+https://bugs.webkit.org/show_bug.cgi?id=148411
+
+Reviewed by Geoffrey Garen and Filip Pizlo.
+
+Source/JavaScriptCore:
+
+* dfg/DFGClobberize.h:
+(JSC::DFG::clobberize):
+
+LayoutTests:
+
+* js/regress-148411-expected.txt: Added.
+* js/regress-148411.html: Added.
+* js/script-tests/regress-148411.js: Added.
+(foo):
+

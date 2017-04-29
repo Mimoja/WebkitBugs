@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r167524 | jhoneycutt@apple.com | 2014-04-19 02:49:07 +0200 (Sa, 19. Apr 2014) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+
+Harden RenderInline::inlineElementContinuation()
+
+<https://bugs.webkit.org/show_bug.cgi?id=131858>
+
+Reviewed by Sam Weinig.
+
+No new tests, as there are no known cases of this happening.
+
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::inlineElementContinuation):
+Return nullptr if the continuation is neither a RenderInline nor a
+RenderBlock.
+

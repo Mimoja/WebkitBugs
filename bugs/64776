@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r91382 | simonjam@chromium.org | 2011-07-20 20:32:54 +0200 (Mi, 20. Jul 2011) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ScriptElement.cpp
+
+Refuse to run scripts inside the SVG shadow DOM
+https://bugs.webkit.org/show_bug.cgi?id=64776
+
+Source/WebCore:
+
+This is a rollback of r90970. The hack that was removed there was also protecting us from
+two further bugs that have been discovered. So, the hack is going back in.
+
+Reviewed by Tony Gentilcore.
+
+* dom/ScriptElement.cpp:
+(WebCore::ScriptElement::prepareScript):
+
+LayoutTests:
+
+Reviewed by Tony Gentilcore.
+
+* platform/chromium/test_expectations.txt:
+
+

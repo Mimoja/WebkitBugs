@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r68819 | jschuh@chromium.org | 2010-09-30 22:31:45 +0200 (Do, 30. Sep 2010) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/counters/counter-traverse-table-cell-expected.txt
+   A /trunk/LayoutTests/fast/css/counters/counter-traverse-table-cell.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/CounterNode.cpp
+   M /trunk/WebCore/rendering/CounterNode.h
+   M /trunk/WebCore/rendering/RenderCounter.cpp
+
+2010-09-30  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Added check to test for removed counter node when calling findPlaceForCounter() in updateCounters().
+        Added refcounting to counternodes in countermaps.
+        https://bugs.webkit.org/show_bug.cgi?id=46387
+
+        Test: fast/css/counters/counter-traverse-table-cell.html
+
+        * rendering/CounterNode.cpp:
+        (WebCore::CounterNode::create):
+        * rendering/CounterNode.h:
+        * rendering/RenderCounter.cpp:
+        (WebCore::makeCounterNode):
+        (WebCore::destroyCounterNodeWithoutMapRemoval):
+        (WebCore::RenderCounter::destroyCounterNodes):
+        (WebCore::RenderCounter::destroyCounterNode):
+        (WebCore::updateCounters):
+2010-09-30  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Tests for crash in counter nodes when traversing table cells.
+        https://bugs.webkit.org/show_bug.cgi?id=46387
+
+        * fast/css/counters/counter-traverse-table-cell-expected.txt: Added.
+        * fast/css/counters/counter-traverse-table-cell.html: Added.
+
+

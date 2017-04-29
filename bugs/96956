@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r131509 | fpizlo@apple.com | 2012-10-16 23:59:35 +0200 (Di, 16. Okt 2012) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGFixupPhase.cpp
+
+Accidental switch fall-through in DFG::FixupPhase
+https://bugs.webkit.org/show_bug.cgi?id=96956
+<rdar://problem/12313242>
+
+Reviewed by Mark Hahnenberg.
+
+* dfg/DFGFixupPhase.cpp:
+(JSC::DFG::FixupPhase::fixupNode):
+
+
+

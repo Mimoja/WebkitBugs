@@ -1,0 +1,22 @@
+------------------------------------------------------------------------
+r114467 | achicu@adobe.com | 2012-04-18 02:19:40 +0200 (Mi, 18. Apr 2012) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/FilterEffectRenderer.cpp
+
+Regression(114172): Use after free in CustomFilterProgram::notifyClients
+https://bugs.webkit.org/show_bug.cgi?id=84000
+
+Reviewed by Dean Jackson.
+
+The function returned early and the shaders didn't have a chance to be saved. Moving
+those two lines before the return false just to make sure that FilterEffectRenderer never adds
+itself as a client for a shader without keeping track of that.
+
+No new tests. The problem reproduces with existing tests.
+css3/filters/custom/custom-filter-property-computed-style.html
+css3/filters/custom/effect-custom-combined-missing.html
+
+* rendering/FilterEffectRenderer.cpp:
+(WebCore::FilterEffectRenderer::build):
+

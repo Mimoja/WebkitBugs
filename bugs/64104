@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r91148 | commit-queue@webkit.org | 2011-07-16 09:33:14 +0200 (Sa, 16. Jul 2011) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/script-tests/svgtransform-animation-discrete.js
+   A /trunk/LayoutTests/svg/animations/svgtransform-animation-discrete-expected.txt
+   A /trunk/LayoutTests/svg/animations/svgtransform-animation-discrete.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGAnimateTransformElement.cpp
+
+Patch by Kulanthaivel Palanichamy <kulanthaivel@codeaurora.org> on 2011-07-16
+Reviewed by Nikolas Zimmermann.
+
+SVG animation API crashes on SVGAnimateTransform
+https://bugs.webkit.org/show_bug.cgi?id=64104
+
+Source/WebCore:
+
+This patch ensures the update in AnimatedTransform list in
+SVGAnimateTransformElement.cpp is in sync with its wrapper list.
+
+Test: svg/animations/svgtransform-animation-discrete.html
+
+* svg/SVGAnimateTransformElement.cpp:
+(WebCore::animatedTransformListFor):
+(WebCore::SVGAnimateTransformElement::resetToBaseValue):
+(WebCore::SVGAnimateTransformElement::calculateAnimatedValue):
+(WebCore::SVGAnimateTransformElement::applyResultsToTarget):
+
+LayoutTests:
+
+Added the test to cover assertion in AnimatedTransform list where its
+value and wrapper length mismatch occurs.
+
+* svg/animations/script-tests/svgtransform-animation-discrete.js: Added.
+(sample1):
+(sample2):
+(executeTest):
+* svg/animations/svgtransform-animation-discrete-expected.txt: Added.
+* svg/animations/svgtransform-animation-discrete.html: Added.
+

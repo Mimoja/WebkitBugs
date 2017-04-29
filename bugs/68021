@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r95071 | adamk@chromium.org | 2011-09-14 04:09:25 +0200 (Mi, 14. Sep 2011) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/counters/counter-cssText-expected.txt
+   A /trunk/LayoutTests/fast/css/counters/counter-cssText.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/CSSPrimitiveValue.cpp
+
+Fix cssText property of counter-valued CSSPrimitiveValue and avoid uninitialized read
+https://bugs.webkit.org/show_bug.cgi?id=68021
+
+Reviewed by Tony Chang.
+
+Source/WebCore:
+
+Reported by valgrind in http://crbug.com/60653.
+
+Besides fixing the uninitialized read, add support for outputting the
+list separator for counters() calls and the list-style name.
+
+Test: fast/css/counters/counter-cssText.html
+
+* css/CSSPrimitiveValue.cpp:
+(WebCore::CSSPrimitiveValue::cssText):
+
+LayoutTests:
+
+* fast/css/counters/counter-cssText-expected.txt: Added.
+* fast/css/counters/counter-cssText.html: Added.
+
+

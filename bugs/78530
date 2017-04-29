@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r108417 | rniwa@webkit.org | 2012-02-22 01:42:37 +0100 (Mi, 22. Feb 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/text-iterator/rtl-first-letter-text-iterator-crash-expected.txt
+   A /trunk/LayoutTests/editing/text-iterator/rtl-first-letter-text-iterator-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/TextIterator.cpp
+
+Assertion failure in TextIterator::handleTextBox
+https://bugs.webkit.org/show_bug.cgi?id=78530
+
+Source/WebCore: 
+
+Reviewed by Eric Seidel.
+
+The assertion failure was caused by handleTextNodeFirstLetter's updating m_text without clearing
+m_sortedTextBoxesPosition. Re-structured handleTextNode so that we always reset m_sortedTextBoxesPosition
+when we have a first-letter.
+
+Test: editing/text-iterator/rtl-first-letter-text-iterator-crash.html
+
+* editing/TextIterator.cpp:
+(WebCore::TextIterator::handleTextNode):
+(WebCore::TextIterator::handleTextBox):
+(WebCore::TextIterator::handleTextNodeFirstLetter):
+
+LayoutTests: 
+
+Reviewed by Enrica Casucci.
+
+Add a regression test. Also rebaseline a crash test.
+
+* editing/text-iterator/rtl-first-letter-text-iterator-crash-expected.txt: Added.
+* editing/text-iterator/rtl-first-letter-text-iterator-crash.html: Added.
+* editing/text-iterator/rtl-selection-crash-expected.txt:
+
+

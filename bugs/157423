@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r201434 | bfulgham@apple.com | 2016-05-27 00:03:34 +0200 (Fr, 27. Mai 2016) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/DumpRenderTree/mac/UIDelegate.mm
+
+Unreviewed test fix after r201427.
+https://bugs.webkit.org/show_bug.cgi?id=157423
+<rdar://problem/23751632>
+
+A debug assertion was firing during some test runs due to the Geolocation permission
+being turned off during the test. The timer logic was originally written to assert
+if the timer fired when permissions were disabled. But this is no longer valid,
+because we expect the Geolocation system to be active and become deactivated if the
+browsing context violates one of the security criteria.
+
+* DumpRenderTree/mac/UIDelegate.mm:
+(-[UIDelegate timerFired]): Remove invalid assertion.
+
+
+

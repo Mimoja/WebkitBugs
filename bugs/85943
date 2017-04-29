@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r116545 | inferno@chromium.org | 2012-05-09 20:28:39 +0200 (Mi, 09. Mai 2012) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/inserting/insert-html-crash-expected.txt
+   A /trunk/LayoutTests/editing/inserting/insert-html-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/ReplaceSelectionCommand.cpp
+
+Crash in ReplaceSelectionCommand::performTrivialReplace
+https://bugs.webkit.org/show_bug.cgi?id=85943
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+RefPtr nodeAfterInsertionPos to guard against mutation events.
+
+Test: editing/inserting/insert-html-crash.html
+
+* editing/ReplaceSelectionCommand.cpp:
+(WebCore::ReplaceSelectionCommand::performTrivialReplace):
+
+LayoutTests:
+
+* editing/inserting/insert-html-crash-expected.txt: Added.
+* editing/inserting/insert-html-crash.html: Added.
+
+

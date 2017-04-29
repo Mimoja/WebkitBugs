@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r101860 | ap@apple.com | 2011-12-02 23:56:23 +0100 (Fr, 02. Dez 2011) | 9 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit2/ChangeLog
+   M /trunk/Source/WebKit2/WebProcess/com.apple.WebProcess.sb
+
+        Update sandbox rules
+        https://bugs.webkit.org/show_bug.cgi?id=73675
+        <rdar://problem/9276430>
+
+        Reviewed by Sam Weinig.
+
+        * WebProcess/com.apple.WebProcess.sb:
+
+
+

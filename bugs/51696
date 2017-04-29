@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r74787 | inferno@chromium.org | 2010-12-30 09:02:08 +0100 (Do, 30. Dez 2010) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/video-element-other-namespace-crash-expected.txt
+   A /trunk/LayoutTests/media/video-element-other-namespace-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/html/MediaDocument.cpp
+
+2010-12-30  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Create a helper function for finding descendent video elements for a node.
+        https://bugs.webkit.org/show_bug.cgi?id=51696
+
+        Test: media/video-element-other-namespace-crash.html
+
+        * html/MediaDocument.cpp:
+        (WebCore::descendentVideoElement): helper function.
+        (WebCore::MediaDocument::defaultEventHandler): use the new helper function. fix code repetitions.
+        (WebCore::MediaDocument::replaceMediaElementTimerFired): use the new helper function.
+2010-12-30  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Tests that we do not crash when trying to find video elements in the media document.
+        https://bugs.webkit.org/show_bug.cgi?id=51696
+
+        * media/video-element-other-namespace-crash-expected.txt: Added.
+        * media/video-element-other-namespace-crash.html: Added.
+
+

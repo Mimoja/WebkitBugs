@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r69345 | inferno@chromium.org | 2010-10-08 00:00:02 +0200 (Fr, 08. Okt 2010) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/root-inlinebox-selected-children-crash-expected.txt
+   A /trunk/LayoutTests/editing/selection/root-inlinebox-selected-children-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/InlineFlowBox.cpp
+   M /trunk/WebCore/rendering/RenderBlockLineLayout.cpp
+
+2010-10-07  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Set the m_selectedChildren flag on the root inline box if one of the leaf 
+        inline box from the bidi runs walk has a selection state. Remove the flag
+        setting logic from addToLine, since line boxes created in createLinesBoxes
+        should not be propagating selection state to root inline box.
+        https://bugs.webkit.org/show_bug.cgi?id=47201
+
+        Test: editing/selection/root-inlinebox-selected-children-crash.html
+
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::addToLine):
+        * rendering/RenderBlockLineLayout.cpp:
+        (WebCore::RenderBlock::constructLine):
+2010-10-07  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we don't crash while setting selected children on the root inline box.
+        https://bugs.webkit.org/show_bug.cgi?id=47201
+
+        * editing/selection/root-inlinebox-selected-children-crash-expected.txt: Added.
+        * editing/selection/root-inlinebox-selected-children-crash.html: Added.
+
+

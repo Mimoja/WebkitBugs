@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r82596 | inferno@chromium.org | 2011-03-31 19:20:13 +0200 (Do, 31. Mär 2011) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/range-delete-expected.txt
+   A /trunk/LayoutTests/svg/dom/range-delete.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+2011-03-31  Tom Sepez  <tsepez@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Make ContainerNode::insertIntoDocument() collect all nodes before
+        operating on any of them.  Add small helper function and use it
+        througout the file where this action is already taking place.
+        https://bugs.webkit.org/show_bug.cgi?id=57265
+        
+        Test: svg/dom/range-delete.html
+
+        * dom/ContainerNode.cpp:
+        (WebCore::collectNodes):
+        (WebCore::collectTargetNodes):
+        (WebCore::ContainerNode::takeAllChildrenFrom):
+        (WebCore::willRemoveChildren):
+        (WebCore::ContainerNode::insertedIntoDocument):
+2011-03-31  Tom Sepez  <tsepez@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Test that script inside an SVG can delete a range containing 
+        itself when invoked on top of script manipulating it.
+        https://bugs.webkit.org/show_bug.cgi?id=57265
+
+        * svg/dom/range-delete-expected.txt: Added.
+        * svg/dom/range-delete.html: Added.
+
+

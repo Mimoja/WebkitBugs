@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+r111602 | schenney@chromium.org | 2012-03-21 21:55:06 +0100 (Mi, 21. Mär 2012) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/mac/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+
+SVG layout leaves objects still needing layout
+https://bugs.webkit.org/show_bug.cgi?id=81006
+
+Unreviewed expectations changes.
+
+* platform/mac/Skipped: Removed skipped tests fixed by 81006
+* platform/win/Skipped: Removed skipped tests fixed by 81006
+
+

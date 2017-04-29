@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r143859 | pdr@google.com | 2013-02-24 07:35:10 +0100 (So, 24. Feb 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/animateTransform-list-crash-expected.txt
+   A /trunk/LayoutTests/svg/animations/animateTransform-list-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGAnimatedTransformList.cpp
+
+Prevent crash in animated transform lists
+https://bugs.webkit.org/show_bug.cgi?id=110704
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+This change prevents accessing values off the end of toAtEndOfDuration by adding a check
+for this case. Similar checks were added in r116458 but the author failed to catch this
+case. WK110706 has been filed to handle this case in general.
+
+This change also makes a trivial change that marks effectiveFrom as const.
+
+Test: svg/animations/animateTransform-list-crash.html
+
+* svg/SVGAnimatedTransformList.cpp:
+(WebCore::SVGAnimatedTransformListAnimator::calculateAnimatedValue):
+
+LayoutTests:
+
+* svg/animations/animateTransform-list-crash-expected.txt: Added.
+* svg/animations/animateTransform-list-crash.html: Added.
+
+

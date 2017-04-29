@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r113378 | adamk@chromium.org | 2012-04-05 23:11:28 +0200 (Do, 05. Apr 2012) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/mutation/clear-transient-without-delivery-expected.txt
+   A /trunk/LayoutTests/fast/mutation/clear-transient-without-delivery.html
+   A /trunk/LayoutTests/fast/mutation/transient-gc-crash-expected.txt
+   A /trunk/LayoutTests/fast/mutation/transient-gc-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/MutationObserverRegistration.cpp
+   M /trunk/Source/WebCore/dom/MutationObserverRegistration.h
+   M /trunk/Source/WebCore/dom/WebKitMutationObserver.cpp
+   M /trunk/Source/WebCore/dom/WebKitMutationObserver.h
+
+Crash in MutationObservers due to an invalid HashSet iterator
+https://bugs.webkit.org/show_bug.cgi?id=83304
+
+Reviewed by Ojan Vafai.
+
+Source/WebCore:
+
+If the observed node has been GCed when we clear transient observers
+from it, the HashSet iterator in WebKitMutationObserver::deliver would
+be invalidated. This patch fixes that behavior by copying the relevant
+registrations into a seperate vector first and operating on the copy.
+
+This patch also fixes a bug: transient observers should be cleared
+after every microtask, not just when delivering.
+
+Tests: fast/mutation/clear-transient-without-delivery.html
+       fast/mutation/transient-gc-crash.html
+
+* dom/MutationObserverRegistration.cpp:
+(WebCore::MutationObserverRegistration::observedSubtreeNodeWillDetach):
+Notify the observer that it has a transient registration so it can be properly cleared.
+* dom/MutationObserverRegistration.h:
+(WebCore::MutationObserverRegistration::hasTransientRegistrations):
+Add an accessor for use when deliver() creates its vector of registrations.
+* dom/WebKitMutationObserver.cpp:
+(WebCore::WebKitMutationObserver::setHasTransientRegistration): Add this to the active observer set
+to allow transient registrations to be cleared appropriately.
+(WebCore::WebKitMutationObserver::deliver): Avoid modifying m_registrations while iterating over it.
+Clear registrations before checking for a lack of records to deliver.
+* dom/WebKitMutationObserver.h:
+
+LayoutTests:
+
+* fast/mutation/clear-transient-without-delivery-expected.txt: Added.
+* fast/mutation/clear-transient-without-delivery.html: Added.
+* fast/mutation/transient-gc-crash-expected.txt: Added.
+* fast/mutation/transient-gc-crash.html: Added.
+
+

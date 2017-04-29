@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r118262 | fpizlo@apple.com | 2012-05-24 01:12:59 +0200 (Do, 24. Mai 2012) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGByteCodeParser.cpp
+
+Use after free in JSC::DFG::ByteCodeParser::processPhiStack
+https://bugs.webkit.org/show_bug.cgi?id=87312
+<rdar://problem/11518848>
+
+Reviewed by Oliver Hunt.
+
+* dfg/DFGByteCodeParser.cpp:
+(JSC::DFG::ByteCodeParser::processPhiStack):
+(JSC::DFG::ByteCodeParser::parse):
+
+
+

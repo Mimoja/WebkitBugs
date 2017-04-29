@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r124843 | shinyak@chromium.org | 2012-08-07 05:43:57 +0200 (Di, 07. Aug 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/event-queue-crash-expected.txt
+   A /trunk/LayoutTests/media/event-queue-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/GenericEventQueue.cpp
+
+Crash in GenericEventQueue::timerFired since the owner of GenericEventQueue is deleted during dispatching events.
+https://bugs.webkit.org/show_bug.cgi?id=92946
+
+Reviewed by Eric Carlson.
+
+Source/WebCore:
+
+In GenericEventQueue::timerFired(), the owner of GenericEventQueue might be deleted.
+We have to protect the owner of GenericEventQueue during dispatching events.
+
+Test: media/event-queue-crash.html
+
+* dom/GenericEventQueue.cpp:
+(WebCore::GenericEventQueue::timerFired): Added a protection.
+
+LayoutTests:
+
+* media/event-queue-crash-expected.txt: Added.
+* media/event-queue-crash.html: Added.
+
+

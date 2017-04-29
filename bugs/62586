@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r88987 | inferno@chromium.org | 2011-06-16 03:09:05 +0200 (Do, 16. Jun 2011) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/body-clone-link-decl-parent-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/body-clone-link-decl-parent-crash.html
+   A /trunk/LayoutTests/fast/dom/styled-clone-inline-style-decl-parent-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/styled-clone-inline-style-decl-parent-crash.html
+   A /trunk/LayoutTests/fast/dom/styled-not-in-document-clone-inline-style-decl-parent-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/styled-not-in-document-clone-inline-style-decl-parent-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+2011-06-15  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Antti Koivisto.
+
+        Tests that accessing the parent stylesheet in nodes (not in document)
+        do not result in crash when document is cleared.
+        https://bugs.webkit.org/show_bug.cgi?id=62586
+
+        * fast/dom/body-clone-link-decl-parent-crash-expected.txt: Added.
+        * fast/dom/body-clone-link-decl-parent-crash.html: Added.
+        * fast/dom/styled-clone-inline-style-decl-parent-crash-expected.txt: Added.
+        * fast/dom/styled-clone-inline-style-decl-parent-crash.html: Added.
+        * fast/dom/styled-not-in-document-clone-inline-style-decl-parent-crash-expected.txt: Added.
+        * fast/dom/styled-not-in-document-clone-inline-style-decl-parent-crash.html: Added.
+2011-06-15  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Antti Koivisto.
+
+        Revert speculative fix in r84151. It caused some issues with
+        stylesheet lifetimes.
+        https://bugs.webkit.org/show_bug.cgi?id=62586
+
+        Tests: fast/dom/body-clone-link-decl-parent-crash.html
+               fast/dom/styled-clone-inline-style-decl-parent-crash.html
+               fast/dom/styled-not-in-document-clone-inline-style-decl-parent-crash.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::removedLastRef):
+

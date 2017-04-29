@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r71724 | inferno@chromium.org | 2010-11-10 09:24:25 +0100 (Mi, 10. Nov 2010) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/blockflow/overhanging-float-legend-crash-expected.txt
+   A /trunk/LayoutTests/fast/blockflow/overhanging-float-legend-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderBox.cpp
+   M /trunk/WebCore/rendering/RenderObject.cpp
+   M /trunk/WebCore/rendering/RenderObject.h
+
+2010-11-09  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fieldsets avoid floats. Legend elements are expected to have their parent
+        as fieldset. When this not the case, floats get added incorrectly added to the
+        legend blocks. This patch tries to prevent those floats addition.
+        https://bugs.webkit.org/show_bug.cgi?id=49214
+
+        Test: fast/blockflow/overhanging-float-legend-crash.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::avoidsFloats):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::isLegend):
+        * rendering/RenderObject.h:
+2010-11-09  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        Tests that we do not crash and avoid floats to be added in legend element
+        when it is not enclosed in a fieldset.
+        https://bugs.webkit.org/show_bug.cgi?id=49214
+
+        * fast/blockflow/overhanging-float-legend-crash-expected.txt: Added.
+        * fast/blockflow/overhanging-float-legend-crash.html: Added.
+
+

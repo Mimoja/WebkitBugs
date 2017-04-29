@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r95488 | abarth@webkit.org | 2011-09-20 00:56:22 +0200 (Di, 20. Sep 2011) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/resources/innocent-victim-with-iframe.html
+   A /trunk/LayoutTests/http/tests/security/window-named-proto-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-named-proto.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/custom/V8DOMWindowCustom.cpp
+
+Named property confusion with __proto__
+https://bugs.webkit.org/show_bug.cgi?id=68221
+
+Reviewed by Eric Seidel.
+
+Source/WebCore: 
+
+The __proto__ property is super magical because it's not a real named
+property and it has higher precedence than even interceptors.  This
+confuses this check, which is meant to detech which names will get
+handled by our interceptor.
+
+Test: http/tests/security/window-named-proto.html
+
+* bindings/v8/custom/V8DOMWindowCustom.cpp:
+(WebCore::V8DOMWindow::namedSecurityCheck):
+
+LayoutTests: 
+
+* http/tests/security/resources/innocent-victim-with-iframe.html: Added.
+* http/tests/security/window-named-proto-expected.txt: Added.
+* http/tests/security/window-named-proto.html: Added.
+
+

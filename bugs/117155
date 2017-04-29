@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r151117 | commit-queue@webkit.org | 2013-06-03 19:31:24 +0200 (Mo, 03. Jun 2013) | 34 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/float-list-changed-before-layout-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-list-changed-before-layout-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+
+ASSERTION FAILED: node->parentNode(), Heap-use-after-free in WebCore::RenderBox::exclusionShapeOutsideInfo
+https://bugs.webkit.org/show_bug.cgi?id=117155
+
+Patch by Bem Jones-Bey <bjonesbe@adobe.com> on 2013-06-03
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Ported from a Blink patch by kenrb@chromium.org:
+
+Clear floats on RenderBlocks that haven't had layout
+
+WebKit revision 150084 creates a condition where a RenderBlock
+can have a populated floating object list even when it has not
+previously had layout. Since clearing of floats is optimized
+to not search through parts of the tree that have not had layout,
+references to floating objects were not being cleared in some cases.
+
+This patch causes markAllDescendantsWithFloatsForLayout() to proceed
+in the above case, in order to clear floats for a RenderBlock that has
+not had layout.
+
+Test: fast/block/float/float-list-changed-before-layout-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::markAllDescendantsWithFloatsForLayout):
+
+LayoutTests:
+
+Test for crash. Note that this will only crash when run under a memory
+checking tool like ASAN.
+
+* fast/block/float/float-list-changed-before-layout-crash-expected.txt: Added.
+* fast/block/float/float-list-changed-before-layout-crash.html: Added.
+

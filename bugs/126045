@@ -1,0 +1,92 @@
+------------------------------------------------------------------------
+r204260 | wilander@apple.com | 2016-08-08 20:38:29 +0200 (Mo, 08. Aug 2016) | 72 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/http/tests/security/aboutBlank/security-context-alias.html
+   M /trunk/LayoutTests/http/tests/security/aboutBlank/security-context-grandchildren-alias.html
+   M /trunk/LayoutTests/http/tests/security/postMessage/origin-unaffected-by-document-domain.html
+   A /trunk/LayoutTests/http/tests/security/set-domain-remove-subdomain-for-ip-address-expected.txt
+   A /trunk/LayoutTests/http/tests/security/set-domain-remove-subdomain-for-ip-address.html
+   M /trunk/LayoutTests/http/tests/security/setDomainRelaxationForbiddenForURLScheme.html
+   M /trunk/LayoutTests/http/tests/workers/worker-document-domain-security.html
+   M /trunk/LayoutTests/http/tests/xmlhttprequest/document-domain-set.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/page/OriginAccessEntry.cpp
+   M /trunk/Source/WebCore/page/OriginAccessEntry.h
+   M /trunk/Source/WebCore/page/SecurityPolicy.cpp
+   M /trunk/Source/WebCore/page/Settings.in
+
+Don't set document.domain to an IP address fragment
+https://bugs.webkit.org/show_bug.cgi?id=126045
+<rdar://problem/27331794>
+
+Reviewed by Daniel Bates.
+
+Source/WebCore:
+
+This patch matches the following Blink one:
+https://chromium.googlesource.com/chromium/blink//b19a57fdb323d5a80d3a1cb0a6b343558c4237b0
+
+IP address octets should not be treated as subdomains when setting
+document.domain. The specs say:
+'The domain attribute's setter must run these steps: ...
+7. If host is not equal to effectiveDomain, then run these substeps:
+    1. If host or effectiveDomain is not a domain, then throw a
+    "SecurityError" DOMException.'
+https://html.spec.whatwg.org/multipage/browsers.html#relaxing-the-same-origin-restriction
+Last Updated 5 August 2016
+
+'A host is a domain, an IPv4 address, or an IPv6 address.'
+https://url.spec.whatwg.org/#concept-domain
+Last Updated 28 July 2016
+
+Test: http/tests/security/set-domain-remove-subdomain-for-ip-address.html
+
+* dom/Document.cpp:
+(WebCore::Document::setDomain):
+    Now checks whether the security origin is allowed to remove
+    subdomains. If not, it throws a security error.
+* page/OriginAccessEntry.cpp:
+(WebCore::OriginAccessEntry::OriginAccessEntry):
+    Constructor now expects an IP address setting.
+(WebCore::OriginAccessEntry::matchesOrigin):
+    Now also checks whether the host in an IP address and returns
+    false if IP addresses aren't configured to be treated as domains.
+* page/OriginAccessEntry.h:
+    Introduced new enum for IP address setting.
+    Constructor now expects an IP address setting.
+(WebCore::OriginAccessEntry::ipAddressSettings):
+    New getter.
+(WebCore::operator==):
+    Now also requires IP address settings to match.
+* page/SecurityPolicy.cpp:
+(WebCore::SecurityPolicy::addOriginAccessWhitelistEntry):
+    Changes to match OriginAccessEntry's new constructor.
+(WebCore::SecurityPolicy::removeOriginAccessWhitelistEntry):
+    Changes to match OriginAccessEntry's new constructor.
+* page/Settings.in:
+    Added a setting to allow IP address octets to be treated as
+    subdomains. This way our existing tests setting document.domain
+    still work.
+
+LayoutTests:
+
+IP address octets should not be treated as subdomains when setting document.domain.
+
+* http/tests/security/aboutBlank/security-context-alias.html:
+    Now enables the new setting treatIPAddressesAsDomains.
+* http/tests/security/aboutBlank/security-context-grandchildren-alias.html:
+    Now enables the new setting treatIPAddressesAsDomains.
+* http/tests/security/postMessage/origin-unaffected-by-document-domain.html:
+    Now enables the new setting treatIPAddressesAsDomains.
+* http/tests/security/set-domain-remove-subdomain-for-ip-address-expected.txt: Added.
+* http/tests/security/set-domain-remove-subdomain-for-ip-address.html: Added.
+* http/tests/security/setDomainRelaxationForbiddenForURLScheme.html:
+    Now enables the new setting treatIPAddressesAsDomains.
+* http/tests/workers/worker-document-domain-security.html:
+    Now enables the new setting treatIPAddressesAsDomains.
+* http/tests/xmlhttprequest/document-domain-set.html:
+    Now enables the new setting treatIPAddressesAsDomains.
+
+

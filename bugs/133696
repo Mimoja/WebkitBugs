@@ -1,0 +1,23 @@
+------------------------------------------------------------------------
+r170946 | jpfau@apple.com | 2014-07-10 03:13:45 +0200 (Do, 10. Jul 2014) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/wk2/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+
+Fix flaky loading tests
+https://bugs.webkit.org/show_bug.cgi?id=133696
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+In some cases, the Frame may be destroyed while the loader is
+initializing. Make sure we don't delete it too early.
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::init):
+
+LayoutTests:
+* platform/wk2/TestExpectations: Unskip no-longer failing tests
+

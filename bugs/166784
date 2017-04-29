@@ -1,0 +1,51 @@
+------------------------------------------------------------------------
+r210468 | cdumez@apple.com | 2017-01-07 05:02:06 +0100 (Sa, 07. Jan 2017) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/frame-window-as-callback-expected.txt
+   A /trunk/LayoutTests/fast/frames/frame-window-as-callback.html
+   A /trunk/LayoutTests/fast/frames/resources/wrong-global-object.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/JSCallbackData.cpp
+   M /trunk/Source/WebCore/bindings/js/JSCallbackData.h
+   M /trunk/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestCallbackFunction.cpp
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestCallbackFunctionWithTypedefs.cpp
+   M /trunk/Source/WebCore/bindings/scripts/test/JS/JSTestCallbackInterface.cpp
+
+Regression(r189230): DOM Callbacks may use wrong global object
+https://bugs.webkit.org/show_bug.cgi?id=166784
+
+Reviewed by Mark Lam.
+
+Source/WebCore:
+
+DOM Callbacks could end up using the wrong global object after r189230
+because we were getting the globalObject from the callback object
+instead of the one at the point the callback object was passed in by
+JavaScript. This patch fixes the issue.
+
+Test: fast/frames/frame-window-as-callback.html
+
+* bindings/js/JSCallbackData.cpp:
+(WebCore::JSCallbackData::invokeCallback):
+* bindings/js/JSCallbackData.h:
+(WebCore::JSCallbackData::globalObject):
+(WebCore::JSCallbackData::JSCallbackData):
+(WebCore::JSCallbackDataStrong::JSCallbackDataStrong):
+(WebCore::JSCallbackDataStrong::callback):
+(WebCore::JSCallbackDataStrong::invokeCallback):
+(WebCore::JSCallbackDataWeak::JSCallbackDataWeak):
+(WebCore::JSCallbackDataWeak::callback):
+(WebCore::JSCallbackDataWeak::invokeCallback):
+* bindings/scripts/CodeGeneratorJS.pm:
+(GenerateCallbackImplementationContent):
+
+LayoutTests:
+
+Add layout test coverage.
+
+* fast/frames/frame-window-as-callback-expected.txt: Added.
+* fast/frames/frame-window-as-callback.html: Added.
+* fast/frames/resources/wrong-global-object.html: Added.
+

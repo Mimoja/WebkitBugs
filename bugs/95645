@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r127472 | commit-queue@webkit.org | 2012-09-04 19:47:49 +0200 (Di, 04. Sep 2012) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/moved-content-node-crash-expected.txt
+   A /trunk/LayoutTests/fast/regions/moved-content-node-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderNamedFlowThread.cpp
+   M /trunk/Source/WebCore/rendering/RenderNamedFlowThread.h
+
+[CSS Regions] Destroying a render named flow thread without unregistering left-over content nodes triggered an assertion.
+https://bugs.webkit.org/show_bug.cgi?id=95645
+
+Patch by Andrei Bucur <abucur@adobe.com> on 2012-09-04
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+This patch cleans up the render named flow thread before destruction by unregistering left-over content nodes.
+
+Tests: fast/regions/moved-content-node-crash.html
+
+* rendering/RenderNamedFlowThread.cpp:
+(WebCore::RenderNamedFlowThread::~RenderNamedFlowThread):
+
+LayoutTests:
+
+Simple test case that triggers an ASSERT in debug mode and causes a crash in release.
+The ASSERT appears in RenderFlowThreadController::unregisterNamedFlowContentNode
+ASSERT(it != m_mapNamedFlowContentNodes.end());
+
+It happens because when a content node is added to an iframe document and then moved back, the iframe's RenderNamedFlowThread is destroyed
+without calling unregisterNamedFlowContentNode on the node. This triggers the before mentioned assertion after a lazyAttach and a detach
+in the parent document.
+
+* fast/regions/moved-content-node-crash-expected.txt: Added.
+* fast/regions/moved-content-node-crash.html: Added.
+

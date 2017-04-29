@@ -1,0 +1,52 @@
+------------------------------------------------------------------------
+r85436 | jschuh@chromium.org | 2011-05-02 00:45:10 +0200 (Mo, 02. Mai 2011) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/loader/stateobjects/pushstate-in-data-url-denied-expected.txt
+   A /trunk/LayoutTests/fast/loader/stateobjects/pushstate-in-data-url-denied.html
+   D /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-illegal-expected.txt
+   D /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-illegal.html
+   D /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-legal-expected.txt
+   D /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-legal.html
+   D /trunk/LayoutTests/fast/loader/stateobjects/resources/replacestate-base-pass.html
+   A /trunk/LayoutTests/http/tests/navigation/replacestate-base-illegal-expected.txt (von /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-illegal-expected.txt:85435)
+   A /trunk/LayoutTests/http/tests/navigation/replacestate-base-illegal.html (von /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-illegal.html:85435)
+   A /trunk/LayoutTests/http/tests/navigation/replacestate-base-legal-expected.txt (von /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-legal-expected.txt:85435)
+   A /trunk/LayoutTests/http/tests/navigation/replacestate-base-legal.html (von /trunk/LayoutTests/fast/loader/stateobjects/replacestate-base-legal.html:85435)
+   A /trunk/LayoutTests/http/tests/navigation/resources/replacestate-base-pass.html (von /trunk/LayoutTests/fast/loader/stateobjects/resources/replacestate-base-pass.html:85435)
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/History.cpp
+
+2011-05-01  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        History::stateObjectAdded should check origin via SecurityOrigin::canRequest
+        https://bugs.webkit.org/show_bug.cgi?id=59840
+
+        * fast/loader/stateobjects/pushstate-in-data-url-denied-expected.txt: Added.
+        * fast/loader/stateobjects/pushstate-in-data-url-denied.html: Added.
+        * fast/loader/stateobjects/replacestate-base-illegal-expected.txt: Removed.
+        * fast/loader/stateobjects/replacestate-base-illegal.html: Removed.
+        * fast/loader/stateobjects/replacestate-base-legal-expected.txt: Removed.
+        * fast/loader/stateobjects/replacestate-base-legal.html: Removed.
+        * fast/loader/stateobjects/resources/replacestate-base-pass.html: Removed.
+        * http/tests/navigation/replacestate-base-illegal-expected.txt: Copied from LayoutTests/fast/loader/stateobjects/replacestate-base-illegal-expected.txt.
+        * http/tests/navigation/replacestate-base-illegal.html: Copied from LayoutTests/fast/loader/stateobjects/replacestate-base-illegal.html.
+        * http/tests/navigation/replacestate-base-legal-expected.txt: Copied from LayoutTests/fast/loader/stateobjects/replacestate-base-legal-expected.txt.
+        * http/tests/navigation/replacestate-base-legal.html: Copied from LayoutTests/fast/loader/stateobjects/replacestate-base-legal.html.
+        * http/tests/navigation/resources/replacestate-base-pass.html: Copied from LayoutTests/fast/loader/stateobjects/resources/replacestate-base-pass.html.
+2011-05-01  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        History::stateObjectAdded should check origin via SecurityOrigin::canRequest
+        https://bugs.webkit.org/show_bug.cgi?id=59840
+
+        Tests: fast/loader/stateobjects/pushstate-in-data-url-denied.html
+               http/tests/navigation/replacestate-base-illegal.html
+               http/tests/navigation/replacestate-base-legal.html
+
+        * page/History.cpp:
+        (WebCore::History::stateObjectAdded):
+

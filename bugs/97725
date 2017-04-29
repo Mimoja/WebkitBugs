@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r129938 | yoli@rim.com | 2012-09-28 22:13:01 +0200 (Fr, 28. Sep 2012) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/international/harfbuzz-buffer-overrun-expected.txt
+   A /trunk/LayoutTests/fast/text/international/harfbuzz-buffer-overrun.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/harfbuzz/ComplexTextControllerHarfBuzz.cpp
+
+Source/WebCore: [HarfBuzz] harfbuzz expects log_clusters to have same length as other buffers.
+https://bugs.webkit.org/show_bug.cgi?id=97725
+
+Reviewed by Tony Chang.
+
+log_clusters should have same length as other buffers, which is number of glyphs.
+
+Test: fast/text/international/harfbuzz-buffer-overrun.html
+
+* platform/graphics/harfbuzz/ComplexTextControllerHarfBuzz.cpp:
+(WebCore::ComplexTextController::ComplexTextController):
+(WebCore::ComplexTextController::~ComplexTextController):
+(WebCore::ComplexTextController::deleteGlyphArrays):
+(WebCore::ComplexTextController::createGlyphArrays):
+
+LayoutTests: [HarfBuzz] harfbuzz expects log_clusters to have same length as other buffers
+https://bugs.webkit.org/show_bug.cgi?id=97725
+
+Reviewed by Tony Chang.
+
+Add a test case. A buffer overrun doesn't always cause immediate crash unless it runs with some
+memory verification techs like WTF_FASTMALLOC_VALIDATION.
+
+* fast/text/international/harfbuzz-buffer-overrun-expected.txt: Added.
+* fast/text/international/harfbuzz-buffer-overrun.html: Added.
+
+

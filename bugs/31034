@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r50466 | darin@apple.com | 2009-11-03 19:23:53 +0100 (Di, 03. Nov 2009) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/run-in-crash-expected.txt
+   A /trunk/LayoutTests/fast/css/run-in-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderBlock.cpp
+   M /trunk/WebCore/rendering/RenderInline.cpp
+
+Crash due to double-destroy related to CSS run-in property
+https://bugs.webkit.org/show_bug.cgi?id=31034
+rdar://problem/7328458
+
+Patch by Darin Adler <darin@apple.com> on 2009-11-02
+Reviewed by Dan Bernstein.
+
+WebCore: 
+
+Test: fast/css/run-in-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::destroy): Reorder destruction so the
+continuation is destroyed after anonymous children. See comment
+in the code for more details of why this is right.
+* rendering/RenderInline.cpp:
+(WebCore::RenderInline::destroy): Ditto.
+
+LayoutTests: 
+
+* fast/css/run-in-crash-expected.txt: Added.
+* fast/css/run-in-crash.html: Added.
+
+
+

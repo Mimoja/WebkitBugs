@@ -1,0 +1,39 @@
+------------------------------------------------------------------------
+r74574 | jschuh@chromium.org | 2010-12-23 21:38:09 +0100 (Do, 23. Dez 2010) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/css/cursor-image-replace-expected.txt
+   A /trunk/LayoutTests/svg/css/cursor-image-replace.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/WebCore.xcodeproj/project.pbxproj
+   M /trunk/WebCore/css/CSSCursorImageValue.cpp
+   M /trunk/WebCore/svg/SVGElement.cpp
+   M /trunk/WebCore/svg/SVGElement.h
+
+2010-12-23  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        CSSCursorImageValue destructor should clear referenced element.
+        https://bugs.webkit.org/show_bug.cgi?id=51417
+
+        Calls correct method to clear image and renames method to avoid future confusion.
+
+        Test: svg/css/cursor-image-replace.svg
+
+        * css/CSSCursorImageValue.cpp:
+        (WebCore::CSSCursorImageValue::~CSSCursorImageValue):
+        * svg/SVGElement.cpp:
+        (WebCore::SVGElement::cursorImageValueRemoved):
+        * svg/SVGElement.h:
+2010-12-23  Justin Schuh  <jschuh@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        CSSCursorImageValue destructor should clear referenced element.
+        https://bugs.webkit.org/show_bug.cgi?id=51417
+
+        * svg/css/cursor-image-replace-expected.txt: Added.
+        * svg/css/cursor-image-replace.svg: Added.
+
+

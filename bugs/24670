@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r41810 | ap@webkit.org | 2009-03-18 19:02:51 +0100 (Mi, 18. Mär 2009) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-2-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-2.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-post-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-post-sync-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-post-sync.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-post.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-sync-double-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-sync-double.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-sync-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-sync.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-post-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-post-sync-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-post-sync.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-post.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-sync-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events-sync.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/simple-cross-origin-denied-events.html
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24670
+        Add tests for XHR progress events during cross-origin requests.
+
+        * http/tests/xmlhttprequest/redirect-cross-origin-2-expected.txt: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-2.html: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-expected.txt: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-post-expected.txt: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-post-sync-expected.txt: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-post-sync.html: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-post.html: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-sync-double-expected.txt: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-sync-double.html: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-sync-expected.txt: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin-sync.html: Added.
+        * http/tests/xmlhttprequest/redirect-cross-origin.html: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-expected.txt: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-post-expected.txt: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-post-sync-expected.txt: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-post-sync.html: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-post.html: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-sync-expected.txt: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events-sync.html: Added.
+        * http/tests/xmlhttprequest/simple-cross-origin-denied-events.html: Added.
+
+
+

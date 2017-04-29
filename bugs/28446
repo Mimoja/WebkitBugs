@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+r47494 | ap@apple.com | 2009-08-19 08:08:43 +0200 (Mi, 19. Aug 2009) | 14 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/access-control-preflight-headers-async-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/access-control-preflight-headers-async.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/access-control-preflight-headers-sync-expected.txt
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/access-control-preflight-headers-sync.html
+   A /trunk/LayoutTests/http/tests/xmlhttprequest/resources/no-custom-header.php
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/loader/DocumentThreadableLoader.cpp
+
+        Reviewed by Maciej Stachowiak.
+
+        https://bugs.webkit.org/show_bug.cgi?id=28446
+        Custom request headers shouldn't be sent with cross-origin preflight request
+
+        Tests: http/tests/xmlhttprequest/access-control-preflight-headers-async.html
+               http/tests/xmlhttprequest/access-control-preflight-headers-sync.html
+
+        * loader/DocumentThreadableLoader.cpp:
+        (WebCore::DocumentThreadableLoader::makeCrossOriginAccessRequestWithPreflight):
+        Don't copy headers to OPTIONS request. The spec is vague about this, but the intention was
+        that they shouldn't be sent, and Firefox doesn't send them.
+
+
+

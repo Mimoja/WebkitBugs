@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r79734 | inferno@chromium.org | 2011-02-26 00:18:18 +0100 (Sa, 26. Feb 2011) | 38 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/table-continuation-outline-paint-crash.html
+   A /trunk/LayoutTests/platform/mac/fast/table/table-continuation-outline-paint-crash-expected.checksum
+   A /trunk/LayoutTests/platform/mac/fast/table/table-continuation-outline-paint-crash-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/table/table-continuation-outline-paint-crash-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineFlowBox.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+
+2011-02-25  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Don't add inline continuation outline to the containing block's
+        continuationOutlineTable list if it is not enclosed by an anonymous block.
+        https://bugs.webkit.org/show_bug.cgi?id=54690
+
+        We currently don't reconnect inline continuations after a child removal.
+        As a result, those merged inlines do not get seperated and hence not get enclosed
+        by anonymous blocks. In this case, it is better to bail out and paint it ourself.
+
+        Test: fast/table/table-continuation-outline-paint-crash.html
+
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::paint): 
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::paintsContinuationOutline): helper function to tell
+        if this containing block has the continuation flow in its continuations list.
+        * rendering/RenderBlock.h: helper function definition.
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::destroy): debug only code that asserts if we leave
+        behind a continuation in the containing block's continuation list when it is
+        getting destroyed.
+2011-02-25  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Ensure that we do not add the inline continuation flow to the table's continuation
+        table map for painting. The layout test should not crash on assert and should show
+        a solid outline around the inline child.
+        https://bugs.webkit.org/show_bug.cgi?id=54690        
+
+        * fast/table/table-continuation-outline-paint-crash.html: Added.
+        * platform/mac/fast/table/table-continuation-outline-paint-crash-expected.checksum: Added.
+        * platform/mac/fast/table/table-continuation-outline-paint-crash-expected.png: Added.
+        * platform/mac/fast/table/table-continuation-outline-paint-crash-expected.txt: Added.
+
+

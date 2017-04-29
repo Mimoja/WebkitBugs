@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r110926 | timothy_horton@apple.com | 2012-03-16 02:39:14 +0100 (Fr, 16. Mär 2012) | 8 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/platform/mac/Skipped
+
+canvas/philip/tests/2d.line.cap.round.html fails on Mac Lion WK1
+https://bugs.webkit.org/show_bug.cgi?id=81289
+<rdar://problem/11059777>
+
+Unreviewed skip of two more similarly flaky tests:
+    canvas/philip/tests/2d.shadow.canvas.transparent.2.html
+    canvas/philip/tests/2d.shadow.image.transparent.2.html
+
+

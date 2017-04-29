@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r115763 | simonjam@chromium.org | 2012-05-02 02:04:01 +0200 (Mi, 02. Mai 2012) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/html5lib/resources/webkit02.dat
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLElementStack.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+
+Ensure HTMLElementStack fails gracefully if it has a non-Element.
+https://bugs.webkit.org/show_bug.cgi?id=85167
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: Added to html5lib/resources/webkit02.dat
+
+* html/parser/HTMLElementStack.cpp:
+(WebCore::HTMLElementStack::oneBelowTop):
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::processEndTag):
+
+LayoutTests:
+
+* html5lib/resources/webkit02.dat:
+
+

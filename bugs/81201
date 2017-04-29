@@ -1,0 +1,85 @@
+------------------------------------------------------------------------
+r111500 | shinyak@chromium.org | 2012-03-21 06:12:51 +0100 (Mi, 21. Mär 2012) | 59 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-media-element-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-media-element.html
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-meter-element-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-meter-element.html
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-progress-element-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-progress-element.html
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-select-element-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/content-element-in-select-element.html
+   M /trunk/LayoutTests/platform/chromium/test_expectations.txt
+   M /trunk/LayoutTests/platform/efl/Skipped
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/LayoutTests/platform/wincairo/Skipped
+   M /trunk/LayoutTests/platform/wk2/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/NodeRenderingContext.h
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+   M /trunk/Source/WebCore/html/HTMLMeterElement.cpp
+   M /trunk/Source/WebCore/html/HTMLProgressElement.cpp
+   M /trunk/Source/WebCore/html/HTMLSelectElement.cpp
+
+[Crash] RenderMenuList::addChild() in Shadow DOM.
+https://bugs.webkit.org/show_bug.cgi?id=81201
+
+Reviewed by Dimitri Glazkov.
+
+Source/WebCore:
+
+<audio>, <video>, <meter>, <progress>, and <select> are implemented using
+Shadow DOM having HTMLContentElement. Their renderer children basically should not
+create a renderer unless they are on the upper shadow encapsulation boundary,
+which means they are the direct children of the shadow root.
+
+However, current implementation allows their renderer children to create a renderer
+even if they are on a lower shadow encapsulation boundary, which means
+they are distributed elements of HTMLContentElement.
+
+This patch makes there renderer children not to create a renderer if they are on a lower shadow
+encapsulation boudary.
+
+Tests: fast/dom/shadow/content-element-in-media-element.html
+       fast/dom/shadow/content-element-in-meter-element.html
+       fast/dom/shadow/content-element-in-progress-element.html
+       fast/dom/shadow/content-element-in-select-element.html
+
+* dom/NodeRenderingContext.h:
+(NodeRenderingContext):
+(WebCore::NodeRenderingContext::isOnUpperEncapsulationBoundary):
+(WebCore):
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::childShouldCreateRenderer):
+* html/HTMLMeterElement.cpp:
+(WebCore::HTMLMeterElement::childShouldCreateRenderer):
+* html/HTMLProgressElement.cpp:
+(WebCore::HTMLProgressElement::childShouldCreateRenderer):
+* html/HTMLSelectElement.cpp:
+(WebCore::HTMLSelectElement::childShouldCreateRenderer):
+
+LayoutTests:
+
+Skipped these tests in non-chromium port since SHADOW_DOM flag is not enabled.
+
+Marked 2 new tests FAIL. Their behavior is affected by this patch, but this patch
+won't fix them completely. They have another bugs. See Bug 81310 and Bug 81311.
+
+* fast/dom/shadow/content-element-in-media-element-expected.txt: Added.
+* fast/dom/shadow/content-element-in-media-element.html: Added.
+* fast/dom/shadow/content-element-in-meter-element-expected.txt: Added.
+* fast/dom/shadow/content-element-in-meter-element.html: Added.
+* fast/dom/shadow/content-element-in-progress-element-expected.txt: Added.
+* fast/dom/shadow/content-element-in-progress-element.html: Added.
+* fast/dom/shadow/content-element-in-select-element-expected.txt: Added.
+* fast/dom/shadow/content-element-in-select-element.html: Added.
+* platform/chromium/test_expectations.txt:
+* platform/efl/Skipped:
+* platform/mac/Skipped:
+* platform/qt/Skipped:
+* platform/win/Skipped:
+* platform/wincairo/Skipped:
+* platform/wk2/Skipped:
+

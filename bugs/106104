@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r138812 | commit-queue@webkit.org | 2013-01-04 19:32:14 +0100 (Fr, 04. Jan 2013) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/FontCache.cpp
+
+Early out from FontCache::releaseFontData if cached font data not found.
+https://bugs.webkit.org/show_bug.cgi?id=106104
+
+Patch by John Mellor <johnme@chromium.org> on 2013-01-04
+Reviewed by Abhishek Arya.
+
+No tests, as no change in behavior.
+
+* platform/graphics/FontCache.cpp:
+(WebCore::FontCache::releaseFontData):
+
+    Early out in release builds if cached font data not found.
+

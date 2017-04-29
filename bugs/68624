@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r97180 | inferno@chromium.org | 2011-10-11 23:05:20 +0200 (Di, 11. Okt 2011) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/table/table-row-before-after-content-around-table-cell-expected.png
+   A /trunk/LayoutTests/fast/table/table-row-before-after-content-around-table-cell-expected.txt
+   A /trunk/LayoutTests/fast/table/table-row-before-after-content-around-table-cell.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+
+Source/WebCore: Generalize r95461 change to include table-cell and 
+allow splitting between :before, :after content.
+https://bugs.webkit.org/show_bug.cgi?id=69854
+
+Reviewed by Eric Seidel.
+
+Test: fast/table/table-row-before-after-content-around-table-cell.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::addChild):
+
+LayoutTests: Style for updated due to inability to locate
+:before content in presence of listmarkers and runins.
+https://bugs.webkit.org/show_bug.cgi?id=68624
+
+Reviewed by Eric Seidel.
+
+* fast/lists/inline-before-content-after-list-marker-expected.png: Added.
+* fast/lists/inline-before-content-after-list-marker-expected.txt: Added.
+* fast/lists/inline-before-content-after-list-marker.html: Added.
+* fast/runin/runin-between-list-marker-and-before-content-expected.png: Added.
+* fast/runin/runin-between-list-marker-and-before-content-expected.txt: Added.
+* fast/runin/runin-between-list-marker-and-before-content.html: Added.
+* fast/runin/runin-into-div-with-float-child-expected.png: Added.
+* fast/runin/runin-into-div-with-float-child-expected.txt: Added.
+* fast/runin/runin-into-div-with-float-child.html: Added.
+* fast/runin/runin-not-go-into-float-expected.png: Added.
+* fast/runin/runin-not-go-into-float-expected.txt: Added.
+* fast/runin/runin-not-go-into-float.html: Added.
+
+

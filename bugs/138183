@@ -1,0 +1,51 @@
+------------------------------------------------------------------------
+r175348 | antti@apple.com | 2014-10-29 23:01:21 +0100 (Mi, 29. Okt 2014) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/CMakeLists.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/WebCore.exp.in
+   M /trunk/Source/WebCore/WebCore.vcxproj/WebCore.vcxproj
+   M /trunk/Source/WebCore/WebCore.xcodeproj/project.pbxproj
+   A /trunk/Source/WebCore/loader/cache/CacheValidation.cpp
+   A /trunk/Source/WebCore/loader/cache/CacheValidation.h
+   M /trunk/Source/WebCore/loader/cache/CachedResource.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResource.h
+
+Notify Settings object when its Page object goes away.
+https://bugs.webkit.org/show_bug.cgi?id=138183
+rdar://problem/18786900
+
+Patch by Alexey Proskuryakov <ap@apple.com> on 2014-10-29
+Reviewed by Andreas Kling.
+
+I could not make a test for this issue.
+
+* page/Page.cpp:
+(WebCore::Page::~Page):
+* page/Settings.cpp:
+(WebCore::setImageLoadingSettings):
+(WebCore::Settings::Settings):
+(WebCore::Settings::setTextAutosizingEnabled):
+(WebCore::Settings::setTextAutosizingWindowSizeOverride):
+(WebCore::Settings::setTextAutosizingFontScaleFactor):
+(WebCore::Settings::setMediaTypeOverride):
+(WebCore::Settings::setScriptEnabled):
+(WebCore::Settings::setUserStyleSheetLocation):
+(WebCore::Settings::setMinDOMTimerInterval):
+(WebCore::Settings::minDOMTimerInterval):
+(WebCore::Settings::domTimerAlignmentInterval):
+(WebCore::Settings::setUsesPageCache):
+(WebCore::Settings::setScreenFontSubstitutionEnabled):
+(WebCore::Settings::setFontRenderingMode):
+(WebCore::Settings::setDNSPrefetchingEnabled):
+(WebCore::Settings::setStorageBlockingPolicy):
+(WebCore::Settings::setBackgroundShouldExtendBeyondPage):
+(WebCore::Settings::setScrollingPerformanceLoggingEnabled):
+(WebCore::Settings::setHiddenPageDOMTimerThrottlingEnabled):
+(WebCore::Settings::setHiddenPageCSSAnimationSuspensionEnabled):
+(WebCore::Settings::setFontFallbackPrefersPictographs):
+* page/Settings.h:
+(WebCore::Settings::pageDestroyed):
+
+
+

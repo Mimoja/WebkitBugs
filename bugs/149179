@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r195837 | bfulgham@apple.com | 2016-01-29 22:00:24 +0100 (Fr, 29. Jan 2016) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/canvas/webgl/webgl-drawarrays-crash-expected.txt
+   A /trunk/LayoutTests/fast/canvas/webgl/webgl-drawarrays-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/canvas/WebGLRenderingContextBase.cpp
+
+Source/WebCore:
+[WebGL] Check vertex array bounds before permitting a glDrawArrays to execute
+https://bugs.webkit.org/show_bug.cgi?id=153643
+<rdar://problem/23424456>
+
+Reviewed by Dean Jackson.
+
+Tested by fast/canvas/webgl/webgl-drawarrays-crash.html.
+
+* html/canvas/WebGLRenderingContextBase.cpp:
+(WebCore::WebGLRenderingContextBase::validateDrawArrays): Make sure that we have at
+least one buffer bound to a program if a drawArray call with a non-zero range of
+requested data is being made.
+(WebCore::WebGLRenderingContextBase::validateDrawElements): Drive-by formatting fix.
+
+LayoutTests:
+Test to check for stack recursion when indexed propertyNames defined using Object.defineProperty are deleted.
+https://bugs.webkit.org/show_bug.cgi?id=149179
+<rdar://problem/22708019>.
+
+Patch by Pranjal Jumde <pjumde@apple.com> on 2015-12-22
+Reviewed by Dean Jackson.
+
+* storage/domstorage/localstorage/delete-defineproperty-removal-expected.txt: Added.
+* storage/domstorage/localstorage/delete-defineproperty-removal.html: Added.
+
+

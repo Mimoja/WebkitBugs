@@ -1,0 +1,76 @@
+------------------------------------------------------------------------
+r74954 | inferno@chromium.org | 2011-01-04 03:27:50 +0100 (Di, 04. Jan 2011) | 48 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/table-before-after-child-add.html
+   D /trunk/LayoutTests/fast/css-generated-content/table-before-child-add.html
+   A /trunk/LayoutTests/fast/css-generated-content/table-cell-before-after-child-add.html
+   A /trunk/LayoutTests/fast/css-generated-content/table-row-before-after-child-add.html
+   A /trunk/LayoutTests/fast/css-generated-content/table-table-before-after-child-add.html
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-before-after-child-add-expected.checksum
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-before-after-child-add-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-before-after-child-add-expected.txt
+   D /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-before-child-add-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-cell-before-after-child-add-expected.checksum
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-cell-before-after-child-add-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-cell-before-after-child-add-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.checksum
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.checksum
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.png
+   A /trunk/LayoutTests/platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.txt
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/rendering/RenderTable.cpp
+   M /trunk/WebCore/rendering/RenderTableRow.cpp
+   M /trunk/WebCore/rendering/RenderTableSection.cpp
+
+2011-01-01  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Fixes before child calculation when adding anonymous childs to table parts.
+        https://bugs.webkit.org/show_bug.cgi?id=50932
+
+        Fix in r74364 was incomplete. When before child is equal to the table part(to
+        which the new child is getting added), it confuses the table part to add it
+        incorrectly as an after child. The patch fixes by passing the before child as
+        the table part's first child.
+
+        Tests: fast/css-generated-content/table-before-after-child-add.html
+               fast/css-generated-content/table-cell-before-after-child-add.html
+               fast/css-generated-content/table-row-before-after-child-add.html
+               fast/css-generated-content/table-row-before-after-child-add.html
+
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::addChild):
+        * rendering/RenderTableRow.cpp:
+        (WebCore::RenderTableRow::addChild):
+        * rendering/RenderTableSection.cpp:
+        (WebCore::RenderTableSection::addChild):
+2010-12-20  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Tests that "before" and "after" childs are added to table correctly.
+        https://bugs.webkit.org/show_bug.cgi?id=50932
+
+        * fast/css-generated-content/table-before-after-child-add.html: Added.
+        * fast/css-generated-content/table-before-child-add.html: Removed.
+        * fast/css-generated-content/table-cell-before-after-child-add.html: Added.
+        * fast/css-generated-content/table-row-before-after-child-add.html: Added.
+        * platform/mac/fast/css-generated-content/table-before-after-child-add-expected.checksum: Added.
+        * platform/mac/fast/css-generated-content/table-before-after-child-add-expected.png: Added.
+        * platform/mac/fast/css-generated-content/table-before-after-child-add-expected.txt: Added.
+        * platform/mac/fast/css-generated-content/table-before-child-add-expected.txt: Removed.
+        * platform/mac/fast/css-generated-content/table-cell-before-after-child-add-expected.checksum: Added.
+        * platform/mac/fast/css-generated-content/table-cell-before-after-child-add-expected.png: Added.
+        * platform/mac/fast/css-generated-content/table-cell-before-after-child-add-expected.txt: Added.
+        * platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.checksum: Added.
+        * platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.png: Added.
+        * platform/mac/fast/css-generated-content/table-row-before-after-child-add-expected.txt: Added.
+        * platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.checksum: Added.
+        * platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.png: Added.
+        * platform/mac/fast/css-generated-content/table-table-before-after-child-add-expected.txt: Added.
+
+

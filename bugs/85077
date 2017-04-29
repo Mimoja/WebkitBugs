@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r115454 | antti@apple.com | 2012-04-27 20:26:25 +0200 (Fr, 27. Apr 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.cpp
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.h
+
+Memory cache pruning should be protected against reentering.
+https://bugs.webkit.org/show_bug.cgi?id=85077
+
+Reviewed by Alexey Proskuryakov.
+
+MemoryCache::pruneDeadResourcesToSize() has some ad-hock protection against reentering.
+This patch adds more complete protection.
+
+* loader/cache/MemoryCache.cpp:
+(WebCore::MemoryCache::MemoryCache):
+(WebCore::MemoryCache::pruneLiveResourcesToSize):
+        
+    Protect live resource pruning too.
+
+(WebCore::MemoryCache::pruneDeadResourcesToSize):
+        
+    Remove the existing weak reentrancy handling in favor of full proctection.
+
+* loader/cache/MemoryCache.h:
+(MemoryCache):
+
+
+

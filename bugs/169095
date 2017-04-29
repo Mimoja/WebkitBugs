@@ -1,0 +1,52 @@
+------------------------------------------------------------------------
+r213311 | cdumez@apple.com | 2017-03-03 00:43:09 +0100 (Fr, 03. Mär 2017) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/insert-frame-unload-handler-expected.txt
+   A /trunk/LayoutTests/fast/frames/insert-frame-unload-handler.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNodeAlgorithms.cpp
+   M /trunk/Source/WebCore/html/HTMLFrameOwnerElement.h
+   M /trunk/Source/WebCore/loader/FrameLoader.cpp
+
+We should prevent load of subframes inserted during FrameTree deconstruction
+https://bugs.webkit.org/show_bug.cgi?id=169095
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+When deconstructing the FrameTree, we fire the unload event in each subframe.
+Such unload event handler may insert a new frame, we would previously load
+such new frame which was unsafe as we would end up with an attached subframe
+on a detached tree. To address the issue, we prevent new subframes from loading
+while deconstructing the FrameTree and firing the unload events. This new
+behavior is consistent with Chrome and should therefore be safe from a
+compatibility standpoint.
+
+Test: fast/frames/insert-frame-unload-handler.html
+
+* dom/ContainerNodeAlgorithms.cpp:
+(WebCore::disconnectSubframes):
+Update SubframeLoadingDisabler call site now that the constructor takes in
+a pointer instead of a reference.
+
+* html/HTMLFrameOwnerElement.h:
+(WebCore::SubframeLoadingDisabler::SubframeLoadingDisabler):
+(WebCore::SubframeLoadingDisabler::~SubframeLoadingDisabler):
+Update SubframeLoadingDisabler constructor to take in a pointer instead
+of a reference, for convenience.
+
+* loader/FrameLoader.cpp:
+(WebCore::FrameLoader::detachChildren):
+Prevent loads in subframes while detaching the subframes. It would be unsafe
+as we copy the list of frames before iterating to fire the unload events.
+Therefore, newly inserted frames would not get unloaded.
+
+LayoutTests:
+
+Add layout test coverage. Our behavior on this test is consistent with Chrome.
+
+* fast/frames/insert-frame-unload-handler-expected.txt: Added.
+* fast/frames/insert-frame-unload-handler.html: Added.
+

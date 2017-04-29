@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r201439 | bfulgham@apple.com | 2016-05-27 01:40:37 +0200 (Fr, 27. Mai 2016) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/circular-dom-tree-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/circular-dom-tree-crash.html
+
+DOM mutation methods fail to re-check validity of node insertion after removing nodes from old parent
+https://bugs.webkit.org/show_bug.cgi?id=81991
+<rdar://problem/11120506>
+
+Reviewed by Chris Dumez.
+
+Add a test case for an old DOM mutation bug that was fixed long ago.
+
+* fast/dom/circular-dom-tree-crash-expected.txt: Added.
+* fast/dom/circular-dom-tree-crash.html: Added.
+
+

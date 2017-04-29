@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r81399 | jianli@chromium.org | 2011-03-18 00:06:55 +0100 (Fr, 18. Mär 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/fileapi
+   A /trunk/LayoutTests/http/tests/fileapi/create-blob-url-from-data-url-expected.txt
+   A /trunk/LayoutTests/http/tests/fileapi/create-blob-url-from-data-url.html
+   M /trunk/LayoutTests/platform/mac-wk2/Skipped
+   M /trunk/LayoutTests/platform/qt/Skipped
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ScriptExecutionContext.cpp
+   M /trunk/Source/WebCore/fileapi/BlobURL.cpp
+   M /trunk/Source/WebCore/fileapi/EntryBase.cpp
+   M /trunk/Source/WebCore/fileapi/FileReaderLoader.cpp
+
+Blob URL should not be allow to get created from the code running from data URI
+https://bugs.webkit.org/show_bug.cgi?id=56600
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+Test: http/tests/fileapi/create-blob-url-from-data-url.html
+
+* dom/ScriptExecutionContext.cpp:
+(WebCore::ScriptExecutionContext::createPublicBlobURL):
+* fileapi/BlobURL.cpp:
+(WebCore::BlobURL::createBlobURL):
+* fileapi/EntryBase.cpp:
+(WebCore::EntryBase::toURI):
+* fileapi/FileReaderLoader.cpp:
+(WebCore::FileReaderLoader::start):
+
+LayoutTests:
+
+* http/tests/fileapi/create-blob-url-from-data-url-expected.txt: Added.
+* http/tests/fileapi/create-blob-url-from-data-url.html: Added.
+* platform/mac-wk2/Skipped:
+* platform/qt/Skipped:
+* platform/win/Skipped:
+

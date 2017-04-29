@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r191921 | cdumez@apple.com | 2015-11-03 01:14:36 +0100 (Di, 03. Nov 2015) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/DataURLDecoder.cpp
+
+Regression(r191673): Crash in RunLoopTimer::schedule()
+https://bugs.webkit.org/show_bug.cgi?id=150816
+<rdar://problem/23335285>
+
+Reviewed by Anders Carlsson.
+
+The crash was happening when the RunLoopTimer would fire during the
+call to RunLoopTimer::schedule(), which can happen because we are
+calling schedule() from a background thread. In such case, the
+timerFired() callback execution would cause |this| to get destroyed.
+
+To avoid this issue, DecodingResultDispatcher is now ref-counted. The
+object is ref'd while calling startTimer() so that the object cannot go
+away during the execution of this method. Also, we explicitly ref the
+object when starting the timer to keep the object alive until the
+RunLoopTimer has fired, at which point we explicitely de-ref.
+
+This should handle correctly the cases where the RunLoopTimer fires
+during AND after the execution of startTimer().
+
+* platform/network/DataURLDecoder.cpp:
+(WebCore::DataURLDecoder::DecodingResultDispatcher::dispatch):
+(WebCore::DataURLDecoder::DecodingResultDispatcher::startTimer):
+(WebCore::DataURLDecoder::DecodingResultDispatcher::timerFired):
+

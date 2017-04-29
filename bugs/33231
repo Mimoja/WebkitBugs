@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r52833 | pkasting@chromium.org | 2010-01-06 00:22:47 +0100 (Mi, 06. Jan 2010) | 15 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/platform/image-decoders/gif/GIFImageDecoder.cpp
+   M /trunk/WebCore/platform/image-decoders/gif/GIFImageDecoder.h
+   M /trunk/WebCore/platform/image-decoders/gif/GIFImageReader.cpp
+   M /trunk/WebCore/platform/image-decoders/gif/GIFImageReader.h
+
+Public GIF decoder should stop decoding when allocation fails
+https://bugs.webkit.org/show_bug.cgi?id=33231
+
+Reviewed by Adam Barth.
+
+* platform/image-decoders/gif/GIFImageDecoder.cpp:
+(WebCore::GIFImageDecoder::haveDecodedRow):
+* platform/image-decoders/gif/GIFImageDecoder.h:
+* platform/image-decoders/gif/GIFImageReader.cpp:
+(GIFImageReader::output_row):
+(GIFImageReader::do_lzw):
+(GIFImageReader::read):
+* platform/image-decoders/gif/GIFImageReader.h:
+
+
+

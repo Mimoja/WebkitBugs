@@ -1,0 +1,49 @@
+------------------------------------------------------------------------
+r149185 | commit-queue@webkit.org | 2013-04-26 17:13:02 +0200 (Fr, 26. Apr 2013) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/crash-remove-iframe-during-object-beforeload-expected.txt
+   A /trunk/LayoutTests/fast/frames/crash-remove-iframe-during-object-beforeload.html
+   A /trunk/LayoutTests/fast/frames/resources/remove-this-during-object-beforeload.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+   M /trunk/Source/WebCore/page/FrameView.cpp
+   M /trunk/Source/WebCore/rendering/RenderArena.h
+
+use-after-free removing a frame from its parent in a beforeload event of an OBJECT element
+https://bugs.webkit.org/show_bug.cgi?id=113964
+
+Source/WebCore:
+
+Object elements have the tendecny to modify or even fully remove
+the containing Document inside beforeload callback. While Document is removed,
+RenderArena gets destroyed. Retained RenderWidgets fails to function with NULL arena.
+
+Protect RendereArena from getting wiped out, when Document is removed
+during FrameView::updateWidget().
+
+Patch by Zalan Bujtas <zalan@apple.com> on 2013-04-26
+Reviewed by Antti Koivisto.
+
+Test: fast/frames/crash-remove-iframe-during-object-beforeload.html
+
+* dom/Document.cpp:
+(WebCore::Document::attach):
+* dom/Document.h:
+(Document):
+* page/FrameView.cpp:
+(WebCore::FrameView::updateWidgets):
+* rendering/RenderArena.h:
+(RenderArena):
+(WebCore::RenderArena::create):
+
+LayoutTests:
+
+Patch by Zalan Bujtas <zalan@apple.com> on 2013-04-26
+Reviewed by Antti Koivisto.
+
+* fast/frames/crash-remove-iframe-during-object-beforeload-expected.txt: Added.
+* fast/frames/crash-remove-iframe-during-object-beforeload.html: Added.
+* fast/frames/resources/remove-this-during-object-beforeload.html: Added.
+

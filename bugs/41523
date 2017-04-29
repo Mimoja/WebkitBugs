@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r62873 | ojan@chromium.org | 2010-07-09 02:23:35 +0200 (Fr, 09. Jul 2010) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/crash-on-clear-selection-expected.txt
+   A /trunk/LayoutTests/editing/selection/crash-on-clear-selection.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/editing/SelectionController.cpp
+
+2010-07-02  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Crash in RenderObject::containingBlock when clearing selection in a display:none node.
+        https://bugs.webkit.org/show_bug.cgi?id=41523
+
+        * editing/selection/crash-on-clear-selection-expected.txt: Added.
+        * editing/selection/crash-on-clear-selection.html: Added.
+2010-07-02  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Crash in RenderObject::containingBlock when clearing selection in a display:none node.
+        https://bugs.webkit.org/show_bug.cgi?id=41523
+
+        updateStyleIfNeeded before clearing the selection in the RenderView. Otherwise,
+        m_selectionStart and m_selectionEnd in RenderView point to garbage object.
+        This fixes the crash because updateStyleIfNeeded clears the selection before
+        clobbering nodes that contain the selection.
+
+        Test: editing/selection/crash-on-clear-selection.html
+
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::updateAppearance):
+

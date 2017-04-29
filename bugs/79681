@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r109245 | commit-queue@webkit.org | 2012-02-29 21:40:10 +0100 (Mi, 29. Feb 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/lists/remove-listmarker-from-anonblock-with-continuation-crash-expected.txt
+   A /trunk/LayoutTests/fast/lists/remove-listmarker-from-anonblock-with-continuation-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderListItem.cpp
+
+Crash when changing list marker locations
+https://bugs.webkit.org/show_bug.cgi?id=79681
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-02-29
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+This fixes a regression crash from r108548.
+
+There are some conditions where removing the anonymous block
+parent at that point can cause problems. One is when there is
+a continuation from it, and another when it is a sibling of
+lineBoxParent and it causes lineBoxParent to be deleted
+incidentally. This patch delays the destruction until after
+lineBoxParent has been used and makes an exception for
+continuations.
+
+* rendering/RenderListItem.cpp:
+(WebCore::RenderListItem::updateMarkerLocation)
+
+LayoutTests:
+
+This test exercises the crashing condition for bug 79681 where an
+anonymous block was being removed from the render tree inappropriately.
+
+* fast/lists/remove-listmarker-from-anonblock-with-continuation-crash-expected.txt: Added
+* fast/lists/remove-listmarker-from-anonblock-with-continuation-crash.html: Added
+

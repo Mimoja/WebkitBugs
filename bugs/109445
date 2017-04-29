@@ -1,0 +1,57 @@
+------------------------------------------------------------------------
+r163579 | jpfau@apple.com | 2014-02-07 01:54:55 +0100 (Fr, 07. Feb 2014) | 40 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/TestExpectations
+   A /trunk/LayoutTests/fast/parser/adoption-agency-crash-01-expected.txt
+   A /trunk/LayoutTests/fast/parser/adoption-agency-crash-01.html
+   A /trunk/LayoutTests/fast/parser/adoption-agency-crash-02-expected.txt
+   A /trunk/LayoutTests/fast/parser/adoption-agency-crash-02.html
+   A /trunk/LayoutTests/fast/parser/adoption-agency-crash-03-expected.txt
+   A /trunk/LayoutTests/fast/parser/adoption-agency-crash-03.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.cpp
+   M /trunk/Source/WebCore/html/parser/HTMLConstructionSite.h
+   M /trunk/Source/WebCore/html/parser/HTMLTreeBuilder.cpp
+
+Make adoption agency use the task queue
+https://bugs.webkit.org/show_bug.cgi?id=109445
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Tests: fast/parser/adoption-agency-crash-01.html
+       fast/parser/adoption-agency-crash-02.html
+       fast/parser/adoption-agency-crash-03.html
+
+* html/parser/HTMLConstructionSite.cpp:
+(WebCore::insert):
+(WebCore::executeInsertTask):
+(WebCore::executeReparentTask):
+(WebCore::executeInsertAlreadyParsedChildTask):
+(WebCore::executeTakeAllChildrenTask):
+(WebCore::executeTask):
+(WebCore::HTMLConstructionSite::attachLater):
+(WebCore::HTMLConstructionSite::executeQueuedTasks):
+(WebCore::HTMLConstructionSite::insertTextNode):
+(WebCore::HTMLConstructionSite::reparent):
+(WebCore::HTMLConstructionSite::insertAlreadyParsedChild):
+(WebCore::HTMLConstructionSite::takeAllChildren):
+(WebCore::HTMLConstructionSite::fosterParent):
+* html/parser/HTMLConstructionSite.h:
+(WebCore::HTMLConstructionSiteTask::HTMLConstructionSiteTask):
+(WebCore::HTMLConstructionSiteTask::oldParent):
+* html/parser/HTMLTreeBuilder.cpp:
+(WebCore::HTMLTreeBuilder::callTheAdoptionAgency):
+
+LayoutTests:
+
+* TestExpectations:
+* fast/parser/adoption-agency-crash-01-expected.txt: Added.
+* fast/parser/adoption-agency-crash-01.html: Added.
+* fast/parser/adoption-agency-crash-02-expected.txt: Added.
+* fast/parser/adoption-agency-crash-02.html: Added.
+* fast/parser/adoption-agency-crash-03-expected.txt: Added.
+* fast/parser/adoption-agency-crash-03.html: Added.
+

@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r142539 | eae@chromium.org | 2013-02-12 01:07:35 +0100 (Di, 12. Feb 2013) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/frames/invalid-frameset-expected.html
+   A /trunk/LayoutTests/fast/frames/invalid-frameset.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderFrameSet.cpp
+
+Change RenderFrameSet::paint to use m-rows/m_cols directly.
+https://bugs.webkit.org/show_bug.cgi?id=108503
+
+Source/WebCore:
+
+Reviewed by Eric Seidel.
+
+Test: fast/frames/invalid-frameset.html
+
+* rendering/RenderFrameSet.cpp:
+(WebCore::RenderFrameSet::paint):
+
+LayoutTests:
+
+Reviewed by Eric Seidel.
+
+Add test for how we render an invalid frameset.
+
+* fast/frames/invalid-frameset-expected.html: Added.
+* fast/frames/invalid-frameset.html: Added.
+
+

@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r104381 | rniwa@webkit.org | 2012-01-07 10:12:01 +0100 (Sa, 07. Jan 2012) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/node-list-length-after-removing-node-expected.txt
+   A /trunk/LayoutTests/fast/dom/node-list-length-after-removing-node.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/DynamicNodeList.cpp
+   M /trunk/Source/WebCore/dom/DynamicNodeList.h
+
+REGRESSION(r104210): Crash inside DynamicSubtreeNodeList::length
+https://bugs.webkit.org/show_bug.cgi?id=75731
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+The crash was caused by DynamicSubtreeNodeList::SubtreeCaches::domVersionIsConsistent
+using m_cachedItem as a way to access the document. Changed SubtreeCaches to use
+DynamicSubtreeNodeList's m_node instead.
+
+Test: fast/dom/node-list-length-after-removing-node.html
+
+* dom/DynamicNodeList.cpp:
+(WebCore::DynamicSubtreeNodeList::SubtreeCaches::setLengthCache):
+(WebCore::DynamicSubtreeNodeList::SubtreeCaches::setItemCache):
+(WebCore::DynamicSubtreeNodeList::length):
+(WebCore::DynamicSubtreeNodeList::item):
+* dom/DynamicNodeList.h:
+(WebCore::DynamicSubtreeNodeList::SubtreeCaches::isLengthCacheValid):
+(WebCore::DynamicSubtreeNodeList::SubtreeCaches::isItemCacheValid):
+(WebCore::DynamicSubtreeNodeList::SubtreeCaches::cachedItem):
+(WebCore::DynamicSubtreeNodeList::SubtreeCaches::domVersionIsConsistent):
+
+LayoutTests: 
+
+Add a regression test. It reproduces the crash with a very high probability.
+
+* fast/dom/node-list-length-after-removing-node-expected.txt: Added.
+* fast/dom/node-list-length-after-removing-node.html: Added.
+
+

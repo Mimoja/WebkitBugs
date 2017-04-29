@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+r194638 | zalan@apple.com | 2016-01-06 17:57:35 +0100 (Mi, 06. Jan 2016) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/ruby/ruby-inline-margin-collapse-crash-expected.txt
+   A /trunk/LayoutTests/fast/ruby/ruby-inline-margin-collapse-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+isAnonymousInlineBlock() should exclude any ruby content.
+https://bugs.webkit.org/show_bug.cgi?id=152648
+<rdar://problem/23872549>
+
+Reviewed by David Hyatt.
+
+isAnonymousInlineBlock is designed for the new Block-Inside-Inline Model
+and all other anonymous inline-block renderers (including Ruby) should bail out of it.
+(see webkit.org/b/143145)
+
+Source/WebCore:
+
+Test: fast/ruby/ruby-inline-margin-collapse-crash.html
+
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::isAnonymousInlineBlock):
+* rendering/RenderObject.h:
+(WebCore::RenderObject::isAnonymousInlineBlock): Deleted.
+
+LayoutTests:
+
+* fast/ruby/ruby-inline-margin-collapse-crash-expected.txt: Added.
+* fast/ruby/ruby-inline-margin-collapse-crash.html: Added.
+

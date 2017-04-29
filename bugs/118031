@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r151998 | rniwa@webkit.org | 2013-06-26 19:47:49 +0200 (Mi, 26. Jun 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Attr/set-attribute-node-from-iframe-expected.txt
+   A /trunk/LayoutTests/fast/dom/Attr/set-attribute-node-from-iframe.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+Set Attr.ownerDocument in Element#setAttributeNode()
+https://bugs.webkit.org/show_bug.cgi?id=118031
+
+Reviewed by Andreas Kling.
+
+Source/WebCore: 
+
+Merge https://chromium.googlesource.com/chromium/blink/+/fa739fe5369f55bbdcb3fa123cb64df36b8ae414.
+
+Adopt Attr node as needed.
+
+Test: fast/dom/Attr/set-attribute-node-from-iframe.html
+
+* dom/Element.cpp:
+(WebCore::Element::setAttributeNode):
+
+LayoutTests: 
+
+Add a regression test.
+
+* fast/dom/Attr/set-attribute-node-from-iframe-expected.txt: Added.
+* fast/dom/Attr/set-attribute-node-from-iframe.html: Added.
+
+

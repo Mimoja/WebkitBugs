@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r83255 | mjs@apple.com | 2011-04-08 08:01:59 +0200 (Fr, 08. Apr 2011) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/table-row-after-no-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/table-row-after-no-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderTableRow.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableRow.h
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+
+2011-04-07  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        REGRESSION (r80871): Crash when visiting http://broadband.biglobe.ne.jp/
+        https://bugs.webkit.org/show_bug.cgi?id=56297
+        <rdar://problem/9131597>
+
+        Test: fast/css-generated-content/table-row-after-no-crash.html
+
+        * rendering/RenderTableRow.cpp:
+        (WebCore::RenderTableRow::styleDidChange): Factor out generation of before/after
+        content, and only do it if the row already has a parent. For construction of
+        anonymous cells to work correctly, the row needs to already have a parent, so
+        in that case wait a bit.
+        (WebCore::RenderTableRow::updateBeforeAndAfterContent): Factored out to here.
+        * rendering/RenderTableRow.h:
+        * rendering/RenderTableSection.cpp:
+        (WebCore::RenderTableSection::addChild): When adding a row, update its
+        before/after content, in case it had any.
+2011-04-07  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        REGRESSION (r80871): Crash when visiting http://broadband.biglobe.ne.jp/
+        https://bugs.webkit.org/show_bug.cgi?id=56297
+        <rdar://problem/9131597>
+
+        * fast/css-generated-content/table-row-after-no-crash-expected.txt: Added.
+        * fast/css-generated-content/table-row-after-no-crash.html: Added.
+
+

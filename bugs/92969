@@ -1,0 +1,54 @@
+------------------------------------------------------------------------
+r125147 | morrita@google.com | 2012-08-09 06:16:38 +0200 (Do, 09. Aug 2012) | 36 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/custom/loadevents-async-expected.txt
+   A /trunk/LayoutTests/svg/custom/loadevents-async.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGElement.cpp
+   M /trunk/Source/WebCore/svg/SVGElement.h
+   M /trunk/Source/WebCore/svg/SVGExternalResourcesRequired.cpp
+   M /trunk/Source/WebCore/svg/SVGScriptElement.cpp
+   M /trunk/Source/WebCore/svg/SVGScriptElement.h
+   M /trunk/Source/WebCore/svg/SVGStyleElement.cpp
+   M /trunk/Source/WebCore/svg/SVGStyleElement.h
+   M /trunk/Source/WebCore/svg/SVGUseElement.cpp
+   M /trunk/Source/WebCore/svg/SVGUseElement.h
+
+[SVG] load events shouldn't be fired during Node::insrtedInto()
+https://bugs.webkit.org/show_bug.cgi?id=92969
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Event dispatches during insertedInto() allow event handlers to
+break DOM tree cosistency. This chagne makes them async for load
+events which are dispatched during insertedInto() call. This
+prevents event handlers from breaking tree consistency while the
+notification traversal.
+
+Test: svg/custom/loadevents-async.html
+
+* svg/SVGElement.cpp:
+(WebCore::SVGElement::sendSVGLoadEventIfPossibleAsynchronously): Added.
+(WebCore):
+(WebCore::SVGElement::svgLoadEventTimerFired): Added.
+(WebCore::SVGElement::svgLoadEventTimer):
+- Added a stub. Implemented in SVGScriptElement, SVGStopElement, SVGUseElement
+  where the load event happens.
+* svg/SVGElement.h:
+(SVGElement):
+* svg/SVGExternalResourcesRequired.cpp:
+(WebCore::SVGExternalResourcesRequired::insertedIntoDocument):
+- Replaces event dispatch call with async version.
+* svg/SVGScriptElement.h:
+* svg/SVGStyleElement.h:
+* svg/SVGUseElement.h:
+
+LayoutTests:
+
+* svg/custom/loadevents-async-expected.txt: Added.
+* svg/custom/loadevents-async.html: Added.
+
+

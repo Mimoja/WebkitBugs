@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r62386 | ddkilzer@apple.com | 2010-07-02 18:45:41 +0200 (Fr, 02. Jul 2010) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/JavaScriptCore/ChangeLog
+   M /trunk/JavaScriptCore/yarr/RegexInterpreter.cpp
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/js/regexp-look-ahead-expected.txt
+   A /trunk/LayoutTests/fast/js/regexp-look-ahead.html
+   A /trunk/LayoutTests/fast/js/script-tests/regexp-look-ahead.js
+
+2010-07-02  Peter Varga  <pvarga@inf.u-szeged.hu>
+
+        Reviewed by Oliver Hunt.
+
+        The alternativeFrameLocation value is wrong in the emitDisjunction function in
+        case of PatternTerm::TypeParentheticalAssertion. This value needs to be
+        computed from term.frameLocation instead of term.inputPosition. This mistake caused glibc
+        memory corruption in some cases.
+        Layout test added for checking of TypeParentheticalAssertion case.
+        https://bugs.webkit.org/show_bug.cgi?id=41458
+
+        * yarr/RegexInterpreter.cpp:
+        (JSC::Yarr::ByteCompiler::emitDisjunction):
+2010-07-02  Peter Varga  <pvarga@inf.u-szeged.hu>
+
+        Reviewed by Oliver Hunt.
+
+        The alternativeFrameLocation value is wrong in the emitDisjunction function in
+        case of PatternTerm::TypeParentheticalAssertion. This value needs to be
+        computed from term.frameLocation instead of term.inputPosition. This mistake caused glibc
+        memory corruption in some cases.
+        Layout test added for checking of TypeParentheticalAssertion case.
+        https://bugs.webkit.org/show_bug.cgi?id=41458
+
+        * fast/js/regexp-look-ahead-expected.txt: Added.
+        * fast/js/regexp-look-ahead.html: Added.
+        * fast/js/script-tests/regexp-look-ahead.js: Added.
+

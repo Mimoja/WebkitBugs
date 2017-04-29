@@ -1,0 +1,59 @@
+------------------------------------------------------------------------
+r42223 | weinig@apple.com | 2009-04-04 02:56:25 +0200 (Sa, 04. Apr 2009) | 42 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   M /trunk/LayoutTests/dom/xhtml/level2/html/HTMLFormElement10-expected.txt
+   M /trunk/LayoutTests/fast/dom/Window/dom-access-from-closure-iframe-expected.txt
+   M /trunk/LayoutTests/fast/dom/Window/dom-access-from-closure-window-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-document-direct-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-document-direct.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-frame-iframe-for-document-direct-test-victim.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-frame-iframe-for-document-direct-test.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/JSDOMWindowBase.cpp
+   M /trunk/WebCore/bindings/js/ScriptController.cpp
+   M /trunk/WebCore/bindings/js/ScriptController.h
+
+WebCore:
+
+2009-04-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6330929>
+        https://bugs.webkit.org/show_bug.cgi?id=21456
+
+        Don't update the document pointer for all inactive windows on navigations.
+        This change causes us to differ slightly from Firefox when accessing the
+        document from within a closure tied to a navigated context, but as all
+        browsers differ on this edge case, I don't foresee compatibility issues.
+
+        Test: http/tests/security/cross-frame-access-document-direct.html
+
+        * bindings/js/JSDOMWindowBase.cpp:
+        (WebCore::JSDOMWindowBase::~JSDOMWindowBase):
+        * bindings/js/ScriptController.cpp:
+        (WebCore::ScriptController::clearWindowShell):
+        (WebCore::ScriptController::initScript):
+        (WebCore::ScriptController::updateDocument):
+        * bindings/js/ScriptController.h:
+
+LayoutTests:
+
+2009-04-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Update tests for <rdar://problem/6330929>
+        https://bugs.webkit.org/show_bug.cgi?id=21456
+
+        * dom/xhtml/level2/html/HTMLFormElement10-expected.txt:
+        * fast/dom/Window/dom-access-from-closure-iframe-expected.txt:
+        * fast/dom/Window/dom-access-from-closure-window-expected.txt:
+        * http/tests/security/cross-frame-access-document-direct-expected.txt: Added.
+        * http/tests/security/cross-frame-access-document-direct.html: Added.
+        * http/tests/security/resources/cross-frame-iframe-for-document-direct-test-victim.html: Added.
+        * http/tests/security/resources/cross-frame-iframe-for-document-direct-test.html: Added.
+
+
+

@@ -1,0 +1,143 @@
+------------------------------------------------------------------------
+r117572 | morrita@google.com | 2012-05-18 12:17:52 +0200 (Fr, 18. Mai 2012) | 109 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/spelling/spellcheck-async-remove-frame-expected.txt
+   A /trunk/LayoutTests/editing/spelling/spellcheck-async-remove-frame.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/editing/Editor.cpp
+   M /trunk/Source/WebCore/editing/Editor.h
+   M /trunk/Source/WebCore/loader/EmptyClients.h
+   M /trunk/Source/WebCore/page/EditorClient.h
+   M /trunk/Source/WebKit/blackberry/ChangeLog
+   M /trunk/Source/WebKit/blackberry/WebCoreSupport/EditorClientBlackBerry.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/EditorClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/EditorClientImpl.h
+   M /trunk/Source/WebKit/chromium/src/WebTextCheckingCompletionImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebTextCheckingCompletionImpl.h
+   M /trunk/Source/WebKit/efl/ChangeLog
+   M /trunk/Source/WebKit/efl/WebCoreSupport/EditorClientEfl.h
+   M /trunk/Source/WebKit/gtk/ChangeLog
+   M /trunk/Source/WebKit/gtk/WebCoreSupport/EditorClientGtk.h
+   M /trunk/Source/WebKit/mac/ChangeLog
+   M /trunk/Source/WebKit/mac/WebCoreSupport/WebEditorClient.h
+   M /trunk/Source/WebKit/qt/ChangeLog
+   M /trunk/Source/WebKit/qt/WebCoreSupport/EditorClientQt.h
+   M /trunk/Source/WebKit/win/ChangeLog
+   M /trunk/Source/WebKit/win/WebCoreSupport/WebEditorClient.h
+   M /trunk/Source/WebKit/wince/ChangeLog
+   M /trunk/Source/WebKit/wince/WebCoreSupport/EditorClientWinCE.h
+   M /trunk/Source/WebKit/wx/ChangeLog
+   M /trunk/Source/WebKit/wx/WebKitSupport/EditorClientWx.h
+
+https://bugs.webkit.org/show_bug.cgi?id=85515
+Stale frame in WebCore::SpellChecker::didCheckSucceeded
+
+Source/WebCore:
+
+Reviewed by Ryosuke Niwa.
+
+Added EditorClient::frameWillDetachPage() notification to give a
+change to invalidate pending spellcheck requests on the client.
+
+Test: editing/spelling/spellcheck-async-remove-frame.html
+
+* editing/Editor.cpp:
+(WebCore::Editor::Editor):
+* editing/Editor.h:
+(Editor):
+* loader/EmptyClients.h:
+(WebCore::EmptyEditorClient::frameWillDetachPage):
+* page/EditorClient.h:
+(EditorClient):
+
+Source/WebKit/blackberry:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientBlackBerry.h:
+(WebCore::EditorClientBlackBerry::frameWillDetachPage):
+
+Source/WebKit/chromium:
+
+Added WebTextCheckingCompletionImpl::invalidate() to mark
+pending spellcheck request as invalid, and added frameWillDetachPage()
+to fire it.
+
+Reviewed by Ryosuke Niwa.
+
+* src/EditorClientImpl.cpp:
+(WebKit::EditorClientImpl::frameWillDetachPage):
+(WebKit):
+(WebKit::EditorClientImpl::requestCheckingOfString):
+(WebKit::EditorClientImpl::didCheckString):
+* src/EditorClientImpl.h:
+(WebKit):
+(EditorClientImpl):
+* src/WebTextCheckingCompletionImpl.cpp:
+(WebKit::WebTextCheckingCompletionImpl::didFinishCheckingText):
+(WebKit::WebTextCheckingCompletionImpl::didCancelCheckingText):
+(WebKit::WebTextCheckingCompletionImpl::invalidate):
+(WebKit):
+* src/WebTextCheckingCompletionImpl.h:
+(WebKit):
+(WebKit::WebTextCheckingCompletionImpl::WebTextCheckingCompletionImpl):
+(WebTextCheckingCompletionImpl):
+(WebKit::WebTextCheckingCompletionImpl::spellChecker):
+
+Source/WebKit/efl:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientEfl.h:
+(WebCore::EditorClientEfl::frameWillDetachPage):
+
+Source/WebKit/gtk:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientGtk.h:
+(WebKit::EditorClient::frameWillDetachPage):
+
+Source/WebKit/mac:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/WebEditorClient.h:
+
+Source/WebKit/qt:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientQt.h:
+(WebCore::EditorClientQt::frameWillDetachPage):
+
+Source/WebKit/win:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/WebEditorClient.h:
+(WebEditorClient::frameWillDetachPage):
+
+Source/WebKit/wince:
+
+Reviewed by Ryosuke Niwa.
+
+* WebCoreSupport/EditorClientWinCE.h:
+(WebKit::EditorClientWinCE::frameWillDetachPage):
+
+Source/WebKit/wx:
+
+Reviewed by Ryosuke Niwa.
+
+* WebKitSupport/EditorClientWx.h:
+(WebCore::EditorClientWx::frameWillDetachPage):
+
+LayoutTests:
+
+Reviewed by Ryosuke Niwa.
+
+* editing/spelling/spellcheck-async-remove-frame-expected.txt: Added.
+* editing/spelling/spellcheck-async-remove-frame.html: Added.
+

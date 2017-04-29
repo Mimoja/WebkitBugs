@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r201997 | beidson@apple.com | 2016-06-13 20:56:43 +0200 (Mo, 13. Jun 2016) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/indexeddb/server/UniqueIDBDatabase.cpp
+
+Crashes in WebCore::IDBServer::UniqueIDBDatabase::executeNextDatabaseTask.
+<rdar://problem/26768449> and https://bugs.webkit.org/show_bug.cgi?id=158696
+
+Reviewed by David Kilzer.
+
+No new tests (Covered by all existing tests in Gmalloc/ASAN configs).
+
+* Modules/indexeddb/server/UniqueIDBDatabase.cpp:
+(WebCore::IDBServer::UniqueIDBDatabase::executeNextDatabaseTask):
+(WebCore::IDBServer::UniqueIDBDatabase::executeNextDatabaseTaskReply):
+

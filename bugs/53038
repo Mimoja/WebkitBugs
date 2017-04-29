@@ -1,0 +1,44 @@
+------------------------------------------------------------------------
+r76652 | inferno@chromium.org | 2011-01-26 01:10:34 +0100 (Mi, 26. Jan 2011) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/window-domurl-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/window-domurl-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ScriptExecutionContext.cpp
+   M /trunk/Source/WebCore/dom/ScriptExecutionContext.h
+   M /trunk/Source/WebCore/html/DOMURL.cpp
+   M /trunk/Source/WebCore/html/DOMURL.h
+
+2011-01-25  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Test for crash when a window's location changes before creating an object URL.
+        https://bugs.webkit.org/show_bug.cgi?id=53038
+
+        * fast/dom/window-domurl-crash-expected.txt: Added.
+        * fast/dom/window-domurl-crash.html: Added.
+2011-01-25  Cris Neckar  <cdn@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add a hashset of DOMURLs to ScriptExecutionContext to track back references.
+        https://bugs.webkit.org/show_bug.cgi?id=53038
+
+        Test: fast/dom/window-domurl-crash.html
+
+        * dom/ScriptExecutionContext.cpp:
+        (WebCore::ScriptExecutionContext::~ScriptExecutionContext):
+        (WebCore::ScriptExecutionContext::createdDomUrl):
+        (WebCore::ScriptExecutionContext::destroyedDomUrl):
+        * dom/ScriptExecutionContext.h:
+        (WebCore::ScriptExecutionContext::domUrls):
+        * html/DOMURL.cpp:
+        (WebCore::DOMURL::DOMURL):
+        (WebCore::DOMURL::~DOMURL):
+        (WebCore::DOMURL::contextDestroyed):
+        * html/DOMURL.h:
+        (WebCore::DOMURL::scriptExecutionContext):
+
+

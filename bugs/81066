@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r111272 | beidson@apple.com | 2012-03-20 00:59:07 +0100 (Di, 20. Mär 2012) | 35 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/history/PageCache.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedResourceLoader.cpp
+   M /trunk/Source/WebCore/loader/cache/MemoryCache.h
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+   A /trunk/Tools/TestWebKitAPI/Tests/mac/MemoryCachePruneWithinResourceLoadDelegate.html
+   A /trunk/Tools/TestWebKitAPI/Tests/mac/MemoryCachePruneWithinResourceLoadDelegate.mm
+
+<rdar://problem/10917120> and https://bugs.webkit.org/show_bug.cgi?id=81066
+Crash in 3rd party WebKit apps under XHR/Cache code
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+No new layout tests.
+TestWebKitAPI test MemoryCachePruneWithinResourceLoadDelegate included
+
+A CachedResource representing an XHR was being deleted by cache pruning during a delegate callback.
+This worked until http://trac.webkit.org/changeset/98380
+
+* history/PageCache.cpp:
+(WebCore::PageCache::releaseAutoreleasedPagesNow): Only trigger pruning after the page cache
+  autorelease if it was enabled before.
+
+* loader/cache/CachedResourceLoader.cpp:
+(WebCore::CachedResourceLoader::loadResource): Disable pruning before loading the resource and
+  re-enable it afterwards if necessary.
+
+* loader/cache/MemoryCache.h:
+(WebCore::MemoryCache::pruneEnabled):
+
+Tools:
+
+* TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+* TestWebKitAPI/Tests/mac/MemoryCachePruneWithinResourceLoadDelegate.html: Added.
+* TestWebKitAPI/Tests/mac/MemoryCachePruneWithinResourceLoadDelegate.mm: Added.
+(-[MemoryCachePruneTestResourceLoadDelegate webView:identifierForInitialRequest:fromDataSource:]):
+(-[MemoryCachePruneTestResourceLoadDelegate webView:resource:willSendRequest:redirectResponse:fromDataSource:]):
+(-[MemoryCachePruneTestResourceLoadDelegate webView:resource:didFinishLoadingFromDataSource:]):
+(-[MemoryCachePruneTestResourceLoadDelegate webView:resource:didFailLoadingWithError:fromDataSource:]):
+(TestWebKitAPI):
+(TestWebKitAPI::TEST):
+

@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r210112 | dbates@webkit.org | 2016-12-22 23:20:25 +0100 (Do, 22. Dez 2016) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame-expected.txt
+   A /trunk/LayoutTests/fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame.html
+   A /trunk/LayoutTests/fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame2-expected.txt
+   A /trunk/LayoutTests/fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame2.html
+   A /trunk/LayoutTests/fast/events/popup-blocked-from-unique-frame-via-window-open-named-sibling-frame-expected.txt
+   A /trunk/LayoutTests/fast/events/popup-blocked-from-unique-frame-via-window-open-named-sibling-frame.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMWindow.cpp
+
+Bypass pop-up blocker from cross-origin or sandboxed frame
+https://bugs.webkit.org/show_bug.cgi?id=166290
+<rdar://problem/29742039>
+
+Reviewed by Darin Adler.
+
+Source/WebCore:
+
+Tests: fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame.html
+       fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame2.html
+       fast/events/popup-blocked-from-unique-frame-via-window-open-named-sibling-frame.html
+
+* page/DOMWindow.cpp:
+(WebCore::DOMWindow::open): Use FrameLoader::findFrameForNavigation() to find the
+target frame to navigate with respect to the active document just as we do in WebCore::createWindow().
+
+LayoutTests:
+
+* fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame-expected.txt: Added.
+* fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame.html: Added.
+* fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame2-expected.txt: Added.
+* fast/events/popup-blocked-from-sandboxed-frame-via-window-open-named-sibling-frame2.html: Added.
+* fast/events/popup-blocked-from-unique-frame-via-window-open-named-sibling-frame-expected.txt: Added.
+* fast/events/popup-blocked-from-unique-frame-via-window-open-named-sibling-frame.html: Added.
+

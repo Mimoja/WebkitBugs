@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r84151 | antti@apple.com | 2011-04-18 18:37:50 +0200 (Mo, 18. Apr 2011) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+CSSSelector double frees
+https://bugs.webkit.org/show_bug.cgi?id=56124
+<rdar://problem/9119036>
+
+Reviewed by Simon Fraser.
+
+In all stacks this is occuring when the document is kept alive by the guard ref only
+and the node holding it is deleted.
+
+As a speculative fix, clear the document stylesheets when it turns into a guard ref zombie.
+This has a pretty good chance of fixing the actual bug. At minimum it will move the
+crash to an earlier, more easily traceble point.
+
+No tests, crash stacks only, no idea how to reproduce.
+
+* dom/Document.cpp:
+(WebCore::Document::removedLastRef):
+
+
+

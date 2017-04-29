@@ -1,0 +1,77 @@
+------------------------------------------------------------------------
+r146262 | pdr@google.com | 2013-03-19 22:45:52 +0100 (Di, 19. Mär 2013) | 58 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLayer.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGPath.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceFilter.h
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGResourceFilterPrimitive.cpp
+   M /trunk/Source/WebCore/rendering/svg/RenderSVGRoot.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGRenderSupport.cpp
+   M /trunk/Source/WebCore/rendering/svg/SVGRenderingContext.cpp
+   M /trunk/Source/WebCore/svg/SVGCircleElement.cpp
+   M /trunk/Source/WebCore/svg/SVGEllipseElement.cpp
+   M /trunk/Source/WebCore/svg/SVGLineElement.cpp
+   M /trunk/Source/WebCore/svg/SVGPathElement.cpp
+   M /trunk/Source/WebCore/svg/SVGPolyElement.cpp
+   M /trunk/Source/WebCore/svg/SVGRectElement.cpp
+
+Clean up static_casts for SVG renderers
+https://bugs.webkit.org/show_bug.cgi?id=111651
+
+Reviewed by Abhishek Arya.
+
+toRenderSVGPath and toRenderSVGFilter are preferred over static_casts because bad casts can
+be caught on our testing infrastructure. This patch replaces all static_casts for
+RenderSVGPath and RenderSVGFilter with toRenderSVGPath and toRenderSVGFilter, respectively.
+
+This patch also adds FIXME to the remaining toRenderSVG* instances that are missing.
+
+No new tests as this is covered with existing tests.
+
+* rendering/RenderLayer.cpp:
+(WebCore::RenderLayer::paintLayerContents):
+
+    This call is currently safe due to the element->hasTagName(SVGNames::clipPathTag) check.
+
+* rendering/svg/RenderSVGPath.h:
+(WebCore):
+(WebCore::toRenderSVGPath):
+* rendering/svg/RenderSVGResourceFilter.h:
+(WebCore):
+(WebCore::toRenderSVGFilter):
+* rendering/svg/RenderSVGResourceFilterPrimitive.cpp:
+(WebCore::RenderSVGResourceFilterPrimitive::styleDidChange):
+* rendering/svg/RenderSVGRoot.cpp:
+(WebCore::RenderSVGRoot::addResourceForClientInvalidation):
+* rendering/svg/SVGRenderSupport.cpp:
+(WebCore::SVGRenderSupport::repaintRectForRendererInLocalCoordinatesExcludingSVGShadow):
+(WebCore::SVGRenderSupport::rendererHasSVGShadow):
+(WebCore::SVGRenderSupport::setRendererHasSVGShadow):
+* rendering/svg/SVGRenderingContext.cpp:
+(WebCore::SVGRenderingContext::~SVGRenderingContext):
+
+    This cast was not correct! Thankfully it was not required anyway.
+
+* svg/SVGCircleElement.cpp:
+(WebCore::SVGCircleElement::svgAttributeChanged):
+
+    This cast was not correct!
+
+* svg/SVGEllipseElement.cpp:
+(WebCore::SVGEllipseElement::svgAttributeChanged):
+
+    This cast was not correct!
+
+* svg/SVGLineElement.cpp:
+(WebCore::SVGLineElement::svgAttributeChanged):
+* svg/SVGPathElement.cpp:
+(WebCore::SVGPathElement::svgAttributeChanged):
+(WebCore::SVGPathElement::pathSegListChanged):
+(WebCore::SVGPathElement::getBBox):
+* svg/SVGPolyElement.cpp:
+(WebCore::SVGPolyElement::svgAttributeChanged):
+* svg/SVGRectElement.cpp:
+(WebCore::SVGRectElement::svgAttributeChanged):
+
+

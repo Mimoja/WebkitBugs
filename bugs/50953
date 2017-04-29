@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r74041 | ap@apple.com | 2010-12-14 19:35:50 +0100 (Di, 14. Dez 2010) | 6 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/dom/Document.h
+   M /trunk/WebCore/page/Page.cpp
+   M /trunk/WebCore/page/Page.h
+   M /trunk/WebCore/page/Settings.cpp
+   M /trunk/WebKit/mac/ChangeLog
+   M /trunk/WebKit/mac/WebView/WebPreferences.mm
+   M /trunk/WebKit/win/ChangeLog
+   M /trunk/WebKit/win/WebPreferences.cpp
+   M /trunk/WebKit2/ChangeLog
+   M /trunk/WebKit2/Shared/WebPreferencesStore.h
+   M /trunk/WebKit2/UIProcess/API/C/WKPreferences.cpp
+   M /trunk/WebKit2/UIProcess/API/C/WKPreferences.h
+   M /trunk/WebKit2/WebProcess/WebPage/WebPage.cpp
+
+        Reviewed by Adam Barth.
+
+        https://bugs.webkit.org/show_bug.cgi?id=50953
+        DNS Prefetch should be an opt-in feature
+
+
+

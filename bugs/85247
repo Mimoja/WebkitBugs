@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r117224 | inferno@chromium.org | 2012-05-16 08:45:05 +0200 (Mi, 16. Mai 2012) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLObjectElement/beforeload-set-text-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLObjectElement/beforeload-set-text-crash.xhtml
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+Crash in Document::nodeChildrenWillBeRemoved.
+https://bugs.webkit.org/show_bug.cgi?id=85247
+
+Reviewed by Hajime Morita.
+
+Source/WebCore:
+
+Reverse ordering of commands to ref ptr the children set
+first before calling nodeChildrenWillBeRemoved, since it
+can fire mutation events.
+
+Test: fast/dom/HTMLObjectElement/beforeload-set-text-crash.xhtml
+
+* dom/ContainerNode.cpp:
+(WebCore::willRemoveChildren):
+
+LayoutTests:
+
+* fast/dom/HTMLObjectElement/beforeload-set-text-crash-expected.txt: Added.
+* fast/dom/HTMLObjectElement/beforeload-set-text-crash.xhtml: Added.
+
+

@@ -1,0 +1,64 @@
+------------------------------------------------------------------------
+r68460 | kbr@google.com | 2010-09-28 02:41:26 +0200 (Di, 28. Sep 2010) | 47 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/canvas/webgl
+   A /trunk/LayoutTests/http/tests/canvas/webgl/origin-clean-conformance-expected.txt
+   A /trunk/LayoutTests/http/tests/canvas/webgl/origin-clean-conformance.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/html/canvas/CanvasRenderingContext.cpp
+   M /trunk/WebCore/html/canvas/CanvasRenderingContext.h
+   M /trunk/WebCore/html/canvas/CanvasRenderingContext2D.cpp
+   M /trunk/WebCore/html/canvas/CanvasRenderingContext2D.h
+   M /trunk/WebCore/html/canvas/WebGLRenderingContext.cpp
+   M /trunk/WebCore/html/canvas/WebGLRenderingContext.h
+   M /trunk/WebCore/html/canvas/WebGLRenderingContext.idl
+
+2010-09-27  Adrienne Walker  <enne@google.com>
+
+        Reviewed by Adam Barth.
+
+        WebGL's readPixels doesn't respect origin-clean flag
+
+        Push CanvasRenderingContext2D checkOrigin logic into base class so it can be shared between different kinds of canvas contexts.
+        https://bugs.webkit.org/show_bug.cgi?id=45718
+
+        Test: LayoutTests/http/tests/canvas/webgl/origin-clean-conformance.html
+
+        * html/canvas/CanvasRenderingContext.cpp:
+        (WebCore::CanvasRenderingContext::checkOrigin):
+        * html/canvas/CanvasRenderingContext.h:
+        (WebCore::CanvasRenderingContext::~CanvasRenderingContext):
+        (WebCore::CanvasRenderingContext::canvas):
+        (WebCore::CanvasRenderingContext::is2d):
+        (WebCore::CanvasRenderingContext::is3d):
+        (WebCore::CanvasRenderingContext::isAccelerated):
+        (WebCore::CanvasRenderingContext::paintRenderingResultsToCanvas):
+        (WebCore::CanvasRenderingContext::paintsIntoCanvasBuffer):
+        (WebCore::CanvasRenderingContext::platformLayer):
+        * html/canvas/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasRenderingContext2D::setStrokeStyle):
+        (WebCore::CanvasRenderingContext2D::setFillStyle):
+        (WebCore::CanvasRenderingContext2D::drawImage):
+        (WebCore::CanvasRenderingContext2D::drawImageFromRect):
+        * html/canvas/CanvasRenderingContext2D.h:
+        * html/canvas/WebGLRenderingContext.cpp:
+        (WebCore::WebGLRenderingContext::readPixels):
+        (WebCore::WebGLRenderingContext::texImage2D):
+        (WebCore::WebGLRenderingContext::videoFrameToImage):
+        (WebCore::WebGLRenderingContext::texSubImage2D):
+        * html/canvas/WebGLRenderingContext.h:
+        * html/canvas/WebGLRenderingContext.idl:
+2010-09-27  Adrienne Walker  <enne@google.com>
+
+        Reviewed by Adam Barth.
+
+        WebGL's readPixels doesn't respect origin-clean flag
+
+        Add new test by converting Khronos conformance test to be able to run within LayoutTests/http.
+        https://bugs.webkit.org/show_bug.cgi?id=45718
+
+        * http/tests/canvas/webgl/origin-clean-conformance-expected.txt: Added.
+        * http/tests/canvas/webgl/origin-clean-conformance.html: Added.
+
+

@@ -1,0 +1,60 @@
+------------------------------------------------------------------------
+r207471 | said@apple.com | 2016-10-18 19:41:14 +0200 (Di, 18. Okt 2016) | 46 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css/implicit-property-restore-expected.txt
+   A /trunk/LayoutTests/fast/css/implicit-property-restore.html
+   M /trunk/LayoutTests/fast/css/remove-shorthand-expected.txt
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/TemporaryChange.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/css/parser/CSSParser.cpp
+   M /trunk/Source/WebCore/css/parser/SVGCSSParser.cpp
+
+SVGCSSParser: m_implicitShorthand value is not reset after adding the shorthand property
+https://bugs.webkit.org/show_bug.cgi?id=116470
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+When we encounter a shorthand css property, we set m_implicitShorthand
+to true to tell addProperty() later that the individual properties are
+all set through a short hand one. We need to make sure that setting 
+m_implicitShorthand to true will not be leaked after finishing parsing
+the short hand property.
+
+Test: fast/css/implicit-property-restore.html
+
+* css/parser/CSSParser.cpp:
+(WebCore::CSSParser::parseValue):
+(WebCore::CSSParser::parseFillShorthand):
+(WebCore::CSSParser::parseShorthand):
+(WebCore::CSSParser::parse4Values):
+(WebCore::CSSParser::parseBorderRadius):
+(WTF::ImplicitScope::ImplicitScope): Deleted.
+(WTF::ImplicitScope::~ImplicitScope): Deleted.
+Get rid of ImplicitScope and replace its calls by TemporaryChange<bool>.
+        
+* css/parser/SVGCSSParser.cpp:
+(WebCore::CSSParser::parseSVGValue):
+Restore m_implicitShorthand value after setting it temporarily to true.
+
+Source/WTF:
+
+* wtf/TemporaryChange.h:
+(WTF::TemporaryChange::TemporaryChange):
+Add a new constructor to make TemporaryChange work as a restorer. The
+temporary change will happen after we construct the object.
+
+LayoutTests:
+
+* fast/css/implicit-property-restore-expected.txt: Added.
+* fast/css/implicit-property-restore.html: Added.
+
+* fast/css/remove-shorthand-expected.txt:
+Rebase-line the test expected results because of fixing the leak of
+m_implicitShorthand. The bug was happening because "background: ..." property
+comes immediately before the "list-style: ...." property.
+
+

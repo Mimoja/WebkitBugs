@@ -1,0 +1,78 @@
+------------------------------------------------------------------------
+r121557 | mihnea@adobe.com | 2012-06-29 16:31:19 +0200 (Fr, 29. Jun 2012) | 56 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/absolute-pos-elem-in-named-flow-expected.txt
+   A /trunk/LayoutTests/fast/regions/absolute-pos-elem-in-named-flow.html
+   A /trunk/LayoutTests/fast/regions/absolute-pos-elem-in-region-expected.html
+   A /trunk/LayoutTests/fast/regions/absolute-pos-elem-in-region.html
+   A /trunk/LayoutTests/fast/regions/fixed-pos-elem-in-named-flow-expected.txt
+   A /trunk/LayoutTests/fast/regions/fixed-pos-elem-in-named-flow.html
+   A /trunk/LayoutTests/fast/regions/fixed-pos-elem-in-named-flow2-expected.txt
+   A /trunk/LayoutTests/fast/regions/fixed-pos-elem-in-named-flow2.html
+   A /trunk/LayoutTests/fast/regions/fixed-pos-elem-in-region-expected.html
+   A /trunk/LayoutTests/fast/regions/fixed-pos-elem-in-region.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+   M /trunk/Source/WebCore/rendering/RenderLayer.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.h
+
+Crash when flowing a fixed positioned element into a region.
+https://bugs.webkit.org/show_bug.cgi?id=88133
+
+Reviewed by Julien Chaffraix and Abhishek Arya.
+
+Source/WebCore:
+
+When a fixed positioned element is collected into a named flow, we have to make sure
+that such element has the RenderFlowThread as containing block instead of RenderView,
+so that the fixed positioned element is laid out properly.
+Making the RenderFlowThread the top most containing block for named flow elements required the
+modification of RenderLayer::convertToLayerCoords so that the fixed positioned elements inside the
+named flow take the same code path as the absolute positioned elements inside the named flow.
+I also added a method, checkBlockPositionedObjectsNeedLayout, in order to verify that a block
+that is ending its layout, setNeedsLayout(false), has all the positioned children laid out.
+This way, we will hit an assertion if an out-of-flow positioned child inside a RenderFlowThread
+is not laid out after the RenderFlowThread is laid out.
+
+Tests: fast/regions/absolute-pos-elem-in-named-flow.html
+       fast/regions/absolute-pos-elem-in-region.html
+       fast/regions/fixed-pos-elem-in-named-flow.html
+       fast/regions/fixed-pos-elem-in-named-flow2.html
+       fast/regions/fixed-pos-elem-in-region.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::checkPositionedObjectsNeedLayout):
+* rendering/RenderBlock.h:
+(RenderBlock):
+* rendering/RenderLayer.cpp:
+(WebCore::RenderLayer::convertToLayerCoords):
+* rendering/RenderObject.cpp:
+(WebCore):
+(WebCore::RenderObject::checkBlockPositionedObjectsNeedLayout):
+(WebCore::RenderObject::containingBlock):
+(WebCore::RenderObject::container):
+* rendering/RenderObject.h:
+(RenderObject):
+(WebCore::RenderObject::setNeedsLayout):
+
+LayoutTests:
+
+When a fixed positioned element is collected into a named flow, we have to make sure
+that such element has the RenderFlowThread as containing block instead of RenderView,
+so that the fixed positioned element is laid out properly.
+
+* fast/regions/absolute-pos-elem-in-named-flow-expected.txt: Added.
+* fast/regions/absolute-pos-elem-in-named-flow.html: Added.
+* fast/regions/absolute-pos-elem-in-region-expected.html: Added.
+* fast/regions/absolute-pos-elem-in-region.html: Added.
+* fast/regions/fixed-pos-elem-in-named-flow-expected.txt: Added.
+* fast/regions/fixed-pos-elem-in-named-flow.html: Added.
+* fast/regions/fixed-pos-elem-in-named-flow2-expected.txt: Added.
+* fast/regions/fixed-pos-elem-in-named-flow2.html: Added.
+* fast/regions/fixed-pos-elem-in-region-expected.html: Added.
+* fast/regions/fixed-pos-elem-in-region.html: Added.
+
+

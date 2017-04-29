@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r97451 | jschuh@chromium.org | 2011-10-14 10:36:20 +0200 (Fr, 14. Okt 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/chromium/VideoLayerChromium.cpp
+   M /trunk/Source/WebCore/platform/graphics/chromium/VideoLayerChromium.h
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/src/WebMediaPlayerClientImpl.cpp
+   M /trunk/Source/WebKit/chromium/src/WebMediaPlayerClientImpl.h
+
+Clear WebMediaPlayerClientImpl back pointer on destruction
+https://bugs.webkit.org/show_bug.cgi?id=69973
+
+Reviewed by James Robinson.
+
+Clear the backpointer and remove the unused m_currentFrame
+
+Source/WebCore:
+
+* platform/graphics/chromium/VideoLayerChromium.cpp:
+(WebCore::VideoLayerChromium::VideoLayerChromium):
+(WebCore::VideoLayerChromium::cleanupResources):
+(WebCore::VideoLayerChromium::updateCompositorResources):
+(WebCore::VideoLayerChromium::releaseProvider):
+* platform/graphics/chromium/VideoLayerChromium.h:
+
+Source/WebKit/chromium:
+
+* src/WebMediaPlayerClientImpl.cpp:
+(WebKit::WebMediaPlayerClientImpl::~WebMediaPlayerClientImpl):
+(WebKit::WebMediaPlayerClientImpl::load):
+(WebKit::WebMediaPlayerClientImpl::getCurrentFrame):
+(WebKit::WebMediaPlayerClientImpl::putCurrentFrame):
+* src/WebMediaPlayerClientImpl.h:
+
+

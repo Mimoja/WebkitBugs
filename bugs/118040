@@ -1,0 +1,59 @@
+------------------------------------------------------------------------
+r152038 | jer.noble@apple.com | 2013-06-27 00:51:55 +0200 (Do, 27. Jun 2013) | 43 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/webaudio/audiobuffer-neuter-expected.txt
+   A /trunk/LayoutTests/webaudio/audiobuffer-neuter.html
+   M /trunk/Source/WTF/ChangeLog
+   M /trunk/Source/WTF/wtf/ArrayBuffer.cpp
+   M /trunk/Source/WTF/wtf/ArrayBuffer.h
+   M /trunk/Source/WTF/wtf/ArrayBufferView.cpp
+   M /trunk/Source/WTF/wtf/ArrayBufferView.h
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webaudio/AudioBuffer.cpp
+   M /trunk/Source/WebCore/Modules/webaudio/AudioBuffer.h
+
+Potential use-after-free after neutering AudioBuffer's underlying ArrayBuffer.
+https://bugs.webkit.org/show_bug.cgi?id=118040
+
+Reviewed by Filip Pizlo.
+
+Source/WebCore:
+
+Test: webaudio/audiobuffer-neuter.html
+
+When creating an AudioBuffer's backing ArrayBufferView objects, mark them as 'unneuterable',
+meaning the underlying data will be copied in a neuter scenario rather than transferred. This
+means the underlying assumtions of the webaudio code can continue to assume that the memory
+areas owned by the ArrayBufferView will be present until the AudioBuffer is itself destroyed.
+
+In order to not expose the 'unneuterable' behavior to JavaScript, return a fresh Float32Array
+wrapper around the ArrayBuffer object, rather than our own.
+
+* Modules/webaudio/AudioBuffer.cpp:
+(WebCore::AudioBuffer::AudioBuffer): Mark the newly created channels as not neuterable.
+(WebCore::AudioBuffer::getChannelData): Return a new Float32Array object rather than a pointer to our own.
+* Modules/webaudio/AudioBuffer.h:
+
+Source/WTF:
+
+Add support for 'unneuterable' ArrayBufferViews. Views marked as such will have their underlying
+ArrayBuffer objects copied rather than transferred to a new view.
+
+* wtf/ArrayBuffer.cpp:
+(WTF::ArrayBuffer::transfer): Check whether the associated views are neuterable, and if not
+        clone the ArrayBuffer rather than transferring it.
+* wtf/ArrayBuffer.h:
+(WTF::ArrayBufferContents::copyTo): Added. Utility function.
+* wtf/ArrayBufferView.cpp:
+(WTF::ArrayBufferView::ArrayBufferView):
+(WTF::ArrayBufferView::neuter):
+* wtf/ArrayBufferView.h:
+(WTF::ArrayBufferView::setNeuterable):
+(WTF::ArrayBufferView::isNeuterable):
+
+LayoutTests:
+
+* webaudio/audiobuffer-neuter.html: Added.
+* webaudio/audiobuffer-neuter-expected.txt: Added.
+

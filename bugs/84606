@@ -1,0 +1,75 @@
+------------------------------------------------------------------------
+r116174 | inferno@chromium.org | 2012-05-04 23:33:51 +0200 (Fr, 04. Mai 2012) | 52 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/block-add-child-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/block-add-child-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderInline.cpp
+   M /trunk/Source/WebCore/rendering/RenderObject.cpp
+   M /trunk/Source/WebCore/rendering/RenderRuby.cpp
+   M /trunk/Source/WebCore/rendering/RenderRubyRun.cpp
+   M /trunk/Source/WebCore/rendering/RenderTable.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableCell.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableRow.cpp
+   M /trunk/Source/WebCore/rendering/RenderTableSection.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLBlock.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLRow.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLSubSup.cpp
+   M /trunk/Source/WebCore/rendering/style/RenderStyle.cpp
+   M /trunk/Source/WebCore/rendering/style/RenderStyle.h
+
+ASSERT(beforeChildAnonymousContainer->isTable()); fails in RenderBlock::addChildIgnoringAnonymousColumnBlocks.
+https://bugs.webkit.org/show_bug.cgi?id=84606
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+RenderBlock::removeChild forgot to set display on the anonymous block, causing it
+to display as INLINE. To prevent this kind of failure in future, we replace
+createAnonymousStyle with createAnonymousStyleWithDisplay to make everyone explictly
+pass display as the argument.
+
+Test: fast/block/block-add-child-crash.html
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::removeChild):
+(WebCore::RenderBlock::createAnonymousWithParentRendererAndDisplay):
+(WebCore::RenderBlock::createAnonymousColumnsWithParentRenderer):
+(WebCore::RenderBlock::createAnonymousColumnSpanWithParentRenderer):
+* rendering/RenderInline.cpp:
+(WebCore::updateStyleOfAnonymousBlockContinuations):
+(WebCore::RenderInline::addChildIgnoringContinuation):
+* rendering/RenderObject.cpp:
+(WebCore::RenderObject::propagateStyleToAnonymousChildren):
+* rendering/RenderRuby.cpp:
+(WebCore::createAnonymousRubyInlineBlock):
+* rendering/RenderRubyRun.cpp:
+(WebCore::RenderRubyRun::createRubyBase):
+(WebCore::RenderRubyRun::staticCreateRubyRun):
+* rendering/RenderTable.cpp:
+(WebCore::RenderTable::createAnonymousWithParentRenderer):
+* rendering/RenderTableCell.cpp:
+(WebCore::RenderTableCell::createAnonymousWithParentRenderer):
+* rendering/RenderTableRow.cpp:
+(WebCore::RenderTableRow::createAnonymousWithParentRenderer):
+* rendering/RenderTableSection.cpp:
+(WebCore::RenderTableSection::createAnonymousWithParentRenderer):
+* rendering/mathml/RenderMathMLBlock.cpp:
+(WebCore::RenderMathMLBlock::createAlmostAnonymousBlock):
+* rendering/mathml/RenderMathMLRow.cpp:
+(WebCore::RenderMathMLRow::createAnonymousWithParentRenderer):
+* rendering/mathml/RenderMathMLSubSup.cpp:
+(WebCore::RenderMathMLSubSup::addChild):
+* rendering/style/RenderStyle.cpp:
+(WebCore::RenderStyle::createAnonymousStyleWithDisplay):
+* rendering/style/RenderStyle.h:
+
+LayoutTests:
+
+* fast/block/block-add-child-crash-expected.txt: Added.
+* fast/block/block-add-child-crash.html: Added.
+
+

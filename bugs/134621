@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r205197 | bfulgham@apple.com | 2016-08-30 21:54:37 +0200 (Di, 30. Aug 2016) | 29 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/graphics/transforms/TransformationMatrix.cpp
+   M /trunk/Source/WebCore/platform/graphics/transforms/TransformationMatrix.h
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+   A /trunk/Tools/TestWebKitAPI/Tests/WebCore/TransformationMatrix.cpp
+
+Use of uninitialised memory in TransformationMatrx::blend4()
+https://bugs.webkit.org/show_bug.cgi?id=134621
+<rdar://problem/27337539>
+
+Reviewed by Dean Jackson.
+
+Change is based on the Blink change (patch by <alancutter@chromium.org>):
+<https://src.chromium.org/viewvc/blink?revision=177453&view=revision>
+
+Source/WebCore:
+
+TransformationMatrix::blend() was attempting to blend between non-invertable
+matricies. This resulted in garbage stack variables being used.
+This patch ensures that blend() will fall back to a 50% step interpolation
+when one of the sides are not invertable.
+
+Tested by new TransformationMatrix test in TestWebKitAPI.
+
+* platform/graphics/transforms/TransformationMatrix.cpp:
+(WebCore::TransformationMatrix::blend2): Properly handle failure in the
+decompose method calls.
+(WebCore::TransformationMatrix::blend4): Ditto.
+
+Tools:
+
+* TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+* TestWebKitAPI/Tests/WebCore/TransformationMatrix.cpp: Added.
+(TestWebKitAPI::TEST):
+
+

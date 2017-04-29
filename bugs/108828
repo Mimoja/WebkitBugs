@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r142365 | pdr@google.com | 2013-02-09 19:02:37 +0100 (Sa, 09. Feb 2013) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/animate-keytimes-crash-expected.html
+   A /trunk/LayoutTests/svg/animations/animate-keytimes-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGAnimationElement.cpp
+
+Sanitize m_keyTimes for paced value animations
+https://bugs.webkit.org/show_bug.cgi?id=108828
+
+Reviewed by Dirk Schulze.
+
+Source/WebCore:
+
+SVG animations with calcMode=paced calculate new m_keyTimes in
+SVGAnimationElement::calculateKeyTimesForCalcModePaced() because paced animations do not
+specify keyTimes. If an error occurs while calculating m_keyTimes, and there exists
+user-specified values, a crash could occur because the user-specified values were not
+sanitized.
+
+This change clears user-specified keyTimes before calculating new ones.
+
+Test: svg/animations/animate-keytimes-crash.html
+
+* svg/SVGAnimationElement.cpp:
+(WebCore::SVGAnimationElement::calculateKeyTimesForCalcModePaced):
+
+LayoutTests:
+
+* svg/animations/animate-keytimes-crash-expected.html: Added.
+* svg/animations/animate-keytimes-crash.html: Added.
+
+

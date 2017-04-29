@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r109345 | commit-queue@webkit.org | 2012-03-01 16:04:36 +0100 (Do, 01. Mär 2012) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/resources/smil-element-target-crash.svg
+   A /trunk/LayoutTests/svg/animations/smil-element-target-crash-main-expected.txt
+   A /trunk/LayoutTests/svg/animations/smil-element-target-crash-main.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/animation/SVGSMILElement.cpp
+
+Crash in WebCore::SVGDocumentExtensions::removeAnimationElementFromTarget
+https://bugs.webkit.org/show_bug.cgi?id=79831
+
+Patch by Stephen Chenney <schenney@chromium.org> on 2012-03-01
+Reviewed by Eric Seidel.
+
+Out-of-order operations in the SVGSMILElement::removedFromDocument
+method caused its target to be removed and then re-added due to a
+later call. This led to the target being set on the animation while
+the target element itself was unaware. At deletion time, this caused a
+crash (or assert in debug builds). Thanks to Abhishek Arya for help
+with the layout test.
+
+Source/WebCore:
+
+Test: svg/animations/smil-element-target-crash-main.html
+
+* svg/animation/SVGSMILElement.cpp:
+(WebCore::SVGSMILElement::removedFromDocument):
+
+LayoutTests:
+
+* svg/animations/resources/smil-element-target-crash.svg: Added.
+* svg/animations/smil-element-target-crash-main-expected.txt: Added.
+* svg/animations/smil-element-target-crash-main.html: Added.
+

@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r149749 | eric.carlson@apple.com | 2013-05-08 19:16:21 +0200 (Mi, 08. Mai 2013) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/media/track/track-remove-crash-expected.txt
+   A /trunk/LayoutTests/media/track/track-remove-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLMediaElement.cpp
+
+Prevent crash when track is deleted during video element deletion.
+https://bugs.webkit.org/show_bug.cgi?id=106183
+
+Reviewed by Dean Jackson.
+
+Source/WebCore:
+
+Test: media/track/track-remove-crash.html
+
+* html/HTMLMediaElement.cpp:
+(WebCore::HTMLMediaElement::removedFrom): Set m_inActiveDocument to false so we
+    do not process text track cues or dispatch related events.
+
+LayoutTests:
+
+* media/track/track-remove-crash-expected.txt: Added.
+* media/track/track-remove-crash.html: Added.
+
+

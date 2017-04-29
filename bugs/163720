@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r210276 | sbarati@apple.com | 2017-01-04 20:11:23 +0100 (Mi, 04. Jan 2017) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/bound-function-tail-call-with-exception.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/llint/LowLevelInterpreter32_64.asm
+   M /trunk/Source/JavaScriptCore/llint/LowLevelInterpreter64.asm
+
+We don't properly handle exceptions inside the nativeCallTrampoline macro in the LLInt
+https://bugs.webkit.org/show_bug.cgi?id=163720
+
+Reviewed by Mark Lam.
+
+JSTests:
+
+* stress/bound-function-tail-call-with-exception.js: Added.
+(bar):
+(foo):
+(catch):
+
+Source/JavaScriptCore:
+
+In the LLInt, we were incorrectly doing the exception check after the call.
+Before the exception check, we were unwinding to our caller's
+frame under the assumption that our caller was always a JS frame.
+This is incorrect, however, because our caller might be a C frame.
+One way that it can be a C frame is when C calls to JS, and JS tail
+calls to native. This patch fixes this bug by doing unwinding from
+the native callee's frame instead of its callers.
+
+* llint/LowLevelInterpreter32_64.asm:
+* llint/LowLevelInterpreter64.asm:
+
+
+

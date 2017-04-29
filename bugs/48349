@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r70594 | rniwa@webkit.org | 2010-10-27 02:49:45 +0200 (Mi, 27. Okt 2010) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/indent-node-to-split-to-crash-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/indent-node-to-split-to-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/editing/CompositeEditCommand.cpp
+   M /trunk/WebCore/editing/IndentOutdentCommand.cpp
+
+Crash in CompositeEditCommand::splitTreeToNode
+https://bugs.webkit.org/show_bug.cgi?id=48349
+
+Reviewed by Kent Tamura.
+
+WebCore: 
+
+The bug was caused by indentIntoBlockquote's passing null pointer to splitTreeToNode.
+Fixed the crash by adding early exits.
+
+Test: editing/execCommand/indent-node-to-split-to-crash.html
+
+* editing/CompositeEditCommand.cpp:
+(WebCore::CompositeEditCommand::splitTreeToNode):
+* editing/IndentOutdentCommand.cpp:
+(WebCore::IndentOutdentCommand::indentIntoBlockquote):
+
+LayoutTests: 
+
+Added a test to ensure WebKit does not crash when indenting.
+
+* editing/execCommand/indent-node-to-split-to-crash-expected.txt: Added.
+* editing/execCommand/indent-node-to-split-to-crash.html: Added.
+
+
+

@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r79689 | inferno@chromium.org | 2011-02-25 18:51:49 +0100 (Fr, 25. Feb 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/resources/word-break-next-linebox-not-dirty-crash.html
+   A /trunk/LayoutTests/fast/text/word-break-next-linebox-not-dirty-crash-main-expected.txt
+   A /trunk/LayoutTests/fast/text/word-break-next-linebox-not-dirty-crash-main.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderLineBoxList.cpp
+
+2011-02-25  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not crash when removing a text node adjacent to a word break node.
+        https://bugs.webkit.org/show_bug.cgi?id=55206
+
+        * fast/text/resources/word-break-next-linebox-not-dirty-crash.html: Added.
+        * fast/text/word-break-next-linebox-not-dirty-crash-main-expected.txt: Added.
+        * fast/text/word-break-next-linebox-not-dirty-crash-main.html: Added.
+2011-02-25  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        When trying to find which lines to dirty for a changed child, make sure
+        that we do test if the adjacent next linebox contains that changed child
+        and if yes, dirty it. This can happen in cases when we have a word break
+        between text nodes.
+        https://bugs.webkit.org/show_bug.cgi?id=55206
+
+        Test: fast/text/word-break-next-linebox-not-dirty-crash-main.html
+
+        * rendering/RenderLineBoxList.cpp:
+        (WebCore::RenderLineBoxList::dirtyLinesFromChangedChild):
+
+

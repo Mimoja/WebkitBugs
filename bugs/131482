@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r167135 | cfleizach@apple.com | 2014-04-11 20:18:40 +0200 (Fr, 11. Apr 2014) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/platform/mac/fast/speechsynthesis/speech-synthesis-gc-utterance-crash-expected.txt
+   A /trunk/LayoutTests/platform/mac/fast/speechsynthesis/speech-synthesis-gc-utterance-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/speech/SpeechSynthesis.cpp
+
+Heap-use-after-free in WebCore::SpeechSynthesisUtterance::startTime
+https://bugs.webkit.org/show_bug.cgi?id=131482
+
+Reviewed by David Kilzer.
+
+Source/WebCore: 
+
+Hold onto the utterance until it has time to fire, in case other references have been removed.
+
+Merged from Blink r171077 by <dmazzoni@chromium.org>
+
+Test: platform/mac/fast/speechsynthesis/speech-synthesis-gc-utterance-crash.html
+
+* Modules/speech/SpeechSynthesis.cpp:
+(WebCore::SpeechSynthesis::handleSpeakingCompleted):
+
+LayoutTests: 
+
+* platform/mac/fast/speechsynthesis/speech-synthesis-gc-utterance-crash-expected.txt: Added.
+* platform/mac/fast/speechsynthesis/speech-synthesis-gc-utterance-crash.html: Added.
+
+
+

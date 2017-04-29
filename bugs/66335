@@ -1,0 +1,47 @@
+------------------------------------------------------------------------
+r93227 | inferno@chromium.org | 2011-08-17 20:29:24 +0200 (Mi, 17. Aug 2011) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/dom/resources/stylesheet-candidate-node-crash.svg
+   A /trunk/LayoutTests/svg/dom/stylesheet-candidate-node-crash-main-expected.txt
+   A /trunk/LayoutTests/svg/dom/stylesheet-candidate-node-crash-main.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ProcessingInstruction.cpp
+   M /trunk/Source/WebCore/dom/StyleElement.cpp
+   M /trunk/Source/WebCore/dom/StyleElement.h
+   M /trunk/Source/WebCore/html/HTMLLinkElement.cpp
+   M /trunk/Source/WebCore/html/HTMLStyleElement.cpp
+   M /trunk/Source/WebCore/svg/SVGStyleElement.cpp
+
+Source/WebCore: Crash in Document::recalcStyleSelector
+https://bugs.webkit.org/show_bug.cgi?id=66335
+
+Reviewed by Simon Fraser.
+
+When node is getting destroyed and its removedFromDocument
+is not called due to entire document structure torn down(using
+removeAllChildren), make sure to clear out the stylesheet
+candidate node from document's structures in its destructor.
+
+Test: svg/dom/stylesheet-candidate-node-crash-main.html
+
+* dom/ProcessingInstruction.cpp:
+(WebCore::ProcessingInstruction::~ProcessingInstruction):
+* html/HTMLLinkElement.cpp:
+(WebCore::HTMLLinkElement::~HTMLLinkElement):
+* html/HTMLStyleElement.cpp:
+(WebCore::HTMLStyleElement::~HTMLStyleElement):
+* svg/SVGStyleElement.cpp:
+(WebCore::SVGStyleElement::~SVGStyleElement):
+
+LayoutTests: Tests that we do not crash when iterating through stylesheet
+candidate list hashset.
+https://bugs.webkit.org/show_bug.cgi?id=66335
+
+Reviewed by Simon Fraser.
+
+* svg/dom/resources/stylesheet-candidate-node-crash.svg: Added.
+* svg/dom/stylesheet-candidate-node-crash-main-expected.txt: Added.
+* svg/dom/stylesheet-candidate-node-crash-main.html: Added.
+
+

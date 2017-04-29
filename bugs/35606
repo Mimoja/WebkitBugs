@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r56214 | oliver@apple.com | 2010-03-19 07:24:19 +0100 (Fr, 19. Mär 2010) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/animations/keypoints-mismatch-expected.txt
+   A /trunk/LayoutTests/svg/animations/keypoints-mismatch.svg
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/svg/SVGAnimationElement.cpp
+
+WebCore: Fix a minor crash with mismatched array sizes in SVG animation
+elements.
+
+Patch by Chris Evans <cevans@chromium.org> on 2010-03-18
+Reviewed by Nikolas Zimmermann.
+
+https://bugs.webkit.org/show_bug.cgi?id=35606
+
+Test: svg/animations/keypoints-mismatch.svg
+
+* svg/SVGAnimationElement.cpp:
+(WebCore::SVGAnimationElement::startedActiveInterval):
+Globally apply validations relevant to all animation types.
+
+LayoutTests: Add test for minor SVG animation crashers.
+See https://bugs.webkit.org/show_bug.cgi?id=35606
+
+Patch by Chris Evans <cevans@chromium.org> on 2010-03-18
+Reviewed by Nikolas Zimmermann.
+
+* svg/animations/keypoints-mismatch.svg: Added.
+* svg/animations/keypoints-mismatch-expected.txt: Added.
+

@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r192433 | jiewen_tan@apple.com | 2015-11-13 19:36:31 +0100 (Fr, 13. Nov 2015) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/selection/focus-iframe-removal-crash-expected.txt
+   A /trunk/LayoutTests/editing/selection/focus-iframe-removal-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Element.cpp
+
+Element::focus() should acquire the ownership of Frame.
+https://bugs.webkit.org/show_bug.cgi?id=150204
+<rdar://problem/23136794>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+The FrameSelection::setSelection method sometimes releases the last reference to a frame.
+When this happens, the Element::updateFocusAppearance would attempt to use dereferenced memory.
+Instead, we should ensure that the Frame lifetime is guaranteed to extend through the duration
+of the method call.
+
+Test: editing/selection/focus-iframe-removal-crash.html
+
+* dom/Element.cpp:
+(WebCore::Element::updateFocusAppearance):
+
+LayoutTests:
+
+* editing/selection/focus-iframe-removal-crash-expected.txt: Added.
+* editing/selection/focus-iframe-removal-crash.html: Added.
+

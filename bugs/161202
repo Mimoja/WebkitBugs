@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r205031 | bfulgham@apple.com | 2016-08-26 20:12:56 +0200 (Fr, 26. Aug 2016) | 24 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLToken.cpp
+   M /trunk/Source/WebCore/rendering/mathml/RenderMathMLToken.h
+
+Crash when getting font bounding rect
+https://bugs.webkit.org/show_bug.cgi?id=161202
+<rdar://problem/27986981>
+
+Reviewed by Myles C. Maxfield.
+
+We should never store GlyphData objects for later use, because they contain raw pointers to Font elements
+contained in caches, and those font caches get periodically purged.
+
+Instead, we should hold onto the ‘key’ representing the GlyphData, and simply ask the system for the
+GlyphData the next time it is needed.
+
+Tested by existing MathML tests under ASAN and GuardMalloc.
+
+* rendering/mathml/RenderMathMLToken.cpp:
+(WebCore::RenderMathMLToken::RenderMathMLToken): Clean up constructors.
+(WebCore::RenderMathMLToken::computePreferredLogicalWidths): Use keys to get correct GlyphData when needed.
+(WebCore::RenderMathMLToken::updateMathVariantGlyph): Ditto.
+(WebCore::RenderMathMLToken::firstLineBaseline): Ditto.
+(WebCore::RenderMathMLToken::layoutBlock): Ditto.
+(WebCore::RenderMathMLToken::paint): Ditto.
+(WebCore::RenderMathMLToken::paintChildren): Ditto.
+* rendering/mathml/RenderMathMLToken.h:
+
+

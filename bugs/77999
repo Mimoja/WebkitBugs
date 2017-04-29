@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r106972 | inferno@chromium.org | 2012-02-07 21:01:42 +0100 (Di, 07. Feb 2012) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/remove-body-during-body-replacement-expected.txt
+   A /trunk/LayoutTests/fast/dom/remove-body-during-body-replacement.html
+   A /trunk/LayoutTests/fast/dom/remove-body-during-body-replacement2-expected.txt
+   A /trunk/LayoutTests/fast/dom/remove-body-during-body-replacement2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+
+Crash in ContainerNode functions due to mutation events.
+https://bugs.webkit.org/show_bug.cgi?id=77999
+
+Reviewed by Ryosuke Niwa.
+
+Source/WebCore:
+
+Add RefPtr to protect premature deletion of this due to mutation events.
+
+Tests: fast/dom/remove-body-during-body-replacement.html
+       fast/dom/remove-body-during-body-replacement2.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::insertBefore):
+(WebCore::ContainerNode::replaceChild):
+(WebCore::ContainerNode::removeChild):
+(WebCore::ContainerNode::appendChild):
+
+LayoutTests:
+
+* fast/dom/remove-body-during-body-replacement-expected.txt: Added.
+* fast/dom/remove-body-during-body-replacement.html: Added.
+* fast/dom/remove-body-during-body-replacement2-expected.txt: Added.
+* fast/dom/remove-body-during-body-replacement2.html: Added.
+
+

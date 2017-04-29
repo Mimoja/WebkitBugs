@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r195162 | jiewen_tan@apple.com | 2016-01-16 03:08:08 +0100 (Sa, 16. Jan 2016) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/loading/resources/server-redirect-result.html
+   A /trunk/LayoutTests/http/tests/loading/resources/server-redirect.php
+   A /trunk/LayoutTests/http/tests/loading/server-redirect-for-provisional-load-caching-expected.txt
+   A /trunk/LayoutTests/http/tests/loading/server-redirect-for-provisional-load-caching.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/loader/DocumentLoader.cpp
+   M /trunk/Source/WebCore/loader/cache/CachedRawResource.h
+
+FrameLoaderClient::didReceiveServerRedirectForProvisionalLoadForFrame() is never called when loading a main resource from the memory cache
+https://bugs.webkit.org/show_bug.cgi?id=152520
+<rdar://problem/23305737>
+
+Reviewed by Andy Estes.
+
+Source/WebCore:
+
+Test: http/tests/loading/server-redirect-for-provisional-load-caching.html
+
+* loader/DocumentLoader.cpp:
+(WebCore::DocumentLoader::responseReceived):
+Dispatch message to notify client that a cached resource was redirected. So,
+client can make proper actions to treat server side redirection.
+* loader/cache/CachedRawResource.h:
+Add a method to tell whether the cached resource was redirected.
+
+LayoutTests:
+
+* http/tests/loading/resources/server-redirect-result.html: Added.
+* http/tests/loading/resources/server-redirect.php: Added.
+* http/tests/loading/server-redirect-for-provisional-load-caching-expected.txt: Added.
+* http/tests/loading/server-redirect-for-provisional-load-caching.html: Added.
+

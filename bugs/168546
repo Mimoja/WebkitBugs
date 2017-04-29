@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r213742 | mark.lam@apple.com | 2017-03-11 02:38:22 +0100 (Sa, 11. Mär 2017) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/regress-168546.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/bytecompiler/NodesCodegen.cpp
+
+JSC: BindingNode::bindValue doesn't increase the scope's reference count.
+https://bugs.webkit.org/show_bug.cgi?id=168546
+<rdar://problem/30589551>
+
+Reviewed by Saam Barati.
+
+JSTests:
+
+* stress/regress-168546.js: Added.
+
+Source/JavaScriptCore:
+
+We should protect the scope RegisterID with a RefPtr while it is still needed.
+
+* bytecompiler/NodesCodegen.cpp:
+(JSC::ForInNode::emitLoopHeader):
+(JSC::ForOfNode::emitBytecode):
+(JSC::BindingNode::bindValue):
+
+
+

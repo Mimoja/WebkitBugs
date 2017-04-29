@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+r165826 | reni@webkit.org | 2014-03-18 19:57:45 +0100 (Di, 18. Mär 2014) | 19 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/plugins/crash-invalid-data-reference-expected.txt
+   A /trunk/LayoutTests/plugins/crash-invalid-data-reference.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderView.cpp
+
+Bad cast with toRenderBox in WebCore::RenderView::repaintViewRectangle
+https://bugs.webkit.org/show_bug.cgi?id=129104
+
+Reviewed by Simon Fraser.
+
+Source/WebCore:
+
+We should not cast the renderer of a RenderView's owner to RenderBox
+unless we are sure it is one.
+
+Test: plugins/crash-invalid-data-reference.html
+
+* rendering/RenderView.cpp:
+(WebCore::RenderView::repaintViewRectangle):
+
+LayoutTests:
+
+* plugins/crash-invalid-data-reference-expected.txt: Added.
+* plugins/crash-invalid-data-reference.html: Added.
+

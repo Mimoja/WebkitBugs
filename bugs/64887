@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r91613 | cdn@chromium.org | 2011-07-23 00:42:51 +0200 (Sa, 23. Jul 2011) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebKit/chromium/ChangeLog
+   M /trunk/Source/WebKit/chromium/public/WebKitClient.h
+   M /trunk/Source/WebKit/chromium/src/WebKit.cpp
+
+Hook v8 up to cryptographicallyRandomValues as an entropy source.
+https://bugs.webkit.org/show_bug.cgi?id=64887
+
+Reviewed by Adam Barth.
+
+* public/WebKitClient.h:
+* src/WebKit.cpp:
+(WebKit::generateEntropy):
+(WebKit::initialize):
+
+

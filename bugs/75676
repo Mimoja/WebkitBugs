@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r109546 | antti@apple.com | 2012-03-02 12:28:14 +0100 (Fr, 02. Mär 2012) | 17 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/dom/Document.h
+
+possible regression: r104060 maybe causing crashes
+https://bugs.webkit.org/show_bug.cgi?id=75676
+
+Rubber-stamped by Simon Hausmann.
+
+Remove the speculative fix (the problem was elsewhere, http://trac.webkit.org/changeset/104845).
+
+Also remove the debugging code added for this bug.
+    
+* dom/Document.cpp:
+(WebCore::Document::Document):
+(WebCore::Document::clearStyleSelector):
+(WebCore::Document::updateActiveStylesheets):
+* dom/Document.h:
+(Document):
+
+
+

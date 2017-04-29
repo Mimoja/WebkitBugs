@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r107123 | inferno@chromium.org | 2012-02-08 21:53:54 +0100 (Mi, 08. Feb 2012) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Node.cpp
+
+Crash in Node::normalize.
+https://bugs.webkit.org/show_bug.cgi?id=78135
+
+Reviewed by Ryosuke Niwa.
+
+No new tests. Original testcase does not reduce to manageable
+extent.
+
+* dom/Node.cpp:
+(WebCore::Node::normalize):
+
+

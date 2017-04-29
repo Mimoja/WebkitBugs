@@ -1,0 +1,14 @@
+------------------------------------------------------------------------
+r207157 | dbates@webkit.org | 2016-10-11 21:40:43 +0200 (Di, 11. Okt 2016) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/network/cf/ResourceResponse.h
+
+[iOS] Sandbox QuickLook previews
+https://bugs.webkit.org/show_bug.cgi?id=163240
+<rdar://problem/25961633>
+
+Fix bad merge following r207151.
+
+* platform/network/cf/ResourceResponse.h: Define m_isQuickLook.
+

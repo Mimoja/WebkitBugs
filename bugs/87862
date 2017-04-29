@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r118955 | commit-queue@webkit.org | 2012-05-30 21:44:22 +0200 (Mi, 30. Mai 2012) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/canvas/webgl/array-override-set-expected.txt
+   A /trunk/LayoutTests/fast/canvas/webgl/array-override-set.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/custom/V8ArrayBufferViewCustom.cpp
+   M /trunk/Source/WebCore/bindings/v8/custom/V8ArrayBufferViewCustom.h
+   M /trunk/Source/WebCore/bindings/v8/custom/V8ArrayBufferViewCustomScript.js
+
+[v8] Crash after redefining setter on typed array to a number
+https://bugs.webkit.org/show_bug.cgi?id=87862
+
+Patch by Ulan Degenbaev <ulan@chromium.org> on 2012-05-30
+Reviewed by Kenneth Russell.
+
+Remove calls to typed array set() method from C++.
+Store the copying script as a hidden property of a typed array prototype.
+
+Source/WebCore:
+
+Test: fast/canvas/webgl/array-override-set.html
+
+* bindings/v8/custom/V8ArrayBufferViewCustom.cpp:
+(WebCore):
+(WebCore::getHiddenCopyMethod):
+(WebCore::installHiddenCopyMethod):
+(WebCore::copyElements):
+* bindings/v8/custom/V8ArrayBufferViewCustom.h:
+(WebCore):
+(WebCore::constructWebGLArray):
+(WebCore::setWebGLArrayHelper):
+* bindings/v8/custom/V8ArrayBufferViewCustomScript.js:
+
+LayoutTests:
+
+* fast/canvas/webgl/array-override-set-expected.txt: Added.
+* fast/canvas/webgl/array-override-set.html: Added.
+

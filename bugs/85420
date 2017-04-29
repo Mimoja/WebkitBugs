@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r116864 | inferno@chromium.org | 2012-05-13 06:22:42 +0200 (So, 13. Mai 2012) | 22 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/HTMLSelectElement/option-add-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/HTMLSelectElement/option-add-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/HTMLSelectElement.cpp
+
+Crash in HTMLSelectElement::setOption
+https://bugs.webkit.org/show_bug.cgi?id=85420
+
+Source/WebCore:
+
+Reviewed by Eric Seidel
+
+RefPtr before option in HTMLSelectElement::setOption since it
+can get destroyed due to mutation events.
+
+Test: fast/dom/HTMLSelectElement/option-add-crash.html
+
+* html/HTMLSelectElement.cpp:
+(WebCore::HTMLSelectElement::setOption):
+
+LayoutTests:
+
+Reviewed by Eric Seidel.
+
+* fast/dom/HTMLSelectElement/option-add-crash-expected.txt: Added.
+* fast/dom/HTMLSelectElement/option-add-crash.html: Added.
+
+

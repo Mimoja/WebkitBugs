@@ -1,0 +1,31 @@
+------------------------------------------------------------------------
+r96341 | abarth@webkit.org | 2011-09-29 19:50:47 +0200 (Do, 29. Sep 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/window-named-valueOf-expected.txt
+   A /trunk/LayoutTests/http/tests/security/window-named-valueOf.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/v8/custom/V8DOMWindowCustom.cpp
+
+We should ignore the return value of GetRealNamedProperty
+https://bugs.webkit.org/show_bug.cgi?id=68840
+
+Reviewed by Nate Chapin.
+
+Source/WebCore:
+
+Instead of skipping the lookup process by using the result of real
+named property, we should just indiciate that it wasn't handled by the
+interceptor.
+
+Test: http/tests/security/window-named-valueOf.html
+
+* bindings/v8/custom/V8DOMWindowCustom.cpp:
+(WebCore::V8DOMWindow::namedPropertyGetter):
+
+LayoutTests:
+
+* http/tests/security/window-named-valueOf-expected.txt: Added.
+* http/tests/security/window-named-valueOf.html: Added.
+
+

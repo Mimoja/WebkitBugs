@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r140069 | inferno@chromium.org | 2013-01-18 01:22:41 +0100 (Fr, 18. Jan 2013) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/multicol/float-not-removed-crash-expected.txt
+   A /trunk/LayoutTests/fast/multicol/float-not-removed-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBoxModelObject.cpp
+
+Heap-use-after-free in WebCore::RenderBlock::checkFloatsInCleanLine
+https://bugs.webkit.org/show_bug.cgi?id=90802
+
+Reviewed by Julien Chaffraix.
+
+Source/WebCore:
+
+Test: fast/multicol/float-not-removed-crash.html
+
+* rendering/RenderBoxModelObject.cpp:
+(WebCore::RenderBoxModelObject::moveChildrenTo):
+1. When fullRemoveInsert is True, make sure to clear the
+floating objects from our list (similar to positioned objects).
+Our children are getting moved to another block and we won't
+get notified when they are going away.
+2. Remove the redundant hasPositionedObjects check since it
+is already done inside removePositionedObjects.
+
+LayoutTests:
+
+* fast/multicol/float-not-removed-crash-expected.txt: Added.
+* fast/multicol/float-not-removed-crash.html: Added.
+
+

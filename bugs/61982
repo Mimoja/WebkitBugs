@@ -1,0 +1,32 @@
+------------------------------------------------------------------------
+r87995 | dominicc@chromium.org | 2011-06-03 10:36:04 +0200 (Fr, 03. Jun 2011) | 21 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/html/clone-range-expected.txt
+   A /trunk/LayoutTests/fast/html/clone-range.html
+   M /trunk/LayoutTests/platform/win/Skipped
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/shadow/SliderThumbElement.h
+
+2011-06-03  Dominic Cooney  <dominicc@chromium.org>
+
+        Reviewed by Kent Tamura.
+
+        Adds a test that range input clones have the right kind of slider.
+        https://bugs.webkit.org/show_bug.cgi?id=61982
+
+        * fast/html/clone-range-expected.txt: Added.
+        * fast/html/clone-range.html: Added.
+        * platform/win/Skipped: Test needs DRT functionality not in this port.
+2011-06-03  Dominic Cooney  <dominicc@chromium.org>
+
+        Reviewed by Kent Tamura.
+
+        Cloned range input sliders should be SliderThumbElements, not divs.
+        https://bugs.webkit.org/show_bug.cgi?id=61982
+
+        Test: fast/html/clone-range.html
+
+        * html/shadow/SliderThumbElement.h:
+        (WebCore::SliderThumbElement::cloneElementWithoutAttributesAndChildren): Create a SliderThumbElement when being cloned.
+

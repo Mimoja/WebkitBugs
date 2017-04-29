@@ -1,0 +1,194 @@
+------------------------------------------------------------------------
+r58703 | abarth@webkit.org | 2010-05-03 23:50:27 +0200 (Mo, 03. Mai 2010) | 143 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/clipboard-access-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/clipboard-access.html
+   A /trunk/LayoutTests/editing/execCommand/script-tests/clipboard-access.js
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/WebCore.base.exp
+   M /trunk/WebCore/editing/EditorCommand.cpp
+   M /trunk/WebCore/page/Settings.cpp
+   M /trunk/WebCore/page/Settings.h
+   M /trunk/WebKit/chromium/ChangeLog
+   M /trunk/WebKit/chromium/public/WebSettings.h
+   M /trunk/WebKit/chromium/src/WebSettingsImpl.cpp
+   M /trunk/WebKit/chromium/src/WebSettingsImpl.h
+   M /trunk/WebKit/gtk/ChangeLog
+   M /trunk/WebKit/gtk/webkit/webkitwebsettings.cpp
+   M /trunk/WebKit/gtk/webkit/webkitwebview.cpp
+   M /trunk/WebKit/mac/ChangeLog
+   M /trunk/WebKit/mac/WebView/WebPreferenceKeysPrivate.h
+   M /trunk/WebKit/mac/WebView/WebPreferences.mm
+   M /trunk/WebKit/mac/WebView/WebPreferencesPrivate.h
+   M /trunk/WebKit/mac/WebView/WebView.mm
+   M /trunk/WebKit/qt/Api/qwebsettings.cpp
+   M /trunk/WebKit/qt/Api/qwebsettings.h
+   M /trunk/WebKit/qt/ChangeLog
+   M /trunk/WebKit/win/ChangeLog
+   M /trunk/WebKit/win/Interfaces/IWebPreferencesPrivate.idl
+   M /trunk/WebKit/win/WebPreferenceKeysPrivate.h
+   M /trunk/WebKit/win/WebPreferences.cpp
+   M /trunk/WebKit/win/WebPreferences.h
+   M /trunk/WebKit/win/WebView.cpp
+   M /trunk/WebKitTools/ChangeLog
+   M /trunk/WebKitTools/DumpRenderTree/LayoutTestController.cpp
+   M /trunk/WebKitTools/DumpRenderTree/LayoutTestController.h
+   M /trunk/WebKitTools/DumpRenderTree/chromium/LayoutTestController.cpp
+   M /trunk/WebKitTools/DumpRenderTree/chromium/LayoutTestController.h
+   M /trunk/WebKitTools/DumpRenderTree/chromium/TestShell.cpp
+   M /trunk/WebKitTools/DumpRenderTree/gtk/DumpRenderTree.cpp
+   M /trunk/WebKitTools/DumpRenderTree/gtk/LayoutTestControllerGtk.cpp
+   M /trunk/WebKitTools/DumpRenderTree/mac/DumpRenderTree.mm
+   M /trunk/WebKitTools/DumpRenderTree/mac/LayoutTestControllerMac.mm
+   M /trunk/WebKitTools/DumpRenderTree/qt/DumpRenderTreeQt.cpp
+   M /trunk/WebKitTools/DumpRenderTree/qt/LayoutTestControllerQt.cpp
+   M /trunk/WebKitTools/DumpRenderTree/qt/LayoutTestControllerQt.h
+   M /trunk/WebKitTools/DumpRenderTree/win/DumpRenderTree.cpp
+   M /trunk/WebKitTools/DumpRenderTree/win/LayoutTestControllerWin.cpp
+   M /trunk/WebKitTools/DumpRenderTree/wx/LayoutTestControllerWx.cpp
+
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Tests that javascript cannot access clipboard.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * editing/execCommand/clipboard-access-expected.txt: Added.
+        * editing/execCommand/clipboard-access.html: Added.
+        * editing/execCommand/script-tests/clipboard-access.js: Added.
+        (enabled):
+        (whenEnabled):
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is disabled by default.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        Test: editing/execCommand/clipboard-access.html
+
+        * WebCore.base.exp:
+        * editing/EditorCommand.cpp:
+        (WebCore::supportedCopyCut):
+        (WebCore::supportedPaste):
+        (WebCore::createCommandMap):
+        * page/Settings.cpp:
+        (WebCore::Settings::Settings):
+        (WebCore::Settings::setJavaScriptCanAccessClipboard):
+        * page/Settings.h:
+        (WebCore::Settings::javaScriptCanAccessClipboard):
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is disabled by default.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * public/WebSettings.h:
+        * src/WebSettingsImpl.cpp:
+        (WebKit::WebSettingsImpl::setJavaScriptCanAccessClipboard):
+        * src/WebSettingsImpl.h:
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is disabled by default.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * webkit/webkitwebsettings.cpp:
+        (webkit_web_settings_class_init):
+        (webkit_web_settings_set_property):
+        (webkit_web_settings_get_property):
+        (webkit_web_settings_copy):
+        * webkit/webkitwebview.cpp:
+        (webkit_web_view_update_settings):
+        (webkit_web_view_settings_notify):
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is disabled by default.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * WebView/WebPreferenceKeysPrivate.h:
+        * WebView/WebPreferences.mm:
+        (+[WebPreferences initialize]):
+        (-[WebPreferences javaScriptCanAccessClipboard]):
+        (-[WebPreferences setJavaScriptCanAccessClipboard:]):
+        * WebView/WebPreferencesPrivate.h:
+        * WebView/WebView.mm:
+        (-[WebView _preferencesChangedNotification:]):
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is disabled by default.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * Api/qwebsettings.cpp:
+        (QWebSettingsPrivate::apply):
+        * Api/qwebsettings.h:
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is disabled by default.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * Interfaces/IWebPreferencesPrivate.idl:
+        * WebPreferenceKeysPrivate.h:
+        * WebPreferences.cpp:
+        (WebPreferences::initializeDefaultSettings):
+        (WebPreferences::javaScriptCanAccessClipboard):
+        (WebPreferences::setJavaScriptCanAccessClipboard):
+        * WebPreferences.h:
+        * WebView.cpp:
+        (WebView::notifyPreferencesChanged):
+2010-05-03  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add support for controlling clipboard access from javascript.
+        Clipboard access from javascript is enabled in test framework.
+        https://bugs.webkit.org/show_bug.cgi?id=27751
+
+        * DumpRenderTree/LayoutTestController.cpp:
+        (setJavaScriptCanAccessClipboardCallback):
+        (LayoutTestController::staticFunctions):
+        * DumpRenderTree/LayoutTestController.h:
+        * DumpRenderTree/chromium/LayoutTestController.cpp:
+        (LayoutTestController::LayoutTestController):
+        (LayoutTestController::setJavaScriptCanAccessClipboard):
+        (LayoutTestController::overridePreference):
+        * DumpRenderTree/chromium/LayoutTestController.h:
+        * DumpRenderTree/chromium/TestShell.cpp:
+        (TestShell::resetWebSettings):
+        * DumpRenderTree/gtk/DumpRenderTree.cpp:
+        (resetDefaultsToConsistentValues):
+        * DumpRenderTree/gtk/LayoutTestControllerGtk.cpp:
+        (LayoutTestController::setJavaScriptCanAccessClipboard):
+        * DumpRenderTree/mac/DumpRenderTree.mm:
+        (resetDefaultsToConsistentValues):
+        * DumpRenderTree/mac/LayoutTestControllerMac.mm:
+        (LayoutTestController::setJavaScriptCanAccessClipboard):
+        * DumpRenderTree/qt/DumpRenderTreeQt.cpp:
+        (WebCore::WebPage::WebPage):
+        (WebCore::WebPage::resetSettings):
+        * DumpRenderTree/qt/LayoutTestControllerQt.cpp:
+        (LayoutTestController::setJavaScriptCanAccessClipboard):
+        * DumpRenderTree/qt/LayoutTestControllerQt.h:
+        * DumpRenderTree/win/DumpRenderTree.cpp:
+        (resetDefaultsToConsistentValues):
+        * DumpRenderTree/win/LayoutTestControllerWin.cpp:
+        (LayoutTestController::setJavaScriptCanAccessClipboard):
+        * DumpRenderTree/wx/LayoutTestControllerWx.cpp:
+        (LayoutTestController::setJavaScriptCanAccessClipboard):
+

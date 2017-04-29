@@ -1,0 +1,28 @@
+------------------------------------------------------------------------
+r95959 | inferno@chromium.org | 2011-09-26 19:13:09 +0200 (Mo, 26. Sep 2011) | 18 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/custom-font-data-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/custom-font-data-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+Delete retired custom font data only on document
+destruction, and not on recalc style.
+https://bugs.webkit.org/show_bug.cgi?id=68805
+
+Reviewed by Dave Hyatt.
+
+Source/WebCore: 
+
+Test: fast/text/custom-font-data-crash.html
+
+* dom/Document.cpp:
+(WebCore::Document::recalcStyle):
+
+LayoutTests: 
+
+* fast/text/custom-font-data-crash-expected.txt: Added.
+* fast/text/custom-font-data-crash.html: Added.
+
+

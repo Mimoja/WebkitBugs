@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r124626 | jonlee@apple.com | 2012-08-03 19:32:35 +0200 (Fr, 03. Aug 2012) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/notifications/notifications-event-listener-crash-expected.txt
+   A /trunk/LayoutTests/fast/notifications/notifications-event-listener-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/Dictionary.h
+
+Crash in Notification when setting a non-object as an event listener (91881)
+https://bugs.webkit.org/show_bug.cgi?id=91881
+<rdar://problem/11923341>
+
+Reviewed by Oliver Hunt.
+
+Source/WebCore:
+
+Check to make sure that the value being retrieved is an object. This is similar
+to the isObject() check done in the bindings code.
+
+Test: fast/notifications/notifications-event-listener-crash.html
+
+* bindings/js/Dictionary.h:
+(WebCore::Dictionary::getEventListener):
+
+LayoutTests:
+
+* fast/notifications/notifications-event-listener-crash-expected.txt: Added.
+* fast/notifications/notifications-event-listener-crash.html: Added.
+

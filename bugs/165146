@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r209486 | rniwa@webkit.org | 2016-12-07 23:51:54 +0100 (Mi, 07. Dez 2016) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/shadow-dom/caret-range-from-point-in-shadow-tree-expected.txt
+   A /trunk/LayoutTests/fast/shadow-dom/caret-range-from-point-in-shadow-tree.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+
+document.caretRangeFromPoint doesn't retarget the resultant Range correctly.
+https://bugs.webkit.org/show_bug.cgi?id=165146
+
+Reviewed by Sam Weinig.
+
+Source/WebCore:
+
+The bug was caused by caretRangeFromPoint not retargeting the resultant Range correctly.
+Namely, it's possible for RenderObject::positionForPoint to move across shadow boundary
+even if node was identically equal to ancestorInThisScope(node).
+
+Fixed the bug by directly retargeting the range's container node and its offset as done
+for elementFromPoint in r206795.
+
+Test: fast/shadow-dom/caret-range-from-point-in-shadow-tree.html
+
+* dom/Document.cpp:
+(WebCore::Document::caretRangeFromPoint):
+
+LayoutTests:
+
+Added a regression test for caretRangeFromPoint retargeting the result.
+
+* fast/shadow-dom/caret-range-from-point-in-shadow-tree-expected.txt: Added.
+* fast/shadow-dom/caret-range-from-point-in-shadow-tree.html: Added.
+
+

@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r107046 | haraken@chromium.org | 2012-02-08 09:13:58 +0100 (Mi, 08. Feb 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-frameelement-expected.txt
+   A /trunk/LayoutTests/http/tests/security/cross-frame-access-frameelement.html
+   A /trunk/LayoutTests/http/tests/security/resources/cross-frame-access-frameelement-from-iframe.html
+   M /trunk/LayoutTests/platform/chromium/http/tests/security/cross-frame-access-put-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/DOMWindow.idl
+
+Replace [CheckNodeSecurity] with [CheckAccessToNode]
+https://bugs.webkit.org/show_bug.cgi?id=77971
+
+Reviewed by Adam Barth.
+
+Source/WebCore:
+
+[CheckNodeSecurity] is not implemented by code generators.
+This patch replaces [CheckNodeSecurity] with [CheckAccessToNode].
+
+Test: http/tests/security/cross-frame-access-frameelement.html
+
+* page/DOMWindow.idl:
+
+LayoutTests:
+
+The added test checks if frameElement is accessible from the same or cross origin iframe.
+
+* http/tests/security/cross-frame-access-frameelement-expected.txt: Added.
+* http/tests/security/cross-frame-access-frameelement.html: Added.
+* http/tests/security/resources/cross-frame-access-frameelement-from-iframe.html: Added.
+* platform/chromium/http/tests/security/cross-frame-access-put-expected.txt: Updated the test result.
+
+

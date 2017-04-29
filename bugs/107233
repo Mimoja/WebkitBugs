@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r140944 | shinyak@chromium.org | 2013-01-28 07:15:45 +0100 (Mo, 28. Jan 2013) | 27 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/select-in-shadowdom-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/select-in-shadowdom.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/EventHandler.cpp
+
+[Shadow DOM] Selecting a node to another node in ShadowDOM fires 'click' event unexpectedly
+https://bugs.webkit.org/show_bug.cgi?id=107233
+
+Reviewed by Dimitri Glazkov.
+
+Source/WebCore:
+
+When selecting from a node to another node in ShadowDOM, 'click' event is unexpectedly fired.
+
+The root cause of the bug is using shadow ancestor nodes for checking the node mouse is pressed on
+and the node mouse is released on is the same. This was introduced to fire a click event for a slider
+in <input> or etc.
+
+However, we don't need to check shadow ancestor if we're in Author ShadowDOM.
+
+Test: fast/dom/shadow/selecting-anchor.html
+
+* page/EventHandler.cpp:
+(WebCore::mouseIsReleasedOnPressedElement):
+(WebCore):
+(WebCore::EventHandler::handleMouseReleaseEvent):
+
+LayoutTests:
+
+* fast/dom/shadow/select-in-shadowdom-expected.txt: Added.
+* fast/dom/shadow/select-in-shadowdom.html: Added.
+
+

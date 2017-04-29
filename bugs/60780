@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r86448 | inferno@chromium.org | 2011-05-13 20:17:12 +0200 (Fr, 13. Mai 2011) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-crash-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-not-removed-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBox.cpp
+
+2011-05-13  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Regression(r75823): Revert initialization back to the first RenderBlock
+        in the parent chain.
+        https://bugs.webkit.org/show_bug.cgi?id=60780
+
+        Test: fast/block/float/float-not-removed-crash.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::removeFloatingOrPositionedChildFromBlockLists):
+        In r75823, I forgot to initialize parentBlock, when the original code
+        did and Hyatt did mention in c#5. Now, initializing parentBlock to the
+        first RenderBlock in the parent chain.
+2011-05-13  Abhishek Arya  <inferno@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        Tests that we do not crash when trying to access a deleted float.
+        https://bugs.webkit.org/show_bug.cgi?id=60780
+
+        * fast/block/float/float-not-removed-crash-expected.txt: Added.
+        * fast/block/float/float-not-removed-crash.html: Added.
+
+

@@ -1,0 +1,41 @@
+------------------------------------------------------------------------
+r199101 | zalan@apple.com | 2016-04-06 17:56:06 +0200 (Mi, 06. Apr 2016) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/float/float-moves-between-lines-expected.txt
+   A /trunk/LayoutTests/fast/block/float/float-moves-between-lines.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlockFlow.h
+   M /trunk/Source/WebCore/rendering/RenderBlockLineLayout.cpp
+
+ASSERTION FAILED: !floatingObject->originatingLine() in WebCore::RenderBlockFlow::linkToEndLineIfNeeded
+https://bugs.webkit.org/show_bug.cgi?id=153001
+
+Reviewed by Dan Bernstein.
+
+1. Float boxes are always attached to the line where we see them first.
+2. Float box can only be attached to one line.
+3. RenderBlockFlow can perform partial layout on dirty lines only.
+
+In certain cases, the last dirty line can "pull up" float boxes from the first clean line.
+It simply means that due to some layout changes on previous lines now we see those floats on this last dirty line first.
+If after placing the float we still find it on the same position, the line below is still considered clean.
+Source/WebCore:
+
+Remove the float box from its original line if the line above already placed it.
+
+Test: fast/block/float/float-moves-between-lines.html
+
+* rendering/RenderBlockFlow.h:
+* rendering/RenderBlockLineLayout.cpp:
+(WebCore::RenderBlockFlow::reattachCleanLineFloats):
+(WebCore::RenderBlockFlow::linkToEndLineIfNeeded):
+(WebCore::RenderBlockFlow::layoutRunsAndFloatsInRange): Deleted.
+
+LayoutTests:
+
+Remove the float box from its original line if the line above already placed it.
+
+* fast/block/float/float-moves-between-lines-expected.txt: Added.
+* fast/block/float/float-moves-between-lines.html: Added.
+

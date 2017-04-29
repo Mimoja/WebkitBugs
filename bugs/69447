@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r97214 | crogers@google.com | 2011-10-12 03:48:00 +0200 (Mi, 12. Okt 2011) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/platform/audio/HRTFKernel.cpp
+   M /trunk/Source/WebCore/platform/audio/HRTFPanner.cpp
+
+Heap buffer overflow in Webaudio FFTFrame::doFFT
+https://bugs.webkit.org/show_bug.cgi?id=69447
+
+Reviewed by Kenneth Russell.
+
+No new tests. This only changes internal implementation details.
+
+* platform/audio/HRTFKernel.cpp:
+(WebCore::extractAverageGroupDelay):
+* platform/audio/HRTFPanner.cpp:
+(WebCore::HRTFPanner::fftSizeForSampleRate):
+

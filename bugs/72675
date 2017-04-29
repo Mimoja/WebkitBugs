@@ -1,0 +1,48 @@
+------------------------------------------------------------------------
+r106150 | commit-queue@webkit.org | 2012-01-27 23:26:13 +0100 (Fr, 27. Jan 2012) | 33 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-generated-content/float-first-letter-siblings-convert-to-inline-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/float-first-letter-siblings-convert-to-inline.html
+   A /trunk/LayoutTests/fast/css-generated-content/positioned-div-with-floating-after-content-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-generated-content/positioned-div-with-floating-after-content-crash.html
+   A /trunk/LayoutTests/fast/css-generated-content/resources/positioned-div-with-floating-after-content-crash-frame1.html
+   A /trunk/LayoutTests/fast/css-generated-content/resources/positioned-div-with-floating-after-content-crash-frame2.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderBlock.cpp
+   M /trunk/Source/WebCore/rendering/RenderBlock.h
+
+Crash in updateFirstLetter() from unnecessary anonymous block
+https://bugs.webkit.org/show_bug.cgi?id=72675
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2012-01-27
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+There was a problem with anonymous blocks not getting removed when
+their only block flow siblings are removed if they also have non-block
+flow first-letter siblings (i.e. floats). This patch modifies
+RenderBlock::removeChild() to look for this situation and strip out
+unnecessary anonymous container blocks if it occurs.
+
+* rendering/RenderBlock.cpp:
+(WebCore::RenderBlock::removeChild):
+(WebCore::RenderBlock::collapseAnonymousBoxChild): Added
+* rendering/RenderBlock.h:
+(WebCore::RenderBlock::collapseAnonymousBoxChild): Added
+
+LayoutTests:
+
+Adding tests that cause a div to be removed from between a floating
+first-letter block and its remaining text. If the anonymous block is
+removed as an immediate consequence of the div removal, this shouldn't
+crash.
+
+* fast/css-generated-content/float-first-letter-siblings-convert-to-inline-expected.txt: Added
+* fast/css-generated-content/float-first-letter-siblings-convert-to-inline.html: Added
+* fast/css-generated-content/positioned-div-with-floating-after-content-crash-expected.txt: Added
+* fast/css-generated-content/positioned-div-with-floating-after-content-crash.html: Added
+* fast/css-generated-content/resources/positioned-div-with-floating-after-content-crash-frame1.html: Added
+* fast/css-generated-content/resources/positioned-div-with-floating-after-content-crash-frame2.html: Added
+

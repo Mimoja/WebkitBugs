@@ -1,0 +1,42 @@
+------------------------------------------------------------------------
+r48619 | abarth@webkit.org | 2009-09-22 07:08:37 +0200 (Di, 22. Sep 2009) | 32 Zeilen
+Geänderte Pfade:
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/bindings/js/JSDOMWindowCustom.cpp
+   M /trunk/WebCore/bindings/js/JSLocationCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8DOMWindowCustom.cpp
+   M /trunk/WebCore/bindings/v8/custom/V8LocationCustom.cpp
+
+2009-09-21  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        Don't re-enter JavaScript after performing access checks
+        https://bugs.webkit.org/show_bug.cgi?id=29531
+
+        Moved the access check slightly later in this functions to avoid
+        re-entering the JavaScript interpreter (typically via toString)
+        after performing the access check.
+
+        I can't really think of a meaningful test for this change.  It's more
+        security hygiene.
+
+        * bindings/js/JSDOMWindowCustom.cpp:
+        (WebCore::JSDOMWindow::setLocation):
+        (WebCore::JSDOMWindow::open):
+        (WebCore::JSDOMWindow::showModalDialog):
+        * bindings/js/JSLocationCustom.cpp:
+        (WebCore::JSLocation::setHref):
+        (WebCore::JSLocation::replace):
+        (WebCore::JSLocation::assign):
+        * bindings/v8/custom/V8DOMWindowCustom.cpp:
+        (WebCore::V8Custom::WindowSetTimeoutImpl):
+        (WebCore::if):
+        (CALLBACK_FUNC_DECL):
+        (V8Custom::WindowSetLocation):
+        (V8Custom::ClearTimeoutImpl):
+        * bindings/v8/custom/V8LocationCustom.cpp:
+        (WebCore::ACCESSOR_SETTER):
+        (WebCore::CALLBACK_FUNC_DECL):
+
+

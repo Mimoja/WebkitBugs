@@ -1,0 +1,68 @@
+------------------------------------------------------------------------
+r98033 | jchaffraix@webkit.org | 2011-10-21 00:55:49 +0200 (Fr, 21. Okt 2011) | 50 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/flexbox/021-vertical-expected.png
+   A /trunk/LayoutTests/fast/flexbox/021-vertical-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/021-vertical.html
+   A /trunk/LayoutTests/fast/flexbox/crash-flexbox-no-layout-child-expected.txt
+   A /trunk/LayoutTests/fast/flexbox/crash-flexbox-no-layout-child.html
+   M /trunk/LayoutTests/platform/chromium-win/fast/flexbox/021-expected.txt
+   M /trunk/LayoutTests/platform/efl/fast/flexbox/021-expected.txt
+   M /trunk/LayoutTests/platform/gtk/fast/flexbox/021-expected.txt
+   M /trunk/LayoutTests/platform/mac/fast/flexbox/021-expected.txt
+   M /trunk/LayoutTests/platform/qt/fast/flexbox/021-expected.txt
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderDeprecatedFlexibleBox.cpp
+
+RenderDeprecatedFlexibleBox does not call its children's layout method
+https://bugs.webkit.org/show_bug.cgi?id=64842
+
+Reviewed by David Hyatt.
+
+Source/WebCore:
+
+Tests: fast/flexbox/021-vertical.html
+       fast/flexbox/crash-flexbox-no-layout-child.html
+
+The FlexBoxIterator would skip any child with visibility: collapsed. However those child
+would need layout but their layout() function would never be called.
+
+This change refactors the way flexible box handles visibility: collapsed child and mark sure
+their layout() function is called but makes sure that they don't participate in the flex box
+dimensions.
+
+* rendering/RenderDeprecatedFlexibleBox.cpp:
+(WebCore::FlexBoxIterator::next): Do not skip visibility: collapsed child.
+(WebCore::childDoesNotAffectWidthOrFlexing): Helper function.
+
+(WebCore::RenderDeprecatedFlexibleBox::calcHorizontalPrefWidths):
+(WebCore::RenderDeprecatedFlexibleBox::calcVerticalPrefWidths):
+(WebCore::gatherFlexChildrenInfo):
+(WebCore::RenderDeprecatedFlexibleBox::layoutHorizontalBox):
+(WebCore::RenderDeprecatedFlexibleBox::layoutVerticalBox):
+(WebCore::RenderDeprecatedFlexibleBox::applyLineClamp):
+(WebCore::RenderDeprecatedFlexibleBox::allowedChildFlex):
+Updated to skip the now seen visibility: collapsed child during the
+iteration.
+
+LayoutTests:
+
+Added a test covering the vertical change as the horizontal one is covered
+by 021.html. The test is failing currently as we don't properly support this
+case.
+
+* fast/flexbox/021-vertical-expected.png: Added.
+* fast/flexbox/021-vertical-expected.txt: Added.
+* fast/flexbox/021-vertical.html: Added.
+* fast/flexbox/crash-flexbox-no-layout-child-expected.txt: Added.
+* fast/flexbox/crash-flexbox-no-layout-child.html: Added.
+
+* platform/chromium-win/fast/flexbox/021-expected.txt:
+* platform/efl/fast/flexbox/021-expected.txt:
+* platform/gtk/fast/flexbox/021-expected.txt:
+* platform/mac/fast/flexbox/021-expected.txt:
+* platform/qt/fast/flexbox/021-expected.txt:
+Updated as we now layout out this flex-box. The image result should not
+change as it doesn't contribute to the visible flexbox layout.
+

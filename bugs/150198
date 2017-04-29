@@ -1,0 +1,53 @@
+------------------------------------------------------------------------
+r192604 | jiewen_tan@apple.com | 2015-11-19 02:42:12 +0100 (Do, 19. Nov 2015) | 37 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/Window/666869-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/666869.html
+   A /trunk/LayoutTests/fast/dom/Window/property-access-on-cached-window-after-frame-removed-expected.txt
+   A /trunk/LayoutTests/fast/dom/Window/property-access-on-cached-window-after-frame-removed.html
+   A /trunk/LayoutTests/fast/dom/Window/resources/window-property-collector.js
+   M /trunk/LayoutTests/platform/mac-wk2/TestExpectations
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/page/PerformanceTiming.cpp
+   M /trunk/Tools/ChangeLog
+   M /trunk/Tools/WebKitTestRunner/InjectedBundle/mac/TestRunnerMac.mm
+
+[WK1] Crash loading Blink layout test fast/dom/Window/property-access-on-cached-window-after-frame-removed.html
+https://bugs.webkit.org/show_bug.cgi?id=150198
+<rdar://problem/23136026>
+
+Reviewed by Brent Fulgham.
+
+Source/WebCore:
+
+Test: fast/dom/Window/property-access-on-cached-window-after-frame-removed.html
+
+Properties of a contentWindow could be accessed even if the frame who owns the window is
+detached. Therefore, check whether the document loader is still alive before using it.
+
+* page/PerformanceTiming.cpp:
+(WebCore::PerformanceTiming::monotonicTimeToIntegerMilliseconds):
+
+Tools:
+
+* WebKitTestRunner/InjectedBundle/mac/TestRunnerMac.mm:
+(WTR::TestRunner::inspectorTestStubURL):
+Since WebInspectorUI.framework is not available for iOS, the framework
+and corresponding functions are disabled in iOS.
+
+LayoutTests:
+
+* fast/dom/Window/666869-expected.txt: Added.
+* fast/dom/Window/666869.html: Added.
+Test case is from Mozilla.
+* fast/dom/Window/property-access-on-cached-window-after-frame-removed-expected.txt: Added.
+* fast/dom/Window/property-access-on-cached-window-after-frame-removed.html: Added.
+* fast/dom/Window/resources/window-property-collector.js: Added.
+(collectProperties):
+(emitExpectedResult):
+(collectPropertiesHelper):
+Test case is from Blink r168256:
+https://codereview.chromium.org/131113003
+* platform/mac-wk2/TestExpectations:
+

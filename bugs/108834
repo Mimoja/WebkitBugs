@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r141810 | jchaffraix@webkit.org | 2013-02-04 23:18:00 +0100 (Mo, 04. Feb 2013) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/css-grid-layout/grid-strict-ordering-crash-expected.txt
+   A /trunk/LayoutTests/fast/css-grid-layout/grid-strict-ordering-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderGrid.cpp
+
+[CSS Grid Layout] Heap-buffer-overflow in std::sort
+https://bugs.webkit.org/show_bug.cgi?id=108834
+
+Reviewed by Abhishek Arya.
+
+Source/WebCore:
+
+Test: fast/css-grid-layout/grid-strict-ordering-crash.html
+
+* rendering/RenderGrid.cpp:
+(WebCore::sortByGridTrackGrowthPotential):
+The std::sort documentation says that this function should define a *strict* weak ordering. Fixed the strict
+part of the ordering. Also moved the function definition next to where it is needed and made the GridTrack
+argument const (as it shouldn't modify them or std::sort will misbehave).
+
+* rendering/RenderGrid.cpp:
+(WebCore::sortByGridTrackGrowthPotential):
+(WebCore):
+
+LayoutTests:
+
+* fast/css-grid-layout/grid-strict-ordering-crash-expected.txt: Added.
+* fast/css-grid-layout/grid-strict-ordering-crash.html: Added.
+The test requires a column / row index above the Vector inline capacity to work (which is currently 16).
+The values are much higher in case we decide to bump the inline capacity.
+
+

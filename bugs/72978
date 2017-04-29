@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r101272 | commit-queue@webkit.org | 2011-11-28 21:09:04 +0100 (Mo, 28. Nov 2011) | 20 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/text/international/embed-bidi-style-in-isolate-crash-expected.txt
+   A /trunk/LayoutTests/fast/text/international/embed-bidi-style-in-isolate-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/InlineIterator.h
+
+Crash due to bidi style in isolated run
+https://bugs.webkit.org/show_bug.cgi?id=72978
+
+Patch by Ken Buchanan <kenrb@chromium.org> on 2011-11-28
+Reviewed by Eric Seidel.
+
+Source/WebCore:
+
+Prevent the UBA from changing the embedding level when inside an isolated run.
+
+* rendering/InlineIterator.h:
+(WebCore::notifyObserverEnteredObject):
+(WebCore::notifyObserverWillExitObject):
+
+LayoutTests:
+
+Test to verify fix for crashing bug.
+
+* fast/text/international/embed-bidi-style-in-isolate-crash.html: Added
+* fast/text/international/embed-bidi-style-in-isolate-crash-expected.txt: Added
+

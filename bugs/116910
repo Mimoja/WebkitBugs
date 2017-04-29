@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r150946 | rniwa@webkit.org | 2013-05-30 06:17:28 +0200 (Do, 30. Mai 2013) | 31 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/Document.cpp
+   M /trunk/Source/WebCore/html/FormController.cpp
+   M /trunk/Source/WebCore/html/FormController.h
+   M /trunk/Source/WebCore/html/HTMLFormControlElementWithState.cpp
+   M /trunk/Source/WebCore/html/HTMLFormControlElementWithState.h
+   M /trunk/Source/WebCore/html/HTMLTextFormControlElement.cpp
+
+Store form control list with RefPtr
+https://bugs.webkit.org/show_bug.cgi?id=116910
+
+Reviewed by Kent Tamura.
+
+Merge https://chromium.googlesource.com/chromium/blink/+/582132773280455ead1d42b0073be37efdeaf989.
+
+Unfortunately, the Blink change doesn't provide much insight as to what kind of crashes are fixed
+by this code change but it cleans up the way form elements with state are registered to the form
+controller so it seems benefitial to merge it anyway.
+
+* dom/Document.cpp:
+(WebCore::Document::dispose):
+* html/FormController.cpp:
+(WebCore::FormController::createSavedFormStateMap):
+(WebCore::FormController::registerFormElementWithState):
+(WebCore::FormController::unregisterFormElementWithState):
+(WebCore):
+* html/FormController.h:
+(FormController):
+* html/HTMLFormControlElementWithState.cpp:
+(WebCore::HTMLFormControlElementWithState::HTMLFormControlElementWithState):
+(WebCore::HTMLFormControlElementWithState::~HTMLFormControlElementWithState):
+(WebCore::HTMLFormControlElementWithState::insertedInto):
+(WebCore):
+(WebCore::HTMLFormControlElementWithState::removedFrom):
+* html/HTMLFormControlElementWithState.h:
+(HTMLFormControlElementWithState):
+* html/HTMLTextFormControlElement.cpp:
+(WebCore::HTMLTextFormControlElement::insertedInto):
+
+

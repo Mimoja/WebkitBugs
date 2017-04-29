@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r167544 | fpizlo@apple.com | 2014-04-19 22:36:58 +0200 (Sa, 19. Apr 2014) | 7 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/dfg/DFGOperations.cpp
+   M /trunk/Source/JavaScriptCore/runtime/JSString.h
+
+Address some feedback on https://bugs.webkit.org/show_bug.cgi?id=130684.
+
+* dfg/DFGOperations.cpp:
+* runtime/JSString.h:
+(JSC::JSRopeString::RopeBuilder::append):
+
+
+

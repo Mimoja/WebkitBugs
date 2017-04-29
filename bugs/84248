@@ -1,0 +1,33 @@
+------------------------------------------------------------------------
+r117161 | inferno@chromium.org | 2012-05-15 23:29:19 +0200 (Di, 15. Mai 2012) | 23 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/svg/foreignObject/viewport-foreignobject-crash-expected.html
+   A /trunk/LayoutTests/svg/foreignObject/viewport-foreignobject-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/svg/SVGElement.cpp
+
+Source/WebCore: Crash due shadow tree parent confusion in SVG.
+https://bugs.webkit.org/show_bug.cgi?id=84248
+
+Reviewed by Nikolas Zimmermann.
+
+Test: svg/foreignObject/viewport-foreignobject-crash.html
+
+When we try to make a decision on whether we need an outer
+SVGRoot container, we detect if we are in shadow tree or not.
+We also need to make sure that our parentOrHostElement is also
+an svg element.
+
+* svg/SVGElement.cpp:
+(WebCore::SVGElement::isOutermostSVGSVGElement):
+
+LayoutTests: Crash due shadow tree parent confusion in SVG.
+https://bugs.webkit.org/show_bug.cgi?id=84248
+
+Reviewed by Nikolas Zimmermann.
+
+* svg/foreignObject/viewport-foreignobject-crash-expected.html: Added.
+* svg/foreignObject/viewport-foreignobject-crash.html: Added.
+
+

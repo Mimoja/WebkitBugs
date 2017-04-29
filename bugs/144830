@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r186395 | dbates@webkit.org | 2015-07-07 05:12:14 +0200 (Di, 07. Jul 2015) | 13 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/bindings/js/ScriptController.cpp
+   M /trunk/Source/WebCore/page/DOMSecurityPolicy.cpp
+
+Isolated worlds should respect Content Security Policy; User Agent Shadow DOM
+should be exempt from Content Security Policy
+https://bugs.webkit.org/show_bug.cgi?id=144830
+<rdar://problem/18860261>
+
+Inadvertently omitted argument overrideContentSecurityPolicy in calls to ContentSecurityPolicy::allowEval()
+that explicitly specified a report status. And the report status, which is an enum, was being implicitly
+converted to bool.
+
+* bindings/js/ScriptController.cpp:
+(WebCore::ScriptController::initScript):
+* page/DOMSecurityPolicy.cpp:
+(WebCore::DOMSecurityPolicy::allowsEval):
+

@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+r146853 | morrita@google.com | 2013-03-26 07:39:12 +0100 (Di, 26. Mär 2013) | 30 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/dom/shadow/shadow-root-touch-listener-crash-expected.txt
+   A /trunk/LayoutTests/fast/dom/shadow/shadow-root-touch-listener-crash.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/dom/ContainerNode.cpp
+   M /trunk/Source/WebCore/dom/Node.cpp
+   M /trunk/Source/WebCore/dom/Node.h
+   M /trunk/Source/WebCore/dom/ShadowRoot.cpp
+
+Listening touch events on ShadowRoot can crash.
+https://bugs.webkit.org/show_bug.cgi?id=113035
+
+Reviewed by Kentaro Hara.
+
+Source/WebCore:
+
+TreeScope destructor clears a document reference on ShadowRoot but
+destructors of ContainerNode and Node assumed it being available
+and tried to access it for some cleanup purposes.
+
+This change extracts such cleanup to Node::willBeDeletedFrom() and
+calls it from ShadowRoot dtor before the document reference gets cleared.
+
+Test: fast/dom/shadow/shadow-root-touch-listener-crash.html
+
+* dom/ContainerNode.cpp:
+(WebCore::ContainerNode::~ContainerNode): Adopted willBeDeletedFrom()
+* dom/Node.cpp:
+(WebCore::Node::~Node): Adopted willBeDeletedFrom()
+(WebCore::Node::willBeDeletedFrom): Extracted from Node and ContainerNode
+(WebCore):
+* dom/Node.h:
+* dom/ShadowRoot.cpp:
+(WebCore::ShadowRoot::~ShadowRoot): Adopted willBeDeletedFrom()
+
+LayoutTests:
+
+* fast/dom/shadow/shadow-root-touch-listener-crash-expected.txt: Added.
+* fast/dom/shadow/shadow-root-touch-listener-crash.html: Added.
+

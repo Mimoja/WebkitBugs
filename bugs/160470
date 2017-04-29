@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r204089 | eric.carlson@apple.com | 2016-08-03 20:17:38 +0200 (Mi, 03. Aug 2016) | 12 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/html/track/AudioTrack.cpp
+   M /trunk/Source/WebCore/html/track/TextTrackList.cpp
+
+Cleanup HTMLMediaElement track lists.
+https://bugs.webkit.org/show_bug.cgi?id=160470
+
+Reviewed by Brent Fulgham.
+
+* html/track/AudioTrack.cpp:
+(WebCore::AudioTrack::willRemove): Remove unnecessary ASSERT and NULL check.
+
+* html/track/TextTrackList.cpp:
+(TextTrackList::~TextTrackList): Call clearElement so media element and client pointers are
+cleared.
+
+

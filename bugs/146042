@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+r185665 | zalan@apple.com | 2015-06-17 23:06:58 +0200 (Mi, 17. Jun 2015) | 26 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/block/selection-cache-is-incorrect-when-non-direct-parent-has-float-expected.txt
+   A /trunk/LayoutTests/fast/block/selection-cache-is-incorrect-when-non-direct-parent-has-float.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/LogicalSelectionOffsetCaches.h
+
+Selection cache produces invalid result when ancestor has float element.
+https://bugs.webkit.org/show_bug.cgi?id=146042
+rdar://problem/20604592
+
+Reviewed by Ryosuke Niwa.
+
+Selection cache already takes floats into account, however it's not enough to check current
+block against floats. Any of the ancestor's float starting from the selection root block
+can impact the selection offsets.
+
+Source/WebCore:
+
+Test: fast/block/selection-cache-is-incorrect-when-non-direct-parent-has-float.html
+
+* rendering/LogicalSelectionOffsetCaches.h:
+(WebCore::LogicalSelectionOffsetCaches::ContainingBlockInfo::ContainingBlockInfo):
+(WebCore::LogicalSelectionOffsetCaches::ContainingBlockInfo::setBlock):
+(WebCore::LogicalSelectionOffsetCaches::ContainingBlockInfo::block):
+(WebCore::LogicalSelectionOffsetCaches::ContainingBlockInfo::cache):
+(WebCore::LogicalSelectionOffsetCaches::ContainingBlockInfo::hasFloatsOrFlowThreads):
+(WebCore::LogicalSelectionOffsetCaches::LogicalSelectionOffsetCaches):
+
+LayoutTests:
+
+* fast/block/selection-cache-is-incorrect-when-non-direct-parent-has-float-expected.txt: Added.
+* fast/block/selection-cache-is-incorrect-when-non-direct-parent-has-float.html: Added.
+

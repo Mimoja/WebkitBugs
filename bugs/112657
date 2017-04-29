@@ -1,0 +1,18 @@
+------------------------------------------------------------------------
+r148555 | james.wei@intel.com | 2013-04-17 00:35:53 +0200 (Mi, 17. Apr 2013) | 11 Zeilen
+Geänderte Pfade:
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webaudio/ChannelMergerNode.cpp
+
+ASSERTION FAILED: i < size(), UNKNOWN in WebCore::ChannelMergerNode::process
+https://bugs.webkit.org/show_bug.cgi?id=112657
+
+Avoid to access input bus in checkNumberOfChannelsForInput() before the
+bus is updated with AudioNode::checkNumberOfChannelsForInput().
+
+Reviewed by Chris Rogers.
+
+* Modules/webaudio/ChannelMergerNode.cpp:
+(WebCore::ChannelMergerNode::checkNumberOfChannelsForInput):
+
+

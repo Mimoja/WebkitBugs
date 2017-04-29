@@ -1,0 +1,35 @@
+------------------------------------------------------------------------
+r73801 | inferno@chromium.org | 2010-12-10 23:09:37 +0100 (Fr, 10. Dez 2010) | 25 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/editing/execCommand/insertHTML-mutation-crash-expected.txt
+   A /trunk/LayoutTests/editing/execCommand/insertHTML-mutation-crash.html
+   M /trunk/WebCore/ChangeLog
+   M /trunk/WebCore/editing/ReplaceSelectionCommand.cpp
+
+2010-12-10  Emil Eklund  <eae@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Fix crash in ReplaceSelectionCommand::doApply when selection is modified
+        during execution.
+        https://bugs.webkit.org/show_bug.cgi?id=50840
+
+        Test: editing/execCommand/insertHTML-mutation-crash.html
+
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplaceSelectionCommand::copyStyleToChildren):
+        Replaced raw node pointer with RefPtr.
+        
+        (WebCore::ReplaceSelectionCommand::doApply):
+        Replaced raw node pointer with RefPtr and added null check.
+2010-12-10  Emil Eklund  <eae@chromium.org>
+
+        Reviewed by Adam Barth.
+
+        Add testcase for ReplaceSelectionCommand crash.
+        https://bugs.webkit.org/show_bug.cgi?id=50840
+
+        * editing/execCommand/insertHTML-mutation-crash.html: Added.
+
+

@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+r212022 | bfulgham@apple.com | 2017-02-10 03:07:18 +0100 (Fr, 10. Feb 2017) | 16 Zeilen
+Geänderte Pfade:
+   M /trunk/JSTests/ChangeLog
+   A /trunk/JSTests/stress/b3-delete-orphans-should-neutralize-upsilons-with-dead-phis.js
+   M /trunk/Source/JavaScriptCore/ChangeLog
+   M /trunk/Source/JavaScriptCore/b3/B3Procedure.cpp
+
+B3::Procedure::deleteOrphans() should neutralize upsilons with dead phis.
+https://bugs.webkit.org/show_bug.cgi?id=167437
+<rdar://problem/30198083>
+
+Patch by Mark Lam <mark.lam@apple.com> on 2017-02-09
+Reviewed by Filip Pizlo.
+
+JSTests:
+
+* stress/b3-delete-orphans-should-neutralize-upsilons-with-dead-phis.js: Added.
+
+Source/JavaScriptCore:
+
+* b3/B3Procedure.cpp:
+(JSC::B3::Procedure::deleteOrphans):
+
+

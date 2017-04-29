@@ -1,0 +1,40 @@
+------------------------------------------------------------------------
+r156450 | mihnea@adobe.com | 2013-09-26 09:58:23 +0200 (Do, 26. Sep 2013) | 28 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   A /trunk/LayoutTests/fast/regions/collect-html-in-named-flow-expected.txt
+   A /trunk/LayoutTests/fast/regions/collect-html-in-named-flow.html
+   A /trunk/LayoutTests/fast/regions/iframe-html-collected-expected.txt
+   A /trunk/LayoutTests/fast/regions/iframe-html-collected.html
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/rendering/RenderNamedFlowThread.cpp
+
+[CSSRegions] Unable to collect html element in a named flow
+https://bugs.webkit.org/show_bug.cgi?id=121878
+
+Reviewed by Antti Koivisto.
+
+Source/WebCore:
+
+Tests: fast/regions/collect-html-in-named-flow.html
+       fast/regions/iframe-html-collected.html
+
+It should be possible to collect the html element in a named flow.
+However, before we check whether adding a child is not restricted
+by its original parent, we have to make sure that the original parent
+is an element to safely perform the check.
+
+* rendering/RenderNamedFlowThread.cpp:
+(WebCore::RenderNamedFlowThread::isChildAllowed):
+
+LayoutTests:
+
+Use an iframe with a html element collected in a named flow
+to test that is does not crash or assert.
+
+* fast/regions/collect-html-in-named-flow-expected.txt: Added.
+* fast/regions/collect-html-in-named-flow.html: Added.
+* fast/regions/iframe-html-collected-expected.txt: Added.
+* fast/regions/iframe-html-collected.html: Added.
+
+

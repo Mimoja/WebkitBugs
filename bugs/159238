@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r202645 | ryanhaddad@apple.com | 2016-06-29 22:17:44 +0200 (Mi, 29. Jun 2016) | 10 Zeilen
+Geänderte Pfade:
+   M /trunk/LayoutTests/ChangeLog
+   D /trunk/LayoutTests/webaudio/convolver-channels-expected.txt
+   D /trunk/LayoutTests/webaudio/convolver-channels.html
+   D /trunk/LayoutTests/webaudio/resources/compatibility.js
+   M /trunk/Source/WebCore/ChangeLog
+   M /trunk/Source/WebCore/Modules/webaudio/ConvolverNode.cpp
+
+Unreviewed, rolling out r202617.
+
+The LayoutTest from this change crashes under GuardMalloc
+
+Reverted changeset:
+
+"Throw exceptions for invalid number of channels for
+ConvolverNode"
+https://bugs.webkit.org/show_bug.cgi?id=159238
+http://trac.webkit.org/changeset/202617
+
